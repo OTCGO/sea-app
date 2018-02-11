@@ -1,9 +1,8 @@
-import { NgModule, ErrorHandler, Injector, Injectable } from '@angular/core'
+import { NgModule, ErrorHandler } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
-import { Pro } from '@ionic/pro'
 
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
@@ -24,29 +23,6 @@ import { PossessionDetailProvider } from '../containers/possessions/possession-d
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/claims/claims.provider'
 
-Pro.init('52f9b83b', {
-  appVersion: '0.1.1'
-})
-
-@Injectable()
-export class MyErrorHandler implements ErrorHandler {
-  ionicErrorHandler: IonicErrorHandler
-
-  constructor (injector: Injector) {
-    try {
-      this.ionicErrorHandler = injector.get(IonicErrorHandler)
-    } catch (e) {
-
-    }
-  }
-
-  handleError(err: any): void {
-    Pro.monitoring.handleNewError(err);
-    // Remove this if you want to disable Ionic's auto exception handling
-    // in development mode.
-    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
-  }
-}
 
 @NgModule({
   declarations: [
@@ -81,8 +57,7 @@ export class MyErrorHandler implements ErrorHandler {
     SendModalProvider,
     AccountProvider,
     ClaimsProvider,
-    { provide: ErrorHandler, useClass: MyErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {
-}
+export class AppModule { }

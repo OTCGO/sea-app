@@ -11,7 +11,6 @@ import { ImportSuccessPage } from '../import-success/import-success'
   templateUrl: 'observation-mode.html',
 })
 export class ObservationModePage {
-    private _file: File;
     importText: string = "导入钱包文件";
     isWIFKey: boolean = false;
     WIFKey: string
@@ -20,7 +19,6 @@ export class ObservationModePage {
   constructor(
       public navCtrl: NavController, 
       public navParams: NavParams,
-      private walletProvider: WalletProvider,
       public alertCtrl: AlertController
     ) {
   }

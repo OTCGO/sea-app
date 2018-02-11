@@ -19,14 +19,11 @@ export class MyApp {
     private walletProvider: WalletProvider
   ) {
     if (this.platform.is('ios') || this.platform.is('android')) enableProdMode()
-    this.splashScreen.show()
     this.appReady()
   }
 
   appReady () {
     this.platform.ready().then(() => {
-
-
 
       this.statusBar.styleDefault();
       this.splashScreen.hide()

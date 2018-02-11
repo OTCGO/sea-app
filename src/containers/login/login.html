@@ -1,0 +1,41 @@
+<ion-content class="login">
+	<div class="title">
+		<ion-label>
+			<h2>登陆钱包</h2>
+		</ion-label>
+	</div>
+	<ion-list class="login-list">
+		<ion-item class="login-input rounded" [class.item-input-has-focus]="!!WIFKey">
+			<ion-input type="text" placeholder="WIF码登录" [(ngModel)]="WIFKey" required></ion-input>
+		</ion-item>
+
+		<button class="login-import" [class.is-active]="!isWIFKey" (click)="openImportBox(fileInput)">
+			<span *ngIf="!isWIFKey">{{ importText }}</span>
+			<img src="assets/imgs/icon-login_file.svg" alt="" class="icon">
+		</button>
+
+		<input type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
+
+		<button class="login-encryptedKey-switcher" *ngIf="!isWIFKey" (click)="openWIFKeyBox()">
+			<img src="assets/imgs/icon-login_WIF.svg" alt="" class="icon">
+		</button>
+
+		<ion-item class="pws-input" *ngIf="isOldWallet || WIFKey">
+			<ion-input type="password" placeholder="请输入交易密码" [(ngModel)]="passphrase" required></ion-input>
+		</ion-item>
+
+	</ion-list>
+
+	<div class="login-button">
+		<button
+			class="otcgo-button--colour"
+			ion-button round block
+			[disabled]="disabledBtn"
+			(click)="login()"
+		>确认</button>
+	</div>
+
+	<div class="login-tip">
+		<a (click)="navCtrl.setRoot(createWalletPage)">还没有钱包？创建一个！</a>
+	</div>
+</ion-content>

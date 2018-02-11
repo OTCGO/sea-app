@@ -1,0 +1,31 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>观察模式</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="login">
+    <ion-list class="login-list">
+        <ion-item class="login-input rounded" [class.item-input-has-focus]="!!WIFKey">
+            <ion-input type="text" placeholder="明文私钥" [(ngModel)]="WIFKey" required></ion-input>
+        </ion-item>
+
+        <button class="login-import" (click)="scanCode()">
+			<img src="../../assets/imgs/icon-login_file.svg" alt="" class="icon">
+		</button>
+
+
+    </ion-list>
+
+    <div class="login-button">
+        <button ion-button round block clear [disabled]="disabledBtn" (click)="doImport()">开始导入</button>
+    </div>
+
+
+    <div class="tip">
+        <a (click)="navCtrl.push(createWalletPage)">什么是观察模式?</a>
+    </div>
+</ion-content>

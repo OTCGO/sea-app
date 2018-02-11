@@ -1,0 +1,68 @@
+<ion-header class="otcgo-header manage-wallet">
+    <ion-navbar>
+        <ion-title>管理钱包</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only clear navPush="AddWallet">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content class="mw">
+
+    <slide-card>
+        <slide-card-item *ngFor="let account of accounts">
+            <div class="mw__header">
+                <div class="mw__header__left" float-left>
+                    <div class="mw__title">
+                        0 <span>GAS</span>
+                    </div>
+                    <div class="mw__subtitle">
+                        ≈ ￥ 7.00
+                    </div>
+                </div>
+
+                <div class="mw__header__right" float-right>
+                    <div class="mw__name">
+                        {{ account.label }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mw__changes-feature">
+                <ion-input placeholder="更改钱包名字" [(ngModel)]="tempLabel"></ion-input>
+            </div>
+
+            <div class="mw__exports-feature">
+                <h5 text-left>导出</h5>
+                <!--<button ion-button class="otcgo-button&#45;&#45;edge-gray mw__exports" clear block icon-right (click)="showPrivateKeyBox(account)">
+                    导出 私钥
+                    <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+                </button>-->
+
+                <!--<button ion-button class="otcgo-button&#45;&#45;edge-gray mw__exports" clear block icon-right (click)="openWalletLocation()">
+                    打开钱包文件所在位置
+                </button>-->
+
+                <button ion-button class="otcgo-button--edge-gray mw__exports" clear block icon-right (click)="showWIFKeyBox(account)">
+                    导出 WIF
+                    <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+                </button>
+
+                <button ion-button class="otcgo-button--edge-gray mw__exports" clear block icon-right (click)="showEncryptedKeyBox(account)">
+                    导出 EncryptedKey
+                    <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+                </button>
+            </div>
+
+            <div class="mw__exports-action">
+
+                <button ion-button class="otcgo-button--colour" block round (click)="saveAccount(account)">保存</button>
+                <a ion-text (click)="showDeleteActionBox(account)">删除钱包</a>
+            </div>
+        </slide-card-item>
+    </slide-card>
+
+</ion-content>

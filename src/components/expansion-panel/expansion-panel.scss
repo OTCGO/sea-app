@@ -1,0 +1,65 @@
+@import "../core/common-theme/variables";
+@import "../core/common-theme/elevation";
+
+.expansion-panel {
+  box-sizing: content-box;
+  display: block;
+  margin: 0;
+  transition: margin 225ms $fast-out-slow-in-timing-function;
+
+  background: white;
+  color: rgba(black, 0.87);
+
+
+  &:not(.expanded) .expansion-panel-header {
+    &:not([aria-disabled='true']) {
+      &.cdk-keyboard-focused,
+      &.cdk-program-focused,
+      &:hover {
+        background: #fafafa;
+      }
+    }
+  }
+}
+
+.expansion-panel-content {
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  width: 100%;
+
+  &.expanded {
+    overflow: visible;
+  }
+}
+
+
+.expansion-panel-spacing {
+  margin: 16px 0;
+
+  .accordion &:first-child {
+    margin-top: 0;
+  }
+
+  .accordion &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.action-row {
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(black, 0.12);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 16px 8px 16px 24px;
+
+  button {
+    margin-left: 8px;
+
+    [dir='rtl'] & {
+      margin-left: 0;
+      margin-right: 8px;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>设置</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-list>
+		<accordion>
+			<expansion-panel class="expansion-demo-width" #myPanel>
+				<expansion-panel-header>
+					<panel-title>语言 Languages</panel-title>
+					<p>中文</p>
+				</expansion-panel-header>
+
+				<button ion-button clear full text-capitalize>
+					<span>Chinese</span>
+					<span class="subtitle">中文</span>
+				</button>
+
+				<button ion-button clear full text-capitalize disabled>
+					<span>English</span>
+					<span class="subtitle">英文</span>
+				</button>
+
+			</expansion-panel>
+		</accordion>
+	</ion-list>
+</ion-content>

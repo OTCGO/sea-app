@@ -42,6 +42,18 @@ $colors: (
 );
 
 
+/*
+// Bottom tabs
+$tabs-md-background: color($colors, secondary);
+$tabs-md-tab-color: color($colors, light);
+$tabs-md-tab-text-color: color($colors, light);
+$tabs-md-tab-color-active: color($colors, light);
+
+$list-md-text-color: color($colors, light);
+$list-md-background-color: color($colors, secondary);
+*/
+
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -86,3 +98,7 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+body {
+  font-family: "Open Sans", arial, x-locale-body, sans-serif;
+}

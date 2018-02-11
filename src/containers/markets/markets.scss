@@ -1,0 +1,88 @@
+page-markets {
+  ion-header.otcgo-header {
+    & * {
+      color: white;
+    }
+
+    ion-navbar {
+      .toolbar-background {
+        background: linear-gradient(270deg, #2fb1d5, #3276d9) !important;
+        border: none;
+      }
+
+      .toolbar-title {
+        text-align: right !important;
+        padding-right: calc(50% - 20px);
+      }
+
+      button {
+        border-radius: 50%;
+        background-color: white;
+        width: 25px;
+        height: 25px;
+
+        ion-icon {
+          color: #2fb1d5;
+        }
+      }
+    }
+  }
+
+  ion-list-header.markets__header {
+    border: none !important;
+    color: rgb(193, 193, 193);
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  ion-card.markets__card {
+    ion-item, button, .item {
+      & p {
+        &.markets__symbol {
+          font-size: 2.2rem;
+          color: rgb(112, 112, 112);
+        }
+
+        &.markets__fall-or {
+          font-size: 2rem;
+          margin: 0;
+        }
+
+        &.markets__green {
+          color: hsl(100, 75%, 55%);
+        }
+
+        &.markets__red {
+          color: orangered;
+        }
+      }
+
+      & [item-end] {
+        margin: 0;
+      }
+
+
+      ion-label {
+        padding-right: 20px;
+        color: rgb(70, 70, 70);
+        font-size: 1.6rem;
+
+        & .markets__current-price {
+          color: rgb(193, 193, 193);
+          font-size: 1.4rem;
+        }
+
+        & .markets__conversion-rate {
+          color: rgb(150, 150, 150);
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  ion-card.markets__card:first-of-type {
+    margin-top: 0;
+  }
+}
+
+

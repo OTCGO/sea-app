@@ -1,0 +1,37 @@
+
+<!-- TODO(Amagi): This is a fake splash screen -->
+<!--<div id="custom-overlay" [style.display]="splash ? 'flex': 'none'">
+	<div class="flb">
+		<div class="Aligner-item Aligner-item&#45;&#45;top"></div>
+		<img src="assets/imgs/logo&#45;&#45;white.png">
+		<div class="Aligner-item Aligner-item&#45;&#45;bottom"></div>
+	</div>
+</div>-->
+
+<ion-content class="possessions-content">
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-card class="card-info">
+		<div class="card-avatar" (click)="openQRCode()">
+			<img src="assets/imgs/icon-avatar.svg" alt="">
+		</div>
+		<div class="card-title">{{ account.address | addressCollapse }}</div>
+	</ion-card>
+
+	<ion-card class="card-list" *ngFor="let balance of balances">
+
+		<ion-item [navPush]="possessionDetailPage" [navParams]="balance">
+			<div class="possessions__icon" item-start>
+				<img [src]="'assets/icon/' + balance.asset + '.png'" onerror="this.src='assets/icon/申一币.png'" />
+			</div>
+			<p class="possessions__symbol">{{ balance.asset }}</p>
+			<ion-note item-end>
+				{{ balance.amount }}
+			</ion-note>
+		</ion-item>
+
+	</ion-card>
+
+</ion-content>

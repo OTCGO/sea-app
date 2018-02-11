@@ -1,0 +1,63 @@
+timeline {
+  .timeline {
+    margin: 30px 0 0 0;
+    padding: 0;
+    position: relative;
+    box-sizing: border-box;
+
+    &:before {
+      content: '';
+      position: absolute;
+      border: 1.5px dashed rgb(193, 193, 193);
+      top: 40px;
+      bottom: 0;
+      left: 25px;
+      margin-left: -10px;
+    }
+
+    h5 {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    timeline-item, ion-col {
+      position: relative;
+      font-size: 1.4rem;
+
+      margin-bottom: 30px;
+
+      timeline-time {
+        display: block;
+        color: rgba(0, 0, 0, 0.5);
+
+        span {
+          display: block;
+
+          &:last-child {
+            color: black;
+          }
+        }
+      }
+
+      ion-card, .content {
+        font-size: 1.8rem;
+        vertical-align: middle;
+        text-align: right;
+        span {
+          color: rgba(0, 0, 0, 0.4);
+        }
+      }
+
+      ion-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.4rem;
+        color: white;
+        background: #46a4da;
+        border-radius: 50%;
+        text-align: center;
+        margin: 0 0 0 -8px;
+        line-height: 30px;
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+<div
+	class="m-carousel"
+	[class.m-carousel--card]="type === 'card'"
+	(mouseenter)="handleMouse(true)"
+	(mouseleave)="handleMouse(false)">
+	<div
+		class="m-carousel__container"
+		[ngStyle]="{ 'height': height }">
+
+		<ng-content></ng-content>
+	</div>
+
+	<ul class="m-carousel__indicators" *ngIf="indicatorPosition !== 'none'"
+	    [class.m-carousel__indicators--labels]="hasLabel"
+		  [class.m-carousel__indicators--outside]="indicatorPosition === 'outside' || type === 'card'"
+	>
+		<li
+			*ngFor="let item of items; index as i"
+			class="m-carousel__indicator"
+			[class.is-active]="i === activeIndex"
+			(click.stop)="handleIndicatorClick(i)"
+			(mouseenter)="throttledIndicatorHover$.next(i)"
+		>
+			<button
+				class="m-carousel__button"
+			>
+				<span *ngIf="hasLabel">{{ item.label }}</span>
+			</button>
+		</li>
+	</ul>
+</div>

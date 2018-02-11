@@ -1,0 +1,59 @@
+<ion-content class="card-background-page">
+    <ion-card class="card-info">
+        <div class="card-avatar">
+	        <img src="assets/imgs/icon-avatar.svg" alt="">
+        </div>
+        <div class="card-title">{{ account.label }}</div>
+    </ion-card>
+
+    <ion-card class="card-circle-menu">
+        <div class="card-circle-menu__icon unavailable">
+            <img src="assets/imgs/icon-profile_notification.svg" alt="">
+        </div>
+        <div class="card-circle-menu__icon" (click)="navCtrl.push(settingsPage)">
+            <img src="assets/imgs/icon-profile_setting.svg" alt="">
+        </div>
+        <div class="card-circle-menu__icon unavailable">
+            <img src="assets/imgs/icon-profile_helpcentre.svg" alt="">
+        </div>
+    </ion-card>
+
+    <ion-card class="card-nav">
+        <div class="nav-item" (click)="navCtrl.push('ManageWallet')">
+            <img class="card-img" src="assets/imgs/icon-profile_manage-wallet.svg" alt="">
+            <span class="card-title">管理钱包</span>
+        </div>
+
+	    <div class="nav-item" (click)="navCtrl.push('ContactsPage')">
+		    <img class="card-img" src="assets/imgs/icon-profile_contacts.svg" alt="">
+		    <span class="card-title">联系人</span>
+	    </div>
+
+        <div class="nav-item">
+            <img class="card-img" src="assets/imgs/icon-profile_tx-history.svg" alt="">
+            <span class="card-title">交易记录</span>
+        </div>
+
+    </ion-card>
+
+    <ion-card class="card-features">
+        <ion-list>
+            <!--<button ion-item icon-right>
+				<span>最近一笔转入</span>
+				<div class="trade-info">
+					<p class="trade-date">2018/01/01</p>
+					<p class="trade-time">20:00 PM 转入</p>
+				</div>
+				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+			</button>-->
+            <button ion-item icon-right (click)="navCtrl.push('Claims')">
+				提取分红
+				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+			</button>
+            <!-- <button ion-item icon-right>
+	智能合约
+	<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+</button> -->
+        </ion-list>
+    </ion-card>
+</ion-content>

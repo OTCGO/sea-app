@@ -1,0 +1,19 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>导入成功</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="imp-suc">
+    <ion-card class="card-info">
+        <img class="card-avatar" src="assets/imgs/icon-avatar.svg" alt="">
+        <div class="card-title">123.json</div>
+    </ion-card>
+
+    <div class="back2mw-button">
+        <button ion-button round block clear [disabled]="disabledBtn" (click)="navCtrl.push(manageWalletPage)">回到管理钱包</button>
+    </div>
+</ion-content>

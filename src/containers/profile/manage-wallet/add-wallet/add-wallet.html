@@ -1,0 +1,25 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>导入钱包</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="aw">
+    <div class="import-tip">请选择导入类型</div>
+    <ion-card class="card-features" *ngFor="let menu of menuList" (click)="menuSelected(menu.pageName)" >
+        <ion-list>
+            <button ion-item icon-right>
+				{{menu.title}}
+				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+            </button>
+        </ion-list>
+    </ion-card>
+
+    <div class="create-wallet-button">
+        <button ion-button round block clear (click)="navCtrl.push(createWalletPage)">创建钱包</button>
+    </div>
+
+</ion-content>

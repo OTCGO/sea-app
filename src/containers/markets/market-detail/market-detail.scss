@@ -1,0 +1,77 @@
+page-market-detail {
+  ion-header.otcgo-header {
+    .icon {
+      color: white;
+    }
+
+    .toolbar-background {
+      background: linear-gradient(0deg, #2a72da, #247bda) !important;
+    }
+  }
+
+  .market-detail__content {
+
+
+    .market-detail__background {
+      position: absolute;
+      height: 45%;
+
+      left: 0;
+      right: 0;
+
+      background: linear-gradient(0deg, rgb(47, 177, 213), #2a72da);
+      z-index: -1;
+    }
+
+    .market-detail__title {
+      font-size: 3.2rem;
+      color: white;
+      padding-left: 20px;
+      padding-top: 30px;
+    }
+
+    .market-detail__card {
+      padding: 32px 20px;
+      position: absolute;
+      top: 30%;
+      border-radius: 10px;
+
+
+      .market-detail__rating {
+        align-items: center;
+        font-size: 1.4rem;
+
+        .col {
+          padding: 0;
+        }
+
+        .market-detail__conversion__title {
+          color: rgb(50, 118, 217);
+          font-size: 3.8rem;
+        }
+
+        .market-detail__conversion__price {
+          color: rgb(193, 193, 193);
+        }
+
+        .market-detail__conversion__base {
+          color: rgb(112, 112, 112);
+          padding-left: 5px;
+        }
+
+        .market-detail__fall-of {
+          font-size: 2rem;
+          text-align: right;
+
+          &--red {
+            color: orangered;
+          }
+
+          &--green {
+            color: hsl(100, 75%, 55%);
+          }
+        }
+      }
+    }
+  }
+}

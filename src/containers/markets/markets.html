@@ -1,0 +1,58 @@
+<ion-header class="otcgo-header">
+
+	<ion-navbar>
+		<ion-title>行情</ion-title>
+
+		<ion-buttons end>
+			<button ion-button round icon-only>
+				<ion-icon name="add"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<ion-list-header class="markets__header">
+		<ion-row>
+			<ion-col col-3 text-left>资产名称</ion-col>
+			<ion-col text-right>最新价</ion-col>
+			<ion-col col-4 text-right>跌涨幅</ion-col>
+		</ion-row>
+	</ion-list-header>
+
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content>
+		</ion-refresher-content>
+	</ion-refresher>
+
+
+	<ion-card class="markets__card" *ngFor="let coin of coins" (click)="navCtrl.push(marketDetailPage, { coin: coin, perGas: coin.currentPrice / GASPrice })">
+		<ion-list>
+			<button ion-row ion-item detail-none>
+				<ion-col col-3 item-start>
+					<p class="markets__symbol">{{ coin.symbol }}</p>
+				</ion-col>
+
+				<ion-label text-right>
+					<p class="markets__current-price">{{ coin.currentPrice | currency:'CNY':'symbol-narrow':'1.1-5' }}</p>
+					{{ (coin.currentPrice / GASPrice) | number:'1.1-4' }}<span class="markets__conversion-rate">/GAS</span>
+				</ion-label>
+
+				<ion-col col-4 item-end text-right>
+					<p [ngClass]="{
+			          'markets__green': coin.percent_change_24h && !coin.percent_change_24h.includes('-'),
+			          'markets__red': coin.percent_change_24h && coin.percent_change_24h.includes('-')
+			        }" class="markets__fall-or">
+						{{ coin.percent_change_24h || 'None' }}{{ coin.percent_change_24h ? '%' : '' }}
+					</p>
+				</ion-col>
+
+
+			</button>
+		</ion-list>
+
+	</ion-card>
+
+</ion-content>

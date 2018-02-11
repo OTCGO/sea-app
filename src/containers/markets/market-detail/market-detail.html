@@ -1,0 +1,45 @@
+<ion-header class="otcgo-header">
+	<ion-navbar></ion-navbar>
+</ion-header>
+
+<ion-content class="market-detail__content">
+	<div class="market-detail__background"></div>
+
+	<div class="market-detail__title">{{ coin.symbol }}</div>
+
+	<ion-card class="market-detail__card">
+		<div class="market-detail__rating" ion-row>
+			<ion-col col-auto class="market-detail__conversion__title">
+				{{ perGas | number }}
+			</ion-col>
+
+			<ion-col col-4>
+				<div class="market-detail__conversion__price">
+					{{ coin.currentPrice | currency:'CNY':'symbol-narrow':'1.1-5' }}
+				</div>
+				<div class="market-detail__conversion__base">
+					GAS
+				</div>
+			</ion-col>
+
+			<ion-col col-4 class="market-detail__fall-of" float-right>
+				<div [ngClass]="{
+				  'market-detail__fall-of--red': coin.percent_change_24h && coin.percent_change_24h.includes('-'),
+				  'market-detail__fall-of--green': coin.percent_change_24h && !coin.percent_change_24h.includes('-')
+				}">{{ coin.percent_change_24h || 'None' }}{{ coin.percent_change_24h ? '%' : '' }}
+				</div>
+			</ion-col>
+		</div>
+
+		<!--<div class="market-detail__change-data">
+
+		</div>
+		<div class="market-detail__change-action">
+
+		</div>-->
+	</ion-card>
+
+	<div class="chart">
+
+	</div>
+</ion-content>

@@ -1,0 +1,104 @@
+page-possession-detail {
+  ion-header.otcgo-header {
+    & * {
+      color: white;
+    }
+
+    .toolbar-background {
+      background: linear-gradient(0deg, #2a72da, #247bda) !important;
+      border: none;
+    }
+
+    .toolbar-title {
+      padding-left: calc(50% - 40px);
+    }
+  }
+
+  ion-content.possession-detail-content {
+
+    ion-card.possession-data-card {
+      background: linear-gradient(0deg, rgb(47, 177, 213), #2a72da);
+
+      border-radius: 0;
+
+      position: fixed;
+      top: 50px;
+      left: 0;
+      z-index: 1;
+
+      height: 300px;
+      width: 100%;
+      margin: 0;
+
+      text-align: center;
+      padding-top: calc(40% - 3.6rem);
+      box-shadow: none;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+
+      .possession-data-amount {
+        position: absolute;
+        top: 2px;
+
+        font-size: 4.8rem;
+        text-shadow: 1px 4px 3px rgba(0, 0, 0, 0.3);
+      }
+      .possession-data-approximation {
+        position: absolute;
+        top: 70px;
+      }
+    }
+
+    button.otcgo-button {
+      width: 60%;
+      color: #efefef;
+      span {
+        background-image: -webkit-linear-gradient(0deg, rgb(47, 177, 213), #2a72da); /* For Chrome and Safari */
+        background-image:    -moz-linear-gradient(0deg, rgb(47, 177, 213), #2a72da); /* For old Fx (3.6 to 15) */
+        background-image:     -ms-linear-gradient(0deg, rgb(47, 177, 213), #2a72da); /* For pre-releases of IE 10*/
+        background-image:      -o-linear-gradient(0deg, rgb(47, 177, 213), #2a72da); /* For old Opera (11.1 to 12.0) */
+        background-image:         linear-gradient(to left, rgb(47, 177, 213), #2a72da); /* Standard syntax; must be last */
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+    }
+
+    .timeline {
+      margin-top: 300px;
+    }
+
+    .possession-detail__title {
+      margin-top: 300px;
+    }
+  }
+
+  .toolbar-background {
+    color: red !important;
+  }
+  ion-modal .modal-wrapper {
+    transform: translateY(30%) !important;
+  }
+  ion-page.modal {
+    padding: 30px;
+    background: transparent;
+  }
+  .modal-backdrop-bg {
+    background-color: #000;
+    opacity: 0;
+  }
+  .active .modal-backdrop-bg {
+    opacity: 0;
+  }
+}
+
+ion-modal.inset-modal {
+  // transparent background overlay
+  background-color: transparent;
+  transition: opacity .25s ease-in-out;
+  padding: 40% 0 0;
+}

@@ -1,0 +1,120 @@
+@import "../core/common-theme/mixins";
+@import "../core/common-theme/_variables";
+
+@include b(carousel) {
+  overflow: hidden;
+  position: relative;
+
+  @include e(container) {
+    position: relative;
+    height: 300px;
+  }
+
+  @include e(arrow) {
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    height: $--carousel-arrow-size;
+    width: $--carousel-arrow-size;
+    cursor: pointer;
+    transition: .3s time;
+    border-radius: 50%;
+    background-color: $--carousel-arrow-background;
+    color: $--color-white;
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: $--carousel-arrow-font-size;
+
+    @include m(left) {
+      left: 16px;
+    }
+
+    @include m(right) {
+      right: 16px;
+    }
+
+    &:hover {
+      background-color: $--carousel-arrow-hover-background;
+    }
+
+    & i {
+      cursor: pointer;
+    }
+  }
+
+  @include e(indicators) {
+
+
+    @include m(outside) {
+      text-align: center;
+      transform: none;
+      margin-left: -52px;
+
+      button {
+        background-color: white;
+      }
+    }
+
+    @include m(labels) {
+      left: 0;
+      right: 0;
+      transform: none;
+      text-align: center;
+
+      .m-carousel__button {
+        height: auto;
+        width: auto;
+        padding: 2px 18px;
+        font-size: 12px;
+      }
+
+      .m-carousel__indicator {
+        padding: 6px 4px;
+      }
+    }
+  }
+
+  @include e(indicator) {
+    display: inline-block;
+    background-color: transparent;
+    padding: $--carousel-indicator-padding-vertical $--carousel-indicator-padding-horizontal;
+    cursor: pointer;
+
+    @include when(active) {
+      button {
+        opacity: 1;
+        background-color: rgb(48, 120, 216);
+      }
+    }
+  }
+
+  @include e(button) {
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: $--color-white;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: .3s;
+  }
+}
+
+
+.carousel-arrow-left-enter,
+.carousel-arrow-left-leave-active {
+  transform: translateY(-50%) translateX(-10px);
+  opacity: 0;
+}
+
+.carousel-arrow-right-enter,
+.carousel-arrow-right-leave-active {
+  transform: translateY(-50%) translateX(10px);
+  opacity: 0;
+}

@@ -1,0 +1,142 @@
+page-manage-wallet {
+
+  ion-content {
+    background-image: url('../assets/imgs/bg-manage-wallet.png');
+    background-position: center top;
+    background-size: cover;
+    .scroll-content {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 0 !important;
+    }
+
+    slide-card {
+      width: 95%;
+      text-align: center;
+      left: 20px;
+      right: 20px;
+      top: 20px;
+      bottom: 20px;
+      position: absolute;
+      z-index: 2;
+      display: block;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      will-change: scroll-position;
+      contain: size style layout;
+
+      .m-carousel {
+        height: 450px;
+
+        &__container {
+          height: 400px;
+          margin-bottom: 20px;
+        }
+
+        &__item {
+          background-color: white;
+          width: 80%;
+          border-radius: 30px;
+
+          box-shadow: 0 2px 30px rgba(0, 147, 221, 0.3);
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-around;
+
+          padding: 20px 10px 10px;
+
+          & > div {
+            width: 80%;
+          }
+
+          .mw__header {
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+
+            &__left {
+              .mw__title {
+                font-size: 2.6rem;
+                color: rgba(0, 0, 0, 0.8);
+                span {
+                  font-size: 2.2rem;
+                  color: rgb(193, 193, 193);
+                }
+              }
+
+              .mw__subtitle {
+                font-size: 1.4rem;
+                color: rgb(193, 193, 193);
+              }
+            }
+
+            &__right {
+              display: flex;
+              justify-content: center;
+
+              .mw__name {
+                font-size: 2.2rem;
+                color: rgb(93, 93, 93);
+              }
+            }
+          }
+
+          .mw__changes-feature {
+            ion-input {
+              border: 1px solid rgb(222, 222, 222);
+              padding-left: 10px;
+            }
+          }
+
+          .mw__exports-feature {
+            button {
+              height: 40px;
+              text-align: left;
+            }
+            .mw__exports.otcgo-button--edge-gray {
+              color: rgba(0, 0, 0, 0.4);
+              min-height: 40px;
+              text-transform: capitalize;
+
+              .button-inner {
+                justify-content: space-between;
+              }
+            }
+          }
+
+          .mw__exports-action {
+            & > * {
+              margin-bottom: 20px;
+            }
+            a {
+              color: rgb(193, 193, 193);
+            }
+          }
+        }
+
+        &__mask {
+          border-radius: 30px;
+        }
+      }
+    }
+  }
+}
+
+.mw__exports-actions--box {
+  .alert-message {
+    color: red;
+  }
+}
+
+.mw__exports-actions--key {
+  .alert-message {
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0 24px;
+    padding: 10px;
+    font-weight: bold;
+  }
+}

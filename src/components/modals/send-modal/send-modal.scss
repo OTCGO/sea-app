@@ -1,0 +1,110 @@
+send-modal {
+  &.show-page {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+
+  }
+
+  .send-modal__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+
+    & .scroll-content {
+      padding-bottom: 0 !important;
+    }
+
+    .content-header {
+      margin-top: -16px;
+      height: 30px;
+
+      button {
+        height: 100%;
+      }
+    }
+
+    .container {
+      padding: 0 10%;
+
+      ion-item {
+        width: 80%;
+        transition: all 0.2s ease-in-out;
+        margin-bottom: 5px;
+        padding-left: 20px;
+
+
+        input::placeholder {
+          color: rgba(0, 0, 0, 0.4);
+        }
+
+        &.round {
+          width: 100%;
+          border-radius: 50px;
+          border: 2px solid rgb(222, 222, 222);
+        }
+
+        .item-inner {
+          border: none !important;
+          box-shadow: none !important;
+        }
+
+        ion-icon {
+          width: 35px;
+          height: 35px;
+          background-color: #fff;
+          box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.2);
+          border-radius: 50%;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      ion-list.amount-range {
+        margin: 0;
+
+        ion-range.range {
+          padding: 0 6px;
+        }
+      }
+
+      ion-item.checkbox {
+        margin: 0 !important;
+        padding-left: 0;
+
+        ion-checkbox {
+          margin-right: 5px;
+        }
+      }
+
+      .tooltips {
+        margin: 10px 0;
+        padding: 0 5px;
+
+        .icon {
+          width: 35px;
+          height: 35px;
+          background-color: rgba(0, 0, 0, 0.2);
+          border-radius: 50%;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 5px;
+
+          img {
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+
+      .spacer {
+        padding: 10% 0;
+        width: 100%;
+      }
+    }
+  }
+}

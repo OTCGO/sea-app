@@ -1,0 +1,49 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>私钥导入</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="login">
+    <ion-list class="login-list">
+        <ion-item class="login-input rounded" [class.item-input-has-focus]="!!WIFKey">
+            <ion-input type="text" placeholder="明文私钥" [(ngModel)]="WIFKey" required></ion-input>
+        </ion-item>
+
+        <button class="login-import" (click)="scanCode()">
+			<img src="../../assets/imgs/icon-login_file.svg" alt="" class="icon">
+		</button>
+
+        <ion-item class="pws-input rounded">
+            <ion-input type="password" placeholder="密码" [(ngModel)]="passphrase" required></ion-input>
+        </ion-item>
+
+        <ion-item class="pws-input rounded">
+            <ion-input type="password" placeholder="重复密码" [(ngModel)]="passphrase" required></ion-input>
+        </ion-item>
+
+    </ion-list>
+
+    <ion-list class="user-agreement">
+        <ion-item no-lines>
+            <ion-label class="chkbox-tip">
+                <span>我已仔细阅读并同意</span>
+            </ion-label>
+            <ion-checkbox class="chkbox" checked="false"></ion-checkbox>
+        </ion-item>
+        <a>蓝鲸淘用户协议与服务条款</a>
+
+    </ion-list>
+
+    <div class="login-button">
+        <button ion-button round block clear [disabled]="disabledBtn" (click)="doImport()">开始导入</button>
+    </div>
+
+
+    <div class="tip">
+        <a (click)="navCtrl.push(createWalletPage)">什么是私钥?</a>
+    </div>
+</ion-content>

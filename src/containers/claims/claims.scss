@@ -1,0 +1,72 @@
+page-claims {
+  ion-header {
+    ion-title.title {
+      text-align: left;
+      .toolbar-title {
+        padding-left: calc(50% - 320px);
+      }
+    }
+  }
+
+  .claims {
+    &__background {
+      background: linear-gradient(135deg, rgba(242,123,0,1) 0%, rgba(234,63,0,1) 32%, rgba(255,0,115,1) 70%, rgba(212,0,123,1) 100%);;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: 0;
+      z-index: -1;
+
+      display: flex;
+      justify-content: center;
+
+      .claims__button {
+        position: absolute;
+        bottom: 20px;
+        width: 80%;
+        color: rgba(242,123,0,1);
+      }
+
+      .claims__svg-text {
+        color: white;
+        position: absolute;
+        top: 43%;
+        p {
+          line-height: 0.2rem;
+        }
+        p.title {
+          font-size: 2rem;
+          color: rgb(255,245,0);
+        }
+      }
+
+      svg {
+        position: absolute;
+        top: 35%;
+        width: 100%;
+        height: 26%;
+
+        g#loop-group {
+          width: 200px;
+          height: 200px;
+          transform-origin: 50% 50%;
+          animation: spin 4s infinite linear;
+        }
+      }
+    }
+
+    &__history {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 65%;
+      z-index: -2;
+    }
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg) }
+}

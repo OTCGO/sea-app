@@ -1,0 +1,33 @@
+page-settings {
+  ion-header {
+    ion-title.title {
+      .toolbar-title {
+        padding-left: calc(50% - 200px);
+      }
+    }
+  }
+
+  .expansion-panel-header {
+    color: rgb(114, 112, 111);
+  }
+
+  .expansion-panel {
+    button[ion-button] {
+      width: 99%;
+      color: rgb(114, 112, 111);
+
+      .button-inner {
+        justify-content: space-between;
+        border-bottom: 1px solid #efefef;
+
+        .subtitle {
+          color: rgb(224, 224, 224);
+        }
+      }
+    }
+
+    button[ion-button]:last-child .button-inner {
+      border-bottom: none;
+    }
+  }
+}

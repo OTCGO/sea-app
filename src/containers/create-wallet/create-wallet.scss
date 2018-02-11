@@ -1,0 +1,65 @@
+page-create-wallet {
+  .otcgo-header {
+    .toolbar .toolbar-title {
+      padding-left: calc(50% - 70px);
+      font-weight: bold;
+    }
+  }
+
+  .cw {
+    text-align: center;
+
+    &__form-field {
+      width: 90%;
+
+      .cw-name, .cw-wif, .cw-pwd {
+        border: 1px solid #efefef;
+        margin-bottom: 10px;
+
+        & .item-inner {
+          border: none;
+        }
+      }
+    }
+
+    &__actions {
+      width: 100%;
+
+      & > * {
+        margin-bottom: 10px;
+      }
+    }
+
+    & .scroll-content{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding-bottom: 0 !important;
+      overflow-y: hidden;
+
+
+      .cw-tip {
+        a {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .cw-button {
+      width: 100%;
+      button {
+        background: linear-gradient(270deg, rgb(47, 177, 213), rgb(47, 177, 213) 6%, rgb(50, 118, 217));
+      }
+    }
+
+    .cw-button-white  {
+      width: 100%;
+      button {
+        background-color: #fff !important;
+        border: 1px solid #448aff;
+      }
+    }
+  }
+}

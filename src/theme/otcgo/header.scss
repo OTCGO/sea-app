@@ -1,0 +1,28 @@
+.otcgo-header {
+  & ion-navbar.toolbar {
+    .toolbar-background {
+      background: none;
+      border: none;
+    }
+
+    .toolbar-title {
+      text-align: left;
+    }
+  }
+
+  &::after {
+    background: none;
+  }
+
+  &.manage-wallet {
+    & * {
+      color: white;
+    }
+
+    & ion-navbar.toolbar {
+      .toolbar-title {
+        padding-left: calc(50% - 60px);
+      }
+    }
+  }
+}

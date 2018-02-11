@@ -1,0 +1,46 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>导入钱包文件</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content class="login">
+    <ion-list class="login-list">
+        <ion-item class="login-input rounded" [class.item-input-has-focus]="!!WIFKey">
+            <ion-input type="text" placeholder="WIF码登录" [(ngModel)]="WIFKey" required></ion-input>
+        </ion-item>
+
+        <button class="login-import" [class.is-active]="!isWIFKey" (click)="openImportBox()">
+			<span *ngIf="!isWIFKey">{{ importText }}</span>
+			<img src="../../assets/imgs/icon-login_file.svg" alt="" class="icon">
+		</button>
+
+        <input type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
+
+        <button class="login-encryptedKey-switcher" *ngIf="!isWIFKey" (click)="openWIFKeyBox()">
+			<img src="../../assets/imgs/icon-login_WIF.svg" alt="" class="icon">
+		</button>
+
+        <ion-item class="pws-input">
+            <ion-input type="password" placeholder="请输入交易密码" [(ngModel)]="passphrase" required></ion-input>
+        </ion-item>
+
+    </ion-list>
+
+    <ion-list class="user-agreement">
+        <ion-item no-lines>
+            <ion-label class="chkbox-tip">
+                <span>我已仔细阅读并同意</span>
+            </ion-label>
+            <ion-checkbox class="chkbox" checked="false"></ion-checkbox>
+        </ion-item>
+        <a>蓝鲸淘用户协议与服务条款</a>
+
+    </ion-list>
+
+    <div class="login-button">
+        <button ion-button round block clear [disabled]="disabledBtn" (click)="doImport()">开始导入</button>
+    </div>
+</ion-content>

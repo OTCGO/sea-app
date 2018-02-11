@@ -1,0 +1,42 @@
+<ion-content class="cw" padding>
+
+	<h1>创建钱包</h1>
+	<!-- CW stand for create-wallet -->
+	<div class="cw__form-field">
+		<ion-item class="cw-name">
+			<ion-input placeholder="Wallet name" required type="text" [(ngModel)]="name"></ion-input>
+		</ion-item>
+
+		<ion-item class="cw-wif">
+			<ion-input placeholder="[optional WIF key]" type="text" [(ngModel)]="wif"></ion-input>
+		</ion-item>
+
+		<ion-item class="cw-pwd">
+			<ion-input placeholder="Password" required type="password" [(ngModel)]="passphrase1"></ion-input>
+		</ion-item>
+
+		<ion-item class="cw-pwd">
+			<ion-input placeholder="Password Confirm" required type="password" [(ngModel)]="passphrase2"></ion-input>
+		</ion-item>
+
+		<ion-item class="cw-protocol">
+			<ion-label>同意蓝鲸淘用户协议与服务条款</ion-label>
+			<ion-checkbox color="blue" [(ngModel)]="protocolAgreement"></ion-checkbox>
+		</ion-item>
+	</div>
+
+	<div class="cw__actions">
+		<div class="cw-button">
+			<button ion-button round full block [disabled]="disabledButton" (click)="createWallet()">
+				创建钱包
+			</button>
+		</div>
+
+		<div class="cw-button-white">
+			<button (click)="navCtrl.setRoot(loginPage)" ion-button round full block clear>
+				已有钱包？点击登陆！
+			</button>
+		</div>
+	</div>
+
+</ion-content>

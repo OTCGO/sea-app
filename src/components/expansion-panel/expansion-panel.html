@@ -1,0 +1,15 @@
+<ng-content select="expansion-panel-header"></ng-content>
+<div class="expansion-panel-content"
+     role="region"
+     [@bodyExpansion]="_getExpandedState()"
+     (@bodyExpansion.done)="_bodyAnimation($event)"
+     (@bodyExpansion.start)="_bodyAnimation($event)"
+     [class.expanded]="expanded"
+     [id]="id"
+     #body>
+	<div class="expansion-panel-body">
+		<ng-content></ng-content>
+		<ng-template [cdkPortalOutlet]="_portal"></ng-template>
+	</div>
+	<ng-content select="action-row"></ng-content>
+</div>

@@ -1,0 +1,8 @@
+{
+  "name": "otcgo-app",
+  "app_id": "52f9b83b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

@@ -36,10 +36,6 @@ export class LoginPage {
 		public alertCtrl: AlertController,
 	) { }
 
-	ionViewDidLoad () {
-		this.walletProvider.initWallet()
-	}
-
 	get disabledBtn () {
 		if (!this.isOldWallet && this._file) return false
 		if (this.isOldWallet && this._file && this.passphrase) return false
@@ -70,7 +66,7 @@ export class LoginPage {
 					ng.isOldWallet = ng.walletProvider.isOldWallet(JSONFile)
 					ng._file = JSONFile
 				} catch (e) {
-					console.log(e)
+					console.log('file change error', e)
 					ng.showPrompt(e)
 				}
 			}

@@ -3,15 +3,15 @@ import { IonicPageModule } from 'ionic-angular'
 
 import { TabsPage } from './tabs'
 
-const COMPONENT = [
-	TabsPage
-]
-
 @NgModule({
-	declarations: COMPONENT,
+	declarations: [
+		TabsPage
+	],
 	imports: [
 		IonicPageModule.forChild(TabsPage),
 	],
-	exports: COMPONENT
+	exports: [
+		TabsPage
+	]
 })
 export class TabsPageModule {}

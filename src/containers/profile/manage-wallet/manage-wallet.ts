@@ -33,7 +33,7 @@ export class ManageWalletPage {
 		private possessionsProvider: PossessionsProvider,
 		private clipBoard: Clipboard,
 		private loadingCtrl: LoadingController,
-	    private neoPriceProvider: PriceProvider
+		private neoPriceProvider: PriceProvider
 	) {}
 
 	showKey ({ title, message }) {
@@ -100,11 +100,11 @@ export class ManageWalletPage {
 		this.showKey({ title: 'EncryptedKey', message: account.encrypted })
 	}
 
-	saveAccount (account) {
+	async saveAccount (account) {
 		if (this.tempLabel) {
 			account.label = this.tempLabel
 			this.tempLabel = ''
-			this.walletProvider.saveWalletFile()
+			await this.walletProvider.saveWalletFile()
 		}
 	}
 

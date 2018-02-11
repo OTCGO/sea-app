@@ -6,7 +6,10 @@ import { MarketsPage } from '../markets/markets'
 import { IonicPage } from 'ionic-angular'
 
 
-@IonicPage()
+@IonicPage({
+  name: 'Tabs',
+  segment: 'tabs'
+})
 @Component({
   templateUrl: 'tabs.html'
 })

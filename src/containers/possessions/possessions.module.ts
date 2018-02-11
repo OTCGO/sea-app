@@ -3,17 +3,16 @@ import { PossessionsPage } from './possessions'
 import { IonicPageModule } from 'ionic-angular'
 import { PipesModule } from '../../pipes/pipes.module'
 
-
-const COMPONENT = [
-  PossessionsPage
-]
-
 @NgModule({
-  declarations: COMPONENT,
-  imports: [
-    IonicPageModule.forChild(PossessionsPage),
-    PipesModule
-  ],
-  exports: COMPONENT
+	declarations: [
+		PossessionsPage
+	],
+	imports: [
+		IonicPageModule.forChild(PossessionsPage),
+		PipesModule
+	],
+	exports: [
+		PossessionsPage
+	]
 })
 export class PossessionsPageModule {}

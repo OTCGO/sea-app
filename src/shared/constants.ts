@@ -98,8 +98,8 @@ const ASSET_HASH_TEST = {
 }
 
 function enumeralize (obj) {
-  return Object.entries(obj)
-               .map(([symbol, id]) => ({ [symbol]: id, [id]: symbol }))
+  return Object.keys(obj)
+               .map(key => ({ [key]: obj[key], [obj[key]]: key }))
                .reduce((acc, cur) => Object.assign({}, acc, cur))
 }
 

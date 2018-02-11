@@ -8,6 +8,8 @@ import 'rxjs/add/observable/throw'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/distinctUntilChanged'
 
+import { includes } from 'lodash'
+
 
 @Injectable()
 export class PriceProvider {
@@ -33,7 +35,8 @@ export class PriceProvider {
 
 	private query (url, currency) {
 		currency = currency.toLowerCase()
-		if (this.CURRENCIES.includes(currency)) {
+
+		if (includes(this.CURRENCIES, currency)) {
 			return this.http
 			           .get(url, { params: { limit: 0, convert: currency } } as any)
 			           .map((res: any) => {
@@ -48,7 +51,7 @@ export class PriceProvider {
 	}
 
 	private mapPrices (tickers, currency) {
-		return tickers.filter(data => this.NEO_CHAIN_COINS.includes(data['symbol']))
+		return tickers.filter(data => includes(this.NEO_CHAIN_COINS, data['symbol']))
 		              .map(
 			              ticker => ({
 				              symbol: ticker.symbol,

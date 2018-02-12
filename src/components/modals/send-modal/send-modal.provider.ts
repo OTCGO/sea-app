@@ -4,7 +4,6 @@ import { ApiProvider, AccountProvider } from '../../../providers'
 import { wallet } from '../../../libs/neon'
 
 const { generateSignature, isAddress } = wallet
-// const { is}
 
 interface ISendOpts {
 	dests: string
@@ -23,10 +22,9 @@ export class SendModalProvider {
 
 	decrypt (passphrase) {
 		try {
-			this.accountProvider.getPrivateKey(passphrase)
+			this.accountProvider.decrypt(passphrase)
 			return Promise.resolve(true)
 		} catch (e) {
-
 			return Promise.reject('密码错误')
 		}
 	}

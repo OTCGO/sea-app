@@ -1,8 +1,13 @@
 import { Component } from '@angular/core'
 import { IonicPage } from 'ionic-angular'
-import { ApiProvider } from '../../providers/api/api.provider'
-import { ClaimsProvider } from './claims.provider'
 
+import { Store, select } from '@ngrx/store'
+
+import { ClaimsProvider } from './claims.provider'
+import { PossessionsProvider } from '../possessions/possessions.provider'
+import * as Counter from '../../actions'
+import { AppState } from '../../modules'
+import * as fromCounter from './reducers'
 
 @IonicPage({
 	name: 'Claims',
@@ -13,9 +18,17 @@ import { ClaimsProvider } from './claims.provider'
 	templateUrl: 'claims.html'
 })
 export class ClaimsPage {
+	account = this.possessionsProvider.account
 	availableGas
+	count$
 
-	constructor (private apiProvider: ApiProvider, private claimsProvider: ClaimsProvider) {}
+	constructor (
+		private claimsProvider: ClaimsProvider,
+		private possessionsProvider: PossessionsProvider,
+	  private store: Store<AppState>
+	) {
+		this.count$ = store.pipe(select(fromCounter.selectCounterValue))
+	}
 
 	ionViewDidLoad () {
 		this.getData()
@@ -29,6 +42,23 @@ export class ClaimsPage {
 	}
 
 	doClaim () {
+		if (this.claimsProvider.hasDecrypt()) {
+			this.claimsProvider.doClaims()
+		} else {
 
+			this.claimsProvider.doClaims()
+		}
+	}
+
+	increment () {
+		this.store.dispatch(new Counter.Increment())
+	}
+
+	decrement () {
+		this.store.dispatch(new Counter.Decrement())
+	}
+
+	reset () {
+		this.store.dispatch(new Counter.Reset())
 	}
 }

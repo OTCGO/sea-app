@@ -43,16 +43,44 @@
 
 		</svg>
 
-		<div class="claims__svg-text" text-center>
-			<p>{{ availableGas }} GAS</p>
+		<div class="claims__svg-text"
+		     text-center>
+			<p>{{ count$ | async }} GAS</p>
 			<p class="title">Available</p>
 		</div>
 
 
-		<button ion-button round full clear
+		<button ion-button
+		        round
+		        full
+		        clear
 		        class="claims__button otcgo-button"
 		        (click)="doClaim()">
 			一键提取
+		</button>
+
+		<button ion-button
+		        round
+		        full
+		        clear
+		        (click)="increment()">
+			Increment
+		</button>
+
+		<button ion-button
+		        round
+		        full
+		        clear
+		        (click)="decrement()">
+			Decrement
+		</button>
+
+		<button ion-button
+		        round
+		        full
+		        clear
+		        (click)="reset()">
+			Reset
 		</button>
 	</div>
 

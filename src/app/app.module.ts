@@ -12,6 +12,12 @@ import {
   IonicApp, IonicModule, IonicErrorHandler,
 } from 'ionic-angular'
 
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
+
+// not used in production
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+
 import { MyApp } from './app.component'
 
 import { ApiProvider, AccountProvider, WalletProvider, PriceProvider } from '../providers'
@@ -22,6 +28,9 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/claims/claims.provider'
+
+import { dev } from '../environments/environment'
+
 
 
 @NgModule({
@@ -38,7 +47,10 @@ import { ClaimsProvider } from '../containers/claims/claims.provider'
       preloadModules: true,
       backButtonText: '',
       }
-    )
+    ),
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
+    dev ? StoreDevtoolsModule.instrument() : []
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp],

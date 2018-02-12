@@ -34,10 +34,10 @@ describe('Test wallet.provider', function () {
 	it(
 		'test have an account',
 		inject([WalletProvider], (wp: WalletProvider) => {
-			expect(wp.hasAccount()).toBe(false)
+			expect(wp.hasAccounts()).toBe(false)
 			wp.initWallet()
 
-			expect(wp.hasAccount()).toBe(true)
+			expect(wp.hasAccounts()).toBe(true)
 			wp.saveWalletFile()
 
 			wp.readWallet().then((walletStr: string) => {
@@ -51,11 +51,11 @@ describe('Test wallet.provider', function () {
 	it(
 		'test ola format account',
 		inject([WalletProvider], (wp: WalletProvider) => {
-			expect(wp.hasAccount()).toBe(false)
+			expect(wp.hasAccounts()).toBe(false)
 
 			wp.upgradeAndAddToAccount(oldFormatAccount, pwd).then((res: boolean) => {
 				expect(res).toBe(true)
-				expect(wp.hasAccount()).toBe(true)
+				expect(wp.hasAccounts()).toBe(true)
 			})
 		})
 	)

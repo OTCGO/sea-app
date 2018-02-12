@@ -9,6 +9,8 @@ import {
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 
+import bn from 'bignumber.js'
+
 import { PossessionDetailProvider } from './possession-detail.provider'
 
 
@@ -45,18 +47,22 @@ export class PossessionDetailPage implements OnInit {
 	ngOnInit() {
 		this.loading.present()
 		this.possessionData = this.navParams.data
+		this.possessionData.amount = new bn(this.possessionData.amount)
+		console.log(this.possessionData)
 		this.initData()
 	}
 
 	initData () {
-		this.possessionDetailProvider.getHistories(this.possessionData.asset).then(histories => {
-			this.transactionHistories = histories
-			this.loading.dismissAll()
-		})
-	}
-
-	ionViewDidLoad () {
-
+		this.possessionDetailProvider
+		    .getHistories(this.possessionData.asset)
+		    .then(histories => {
+			    this.transactionHistories = histories
+			    this.loading.dismissAll()
+		    })
+		    .catch(error => {
+		    	this.loading.dismissAll()
+			    console.error('Possession history', error)
+		    })
 	}
 
 	showSendModal () {

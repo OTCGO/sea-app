@@ -44,9 +44,9 @@ export class WalletProvider {
 
 	addAccount (account) { if (this.wallet) this.wallet.addAccount(account) }
 
-	hasAccount (): boolean { return !!this.wallet.accounts.length }
+	hasAccounts (): boolean { return !!this.wallet.accounts.length }
 
-	getDefaultAccount () { if (this.hasAccount()) return this.wallet.defaultAccount }
+	getDefaultAccount () { if (this.hasAccounts()) return this.wallet.defaultAccount }
 
 	async readWallet () { return await this.file.readAsText(this.dataDirectory, OTCGO_WALLET_FILE_NAME) }
 

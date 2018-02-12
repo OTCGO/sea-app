@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { wallet } from '../../libs/neon'
 import { WalletProvider } from '../wallet/wallet.provider'
+import { PossessionsProvider } from '../../containers/possessions/possessions.provider'
 
 const { Account } = wallet
 
@@ -19,8 +20,11 @@ export class AccountProvider {
 		return this.defaultAccount.publicKey
 	}
 
-	getPrivateKey (passphrase) {
+	decrypt (passphrase) {
 		this.defaultAccount.decrypt(passphrase)
+	}
+
+	getPrivateKey () {
 		return this.defaultAccount.privateKey
 	}
 
@@ -30,12 +34,5 @@ export class AccountProvider {
 
 	getAddress (account) {
 		return account ? (new Account(account)).address : this.defaultAccount.address
-	}
-
-	getBalances (account) {
-		if (account) {
-			const acct = new Account(account)
-			return
-		}
 	}
 }

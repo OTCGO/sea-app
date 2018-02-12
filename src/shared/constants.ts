@@ -97,6 +97,10 @@ const ASSET_HASH_TEST = {
   'iProud': '556befd5be5e3c0b8344b4b053f61d071e33316a33335f3d40024ea76832b59a'
 }
 
+
+export const NEO_HASH = 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
+
+
 function enumeralize (obj) {
   return Object.keys(obj)
                .map(key => ({ [key]: obj[key], [obj[key]]: key }))

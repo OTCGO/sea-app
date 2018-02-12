@@ -10,7 +10,7 @@ import { ASSET_ENUM } from '../../shared/constants'
 
 interface IBlances {
 	hash: string
-	name: string
+	asset: string
 	amount: number
 }
 

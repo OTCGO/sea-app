@@ -9,6 +9,8 @@ import { dev } from '../../environments/environment'
 @Injectable()
 export class ApiProvider {
 	otcgoApi = 'http://api.otcgo.cn'
+	nep5Api = 'http://nep5.otcgo.cn'
+	futureApi = 'http://future.otcgo.cn'
 
 	constructor (
 		private http: HttpClient,
@@ -20,7 +22,7 @@ export class ApiProvider {
 	getAPIEndpoint () {
 		return dev
 			? `${this.otcgoApi}:9999/testnet`
-			: `${this.otcgoApi}:9999/mainnet`
+			: `${this.futureApi}:9999/mainnet`
 	}
 
 	getScanAPI () {
@@ -40,6 +42,7 @@ export class ApiProvider {
 	}
 
 	get (endpoint: string, options?: IReqOpts) {
+		console.log(endpoint)
 		return this.http.get(this.getAPIEndpoint() + '/' + endpoint, options)
 	}
 

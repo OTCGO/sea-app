@@ -20,8 +20,8 @@
 	<ion-card class="possession-data-card">
 		<div class="possession-data-amount">{{ possessionData.amount }}</div>
 		<div class="possession-data-approximation">≈ ￥ {{ possessionData.amount * tokenCurrentPrice }}</div>
-		<button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="!transactionHistories.length">
-			Transfer
+		<button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="possessionData.amount.lte(0)">
+			转账
 		</button>
 	</ion-card>
 

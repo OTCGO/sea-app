@@ -35,8 +35,8 @@ export class PossessionsPage implements OnInit {
 	) {}
 
 	ionViewCanEnter () {
-		console.log('has Account?', this.walletProvider.hasAccount())
-		return this.walletProvider.hasAccount()
+		console.log('has Account?', this.walletProvider.hasAccounts())
+		return this.walletProvider.hasAccounts()
 	}
 
 	ngOnInit () {

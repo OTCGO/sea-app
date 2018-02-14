@@ -4,11 +4,17 @@ import {
 	ToastController
 } from 'ionic-angular'
 
+import { Observable } from 'rxjs'
+
+import { Store } from '@ngrx/store'
+
 import { PossessionDetailPage } from './possession-detail/possession-detail'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 
-import { PossessionsProvider } from './possessions.provider'
-
+import * as fromBalances from '../../reducers/balances.reducer'
+import * as balancesAction from '../../actions/balances.action'
+import { BalancesState } from '../../reducers/balances.reducer'
+import { AccountProvider } from '../../providers/account/account.provider'
 
 @IonicPage({
 	name: 'Possessions',
@@ -22,8 +28,8 @@ export class PossessionsPage implements OnInit {
 	splash: boolean = false
 	possessionDetailPage = PossessionDetailPage
 
-	balances
-	account = this.possessionsProvider.account
+	balances$: Observable<any[]>
+	account = this.accountProvider.defaultAccount
 	loading: Loading = this.loadingCtrl.create()
 
 	constructor (
@@ -31,26 +37,29 @@ export class PossessionsPage implements OnInit {
 		private toastCtrl: ToastController,
 		private walletProvider: WalletProvider,
 		private loadingCtrl: LoadingController,
-		private possessionsProvider: PossessionsProvider,
+		private accountProvider: AccountProvider,
+		private store: Store<BalancesState>
 	) {}
 
 	ionViewCanEnter () {
-		console.log('has Account?', this.walletProvider.hasAccounts())
 		return this.walletProvider.hasAccounts()
 	}
 
-	ngOnInit () {
-		this.loading.present()
-		this.initData()
-	}
+	async ngOnInit () {
+		await this.loading.present()
+		this.balances$ = this.store.select(fromBalances.getBalances)
+		this.store.select(fromBalances.getError).subscribe(
+			error => error && this.showMsg(error)
+		)
+		console.log('magic')
+		this.store.dispatch(new balancesAction.Get(this.account.address))
 
-	initData () {
-		this.possessionsProvider.getBalances().then(bals => this.balances = bals).catch(console.log)
-		this.loading.dismiss()
+		await this.loading.dismiss()
 	}
 
 	doRefresh (e: Refresher) {
-		this.possessionsProvider.getBalances().then(bals => this.balances = bals).catch(console.log)
+		this.store.dispatch(new balancesAction.Get(this.account.address))
+		this.showMsg('刷新成功！')
 		e.complete()
 	}
 
@@ -62,7 +71,6 @@ export class PossessionsPage implements OnInit {
 
 		return toast.present()
 	}
-
 
 	openQRCode () {
 		this.navCtrl.push('payment-qrcode', { address: this.account.address })

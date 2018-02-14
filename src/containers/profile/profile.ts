@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 import { ManageWalletPage } from './manage-wallet/manage-wallet'
-import { PossessionsProvider } from '../possessions/possessions.provider'
 import { SettingsPage } from './settings/settings'
+import { WalletProvider } from '../../providers'
 
 @IonicPage({
   name: 'Profile',
@@ -14,14 +14,14 @@ import { SettingsPage } from './settings/settings'
 
 })
 export class ProfilePage {
-  account = this.possessionsProvider.getAccount()
+  account = this.walletProvider.getDefaultAccount()
   manageWalletPage = ManageWalletPage
   settingsPage = SettingsPage
 
   constructor (
       public navCtrl: NavController,
       public navParams: NavParams,
-      private possessionsProvider: PossessionsProvider
+      private walletProvider: WalletProvider
   ) {}
 
 }

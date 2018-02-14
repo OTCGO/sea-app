@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core'
 import { LoadingController } from 'ionic-angular'
 import { NEO_HASH } from '../../shared/constants'
 import { ApiProvider, AccountProvider, WalletProvider } from '../../providers'
-import { PossessionsProvider } from '../possessions/possessions.provider'
+
+
+import { Store, select } from '@ngrx/store'
+import { RootState } from '../../reducers/index'
+import { Get } from '../../actions/balances.action'
+import * as fromBalances from '../../reducers/balances.reducer'
+import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/observable/fromPromise'
 
 import { wallet } from '../../libs/neon'
 const { generateSignature } = wallet
@@ -16,7 +24,7 @@ export class ClaimsProvider {
 		private walletProvider: WalletProvider,
 		private loadingCtrl: LoadingController,
 		private accountProvider: AccountProvider,
-		private possessionsProvider: PossessionsProvider
+	  private store: Store<RootState>
 	) {
 
 	}
@@ -39,13 +47,6 @@ export class ClaimsProvider {
 		loading.present()
 
 		return this.doSendAsset()
-		           .then(res => {
-			           if (res['result']) {
-				           return this.postGAS(publicKey).then(this.apiProvider.broadcast)
-			           } else {
-			           	return Promise.reject('转账过程出现了问题')
-			           }
-		           })
 	}
 
 	postGAS (publicKey) {
@@ -53,21 +54,25 @@ export class ClaimsProvider {
 	}
 
 	doSendAsset () {
-		return this.possessionsProvider
-		           .getBalances()
-		           .then(balances => {
-			           const NEO = balances.find(bal => bal.hash === NEO_HASH)
-			           const address = this._account.address
-			           const data = {
-				           dests: address,
-				           amounts: NEO.amount,
-				           assetId: NEO_HASH,
-				           source: address
-			           }
-			           return this.postTransfer(data)
-			                      .then(res => this.generateSignature(res['transaction']))
-			                      .then(async res => await this.apiProvider.broadcast(res).toPromise())
-		           })
+		this.store.dispatch(new Get(this._account.address))
+		return this.store.pipe(
+			select(fromBalances.getBalances),
+			map(balances => {
+				const NEO = balances.find(bal => bal.hash === NEO_HASH)
+				const address = this._account.address
+				const data = {
+					dests: address,
+					amounts: NEO.amount,
+					assetId: NEO_HASH,
+					source: address
+				}
+				const promise = this.postTransfer(data)
+				                    .then(res => this.generateSignature(res['transaction']))
+				                    .then(async res => await this.apiProvider.broadcast(res).toPromise())
+				                    .catch(err => console.error('from claims provider doSendAsset()', err))
+				return Observable.fromPromise(promise)
+			})
+		)
 	}
 
 	private postTransfer (transferPostData) {

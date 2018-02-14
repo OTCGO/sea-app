@@ -9,7 +9,7 @@ import {
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 
-import bn from 'bignumber.js'
+import { BigNumber } from 'bignumber.js'
 
 import { PossessionDetailProvider } from './possession-detail.provider'
 
@@ -32,9 +32,9 @@ interface TransactionHistory {
 })
 export class PossessionDetailPage implements OnInit {
 	possessionData
-	tokenCurrentPrice
 	transactionHistories: TransactionHistory[] = []
 	loading = this.loadingCtrl.create()
+	totalValue
 
 	constructor (
 		public navCtrl: NavController,
@@ -47,22 +47,26 @@ export class PossessionDetailPage implements OnInit {
 	ngOnInit() {
 		this.loading.present()
 		this.possessionData = this.navParams.data
-		this.possessionData.amount = new bn(this.possessionData.amount)
-		console.log(this.possessionData)
-		this.initData()
-	}
+		this.possessionData.amount = new BigNumber(this.possessionData.amount)
 
-	initData () {
 		this.possessionDetailProvider
-		    .getHistories(this.possessionData.asset)
-		    .then(histories => {
-			    this.transactionHistories = histories
-			    this.loading.dismissAll()
+		    .getPrices()
+		    .then(prices => {
+		    	const price = prices[this.possessionData.symbol]
+			    // const conversion = 6.5
+			    this.totalValue = this.possessionData.amount.times(price)
+		    })
+		    .then(_=> {
+			    this.possessionDetailProvider
+			        .getHistories(this.possessionData.symbol)
+			        .then(histories => {
+				        this.transactionHistories = histories
+			        })
 		    })
 		    .catch(error => {
-		    	this.loading.dismissAll()
-			    console.error('Possession history', error)
+			    console.error('Possession detail', error)
 		    })
+		    .then(_=> this.loading.dismissAll())
 	}
 
 	showSendModal () {

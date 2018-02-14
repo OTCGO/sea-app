@@ -38,7 +38,11 @@ export class WalletProvider {
 			scrypt: this.scrypt,
 			accounts: [],
 			version: 'beta-0.2',
-			extra: null
+			extra: {
+				addressBook: [
+					{ name: { firstname: '', lastname: '' }, address: 'aosinxpiasnxpioasn', gender: 'male', phone: '', email: '', Description: '' }
+				]
+			}
 		}
 	}
 

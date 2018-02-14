@@ -6,6 +6,6 @@
     "cordova": {}
   },
   "proxies": [
-    { "path": "/coins", "proxyUrl": "https://api.coinmarketcap.com/v1/ticker" }
+    { "path": "https://api.coinmarketcap.com/v1/ticker", "proxyUrl": "https://api.coinmarketcap.com/v1/ticker" }
   ]
 }

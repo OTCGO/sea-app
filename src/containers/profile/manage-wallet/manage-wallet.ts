@@ -2,11 +2,10 @@ import { Component } from '@angular/core'
 import { NavController, NavParams, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular'
 
 import { WalletProvider } from '../../../providers/wallet/wallet.provider'
-import { PossessionsProvider } from '../../possessions/possessions.provider'
 import { Clipboard } from '@ionic-native/clipboard'
 
 import { wallet } from '../../../libs/neon'
-import { PriceProvider } from '../../../providers/api/price.provider'
+import { AccountProvider } from '../../../providers/account/account.provider'
 
 // TODO: Mess code, Try refactor it MEOW
 
@@ -20,7 +19,7 @@ import { PriceProvider } from '../../../providers/api/price.provider'
 })
 export class ManageWalletPage {
 
-	accounts = this.possessionsProvider.getAccounts()
+	accounts = this.accountProvider.accounts
 	tempLabel: string = ''
 	assetsAmount: number
 	prices
@@ -30,11 +29,10 @@ export class ManageWalletPage {
 	constructor (
 		private alertCtrl: AlertController,
 		private walletProvider: WalletProvider,
-		private possessionsProvider: PossessionsProvider,
 		private clipBoard: Clipboard,
 		private loadingCtrl: LoadingController,
-		private neoPriceProvider: PriceProvider
-	) {}
+		private accountProvider: AccountProvider
+	) { }
 
 	showKey ({ title, message }) {
 		const prompt = this.alertCtrl.create({

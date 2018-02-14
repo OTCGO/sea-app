@@ -1,14 +1,13 @@
-import * as CONST from './consts'
-import * as sc from './sc'
+/// <reference path="./api/index.d.ts" />
+/// <reference path="./sc/index.d.ts" />
+/// <reference path="./rpc/index.d.ts" />
+/// <reference path="./wallet/index.d.ts" />
+/// <reference path="./transactions/index.d.ts" />
+/// <reference path="./utils.d.ts" />
+/// <reference path="./consts.d.ts" />
+import { u, wallet } from "@cityofzion/neon-js";
 
-import * as tx from './transactions'
-import * as wallet from './wallet'
-import * as u from './utils'
-
-export {
-  sc,
-  tx,
-  wallet,
-  u,
-  CONST
+declare module '@cityofzion/neon-js' {
+  const _semantic: semantic
+  export default _semantic
 }

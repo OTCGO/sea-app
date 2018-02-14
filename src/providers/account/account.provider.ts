@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { wallet } from '../../libs/neon'
 import { WalletProvider } from '../wallet/wallet.provider'
-import { PossessionsProvider } from '../../containers/possessions/possessions.provider'
 
 const { Account } = wallet
 

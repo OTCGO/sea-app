@@ -1,14 +1,25 @@
 page-claims {
-  ion-header {
+  ion-header.otcgo-header {
+
+    ion-icon {
+      color: white;
+    }
     ion-title.title {
       text-align: left;
       .toolbar-title {
-        padding-left: calc(50% - 320px);
+        color: white;
+        padding-left: calc(50% - 60px);
       }
     }
   }
 
+
+
   .claims {
+    & .scroll-content {
+      margin-top: 0 !important;
+    }
+
     &__background {
       background: linear-gradient(135deg, rgba(242,123,0,1) 0%, rgba(234,63,0,1) 32%, rgba(255,0,115,1) 70%, rgba(212,0,123,1) 100%);;
       height: 100%;
@@ -31,9 +42,9 @@ page-claims {
       .claims__svg-text {
         color: white;
         position: absolute;
-        top: 43%;
+        top: 44%;
         p {
-          line-height: 0.2rem;
+          line-height: 0.5rem;
         }
         p.title {
           font-size: 2rem;

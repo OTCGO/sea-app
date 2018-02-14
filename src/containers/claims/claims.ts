@@ -1,13 +1,9 @@
 import { Component } from '@angular/core'
-import { IonicPage } from 'ionic-angular'
-
-import { Store, select } from '@ngrx/store'
+import { AlertController, IonicPage } from 'ionic-angular'
 
 import { ClaimsProvider } from './claims.provider'
-import { PossessionsProvider } from '../possessions/possessions.provider'
-import * as Counter from '../../actions'
-import { AppState } from '../../modules'
-import * as fromCounter from './reducers'
+import { WalletProvider } from '../../providers/wallet/wallet.provider'
+
 
 @IonicPage({
 	name: 'Claims',
@@ -18,16 +14,15 @@ import * as fromCounter from './reducers'
 	templateUrl: 'claims.html'
 })
 export class ClaimsPage {
-	account = this.possessionsProvider.account
+	account = this.walletProvider.getDefaultAccount()
 	availableGas
-	count$
 
 	constructor (
 		private claimsProvider: ClaimsProvider,
-		private possessionsProvider: PossessionsProvider,
-	  private store: Store<AppState>
+		private walletProvider: WalletProvider,
+	  private alertCtrl: AlertController
 	) {
-		this.count$ = store.pipe(select(fromCounter.selectCounterValue))
+
 	}
 
 	ionViewDidLoad () {
@@ -45,20 +40,56 @@ export class ClaimsPage {
 		if (this.claimsProvider.hasDecrypt()) {
 			this.claimsProvider.doClaims()
 		} else {
+			let prompt = this.showPrompt({
+				cssClass: 'mw__exports-actions--box',
+				title: '输入密码',
+				message: '登陆之后，只需要输入密码一次，系统就会帮你记录哦！',
+				inputs: [{ name: 'passphrase', placeholder: '密码', type: 'password' }],
+				buttons: [
+					{ text: '取消' },
+					{
+						text: '确认',
+						handler: ({ passphrase }) => {
+							if (passphrase === '') return false
+							this.account.decrypt(passphrase)
 
+						}
+					}
+				]
+			})
 			this.claimsProvider.doClaims()
 		}
 	}
 
-	increment () {
-		this.store.dispatch(new Counter.Increment())
+	showPrompt (config) {
+		const prompt = this.alertCtrl.create(config)
+		prompt.present()
+		return prompt
 	}
 
-	decrement () {
-		this.store.dispatch(new Counter.Decrement())
-	}
-
-	reset () {
-		this.store.dispatch(new Counter.Reset())
+	parsePassphrase (encryptedKey, passphrase, commonLoading, type) {
+		if (!passphrase) return false
+		commonLoading.present().then(
+			_ => {
+				try {
+					wallet.decryptWIF(encryptedKey, passphrase)
+					      .then(wif => {
+						      commonLoading.dismiss()
+						      let account = new wallet.Account(wif)
+						      if (type === 'privateKey') {
+							      return this.showKey({ title: '私钥', message: account[type] })
+						      }
+						      return this.showKey({ title: 'WIF', message: account[type] })
+					      })
+					      .catch(_ => {
+						      this.handleError(commonLoading)
+					      })
+					return true
+				} catch (error) {
+					this.handleError(commonLoading)
+					return true
+				}
+			}
+		)
 	}
 }

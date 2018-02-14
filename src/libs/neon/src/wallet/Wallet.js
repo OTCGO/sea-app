@@ -1,6 +1,9 @@
 import fs from 'fs'
 import Account from './Account'
-import { DEFAULT_SCRYPT, DEFAULT_WALLET } from '../consts'
+import { DEFAULT_WALLET } from '../consts'
+import logger from '../logging'
+
+const log = logger('wallet')
 
 /**
  * @typedef WalletFile
@@ -42,7 +45,7 @@ class Wallet {
     /** @type {string} */
     this.version = version
     /** @type {ScryptParams} */
-    this.scrypt = parseWalletScryptParams(scrypt)
+    this.scrypt = scrypt
     /** @type {Account[]} */
     this.accounts = []
     for (const acct of accounts) {
@@ -101,10 +104,15 @@ class Wallet {
    */
   addAccount (acct) {
     const index = this.accounts.length
-    if (acct instanceof Account) {
-      this.accounts.push(acct)
-    } else {
-      this.accounts.push(new Account(acct))
+    if (!(acct instanceof Account)) {
+      acct = new Account(acct)
+    }
+    this.accounts.push(acct)
+    try {
+      const address = acct.address
+      log.info(`Added Account: ${address} to Wallet ${this.name}`)
+    } catch (err) {
+      log.warn(`Encrypted account added to Wallet ${this.name}. You will not be able to export this wallet without first decrypting this account`)
     }
     return index
   }
@@ -172,7 +180,8 @@ class Wallet {
   export () {
     return JSON.stringify({
       name: this.name,
-      scrypt: exportScryptParamsToWallet(this.scrypt),
+      version: this.version,
+      scrypt: this.scrypt,
       accounts: this.accounts.map((acct) => acct.export()),
       extra: this.extra
     })
@@ -204,20 +213,3 @@ class Wallet {
 }
 
 export default Wallet
-
-export const parseWalletScryptParams = (params) => {
-  const parsed = {
-    cost: params.n,
-    blockSize: params.r,
-    parallel: params.p
-  }
-  return Object.assign({}, DEFAULT_SCRYPT, parsed)
-}
-
-export const exportScryptParamsToWallet = (scryptParams) => {
-  return {
-    n: scryptParams.cost,
-    r: scryptParams.blockSize,
-    p: scryptParams.parallel
-  }
-}

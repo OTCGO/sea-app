@@ -6,9 +6,6 @@ import TxAttrUsage from './txAttrUsage'
 import * as comp from './components'
 import * as core from './core'
 import * as exc from './exclusive'
-import logger from '../logging'
-
-const log = logger('tx')
 
 /**
  * @class Transaction
@@ -75,7 +72,6 @@ class Transaction {
    */
   static createClaimTx (publicKeyOrAddress, claimData, override = {}) {
     if (claimData.claims.length === 0) throw new Error('Useless transaction! There is no claims!')
-    const acct = new Account(publicKeyOrAddress)
     const txConfig = Object.assign({
       type: 2,
       version: TX_VERSION.CLAIM
@@ -89,12 +85,9 @@ class Transaction {
     txConfig.outputs = [{
       assetId: ASSET_ID.GAS,
       value: totalClaim,
-      scriptHash: acct.scriptHash
+      scriptHash: new Account(publicKeyOrAddress).scriptHash
     }]
-
-    const tx = new Transaction(Object.assign(txConfig, override))
-    log.info(`New ClaimTransaction for ${acct.address}`)
-    return tx
+    return new Transaction(Object.assign(txConfig, override))
   }
 
   /**
@@ -111,9 +104,7 @@ class Transaction {
       version: TX_VERSION.CONTRACT,
       outputs: intents
     }, override)
-    const tx = new Transaction(txConfig).calculate(balances)
-    log.info(`New ContractTransaction for ${balances.address}`)
-    return tx
+    return new Transaction(txConfig).calculate(balances)
   }
 
   /**
@@ -134,9 +125,7 @@ class Transaction {
       script: typeof (invoke) === 'string' ? invoke : createScript(invoke),
       gas: gasCost
     }, override)
-    const tx = new Transaction(txConfig).calculate(balances)
-    log.info(`New InvocationTransaction for ${balances.address}`)
-    return tx
+    return new Transaction(txConfig).calculate(balances)
   }
 
   /**
@@ -199,7 +188,6 @@ class Transaction {
     this.inputs = inputs
     this.outputs = this.outputs.concat(change)
     balance.applyTx(this)
-    log.info(`Calculated the inputs required for Transaction with Balance: ${balance.address}`)
     return this
   }
 
@@ -229,9 +217,7 @@ class Transaction {
     if (typeof signer === 'string') {
       signer = new Account(signer)
     }
-    core.signTransaction(this, signer.privateKey)
-    log.info(`Signed Transaction with Account: ${signer.label}`)
-    return this
+    return core.signTransaction(this, signer.privateKey)
   }
 }
 

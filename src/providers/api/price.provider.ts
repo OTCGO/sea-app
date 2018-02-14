@@ -14,11 +14,12 @@ import { includes } from 'lodash'
 @Injectable()
 export class PriceProvider {
 	fixerApi = '//api.fixer.io'
+	ccmApi = 'https://api.coinmarketcap.com/v1'
 	ticker = 'ticker'
 
-	CURRENCIES: string[] = [ 'aud', 'brl', 'cad', 'chf', 'clp', 'cny', 'czk', 'dkk', 'eur', 'gbp', 'hkd', 'huf', 'idr',
-	                         'ils', 'inr', 'jpy', 'krw', 'mxn', 'myr', 'nok', 'nzd', 'php', 'pkr', 'pln', 'rub', 'sek',
-	                         'sgd', 'thb', 'try', 'twd', 'usd', 'zar']
+	CURRENCIES: string[] = ['aud', 'brl', 'cad', 'chf', 'clp', 'cny', 'czk', 'dkk', 'eur', 'gbp', 'hkd', 'huf', 'idr',
+	                        'ils', 'inr', 'jpy', 'krw', 'mxn', 'myr', 'nok', 'nzd', 'php', 'pkr', 'pln', 'rub', 'sek',
+	                        'sgd', 'thb', 'try', 'twd', 'usd', 'zar']
 
 	NEO_CHAIN_COINS: string[] = ['NEO', 'GAS', 'TNC', 'QLC', 'TKY', 'RHT', 'CPX', 'ACAT', 'ZPT', 'APH', 'DBC', 'RPX', 'BCS']
 
@@ -26,7 +27,7 @@ export class PriceProvider {
 	constructor (private http: HttpClient) {}
 
 	getPrices (currency = 'cny') {
-		return this.query(`/coins`, currency).toPromise()
+		return this.query(`${this.ccmApi}/${this.ticker}`, currency).toPromise()
 	}
 
 	getExchangeRates (base = 'USD') {

@@ -6,8 +6,9 @@
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
-    "build": "ionic-app-scripts build",
+    "build": "ionic-app-scripts build --webpack ./webpack.config.js",
     "lint": "ionic-app-scripts lint",
+    "serve": "ionic-app-scripts serve --webpack ./webpack.config.js",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
@@ -67,9 +68,11 @@
     "@ionic/app-scripts": "3.1.8",
     "@types/crypto-js": "^3.1.38",
     "@types/lodash": "^4.14.102",
-    "typescript": "2.4.2",
     "ngrx-store-freeze": "^0.2.1",
-    "reflect-metadata": "^0.1.12"
+    "ngrx-store-logger": "^0.2.0",
+    "reflect-metadata": "^0.1.12",
+    "typescript": "^2.7.1",
+    "webpack-merge": "^4.1.1"
   },
   "description": "An Ionic project",
   "cordova": {

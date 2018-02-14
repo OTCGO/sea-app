@@ -3,6 +3,7 @@ import { PossessionsPage } from './possessions'
 import { IonicPageModule } from 'ionic-angular'
 import { PipesModule } from '../../pipes/pipes.module'
 
+
 @NgModule({
 	declarations: [
 		PossessionsPage

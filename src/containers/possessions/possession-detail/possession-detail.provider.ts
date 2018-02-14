@@ -8,12 +8,25 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
 import { ASSET_ENUM } from '../../../shared/constants'
 
+import { api } from '../../../libs/neon'
+import { PriceProvider } from '../../../providers/api/price.provider'
+
 
 @Injectable()
 export class PossessionDetailProvider {
 	account = this.walletProvider.getDefaultAccount()
+	prices
 
-	constructor (private apiProvider: ApiProvider, private walletProvider: WalletProvider) {}
+	constructor (
+		private apiProvider: ApiProvider,
+		private walletProvider: WalletProvider
+	) {
+
+	}
+
+	getPrices () {
+		return api.cmc.getPrices(['NEO', 'GAS', 'QLC', 'RPX', 'DBC', 'TNC'], 'cny')
+	}
 
 	getHistories (name) {
 		let assetId = '0x' + ASSET_ENUM[name.toUpperCase()]

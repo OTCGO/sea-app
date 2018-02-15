@@ -36,7 +36,7 @@
 
     </ion-card>
 
-    <ion-card class="card-features">
+    <ion-card class="card-features unavailable">
         <ion-list>
             <!--<button ion-item icon-right>
 				<span>最近一笔转入</span>
@@ -46,7 +46,7 @@
 				</div>
 				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
 			</button>-->
-            <button ion-item icon-right (click)="navCtrl.push('Claims')">
+            <button ion-item icon-right (click)="navCtrl.push('Claims')" disabled>
 				提取分红
 				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
 			</button>

@@ -5,13 +5,11 @@ import { BALANCES_ACTIONS, GET_BALANCES_TYPES } from '../actions'
 
 export interface BalancesState {
 	entities: any
-	success?: string
 	error?: string
 }
 
 const initialBalancesState: BalancesState = {
 	entities: {},
-	success: null,
 	error: null
 }
 
@@ -26,7 +24,6 @@ export const reducer = (state: BalancesState = initialBalancesState, action: BAL
 		case GET_BALANCES_TYPES.GET_SUCCESS:
 			return {
 				...state,
-				success: 'get balances success',
 				entities: action.payload
 			}
 

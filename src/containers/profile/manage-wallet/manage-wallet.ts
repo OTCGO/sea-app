@@ -24,6 +24,7 @@ export class ManageWalletPage {
 	assetsAmount: number
 	prices
 	GASPrice
+	tabBarElement: HTMLElement = document.querySelector('.tabbar')
 
 
 	constructor (
@@ -111,7 +112,7 @@ export class ManageWalletPage {
 		commonLoading.present().then(
 			_ => {
 				try {
-					wallet.decryptWIF(encryptedKey, passphrase)
+					wallet.decryptAsync(encryptedKey, passphrase)
 					      .then(wif => {
 						      commonLoading.dismiss()
 						      let account = new wallet.Account(wif)

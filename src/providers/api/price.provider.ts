@@ -60,7 +60,6 @@ export class PriceProvider {
 				              percent_change_1h: ticker['percent_change_1h'],
 				              percent_change_24h: ticker['percent_change_24h'],
 				              percent_change_7d: ticker['percent_change_7d'],
-
 			              })
 		              )
 	}

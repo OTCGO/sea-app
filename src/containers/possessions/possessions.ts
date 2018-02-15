@@ -48,11 +48,10 @@ export class PossessionsPage implements OnInit {
 	async ngOnInit () {
 		await this.loading.present()
 		this.balances$ = this.store.select(fromBalances.getBalances)
+		this.store.dispatch(new balancesAction.Get(this.account.address))
 		this.store.select(fromBalances.getError).subscribe(
 			error => error && this.showMsg(error)
 		)
-		console.log('magic')
-		this.store.dispatch(new balancesAction.Get(this.account.address))
 
 		await this.loading.dismiss()
 	}

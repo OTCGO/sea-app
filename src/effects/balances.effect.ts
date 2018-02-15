@@ -49,7 +49,7 @@ export class BalancesEffects {
 					           takeUntil(nextGet$),
 					           map(
 						           (res: any) => res.error
-							           ? new GetError(res.error)
+							           ? Observable.throw(res.error)
 							           : new GetSuccess(res)
 					           ),
 					           catchError(error => of(new GetError(error)))

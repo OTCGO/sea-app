@@ -4,8 +4,8 @@ import {
 	ToastController
 } from 'ionic-angular'
 import { PriceProvider } from '../../providers/api/price.provider'
-import { ApiProvider } from '../../providers/api/api.provider'
 import { MarketDetailPage } from './market-detail/market-detail'
+import { api } from '../../libs/neon'
 
 @IonicPage()
 @Component({
@@ -22,7 +22,7 @@ export class MarketsPage {
 	constructor (
 		public navCtrl: NavController,
 		public navParams: NavParams,
-		private neoPriceProvider: PriceProvider,
+		private priceProvider: PriceProvider,
 		private toastCtrl: ToastController,
 		private loadingCtrl: LoadingController
 	) {}
@@ -35,9 +35,10 @@ export class MarketsPage {
 		this.loading = this.loadingCtrl.create()
 		this.loading.present()
 
-		this.neoPriceProvider.getPrices()
+		api.cmc.getMarkets('cny')
 		    .then(
 			    coins => {
+				    console.log('expect cny price', coins)
 				    this.coins = coins
 				    this.GASPrice = this.coins.find(coin => coin['symbol'] === 'GAS').currentPrice
 				    this.loading.dismiss()
@@ -50,7 +51,7 @@ export class MarketsPage {
 			    })
 		    })
 
-		this.neoPriceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
+		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
 	}
 
 	calculateRate (price: number) {
@@ -69,19 +70,26 @@ export class MarketsPage {
 	}
 
 	doRefresh (refresher: Refresher) {
-		this.neoPriceProvider.getPrices().then(
-			coins => {
-				this.coins = coins
-				this.GASPrice = this.coins.find(coin => coin['symbol'] === 'GAS').currentPrice
-				refresher.complete()
-				const toast = this.toastCtrl.create({
-					message: '行情数据已更新！',
-					duration: 3000
-				})
-				toast.present()
-			}
-		)
+		api.cmc.getMarkets('cny')
+		   .then(
+			   coins => {
+				   this.coins = coins
+				   this.GASPrice = this.coins.find(coin => coin['symbol'] === 'GAS').currentPrice
+				   refresher.complete()
+				   const toast = this.toastCtrl.create({
+					   message: '行情数据已更新！',
+					   duration: 3000
+				   })
+				   toast.present()
+			   }
+		   )
+		   .catch(err => {
+			   this.loading.dismiss().then(_ => {
+				   this.toastCtrl.create({ message: '对不起，找不到数据！' + err, duration: 4000 }).present()
+				   console.log(err)
+			   })
+		   })
 
-		this.neoPriceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
+		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
 	}
 }

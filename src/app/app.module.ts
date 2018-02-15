@@ -34,6 +34,8 @@ import { BalancesEffects } from '../effects/balances.effect'
       tabbarPlacement: 'bottom',
       preloadModules: true,
       backButtonText: '',
+      backButtonIcon: 'ios-arrow-back',
+      tabsHideOnSubPages: true
     }),
     CoreModule.forRoot()
   ],

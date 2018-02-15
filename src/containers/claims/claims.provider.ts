@@ -42,11 +42,12 @@ export class ClaimsProvider {
 		}
 	}
 
-	doClaims (publicKey = this._account.publicKey) {
+	doClaims () {
 		let loading = this.loadingCtrl.create()
 		loading.present()
 
-		return this.doSendAsset()
+		this.doSendAsset()
+		this.postGAS(this._account.publicKey).then(this.apiProvider.broadcast)
 	}
 
 	postGAS (publicKey) {

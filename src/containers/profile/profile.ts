@@ -11,7 +11,6 @@ import { WalletProvider } from '../../providers'
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
-
 })
 export class ProfilePage {
   account = this.walletProvider.getDefaultAccount()

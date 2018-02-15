@@ -15,5 +15,4 @@ export class MarketDetailPage {
 	perGas = this.navParams.data.perGas
 
 	constructor (public navParams: NavParams) {}
-
 }

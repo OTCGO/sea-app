@@ -4,12 +4,8 @@ page-claims {
     ion-icon {
       color: white;
     }
-    ion-title.title {
-      text-align: left;
-      .toolbar-title {
-        color: white;
-        padding-left: calc(50% - 60px);
-      }
+    ion-title.title .toolbar-title{
+      color: white;
     }
   }
 

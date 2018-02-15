@@ -1,6 +1,7 @@
-import { Component } from '@angular/core'
-import { AlertController, IonicPage } from 'ionic-angular'
+import { Component, forwardRef, ViewChild } from '@angular/core'
+import { AlertController, IonicPage, LoadingController, Tab } from 'ionic-angular'
 
+import { wallet } from '../../libs/neon'
 import { ClaimsProvider } from './claims.provider'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 
@@ -20,10 +21,9 @@ export class ClaimsPage {
 	constructor (
 		private claimsProvider: ClaimsProvider,
 		private walletProvider: WalletProvider,
-	  private alertCtrl: AlertController
-	) {
-
-	}
+	  private alertCtrl: AlertController,
+	  private loadingCtrl: LoadingController
+	) {}
 
 	ionViewDidLoad () {
 		this.getData()
@@ -40,8 +40,9 @@ export class ClaimsPage {
 		if (this.claimsProvider.hasDecrypt()) {
 			this.claimsProvider.doClaims()
 		} else {
-			let prompt = this.showPrompt({
-				cssClass: 'mw__exports-actions--box',
+			let loading = this.loadingCtrl.create()
+
+			let prompt = this.alertCtrl.create({
 				title: '输入密码',
 				message: '登陆之后，只需要输入密码一次，系统就会帮你记录哦！',
 				inputs: [{ name: 'passphrase', placeholder: '密码', type: 'password' }],
@@ -51,45 +52,34 @@ export class ClaimsPage {
 						text: '确认',
 						handler: ({ passphrase }) => {
 							if (passphrase === '') return false
-							this.account.decrypt(passphrase)
-
+							loading.present().then(() => {
+								try {
+									this.account.decrypt(passphrase)
+									loading.dismiss().then(() => {
+										prompt.dismiss().then(() => {
+											this.showPrompt('密码正确')
+										})
+									})
+								} catch (e) {
+									loading.dismiss().then(() => {
+										prompt.dismiss().then(() => {
+											this.showPrompt('密码错误')
+										})
+									})
+								}
+							})
 						}
 					}
 				]
 			})
-			this.claimsProvider.doClaims()
+			prompt.present()
 		}
 	}
 
-	showPrompt (config) {
-		const prompt = this.alertCtrl.create(config)
+	showPrompt (message) {
+		const prompt = this.alertCtrl.create({ message })
 		prompt.present()
-		return prompt
+
 	}
 
-	parsePassphrase (encryptedKey, passphrase, commonLoading, type) {
-		if (!passphrase) return false
-		commonLoading.present().then(
-			_ => {
-				try {
-					wallet.decryptWIF(encryptedKey, passphrase)
-					      .then(wif => {
-						      commonLoading.dismiss()
-						      let account = new wallet.Account(wif)
-						      if (type === 'privateKey') {
-							      return this.showKey({ title: '私钥', message: account[type] })
-						      }
-						      return this.showKey({ title: 'WIF', message: account[type] })
-					      })
-					      .catch(_ => {
-						      this.handleError(commonLoading)
-					      })
-					return true
-				} catch (error) {
-					this.handleError(commonLoading)
-					return true
-				}
-			}
-		)
-	}
 }

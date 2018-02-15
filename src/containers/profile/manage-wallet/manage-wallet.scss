@@ -53,6 +53,11 @@ page-manage-wallet {
             width: 80%;
           }
 
+          .mw__outline-title {
+            position: absolute;
+            color: white;
+          }
+
           .mw__header {
             text-align: left;
             display: flex;

@@ -9,5 +9,5 @@ import { IonicPage } from 'ionic-angular'
   templateUrl: 'contacts.html'
 })
 export class ContactsPage {
- constructor () { }
+  constructor () { }
 }

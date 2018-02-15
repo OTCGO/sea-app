@@ -8,7 +8,7 @@
 
 <ion-content class="claims">
 	<div class="claims__background">
-		<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1.12015in" height="1.18516in" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 0.111047 0.117492">
+		<!--<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1.12015in" height="1.18516in" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 0.111047 0.117492">
 			<defs>
 				<style type="text/css">
 
@@ -36,14 +36,14 @@
 					<stop offset="1" style="stop-color:#E77817"/>
 				</linearGradient>
 				<filter id="dropshadow" height="130%">
-					<feGaussianBlur in="SourceAlpha" stdDeviation="3"/> <!-- stdDeviation is how much to blur -->
-					<feOffset dx="2" dy="2" result="offsetblur"/> <!-- how much to offset -->
+					<feGaussianBlur in="SourceAlpha" stdDeviation="3"/> &lt;!&ndash; stdDeviation is how much to blur &ndash;&gt;
+					<feOffset dx="2" dy="2" result="offsetblur"/> &lt;!&ndash; how much to offset &ndash;&gt;
 					<feComponentTransfer>
-						<feFuncA type="linear" slope="0.5"/> <!-- slope is the opacity of the shadow -->
+						<feFuncA type="linear" slope="0.5"/> &lt;!&ndash; slope is the opacity of the shadow &ndash;&gt;
 					</feComponentTransfer>
 					<feMerge>
-						<feMergeNode/> <!-- this contains the offset blurred image -->
-						<feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+						<feMergeNode/> &lt;!&ndash; this contains the offset blurred image &ndash;&gt;
+						<feMergeNode in="SourceGraphic"/> &lt;!&ndash; this contains the element that the filter is applied to &ndash;&gt;
 					</feMerge>
 				</filter>
 			</defs>
@@ -55,12 +55,12 @@
 				<path class="fil2" d="M0.0560803 0.0975345c0.00551022,0 0.00997873,0.00446851 0.00997873,0.00997834 0,0.00551022 -0.00446851,0.00997873 -0.00997873,0.00997873 -0.00550983,0 -0.00997834,-0.00446851 -0.00997834,-0.00997873 0,-0.00550983 0.00446851,-0.00997834 0.00997834,-0.00997834z"/>
 			</g>
 
-		</svg>
+		</svg>-->
 
 		<div class="claims__svg-text"
 		     text-center>
-			<p>{{ availableGas }} GAS</p>
-			<p class="title">可以提取</p>
+			<p>可以提取</p>
+			<p class="title">{{ availableGas }} GAS</p>
 		</div>
 
 

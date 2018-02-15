@@ -13,7 +13,7 @@ const initialBalancesState: BalancesState = {
 	error: null
 }
 
-export const reducer = (state: BalancesState = initialBalancesState, action: BALANCES_ACTIONS): BalancesState => {
+export function reducer (state: BalancesState = initialBalancesState, action: BALANCES_ACTIONS): BalancesState {
 	switch (action.type) {
 		case GET_BALANCES_TYPES.GET_ERROR:
 			return {

@@ -12,7 +12,7 @@ export const reducers: ActionReducerMap<RootState> = {
 	balances: fromBalances.reducer
 }
 
-const logger = (reducer: ActionReducer<RootState>): ActionReducer<RootState> => {
+function logger (reducer: ActionReducer<RootState>): ActionReducer<RootState> {
 	return (state, action): RootState => {
 		console.group(action.type)
 		const nextState = reducer(state, action)

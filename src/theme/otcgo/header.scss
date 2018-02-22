@@ -9,16 +9,4 @@
   &::after {
     background: none;
   }
-
-  &.manage-wallet {
-    & * {
-      color: white;
-    }
-
-    & ion-navbar.toolbar {
-      .toolbar-title {
-        padding-left: calc(50% - 60px);
-      }
-    }
-  }
 }

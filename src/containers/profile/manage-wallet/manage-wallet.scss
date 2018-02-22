@@ -1,4 +1,9 @@
 page-manage-wallet {
+  ion-header.otcgo-header {
+    * > * {
+      color: white;
+    }
+  }
 
   ion-content {
     background-image: url('../assets/imgs/bg-manage-wallet.png');

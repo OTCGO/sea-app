@@ -113,3 +113,21 @@ ion-title {
   text-align: center;
   z-index: -1;
 }
+
+$toast-max-width: fit-content;
+
+ion-toast {
+  .toast-wrapper.toast-bottom {
+    width: auto;
+    bottom: 30px !important;
+    opacity: 0.8;
+
+    .toast-container {
+      display: block;
+
+      .toast-message {
+        text-align: center;
+      }
+    }
+  }
+}

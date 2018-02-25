@@ -9,4 +9,13 @@
   &::after {
     background: none;
   }
+
+  /* Add a bottom line */
+  &--bl {
+    & ion-navbar.toolbar {
+      .toolbar-background {
+        border-bottom: 1px solid #dedede;
+      }
+    }
+  }
 }

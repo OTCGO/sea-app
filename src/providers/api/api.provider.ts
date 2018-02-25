@@ -21,8 +21,8 @@ export class ApiProvider {
 
 	getAPIEndpoint () {
 		return dev
-			? `${this.otcgoApi}:9999/testnet`
-			: `${this.futureApi}:9999/mainnet`
+			? `${this.otcgoApi}/testnet`
+			: `${this.otcgoApi}/mainnet`
 	}
 
 	getScanAPI () {

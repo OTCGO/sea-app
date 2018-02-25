@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { QRScanner } from '@ionic-native/qr-scanner'
+
 import { Clipboard } from '@ionic-native/clipboard'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { StatusBar } from '@ionic-native/status-bar'
@@ -11,6 +11,7 @@ import { ApiProvider, AccountProvider, WalletProvider, PriceProvider } from '../
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/claims/claims.provider'
+import { BarcodeScanner } from '@ionic-native/barcode-scanner'
 
 
 @NgModule({
@@ -18,8 +19,8 @@ import { ClaimsProvider } from '../containers/claims/claims.provider'
 		StatusBar,
 		SplashScreen,
 		File,
-		QRScanner,
 		Clipboard,
+		BarcodeScanner,
 		SocialSharing,
 		WalletProvider,
 		ApiProvider,

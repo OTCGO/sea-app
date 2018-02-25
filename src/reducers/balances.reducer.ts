@@ -1,15 +1,14 @@
 import { createSelector } from '@ngrx/store'
-import { ASSET_ENUM } from '../shared/constants'
 import { IBalance } from '../shared/balances.model'
 import { BALANCES_ACTIONS, GET_BALANCES_TYPES } from '../actions'
 
 export interface BalancesState {
-	entities: any
+	entities?: IBalance[]
 	error?: string
 }
 
 const initialBalancesState: BalancesState = {
-	entities: {},
+	entities: null,
 	error: null
 }
 
@@ -32,32 +31,14 @@ export function reducer (state: BalancesState = initialBalancesState, action: BA
 	}
 }
 
-console.log('magic')
+export const selectBalancesFeature = (state) => state.balances
 
-export const selectBalances = (state) => state.balances
-
-export const getEntities = createSelector(
-	selectBalances,
+export const selectEntities = createSelector(
+	selectBalancesFeature,
 	(state: BalancesState) => state.entities
 )
 
-export const getError = createSelector(
-	selectBalances,
+export const selectError = createSelector(
+	selectBalancesFeature,
 	(state: BalancesState) => state.error
 )
-
-export const getBalances = createSelector(
-	getEntities,
-	(entities) =>
-	  entities.balances
-		  && Object.keys(entities.balances)
-		          .map(key => (
-			          <IBalance>{
-				          hash: key,
-				          symbol: ASSET_ENUM[key] || '暂无',
-				          amount: entities.balances[key]
-			          })
-		          )
-)
-
-

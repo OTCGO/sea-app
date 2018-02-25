@@ -11,5 +11,5 @@ import { IonicPage } from 'ionic-angular'
 	templateUrl: 'settings.html'
 })
 export class SettingsPage {
-	constructor () { }
+	constructor () {}
 }

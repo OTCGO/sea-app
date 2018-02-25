@@ -61,7 +61,7 @@ export class ManageWalletPage {
 			cssClass: 'mw__exports-actions--box',
 			title: '导出私钥',
 			message: '注意，导出私钥并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替',
-			inputs: [{ name: 'passphrase', placeholder: '密码', type: 'password' }],
+			inputs: [{ name: 'passphrase', placeholder: '钱包密码', type: 'password' }],
 			buttons: [
 				{ text: '取消' },
 				{
@@ -81,7 +81,7 @@ export class ManageWalletPage {
 			cssClass: 'mw__exports-actions--box',
 			title: '导出私钥',
 			message: '注意，导出私钥并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替',
-			inputs: [{ name: 'passphrase', placeholder: '密码', type: 'password' }],
+			inputs: [{ name: 'passphrase', placeholder: '钱包密码', type: 'password' }],
 			buttons: [
 				{ text: '取消' },
 				{
@@ -100,6 +100,7 @@ export class ManageWalletPage {
 	}
 
 	async saveAccount (account) {
+
 		if (this.tempLabel) {
 			account.label = this.tempLabel
 			this.tempLabel = ''
@@ -164,6 +165,17 @@ export class ManageWalletPage {
 			accounts: wallet.accounts.filter(account => JSON.stringify(account) !== JSON.stringify(toBeDeletedAccount))
 		}
 		return Promise.resolve()
+	}
+
+	setDefaultAccount (toBeSettedAccount) {
+		const wallet = this.walletProvider.wallet
+		this.walletProvider.wallet = {
+			...wallet,
+			accounts: wallet.accounts.map(account => {
+				account.isDefault = JSON.stringify(account) == JSON.stringify(toBeSettedAccount)
+				return account
+			})
+		}
 	}
 
 	showDeleteSuccess () {

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { File } from '@ionic-native/file'
 
@@ -6,6 +5,7 @@ import { OLD_WALLET_CHECK_LIST, NEW_WALLET_CHECK_LIST, OTCGO_WALLET_FILE_NAME } 
 
 import { wallet } from '../../libs/neon'
 import { decryptOldWallet, doSign, doVerify } from '../utils'
+import { WalletFile } from '../../libs/neon/src/wallet/index'
 
 @Injectable()
 export class WalletProvider {
@@ -16,20 +16,20 @@ export class WalletProvider {
 		if (this._wallet)
 			return this._wallet
 	}
-
-	set wallet (file) {
+	set wallet (file: any) {
+		if (file instanceof wallet.Wallet) {
+			this._wallet = file
+		}
 		if (this.isWallet(file)) {
 			this._wallet = new wallet.Wallet(file)
 		}
 	}
-
 	private _wallet
 
 	constructor (
-		public http: HttpClient,
 		private file: File
 	) {}
-
+	
 	initWallet () {
 		console.log('wallet is init')
 

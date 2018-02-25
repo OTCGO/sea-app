@@ -6,7 +6,7 @@ import {
 
 import { Observable } from 'rxjs'
 
-import { Store } from '@ngrx/store'
+import { select, Store } from '@ngrx/store'
 
 import { PossessionDetailPage } from './possession-detail/possession-detail'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
@@ -47,9 +47,10 @@ export class PossessionsPage implements OnInit {
 
 	async ngOnInit () {
 		await this.loading.present()
-		this.balances$ = this.store.select(fromBalances.getBalances)
+		console.log('magic')
+		this.balances$ = this.store.select(fromBalances.selectEntities)
 		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.store.select(fromBalances.getError).subscribe(
+		this.store.select(fromBalances.selectError).subscribe(
 			error => error && this.showMsg(error)
 		)
 

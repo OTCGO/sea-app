@@ -1,14 +1,6 @@
 import { Fixed8 } from '../utils'
 import { Transaction } from '../transactions/index'
 
-export interface Account {
-  WIF: string
-  privateKey: string
-  publicKey: string
-  scriptHash: string
-  address: string
-}
-
 export interface AssetBalance {
   balance: Fixed8
   unspent: Coin[]
@@ -39,8 +31,9 @@ export interface ScryptParams {
 
 export interface WalletFile {
   name: string
+  version: string
   scrypt: WalletScryptParams
-  accounts: WalletAccount[]
+  accounts: Account[]
   extra: object
 }
 
@@ -61,7 +54,7 @@ export interface WalletAccount {
 }
 
 //Account
-export class Account {
+export class Account implements WalletAccount {
   constructor(str: string)
 
   WIF: string
@@ -69,6 +62,13 @@ export class Account {
   publicKey: string
   scriptHash: string
   address: string
+  label: string
+  isDefault: boolean
+  lock: boolean
+  extra: any
+  key: string
+  contract
+
 
   getPublicKey(encoded: boolean): string
   encrypt(keyphrase: string, scryptParams?: ScryptParams): Account
@@ -143,11 +143,14 @@ export class Wallet {
   scrypt: WalletScryptParams
   accounts: Account[]
   extra: object
+  defaultAccount: Account
 
   constructor(file: WalletFile)
 
   static import(jsonString: string): Wallet
   static readFile(filepath: string): Wallet
+
+
 
   addAccount(acct: Account | object): number
   decrypt(index: number, keyphrase: string): boolean
@@ -158,5 +161,3 @@ export class Wallet {
   setDefault(index: number): this
   writeFile(filepath: string): boolean
 }
-
-

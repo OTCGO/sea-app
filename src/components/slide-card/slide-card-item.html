@@ -1,13 +1,17 @@
 <!-- TODO: namespace specific -->
+<div class="m-carousel__header"
+     [class.is-active]="isActive">
+	{{ header }}
+</div>
 <div
 	class="m-carousel__item"
 	[ngClass]="{
-    'm-carousel__item--card': parent.type === 'card',
-    'is-active': isActive,
-    'is-in-stage': inStage,
-    'is-hover': hover,
-    'is-animating': animating
-  }"
+      'm-carousel__item--card': parent.type === 'card',
+      'is-active': isActive,
+	  'is-in-stage': inStage,
+	  'is-hover': hover,
+	  'is-animating': animating
+    }"
 	[ngStyle]="itemTranslateStyle"
 	(click)="handleItemClick()">
 	<div class="m-carousel__mask" *ngIf="!isActive"></div>

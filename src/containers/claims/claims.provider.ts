@@ -57,7 +57,7 @@ export class ClaimsProvider {
 	doSendAsset () {
 		this.store.dispatch(new Get(this._account.address))
 		return this.store.pipe(
-			select(fromBalances.getBalances),
+			select(fromBalances.selectEntities),
 			map(balances => {
 				const NEO = balances.find(bal => bal.hash === NEO_HASH)
 				const address = this._account.address

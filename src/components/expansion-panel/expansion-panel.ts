@@ -48,9 +48,7 @@ export class ExpansionPanel extends CdkAccordionItem
 
 	@Input()
 	get hideToggle (): boolean { return this._hideToggle }
-
 	set hideToggle (hideToggle: boolean) { this._hideToggle = coerceBooleanProperty(hideToggle) }
-
 	private _hideToggle: boolean = false
 
 	readonly _inputChanges = new Subject<SimpleChanges>()

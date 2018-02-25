@@ -6,11 +6,14 @@ import {
 } from 'ionic-angular'
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
 
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner'
 import { SendModalProvider } from './send-modal.provider'
+import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { isAddress } from './send-modal.provider'
 
-@IonicPage()
+
+@IonicPage({
+	name: 'SendModal'
+})
 @Component({
 	selector: 'send-modal',
 	templateUrl: 'send-modal.html'
@@ -22,7 +25,7 @@ export class SendModalComponent {
 	constructor (
 		public viewCtrl: ViewController,
 		public navParams: NavParams,
-		private qrScanner: QRScanner,
+		private barcodeScanner: BarcodeScanner,
 		private toastCtrl: ToastController,
 		private alertCtrl: AlertController,
 		private loadingCtrl: LoadingController,
@@ -50,9 +53,9 @@ export class SendModalComponent {
 	/**
 	 * Address must be check validity and required
 	 * @if address && isAddress(address)
-	 * passphrase been use for signature the walelt file is require
-	 * amount is required and translate to big num
-	 * optional Label
+	 * @then passphrase been use for signature the wallet file is require
+	 * @then amount is required and translate to big num
+	 * @optional Label
 	 **/
 	async transfer () {
 		this.toAddress.markAsTouched()
@@ -79,7 +82,6 @@ export class SendModalComponent {
 			    }
 		    })
 		    .catch(err => {
-		    	console.log(err)
 		    	this.showPrompt({ message: err, title: '错误' })
 		    })
 		    .then(_=> {
@@ -92,35 +94,18 @@ export class SendModalComponent {
 		prompt.present()
 	}
 
-	qrScan () {
-		this.qrScanner
-		    .prepare()
-		    .then((status: QRScannerStatus) => {
-			    if (status.authorized) {
-			    	let scanSub = this.qrScanner.scan().subscribe(text => {
-					    console.log('Scanned something', text)
-					    let toast = this.toastCtrl.create({
-						    message: text,
-						    duration: 5000
-					    })
-					    toast.present()
-
-					    this.qrScanner.hide()
-					    scanSub.unsubscribe()
-				    })
-
-				    this.qrScanner.show()
-
-			    } else if (status.denied) {
-				    // camera permission was permanently denied
-				    // you must use QRScanner.openSettings() method to guide the user to the settings page
-				    // then they can grant the permission from there
-			    } else {
-				    // permission was denied, but not permanently. You can ask for permission again at a later time.
-
-			    }
+	scan () {
+		this.barcodeScanner
+		    .scan()
+		    .then((data: BarcodeScanResult) => {
+			    this.toAddress.setValue(data.text)
 		    })
-			.catch(err => console.log(err))
+		    .catch(err => {
+			    const toast = this.toastCtrl.create({
+				    message: err
+			    })
+			    toast.present()
+		    })
 	}
 }
 
@@ -134,8 +119,7 @@ function addressValidator (addressCtrl: FormControl): ValidationErrors {
 function amountValidator (maxValue) {
 	return (amountCtrl: FormControl): ValidationErrors | null => {
 		const value = amountCtrl.value
-		const numberifyMaxValue = Number(maxValue)
-		if (!value || value <= 0 || value > numberifyMaxValue) return { invalidAmount: true }
+		if (!value || value <= 0 || value > maxValue) return { invalidAmount: true }
 		return null
 	}
 }

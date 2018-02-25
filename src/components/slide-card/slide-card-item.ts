@@ -1,6 +1,7 @@
-import { AfterContentInit, Component, forwardRef, Inject, Input, OnDestroy, ViewEncapsulation } from '@angular/core'
+import {
+	AfterContentInit, Component, forwardRef, Inject, Input, OnDestroy
+} from '@angular/core'
 import { SlideCard } from './slide-card'
-import { isUndefined } from 'util'
 
 const CARD_SCALE = 0.83
 
@@ -11,6 +12,7 @@ const CARD_SCALE = 0.83
 export class SlideCardItem implements AfterContentInit, OnDestroy {
 	@Input() name: string = 'SlideCardItem'
 	@Input() label: string | number = ''
+	@Input('header') header: string
 
 	get itemTranslateStyle () {
 		return {
@@ -60,7 +62,7 @@ export class SlideCardItem implements AfterContentInit, OnDestroy {
 	translateItem (index, activeIndex, oldIndex) {
 		const parentWidth = this.parentWidth
 		const length = this.parent.items.length
-		if (this.parent.type !== 'card' && !isUndefined(oldIndex)) {
+		if (this.parent.type !== 'card' && typeof oldIndex !== 'undefined') {
 			this.animating = index === activeIndex || index === oldIndex
 		}
 		if (index !== activeIndex && length > 2) {

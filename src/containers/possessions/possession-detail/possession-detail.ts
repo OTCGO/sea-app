@@ -3,18 +3,11 @@ import {
 	NavParams,
 	IonicPage,
 	NavController,
-	ModalController, LoadingController,
+	ModalController,
+	LoadingController,
 } from 'ionic-angular'
 
-import 'rxjs/add/operator/filter'
-import 'rxjs/add/operator/map'
-
-import { BigNumber } from 'bignumber.js'
-
 import { PossessionDetailProvider } from './possession-detail.provider'
-
-
-/* TODO: This code is a mess, Try whenever refactor it MEOW */
 
 interface TransactionHistory {
 	assetId
@@ -25,7 +18,9 @@ interface TransactionHistory {
 	name
 }
 
-@IonicPage()
+@IonicPage({
+	name: 'PossessionDetail'
+})
 @Component({
 	selector: 'page-possession-detail',
 	templateUrl: 'possession-detail.html',
@@ -47,13 +42,11 @@ export class PossessionDetailPage implements OnInit {
 	ngOnInit() {
 		this.loading.present()
 		this.possessionData = this.navParams.data
-		this.possessionData.amount = new BigNumber(this.possessionData.amount)
 
 		this.possessionDetailProvider
 		    .getPrices()
 		    .then(prices => {
 		    	const price = prices[this.possessionData.symbol]
-			    // const conversion = 6.5
 			    this.totalValue = this.possessionData.amount.times(price)
 		    })
 		    .then(_=> {
@@ -70,9 +63,15 @@ export class PossessionDetailPage implements OnInit {
 	}
 
 	showSendModal () {
+		const possessionData = {
+			hash: this.possessionData.hash,
+			symbol: this.possessionData.symbol,
+			amount: this.possessionData.amount.toNumber()
+		}
+
 		const sendModal = this.modalCtrl.create(
-			'SendModalComponent',
-			this.possessionData,
+			'SendModal',
+			possessionData,
 			{ cssClass: 'inset-modal' }
 		)
 		sendModal.present()

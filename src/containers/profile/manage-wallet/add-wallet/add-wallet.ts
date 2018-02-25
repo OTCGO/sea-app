@@ -24,7 +24,7 @@ export class AddWalletPage {
   user: object;
   createWalletPage = CreateWalletPage;
   menuList =  [
-    {title: '导入钱包文件', pageName: ImportFilePage},
+    {title: '钱包文件或WIF导入', pageName: ImportFilePage},
     {title: '私钥导入', pageName: ImportPrivateKeyPage},
     {title: '观察模式', pageName: ObservationModePage}
   ];

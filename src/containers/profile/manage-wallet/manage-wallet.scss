@@ -70,7 +70,7 @@ page-manage-wallet {
 
             &__left {
               .mw__title {
-                font-size: 2.6rem;
+                font-size: 3.6rem;
                 color: rgba(0, 0, 0, 0.8);
                 span {
                   font-size: 2.2rem;
@@ -88,9 +88,25 @@ page-manage-wallet {
               display: flex;
               justify-content: center;
 
-              .mw__name {
-                font-size: 2.2rem;
-                color: rgb(93, 93, 93);
+              .mw__icon {
+                font-size: 1.6rem;
+                color: #c1c1c1;
+                width: 2.4rem;
+                height: 2.4rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+
+                box-shadow: -1px 1px 2px 0px rgba(68, 68, 68, 0.3);
+                border: 0.2px solid rgba(68, 68, 68, 0.3);
+
+
+                &:hover, &:focus {
+                  box-shadow: -2px 1px 2px 0px rgba(50, 118, 217, 0.5);
+                  border: 1px solid rgba(50, 118, 217, 0.2);
+                  color: rgba(50, 118, 217, 0.7);
+                }
               }
             }
           }
@@ -124,6 +140,14 @@ page-manage-wallet {
             }
             a {
               color: rgb(193, 193, 193);
+              &.is-default {
+                color: #3095d6;
+                cursor: none;
+
+                &:hover {
+                  opacity: 1;
+                }
+              }
             }
           }
         }

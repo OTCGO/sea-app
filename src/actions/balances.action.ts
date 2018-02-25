@@ -9,7 +9,7 @@ export enum GET_BALANCES_TYPES {
 export class Get implements Action {
 	readonly type = GET_BALANCES_TYPES.GET
 
-	constructor (public payload) {}
+	constructor (public payload: string) {}
 }
 
 export class GetSuccess implements Action {
@@ -25,5 +25,3 @@ export class GetError implements Action {
 }
 
 export type BALANCES_ACTIONS = Get | GetSuccess | GetError
-
-

@@ -18,7 +18,7 @@
 <ion-content padding class="possession-detail-content">
 
 	<ion-card class="possession-data-card">
-		<div class="possession-data-amount">{{ possessionData.amount }}</div>
+		<div class="possession-data-amount">{{ possessionData.amount.toString() }}</div>
 		<div class="possession-data-approximation">≈ ￥ {{ totalValue }}</div>
 		<button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="possessionData.amount.lte(0)">
 			转账

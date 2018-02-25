@@ -6,8 +6,7 @@ import { WalletProvider } from '../../../../../providers/wallet/wallet.provider'
 @IonicPage()
 @Component({
 	selector: 'page-import-file',
-	templateUrl: 'import-file.html',
-
+	templateUrl: 'import-file.html'
 })
 export class ImportFilePage {
 	private _file: File

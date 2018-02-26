@@ -1,7 +1,7 @@
 <ion-header class="otcgo-header">
 
 	<ion-navbar>
-		<ion-title>行情</ion-title>
+		<ion-title>{{ 'MARKETS.title' | translate }}</ion-title>
 
 		<ion-buttons end>
 			<button ion-button round icon-only>
@@ -16,9 +16,9 @@
 <ion-content>
 	<ion-list-header class="markets__header">
 		<ion-row>
-			<ion-col col-3 text-left>资产名称</ion-col>
-			<ion-col text-right>最新价</ion-col>
-			<ion-col col-4 text-right>跌涨幅</ion-col>
+			<ion-col col-3 text-left>{{ 'MARKETS.name' | translate }}</ion-col>
+			<ion-col text-right>{{ 'MARKETS.price' | translate }}</ion-col>
+			<ion-col col-4 text-right>{{ 'MARKETS.change'| translate }}</ion-col>
 		</ion-row>
 	</ion-list-header>
 

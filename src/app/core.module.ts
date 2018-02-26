@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 
-
 import { Clipboard } from '@ionic-native/clipboard'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { StatusBar } from '@ionic-native/status-bar'

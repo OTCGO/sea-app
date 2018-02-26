@@ -19,6 +19,10 @@ export class AccountProvider {
 		return this.defaultAccount.publicKey
 	}
 
+	getAddress () {
+		return this.defaultAccount.address
+	}
+
 	decrypt (passphrase) {
 		this.defaultAccount.decrypt(passphrase)
 	}

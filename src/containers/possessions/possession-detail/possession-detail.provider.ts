@@ -4,13 +4,12 @@ import { ApiProvider } from '../../../providers'
 import * as API_CONSTANTS from '../../../providers/api/api.consts'
 import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/toPromise'
 import { ASSET_ENUM } from '../../../shared/constants'
 
 import { api } from '../../../libs/neon'
-import { PriceProvider } from '../../../providers/api/price.provider'
 
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/toPromise'
 
 @Injectable()
 export class PossessionDetailProvider {
@@ -20,9 +19,7 @@ export class PossessionDetailProvider {
 	constructor (
 		private apiProvider: ApiProvider,
 		private walletProvider: WalletProvider
-	) {
-
-	}
+	) {}
 
 	getPrices () {
 		return api.cmc.getPrices(['NEO', 'GAS', 'QLC', 'RPX', 'DBC', 'TNC'], 'cny')

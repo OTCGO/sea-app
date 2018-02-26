@@ -8,6 +8,8 @@ import { LoginPage } from '../login/login'
 import { wallet } from '../../libs/neon'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 import { BackupWalletPage } from './backup-wallet/backup-wallet'
+import { debug } from '../../shared/utils'
+import { TranslateService } from '@ngx-translate/core'
 
 @IonicPage({
   name: 'CreateWallet',
@@ -26,13 +28,22 @@ export class CreateWalletPage {
   private passphrase1: string
   private passphrase2: string
 
+  private passphraseLengthError: string
+  private wifError: string
+
   constructor (
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public loadingCtrl: LoadingController,
+    private navCtrl: NavController,
+    private navParams: NavParams,
+    private loadingCtrl: LoadingController,
     private walletProvider: WalletProvider,
-    public toastCtrl: ToastController
-  ) { }
+    private toastCtrl: ToastController,
+    private translateService: TranslateService
+  ) {
+    this.translateService.onLangChange.subscribe(value => {
+      debug('onLangChange')(value)
+
+    })
+  }
 
   get disabledButton () {
     if (this.wif)
@@ -44,10 +55,6 @@ export class CreateWalletPage {
       (this.passphrase1 !== this.passphrase2) ||
       !this.name ||
       !this.protocolAgreement
-  }
-
-  ionViewDidLoad () {
-
   }
 
   async createWallet () {

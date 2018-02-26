@@ -1,15 +1,15 @@
 <ion-content class="backup-wallet">
 
-	<h1>创建成功</h1>
+	<h1>{{ 'CW.BACKUP.title' | translate }}</h1>
 
 	<div class="backup-wallet__content">
 		<img class="backup-wallet__success-icon" src="assets/imgs/icon-backup-wallet_success.svg" alt="">
-		请注意，您的钱包已经生成，请妥善保管！由于手机钱包的限制，若想导出钱包已便别处使用，请进入钱包管理进行导出操作。
+		{{ 'CW.BACKUP.notes' | translate }}
 	</div>
 
 	<div class="backup-wallet__button">
 		<button class="otcgo-button--colour" ion-button round full block (click)="openHome()">
-			进入钱包
+			{{ 'CW.BACKUP.enter' | translate }}
 		</button>
 	</div>
 

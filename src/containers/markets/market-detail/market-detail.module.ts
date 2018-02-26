@@ -8,7 +8,9 @@ const COMPONENT = [
 
 @NgModule({
 	declarations: COMPONENT,
-	imports: [IonicPageModule.forChild(MarketDetailPage)],
+	imports: [
+		IonicPageModule.forChild(MarketDetailPage)
+	],
 	exports: COMPONENT
 })
 export class MarketDetailModule {}

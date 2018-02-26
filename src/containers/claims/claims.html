@@ -1,7 +1,7 @@
 <ion-header class="otcgo-header">
 	<ion-navbar>
 		<ion-title>
-			提取分红
+			{{ 'PROFILE.CLAIMS.title' | translate}}
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -59,13 +59,13 @@
 
 		<div class="claims__svg-text"
 		     text-center>
-			<p>可以提取</p>
+			<p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
 			<p class="title">{{ availableGas }} GAS</p>
 		</div>
 
 
 		<button ion-button round full clear class="claims__button otcgo-button" (click)="doClaim()">
-			一键提取
+			{{ 'PROFILE.CLAIMS.do_claims' | translate }}
 		</button>
 	</div>
 

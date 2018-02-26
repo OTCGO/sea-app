@@ -44,14 +44,17 @@ export class ClaimsProvider {
 
 	doClaims () {
 		let loading = this.loadingCtrl.create()
-		loading.present()
-
-		this.doSendAsset()
-		this.postGAS(this._account.publicKey).then(this.apiProvider.broadcast)
+		loading.present().then(_=> {
+			this.doSendAsset()
+			this.postGAS()
+			    .then(this.generateSignature.bind(this))
+			    .then(this.apiProvider.broadcast)
+			    .then(_=> loading.dismissAll())
+		})
 	}
 
-	postGAS (publicKey) {
-		return this.apiProvider.post('gas', { publicKey }).toPromise()
+	postGAS () {
+		return this.apiProvider.post('gas', { publicKey: this.accountProvider.getPublicKey(true) }).toPromise()
 	}
 
 	doSendAsset () {

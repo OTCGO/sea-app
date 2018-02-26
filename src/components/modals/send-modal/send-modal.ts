@@ -59,6 +59,7 @@ export class SendModalComponent {
 	 **/
 	async transfer () {
 		this.toAddress.markAsTouched()
+		this.passphrase.markAsTouched()
 		this.amount.markAsTouched()
 
 		if (!this.sendForm.valid || !this.toAddress.valid
@@ -77,8 +78,8 @@ export class SendModalComponent {
 				    assetId: this.possessionData.hash
 			    })
 			    if (result) {
+				    await this.dismiss()
 				    await this.toastCtrl.create({ message: '转账成功', duration: 3000 }).present()
-				    this.dismiss()
 			    }
 		    })
 		    .catch(err => {

@@ -1,7 +1,40 @@
 ion-tabs {
-  .tabbar {
-/*    a.tab-button#tab-t0-2 {
-      text-decoration: line-through;
-    }*/
+  .ion-tab-icon-base {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 4px 4px 2px;
+  }
+  .ion-tab-icon-md-base {
+    min-width: 0 !important;
+    height: 32px;
+  }
+  $tabImageName: 'home' 'task' 'master' 'my';
+  @for $i from 1 to 5 {
+    //for ios
+    .ion-ios-tab-#{nth($tabImageName, $i)} {
+      @extend .ion-tab-icon-base;
+      content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+    }
+    .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
+      @extend .ion-tab-icon-base;
+      content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+    }
+    // for android
+    .tabs-md .tab-button[aria-selected=true] {
+      .ion-md-tab-#{nth($tabImageName, $i)} {
+        @extend .ion-tab-icon-md-base;
+        content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+      }
+    }
+    .tabs-md .tab-button[aria-selected=false] {
+      .ion-md-tab-#{nth($tabImageName, $i)} {
+        @extend .ion-tab-icon-md-base;
+        content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+      }
+    }
+  }
+  .ion-ios-tab-task,.ion-ios-tab-task-outline,.ion-ios-tab-master,.ion-ios-tab-master-outline{
+    width: 30px !important;
+    height: 32px !important;
   }
 }

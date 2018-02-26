@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
 
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 import { IonicApp, IonicModule, IonicErrorHandler, } from 'ionic-angular'
@@ -19,9 +19,6 @@ import { metaReducers, reducers } from '../reducers'
 import { CoreModule } from './core.module'
 import { BalancesEffects } from '../effects/balances.effect'
 
-function createTranslateLoader (http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n', '.json')
-}
 
 @NgModule({
   declarations: [
@@ -44,8 +41,8 @@ function createTranslateLoader (http: HttpClient) {
     }),
     TranslateModule.forRoot({
       loader: {
-        provide: TranslateHttpLoader,
-        useFactory: createTranslateLoader,
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
         deps: [HttpClient]
       }
     }),
@@ -54,7 +51,8 @@ function createTranslateLoader (http: HttpClient) {
   bootstrap: [IonicApp],
   entryComponents: [MyApp],
   providers: [
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
   ]
 })
 export class AppModule { }
+console.log()

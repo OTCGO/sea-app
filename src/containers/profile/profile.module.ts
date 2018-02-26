@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 import { ProfilePage } from './profile'
+import { TranslateModule } from '@ngx-translate/core'
 
 const COMPONENTS = [
 	ProfilePage
@@ -8,7 +9,10 @@ const COMPONENTS = [
 
 @NgModule({
 	declarations: COMPONENTS,
-	imports: [IonicPageModule.forChild(ProfilePage)],
+	imports: [
+		TranslateModule.forChild(),
+		IonicPageModule.forChild(ProfilePage)
+	],
 	exports: COMPONENTS
 })
 export class ProfilePageModule {}

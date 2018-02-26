@@ -16,11 +16,11 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 	    <div class="qrcode__content">
 		    <ngx-qrcode [qrc-value]="address"></ngx-qrcode>
 
-		    <div class="title">钱包地址</div>
+		    <div class="title">{{ 'POSSESSIONS.QR_CODE.address' | translate }}</div>
 		    <div class="address">{{ address }}</div>
-		    
-		    <button ion-button class="otcgo-button--colour" round full (click)="copy()">复制</button>
-		    <button ion-button class="otcgo-button--edge" round clear full (click)="share()">分享</button>
+			    
+		    <button ion-button class="otcgo-button--colour" round full (click)="copy()">{{ 'POSSESSIONS.QR_CODE.copy' | translate }}</button>
+		    <button ion-button class="otcgo-button--edge" round clear full (click)="share()">{{ 'POSSESSIONS.QR_CODE.share' | translate }}</button>
       </div>
     </ion-content>
   `
@@ -28,14 +28,17 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 export class PaymentQRCodePage {
   address: string
 
-  constructor (navParams: NavParams, private clipboard: Clipboard, private socialSharing: SocialSharing) {
+  constructor (
+  	navParams: NavParams,
+	  private clipboard: Clipboard,
+	  private socialSharing: SocialSharing,
+  ) {
     this.address = navParams.get('address')
   }
 
   copy () {
     this.clipboard.copy(this.address)
   }
-
 
   share () {
     this.socialSharing.share(this.address)

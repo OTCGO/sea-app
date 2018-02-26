@@ -1,7 +1,7 @@
-import { Component, forwardRef, ViewChild } from '@angular/core'
+import { Component } from '@angular/core'
 import { AlertController, IonicPage, LoadingController, Tab } from 'ionic-angular'
 
-import { wallet } from '../../libs/neon'
+
 import { ClaimsProvider } from './claims.provider'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 
@@ -44,7 +44,7 @@ export class ClaimsPage {
 
 			let prompt = this.alertCtrl.create({
 				title: '输入密码',
-				message: '登陆之后，只需要输入密码一次，系统就会帮你记录哦！',
+				message: '输入您的密码！',
 				inputs: [{ name: 'passphrase', placeholder: '密码', type: 'password' }],
 				buttons: [
 					{ text: '取消' },
@@ -57,13 +57,13 @@ export class ClaimsPage {
 									this.account.decrypt(passphrase)
 									loading.dismiss().then(() => {
 										prompt.dismiss().then(() => {
-											this.showPrompt('密码正确')
+											this.claimsProvider.doClaims()
 										})
 									})
 								} catch (e) {
 									loading.dismiss().then(() => {
 										prompt.dismiss().then(() => {
-											this.showPrompt('密码错误')
+											this.claimsProvider.doClaims()
 										})
 									})
 								}

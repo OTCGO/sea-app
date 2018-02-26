@@ -1,3 +1,82 @@
 {
-	"HELLO": "2"
+	"TABS": {
+		"possessions": "资产",
+		"markets": "行情",
+		"profile": "个人"
+	},
+	"LOGIN": {
+		"title": "登录钱包",
+		"tip": "还没有钱包？创建一个！",
+		"login_wallet": "确认",
+		"wif_placeholder": "WIF码登录",
+		"password": "请输入密码"
+	},
+	"CW": {
+		"title": "创建钱包",
+		"name": "请设置钱包名称",
+		"wif": "[WIF] 如无可不填",
+		"passphrase": "请设置密码",
+		"passphrase_confirm": "请再次输入密码确认",
+		"agreement_prefix": "已阅读同意",
+		"agreement_text": "蓝鲸淘用户协议与服务条款",
+		"create_wallet": "创建钱包",
+		"tip": "登陆钱包",
+		"BACKUP": {
+			"title": "创建钱包成功!",
+			"notes": "请注意，您的钱包已经生成，请妥善保管！由于手机钱包的限制，若想导出钱包已便别处使用，请进入钱包管理进行导出操作。",
+			"enter": "进入钱包"
+		}
+	},
+	"POSSESSIONS": {
+		"DETAILS": {
+			"title": "交易记录",
+			"transfer": "转账",
+			"in": "转入",
+			"out": "转出"
+		},
+		"QR_CODE": {
+			"address": "钱包地址",
+			"copy": "复制",
+			"share": "分享"
+		}
+	},
+	"MARKETS": {
+		"title": "行情",
+		"name": "资产名称",
+		"price": "最新价",
+		"change": "跌涨幅",
+		"DETAILS": {}
+	},
+	"PROFILE": {
+		"manage_wallet": "管理钱包",
+		"contacts": "联系人",
+		"histories": "交易记录",
+		"claims": "提取分红",
+		"MANAGE_WALLET": {
+			"title": "管理钱包",
+			"change_name": "更改钱包名字",
+			"export": "导出",
+			"export_wif": "导出 WIF",
+			"export_key": "导出 EncryptedKey",
+			"save": "保存",
+			"default": "默认钱包",
+			"default_action": "设为默认钱包"
+		},
+		"CONTACTS": {
+			"title": "联系人"
+		},
+		"HISTORIES": {},
+		"SETTINGS": {
+			"title": "设置",
+			"LANGUAGES": {
+				"title": "语言",
+				"subtitle": "中文"
+			}
+		},
+		"CLAIMS": {
+			"title": "提取分红",
+			"available": "可以提取",
+			"do_claims": "一键提取"
+		}
+	}
 }

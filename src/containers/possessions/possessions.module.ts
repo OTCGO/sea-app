@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { PossessionsPage } from './possessions'
 import { IonicPageModule } from 'ionic-angular'
 import { PipesModule } from '../../pipes/pipes.module'
+import { TranslateModule } from '@ngx-translate/core'
 
 
 @NgModule({
@@ -9,8 +10,9 @@ import { PipesModule } from '../../pipes/pipes.module'
 		PossessionsPage
 	],
 	imports: [
-		IonicPageModule.forChild(PossessionsPage),
-		PipesModule
+		PipesModule,
+		TranslateModule.forChild(),
+		IonicPageModule.forChild(PossessionsPage)
 	],
 	exports: [
 		PossessionsPage

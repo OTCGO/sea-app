@@ -49,15 +49,16 @@ export class PossessionDetailPage implements OnInit {
 		    	const price = prices[this.possessionData.symbol]
 			    this.totalValue = this.possessionData.amount.times(price)
 		    })
+		    .catch(error => {
+			    console.error('Possession detail', error)
+			    this.totalValue = NaN
+		    })
 		    .then(_=> {
 			    this.possessionDetailProvider
 			        .getHistories(this.possessionData.symbol)
 			        .then(histories => {
 				        this.transactionHistories = histories
 			        })
-		    })
-		    .catch(error => {
-			    console.error('Possession detail', error)
 		    })
 		    .then(_=> this.loading.dismissAll())
 	}

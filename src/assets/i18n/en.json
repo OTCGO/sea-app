@@ -1,3 +1,82 @@
 {
-  "POSSESSiON_TITLE": "Possessions"
+  "TABS": {
+    "possessions": "Balances",
+    "markets": "Markets",
+    "profile": "Profile"
+  },
+  "LOGIN": {
+    "title": "Login Wallet",
+    "tip": "Not yet have a wallet? create one!",
+    "login_wallet": "Login",
+    "wif_placeholder": "Using WIF Key",
+    "password": "Enter your passphrase here"
+  },
+  "CW": {
+    "title": "Create Wallet",
+    "name": "Wallet name",
+    "wif": "[optional] Your could choose WIF key",
+    "passphrase": "Enter your password",
+    "passphrase_confirm": "Confirm your password",
+    "agreement_prefix": "Agree on",
+    "agreement_text": "Team of Service & Privacy Policy",
+    "create_wallet": "Create",
+    "tip": "Login",
+    "BACKUP": {
+      "title": "Create successful!",
+      "notes": "Please take a attention! Because of the limitation of mobile phone, we can't save your wallet right here! You could choose to using manage wallet to export key and wallet instead.",
+      "enter": "Enter"
+    }
+  },
+  "POSSESSIONS": {
+    "DETAILS": {
+      "title": "Histories",
+      "transfer": "Transfer",
+      "in": "In",
+      "out": "Out"
+    },
+    "QR_CODE": {
+      "address": "Address",
+      "copy": "Copy",
+      "share": "Share"
+    }
+  },
+  "MARKETS": {
+    "title": "Markets",
+    "name": "Name",
+    "price": "Price",
+    "change": "Change",
+    "DETAILS": {}
+  },
+  "PROFILE": {
+    "manage_wallet": "Manage wallet",
+    "contacts": "Contacts",
+    "histories": "Histories",
+    "claims": "Claims",
+    "MANAGE_WALLET": {
+      "title": "Manage wallet",
+      "change_name": "Change name",
+      "export": "Export",
+      "export_wif": "Export WIF",
+      "export_key": "Export EncryptedKey",
+      "save": "Save",
+      "default": "Default",
+      "default_action": "Set to default"
+    },
+    "CONTACTS": {
+      "title": "Contacts"
+    },
+    "HISTORIES": {},
+    "SETTINGS": {
+      "title": "Setting",
+      "LANGUAGES": {
+        "title": "Languages",
+        "subtitle": "English"
+      }
+    },
+    "CLAIMS": {
+      "title": "Claims",
+      "available": "Available GAS",
+      "do_claims": "Do claims"
+    }
+  }
 }

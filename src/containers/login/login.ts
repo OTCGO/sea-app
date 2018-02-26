@@ -32,8 +32,8 @@ export class LoginPage {
 	constructor (
 		public navCtrl: NavController,
 		public navParams: NavParams,
-		private walletProvider: WalletProvider,
 		public alertCtrl: AlertController,
+		private walletProvider: WalletProvider
 	) { }
 
 	get disabledBtn () {
@@ -46,7 +46,7 @@ export class LoginPage {
 		this.isWIFKey = false
 		this.importText = '导入钱包文件'
 
-		if (window.navigator && !this.WIFKey) fileInput.click()
+		// if (window.navigator && !this.WIFKey) fileInput.click()
 	}
 
 	openWIFKeyBox () {

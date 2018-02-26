@@ -1,12 +1,12 @@
 <ion-content class="login">
 	<div class="title">
 		<ion-label>
-			<h2>登陆钱包</h2>
+			<h2>{{ 'LOGIN.title' | translate }}</h2>
 		</ion-label>
 	</div>
 	<ion-list class="login-list">
 		<ion-item class="login-input rounded" [class.item-input-has-focus]="!!WIFKey">
-			<ion-input type="text" placeholder="WIF码登录" [(ngModel)]="WIFKey" required></ion-input>
+			<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" [(ngModel)]="WIFKey" required></ion-input>
 		</ion-item>
 
 		<button class="login-import" [class.is-active]="!isWIFKey" (click)="openImportBox(fileInput)">
@@ -21,21 +21,21 @@
 		</button>
 
 		<ion-item class="pws-input" *ngIf="isOldWallet || WIFKey">
-			<ion-input type="password" placeholder="请输入交易密码" [(ngModel)]="passphrase" required></ion-input>
+			<ion-input type="password" placeholder="{{ 'LOGIN.password' | translate }}" [(ngModel)]="passphrase" required></ion-input>
 		</ion-item>
 
 	</ion-list>
 
 	<div class="login-button">
 		<button
-			class="otcgo-button--colour"
-			ion-button round block
+			ion-button round block outline
 			[disabled]="disabledBtn"
 			(click)="login()"
-		>确认</button>
+		>{{ 'LOGIN.login_wallet' | translate }}</button>
 	</div>
 
 	<div class="login-tip">
-		<a (click)="navCtrl.setRoot(createWalletPage)">还没有钱包？创建一个！</a>
+		<a (click)="navCtrl.setRoot(createWalletPage)">{{ 'LOGIN.tip' | translate }}</a>
 	</div>
+
 </ion-content>

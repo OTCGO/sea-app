@@ -1,10 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { AlertController, LoadingController, ToastController } from 'ionic-angular'
-
-import { IReqOpts } from './api.modal'
 import { dev } from '../../environments/environment'
+import { Observable } from 'rxjs/Observable'
 
 @Injectable()
 export class ApiProvider {
@@ -12,12 +10,7 @@ export class ApiProvider {
 	nep5Api = 'http://nep5.otcgo.cn'
 	futureApi = 'http://future.otcgo.cn'
 
-	constructor (
-		private http: HttpClient,
-		private loadingCtrl: LoadingController,
-		private toastCtrl: ToastController,
-		private alertCtrl: AlertController
-	) {}
+	constructor (private http: HttpClient) {}
 
 	getAPIEndpoint () {
 		return dev
@@ -41,14 +34,13 @@ export class ApiProvider {
 		return this.http.request(method, this.getAPIEndpoint() + '/' + url, options)
 	}
 
-	get (endpoint: string, options?: IReqOpts) {
+	get (endpoint: string, options?: any): Observable<any> {
 		console.log(endpoint)
 		return this.http.get(this.getAPIEndpoint() + '/' + endpoint, options)
 	}
 
-	post (endpoint: string, body: any, options?: IReqOpts) {
-		const headers = new HttpHeaders({ 'Content-Type': 'text/plain' })
-		return this.http.post(this.getAPIEndpoint() + '/' + endpoint, body)
+	post (endpoint: string, body: any, options?: any) {
+		return this.http.post(this.getAPIEndpoint() + '/' + endpoint, body, options)
 	}
 
 	broadcast (body) {

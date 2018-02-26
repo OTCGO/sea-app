@@ -4,8 +4,5 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  },
-  "proxies": [
-    { "path": "https://api.coinmarketcap.com/v1/ticker", "proxyUrl": "https://api.coinmarketcap.com/v1/ticker" }
-  ]
+  }
 }

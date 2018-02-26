@@ -21,17 +21,17 @@
     <ion-card class="card-nav">
         <div class="nav-item" (click)="navCtrl.push('ManageWallet')">
             <img class="card-img" src="assets/imgs/icon-profile_manage-wallet.svg" alt="">
-            <span class="card-title">管理钱包</span>
+            <span class="card-title">{{ 'PROFILE.manage_wallet' | translate }}</span>
         </div>
 
 	    <div class="nav-item" (click)="navCtrl.push('ContactsPage')">
 		    <img class="card-img" src="assets/imgs/icon-profile_contacts.svg" alt="">
-		    <span class="card-title">联系人</span>
+		    <span class="card-title">{{ 'PROFILE.contacts' | translate }}</span>
 	    </div>
 
         <div class="nav-item">
             <img class="card-img" src="assets/imgs/icon-profile_tx-history.svg" alt="">
-            <span class="card-title">交易记录</span>
+            <span class="card-title">{{ 'PROFILE.histories' | translate }}</span>
         </div>
 
     </ion-card>
@@ -46,8 +46,8 @@
 				</div>
 				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
 			</button>-->
-            <button ion-item icon-right (click)="navCtrl.push('Claims')">
-				提取分红
+            <button ion-item icon-right (click)="navCtrl.push('Claims')" disabled>
+				{{ 'PROFILE.claims' | translate }}
 				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
 			</button>
             <!-- <button ion-item icon-right>

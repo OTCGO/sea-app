@@ -21,7 +21,7 @@
 		<div class="possession-data-amount">{{ possessionData.amount.toString() }}</div>
 		<div class="possession-data-approximation">≈ ￥ {{ totalValue }}</div>
 		<button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="possessionData.amount.lte(0)">
-			转账
+			{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
 		</button>
 	</ion-card>
 
@@ -30,7 +30,7 @@
 	</div>
 
 	<timeline endIcon="call" *ngIf="transactionHistories.length">
-		<h5>交易记录</h5>
+		<h5>{{ 'POSSESSIONS.DETAILS.title' | translate }}</h5>
 		<timeline-item *ngFor="let item of transactionHistories" ion-row>
 			<ion-col col-2>
 				<ion-icon></ion-icon>

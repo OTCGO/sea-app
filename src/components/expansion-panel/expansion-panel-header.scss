@@ -6,6 +6,8 @@
   align-items: center;
   padding-left: 16px;
   padding-right: 8px;
+  border-radius: 5px;
+  font-weight: bold;
   @include elevation-transition;
   @include overridable-elevation(2);
 

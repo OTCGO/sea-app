@@ -1,26 +1,31 @@
 <ion-content class="cw" padding>
 
-	<h1>创建钱包</h1>
+	<div class="title">
+		<ion-label>
+			<h2>{{ 'CW.title' | translate }}</h2>
+		</ion-label>
+	</div>
+
 	<!-- CW stand for create-wallet -->
 	<div class="cw__form-field">
 		<ion-item class="cw-name">
-			<ion-input placeholder="名称" required type="text" [(ngModel)]="name"></ion-input>
+			<ion-input placeholder="{{ 'CW.name' | translate }}" required type="text" [(ngModel)]="name"></ion-input>
 		</ion-item>
 
 		<ion-item class="cw-wif">
-			<ion-input placeholder="[可选] WIF" type="text" [(ngModel)]="wif"></ion-input>
+			<ion-input placeholder="{{ 'CW.wif' | translate }}" type="text" [(ngModel)]="wif"></ion-input>
 		</ion-item>
 
 		<ion-item class="cw-pwd">
-			<ion-input placeholder="密码" required type="password" [(ngModel)]="passphrase1"></ion-input>
+			<ion-input placeholder="{{ 'CW.passphrase' | translate }}" required type="password" [(ngModel)]="passphrase1"></ion-input>
 		</ion-item>
 
 		<ion-item class="cw-pwd">
-			<ion-input placeholder="确认密码" required type="password" [(ngModel)]="passphrase2"></ion-input>
+			<ion-input placeholder="{{ 'CW.passphrase_confirm' | translate }}" required type="password" [(ngModel)]="passphrase2"></ion-input>
 		</ion-item>
 
 		<ion-item class="cw-protocol">
-			<ion-label>同意蓝鲸淘用户协议与服务条款</ion-label>
+			<ion-label>{{ 'CW.agreement_prefix' | translate }} <span class="blue">{{ 'CW.agreement_text' | translate }}</span></ion-label>
 			<ion-checkbox color="blue" [(ngModel)]="protocolAgreement"></ion-checkbox>
 		</ion-item>
 	</div>
@@ -28,13 +33,13 @@
 	<div class="cw__actions">
 		<div class="cw-button">
 			<button ion-button round full block [disabled]="disabledButton" (click)="createWallet()">
-				创建钱包
+				{{ 'CW.create_wallet' | translate }}
 			</button>
 		</div>
 
 		<div class="cw-button-white">
 			<button (click)="navCtrl.setRoot(loginPage)" ion-button round full block clear>
-				已有钱包？点击登陆！
+				{{ 'CW.tip' | translate }}
 			</button>
 		</div>
 	</div>

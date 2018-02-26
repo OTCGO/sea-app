@@ -140,8 +140,8 @@ export class ManageWalletPage {
 
 	showDeleteActionBox (toBeDeletedAccount) {
 		const alert = this.alertCtrl.create({
-			title: '确定执行删除钱包操作？',
-			message: '',
+			title: '删除钱包',
+			message: '请注意！点击确定删除钱包之后，钱包将不可恢复！确定执行删除钱包操作？',
 			buttons: [
 				{ text: '取消' },
 				{ text: '确定', handler: () => {

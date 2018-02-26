@@ -1,8 +1,8 @@
 <ion-header class="otcgo-header manage-wallet">
     <ion-navbar>
-        <ion-title>管理钱包</ion-title>
+        <ion-title>{{ 'PROFILE.MANAGE_WALLET.title' | translate }}</ion-title>
         <ion-buttons end>
-            <button ion-button icon-only clear navPush="AddWallet">
+            <button ion-button icon-only clear navPush="AddWallet" disabled>
                 <ion-icon name="add"></ion-icon>
             </button>
         </ion-buttons>
@@ -31,11 +31,11 @@
             </div>
 
             <div class="mw__changes-feature">
-                <ion-input placeholder="更改钱包名字" [(ngModel)]="tempLabel"></ion-input>
+                <ion-input placeholder="{{ 'PROFILE.MANAGE_WALLET.change_name' }}" [(ngModel)]="tempLabel"></ion-input>
             </div>
 
             <div class="mw__exports-feature">
-                <h5 text-left>导出</h5>
+                <h5 text-left>{{ 'PROFILE.MANAGE_WALLET.export' | translate }}</h5>
                 <!--<button ion-button class="otcgo-button&#45;&#45;edge-gray mw__exports" clear block icon-right (click)="showPrivateKeyBox(account)">
                     导出 私钥
                     <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
@@ -46,18 +46,18 @@
                 </button>-->
 
                 <button ion-button class="otcgo-button--edge-gray mw__exports" clear block icon-right (click)="showWIFKeyBox(account)">
-                    导出 WIF
+                    {{ 'PROFILE.MANAGE_WALLET.export_wif' | translate }}
                     <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
                 </button>
 
                 <button ion-button class="otcgo-button--edge-gray mw__exports" clear block icon-right (click)="showEncryptedKeyBox(account)">
-                    导出 EncryptedKey
+                    {{ 'PROFILE.MANAGE_WALLET.export_key' | translate }}
                     <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
                 </button>
             </div>
 
             <div class="mw__exports-action">
-                <button ion-button class="otcgo-button--colour" block round (click)="saveAccount(account)">保存</button>
+                <button ion-button class="otcgo-button--colour" block round (click)="saveAccount(account)">{{ 'PROFILE.MANAGE_WALLET.save' | translate }}</button>
                 <a [class.is-default]="account.isDefault"
                    (click)="setDefaultAccount(account)">
                     {{ account.isDefault ? '默认钱包' : '设为默认钱包' }}

@@ -5,7 +5,6 @@ import { OLD_WALLET_CHECK_LIST, NEW_WALLET_CHECK_LIST, OTCGO_WALLET_FILE_NAME } 
 
 import { wallet } from '../../libs/neon'
 import { decryptOldWallet, doSign, doVerify } from '../utils'
-import { WalletFile } from '../../libs/neon/src/wallet/index'
 
 @Injectable()
 export class WalletProvider {

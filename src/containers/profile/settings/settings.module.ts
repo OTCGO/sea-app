@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { SettingsPage } from './settings';
 import { IonicPageModule } from 'ionic-angular'
 import { ExpansionModule } from '../../../components/expansion-panel/expansion-module'
+import { TranslateModule } from '@ngx-translate/core'
 
 const COMPONENT = [SettingsPage]
 
@@ -9,7 +10,8 @@ const COMPONENT = [SettingsPage]
 	declarations: COMPONENT,
 	imports: [
 		IonicPageModule.forChild(SettingsPage),
-	  ExpansionModule
+		TranslateModule.forChild(),
+		ExpansionModule
 	],
 	exports: COMPONENT,
 })

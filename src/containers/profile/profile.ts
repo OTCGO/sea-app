@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 import { ManageWalletPage } from './manage-wallet/manage-wallet'
 import { SettingsPage } from './settings/settings'
-import { WalletProvider } from '../../providers'
+import { AccountProvider } from '../../providers/account/account.provider'
 
 
 
@@ -15,7 +15,7 @@ import { WalletProvider } from '../../providers'
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  account = this.walletProvider.getDefaultAccount()
+  account = this.accountProvider.defaultAccount
   manageWalletPage = ManageWalletPage
   settingsPage = SettingsPage
   avatar = 'assets/imgs/icon-avatar.svg'
@@ -29,7 +29,7 @@ export class ProfilePage {
   constructor (
       public navCtrl: NavController,
       public navParams: NavParams,
-      private walletProvider: WalletProvider
+      private accountProvider: AccountProvider
   ) {}
 
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core'
 import { AlertController, IonicPage, LoadingController } from 'ionic-angular'
 
-
 import { ClaimsProvider } from './claims.provider'
 import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 

@@ -19,11 +19,10 @@ const { generateSignature } = wallet
 
 @Injectable()
 export class ClaimsProvider {
-	_account = this.walletProvider.getDefaultAccount()
+	_account = this.accountProvider.defaultAccount
 
 	constructor (
 		private apiProvider: ApiProvider,
-		private walletProvider: WalletProvider,
 		private loadingCtrl: LoadingController,
 		private accountProvider: AccountProvider,
 	  private store: Store<RootState>

@@ -94,7 +94,7 @@ export class LoginPage {
 			const account = new wallet.Account(this.WIFKey)
 			account.encrypt(this.passphrase)
 			this.walletProvider.addAccount(account)
-			this.walletProvider.saveWalletFile()
+			this.walletProvider.saveWallet()
 			return this.navCtrl.setRoot(TabsPage)
 		}
 

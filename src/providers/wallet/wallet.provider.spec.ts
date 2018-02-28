@@ -38,7 +38,7 @@ describe('Test wallet.provider', function () {
 			wp.initWallet()
 
 			expect(wp.hasAccounts()).toBe(true)
-			wp.saveWalletFile()
+			wp.saveWallet()
 
 			wp.readWallet().then((walletStr: string) => {
 				// const walletJSON = JSON.parse(walletStr)

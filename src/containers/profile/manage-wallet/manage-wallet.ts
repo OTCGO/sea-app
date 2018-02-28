@@ -106,7 +106,7 @@ export class ManageWalletPage {
 		if (this.tempLabel) {
 			account.label = this.tempLabel
 			this.tempLabel = ''
-			await this.walletProvider.saveWalletFile()
+			await this.walletProvider.saveWallet()
 		}
 	}
 

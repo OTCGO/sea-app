@@ -87,7 +87,7 @@ export class CreateWalletPage {
       } as any)
 
       this.walletProvider.addAccount(account)
-      this.walletProvider.saveWalletFile()
+      this.walletProvider.saveWallet()
 
       await i.dismiss()
       await this.navCtrl.push(this.backupWalletPage)

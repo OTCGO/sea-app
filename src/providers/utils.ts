@@ -29,3 +29,9 @@ export const doVerify = (pubkey, msg, sigval) => {
 export const decryptOldWallet = (enckey, pwd) => (<any>CryptoJS).AES
                                                    .decrypt(enckey, pwd)
                                                    .toString((<any>CryptoJS).enc.Utf8)
+
+export const verifyOldWallet = (prvkey, pubkey) => {
+	const msg = 'aaa'
+	const sigval = doSign(prvkey, msg)
+	return doVerify(pubkey, msg, sigval)
+}

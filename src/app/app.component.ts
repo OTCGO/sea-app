@@ -38,36 +38,8 @@ export class MyApp {
 	}
 
 	initWallet () {
-		if (this.platform.is('mobile')) {
-			this.walletProvider.dataDirectory = this.file.dataDirectory
-
-			return this.walletProvider
-			    .checkWalletExists()
-			    .then(exist => {
-				    if (exist) {
-					    console.log('file exists')
-					    this.walletProvider
-					        .readWallet()
-					        .then((walletStr: string) => {
-						        this.walletProvider.wallet = JSON.parse(walletStr)
-						        this.rootPage = 'Tabs'
-						        console.log('wallet is loaded', JSON.parse(walletStr))
-					        })
-					        .catch(err => {
-						        console.log('read file error', err)
-					        })
-
-				    } else {
-					    console.warn('Wallet was not found')
-					    this.walletProvider.initWallet()
-					    this.rootPage = 'Login'
-				    }
-			    })
-		} else {
+		if (this.platform.is('mobile'))
 			this.walletProvider.initWallet()
-			this.rootPage = 'Login'
-			return Promise.resolve()
-		}
 	}
 
 	initTranslate () {

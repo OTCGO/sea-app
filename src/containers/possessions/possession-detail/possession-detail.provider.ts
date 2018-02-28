@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core'
 import * as moment from 'moment'
-import { ApiProvider } from '../../../providers'
 import * as API_CONSTANTS from '../../../providers/api/api.consts'
-import { WalletProvider } from '../../../providers/wallet/wallet.provider'
-
 import { ASSET_ENUM } from '../../../shared/constants'
-
 import { api } from '../../../libs/neon'
 
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
 
+import { ApiProvider } from '../../../providers'
+import { AccountProvider } from '../../../providers/account/account.provider'
+
 @Injectable()
 export class PossessionDetailProvider {
-	account = this.walletProvider.getDefaultAccount()
+	account = this.accountProvider.defaultAccount
 	prices
 
 	constructor (
 		private apiProvider: ApiProvider,
-		private walletProvider: WalletProvider
+		private accountProvider: AccountProvider
 	) {}
 
 	getPrices () {
@@ -32,8 +31,8 @@ export class PossessionDetailProvider {
 		           .get(API_CONSTANTS.HISTORY + '/' + this.account.address)
 		           .map(res => res['result'])
 		           .map(result => result.filter(item => item.asset === assetId))
-		           .map(result => result.map(item => parseTx(item)))
-		           .toPromise()
+			         .map(result => result.map(item => parseTx(item)))
+			         .toPromise()
 	}
 }
 

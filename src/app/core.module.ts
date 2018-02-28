@@ -11,6 +11,7 @@ import { ApiProvider, AccountProvider, WalletProvider, PriceProvider } from '../
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
+import { FileStorageProvider } from '../providers/file-storage.provider'
 
 
 
@@ -29,6 +30,7 @@ import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
 		SendModalProvider,
 		AccountProvider,
 		ClaimsProvider,
+	  FileStorageProvider
 	]
 })
 export class CoreModule {

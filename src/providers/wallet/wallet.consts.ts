@@ -4,3 +4,16 @@ export const NEW_WALLET_CHECK_LIST = ['name', 'version', 'scrypt', 'accounts', '
 
 export const OTCGO_WALLET_FILE_NAME = 'OTCGO-mobile-wallet.otcgo'
 
+export const DEFAULT_SCRYPT = { n: 16384, r: 8, p: 8, size: 64 }
+
+export const DEFAULT_EMPTY_WALLET = {
+	name: 'OTCGO-mobile-wallet',
+	scrypt: DEFAULT_SCRYPT,
+	accounts: [],
+	version: 'beta-0.2',
+	extra: {
+		addressBook: [
+			{ name: { firstname: '', lastname: '' }, address: 'aosinxpiasnxpioasn', gender: 'male', phone: '', email: '', Description: '' }
+		]
+	}
+}

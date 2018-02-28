@@ -1,8 +1,6 @@
-import { WalletFile } from '../../libs/neon/src/wallet'
-
 
 class Account {
-	wallet: WalletFile
+	wallet
 
 	getWallet() {
 

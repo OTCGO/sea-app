@@ -2,17 +2,23 @@ import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 import { ProfilePage } from './profile'
 import { TranslateModule } from '@ngx-translate/core'
+import { ProfileRoundMenuComponent } from '../../components/profile/round-menu'
+import { ProfileNavComponent } from '../../components/profile/nav'
+import { ProfileFeatureListComponent } from '../../components/profile/feature-list'
 
 const COMPONENTS = [
-	ProfilePage
+	ProfilePage,
+	ProfileNavComponent,
+	ProfileRoundMenuComponent,
+	ProfileFeatureListComponent
 ]
 
 @NgModule({
 	declarations: COMPONENTS,
+	exports: COMPONENTS,
 	imports: [
-		TranslateModule.forChild(),
-		IonicPageModule.forChild(ProfilePage)
-	],
-	exports: COMPONENTS
+		IonicPageModule.forChild(ProfilePage),
+		TranslateModule.forChild()
+	]
 })
 export class ProfilePageModule {}

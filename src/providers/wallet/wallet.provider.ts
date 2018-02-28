@@ -27,7 +27,7 @@ export class WalletProvider {
 
 	constructor (
 		private file: File
-	) {}
+	) { console.log(file) }
 	
 	initWallet () {
 		console.log('wallet is init')
@@ -56,7 +56,7 @@ export class WalletProvider {
 	upgradeAndAddToAccount (oldWalletJSON: object, passphrase: string): Promise<boolean | Error> {
 		if (!this.isOldWallet(oldWalletJSON)) return Promise.reject(new Error('Is not an old wallet, Please check again!'))
 
-		const { privateKeyEncrypted, publicKey } = oldWalletJSON as any
+		const { privateKeyEncrypted, publicKey } = <any>oldWalletJSON
 
 		let privateKey
 
@@ -87,9 +87,7 @@ export class WalletProvider {
 				console.log('save file succeed', saveFileAction)
 			} catch (err) {
 				console.error('save file rejected')
-				Object.keys(err).forEach(key => {
-					console.log(key, err[key])
-				})
+				console.log(err)
 			}
 		} else {
 			try {

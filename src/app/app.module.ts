@@ -15,7 +15,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
 import { MyApp } from './app.component'
 import { dev } from '../environments/environment'
-import { metaReducers, reducers } from '../reducers'
+import { reducers } from '../reducers'
 import { CoreModule } from './core.module'
 import { BalancesEffects } from '../effects/balances.effect'
 
@@ -29,7 +29,7 @@ import { BalancesEffects } from '../effects/balances.effect'
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, { }),
     dev ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([BalancesEffects]),
     IonicModule.forRoot(MyApp, {
@@ -37,7 +37,9 @@ import { BalancesEffects } from '../effects/balances.effect'
       preloadModules: true,
       backButtonText: '',
       backButtonIcon: 'ios-arrow-back',
-      tabsHideOnSubPages: true
+      tabsHideOnSubPages: true,
+      scrollPadding: false,
+      scrollAssist: false
     }),
     TranslateModule.forRoot({
       loader: {

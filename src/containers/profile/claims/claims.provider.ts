@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core'
 import { LoadingController } from 'ionic-angular'
-import { NEO_HASH } from '../../shared/constants'
-import { ApiProvider, AccountProvider, WalletProvider } from '../../providers'
+import { NEO_HASH } from '../../../shared/constants'
+import { ApiProvider, AccountProvider, WalletProvider } from '../../../providers'
 
 
 import { Store, select } from '@ngrx/store'
-import { RootState } from '../../reducers/index'
-import { Get } from '../../actions/balances.action'
-import * as fromBalances from '../../reducers/balances.reducer'
+import { RootState } from '../../../reducers/index'
+import { Get } from '../../../actions/balances.action'
+import * as fromBalances from '../../../reducers/balances.reducer'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/fromPromise'
+import 'rxjs/add/operator/toPromise'
 
-import { wallet } from '../../libs/neon'
+
+import { wallet } from '../../../libs/neon'
 const { generateSignature } = wallet
 
 @Injectable()
@@ -61,7 +63,7 @@ export class ClaimsProvider {
 		this.store.dispatch(new Get(this._account.address))
 		return this.store.pipe(
 			select(fromBalances.selectEntities),
-			map(balances => {
+			map((balances: any[]) => {
 				const NEO = balances.find(bal => bal.hash === NEO_HASH)
 				const address = this._account.address
 				const data = {
@@ -85,7 +87,7 @@ export class ClaimsProvider {
 
 	private generateSignature (transaction) {
 
-		const publicKey = this.accountProvider.getPublicKey()
+		const publicKey = this.accountProvider.getPublicKey(true)
 		const signature = generateSignature(transaction, this._account.privateKey)
 
 		return {

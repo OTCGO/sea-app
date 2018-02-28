@@ -4,6 +4,8 @@ import { ManageWalletPage } from './manage-wallet/manage-wallet'
 import { SettingsPage } from './settings/settings'
 import { WalletProvider } from '../../providers'
 
+
+
 @IonicPage({
   name: 'Profile',
   segment: 'profile'
@@ -16,6 +18,13 @@ export class ProfilePage {
   account = this.walletProvider.getDefaultAccount()
   manageWalletPage = ManageWalletPage
   settingsPage = SettingsPage
+  avatar = 'assets/imgs/icon-avatar.svg'
+
+  menus = [
+    { icon: 'notification', page: 'notification', enabled: false },
+    { icon: 'setting', page: 'settings' },
+    { icon: 'helpcentre', page: 'helpcentre', enabled: false }
+  ]
 
   constructor (
       public navCtrl: NavController,

@@ -1,40 +1,61 @@
 ion-tabs {
-  .ion-tab-icon-base {
-    width: 32px !important;
-    height: 32px !important;
-    padding: 4px 4px 2px;
-  }
-  .ion-tab-icon-md-base {
-    min-width: 0 !important;
-    height: 32px;
-  }
-  $tabImageName: 'home' 'task' 'master' 'my';
-  @for $i from 1 to 5 {
-    //for ios
-    .ion-ios-tab-#{nth($tabImageName, $i)} {
-      @extend .ion-tab-icon-base;
-      content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+}
+
+
+.ion-tab-icon-base {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 4px 4px 2px;
+}
+.ion-tab-icon-md-base {
+  min-width: 0 !important;
+  height: 32px;
+}
+$tabImageName: 'balances' 'markets' 'discover' 'profile';
+@for $i from 1 to 5 {
+  //for ios
+  .ion-ios-tab-#{nth($tabImageName, $i)} {
+    @extend .ion-tab-icon-base;
+    &:before {
+      content: url("../assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_on.svg");
     }
-    .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
-      @extend .ion-tab-icon-base;
-      content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+  }
+  .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
+    @extend .ion-tab-icon-base;
+    &:before {
+      content: url("../assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_off.svg");
     }
-    // for android
-    .tabs-md .tab-button[aria-selected=true] {
-      .ion-md-tab-#{nth($tabImageName, $i)} {
-        @extend .ion-tab-icon-md-base;
-        content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+  }
+
+  // for android
+  .tab-button-icon {
+    transition: all 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  }
+  .tabs-md .tab-button[aria-selected=true] {
+    ion-icon.ion-md-#{nth($tabImageName, $i)} {
+      @extend .ion-tab-icon-md-base;
+      transform-origin: 50% 50%;
+      transform: translate3d(0, 3px, 0) scale(1.8);
+
+      &:before {
+        content: url("../assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_on.svg");
       }
     }
-    .tabs-md .tab-button[aria-selected=false] {
-      .ion-md-tab-#{nth($tabImageName, $i)} {
-        @extend .ion-tab-icon-md-base;
-        content: url("../../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+  }
+  .tabs-md .tab-button[aria-selected=false] {
+    ion-icon.ion-md-#{nth($tabImageName, $i)} {
+      @extend .ion-tab-icon-md-base;
+      transform-origin: 50% 50%;
+      transform: translate3d(0, -2px, 0) scale(1.6);
+      height: 25px;
+
+      &:before {
+        content: url("../assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_off.svg");
       }
     }
   }
-  .ion-ios-tab-task,.ion-ios-tab-task-outline,.ion-ios-tab-master,.ion-ios-tab-master-outline{
-    width: 30px !important;
-    height: 32px !important;
-  }
+}
+.ion-ios-tab-task,.ion-ios-tab-task-outline,.ion-ios-tab-master,.ion-ios-tab-master-outline{
+  width: 30px !important;
+  height: 32px !important;
 }

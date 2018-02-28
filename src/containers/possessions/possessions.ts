@@ -4,9 +4,7 @@ import {
 	ToastController
 } from 'ionic-angular'
 
-import { Observable } from 'rxjs'
-
-import { select, Store } from '@ngrx/store'
+import { Store } from '@ngrx/store'
 
 import { PossessionDetailPage } from './possession-detail/possession-detail'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
@@ -27,8 +25,6 @@ import { AccountProvider } from '../../providers/account/account.provider'
 export class PossessionsPage implements OnInit {
 	splash: boolean = false
 	possessionDetailPage = PossessionDetailPage
-
-	balances$: Observable<any[]>
 	account = this.accountProvider.defaultAccount
 	loading: Loading = this.loadingCtrl.create()
 
@@ -47,14 +43,17 @@ export class PossessionsPage implements OnInit {
 
 	async ngOnInit () {
 		await this.loading.present()
-		console.log('magic')
-		this.balances$ = this.store.select(fromBalances.selectEntities)
+
 		this.store.dispatch(new balancesAction.Get(this.account.address))
 		this.store.select(fromBalances.selectError).subscribe(
 			error => error && this.showMsg(error)
 		)
 
 		await this.loading.dismiss()
+	}
+
+	loadBalance () {
+
 	}
 
 	doRefresh (e: Refresher) {
@@ -70,9 +69,5 @@ export class PossessionsPage implements OnInit {
 		})
 
 		return toast.present()
-	}
-
-	openQRCode () {
-		this.navCtrl.push('payment-qrcode', { address: this.account.address })
 	}
 }

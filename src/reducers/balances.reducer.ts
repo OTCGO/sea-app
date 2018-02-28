@@ -1,4 +1,4 @@
-import { createSelector } from '@ngrx/store'
+import { ActionReducer, createSelector } from '@ngrx/store'
 import { IBalance } from '../shared/balances.model'
 import { BALANCES_ACTIONS, GET_BALANCES_TYPES } from '../actions'
 
@@ -12,7 +12,7 @@ const initialBalancesState: BalancesState = {
 	error: null
 }
 
-export function reducer (state: BalancesState = initialBalancesState, action: BALANCES_ACTIONS): BalancesState {
+export const reducer: ActionReducer<BalancesState> = (state = initialBalancesState, action: BALANCES_ACTIONS): BalancesState => {
 	switch (action.type) {
 		case GET_BALANCES_TYPES.GET_ERROR:
 			return {

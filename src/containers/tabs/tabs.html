@@ -1,7 +1,11 @@
-<ion-tabs class="otcgo-tabs">
-    <ion-tab root="Possessions" tabTitle="{{ 'TABS.possessions' | translate }}" tabIcon="home"></ion-tab>
-    <!--[root]="tab2Root" for beta version-->
-    <ion-tab [root]="marketsPage" tabTitle="{{ 'TABS.markets' | translate }}" tabIcon="information-circle"></ion-tab>
-    <!--<ion-tab tabTitle="发现" tabIcon="information-circle"></ion-tab>-->
-    <ion-tab [root]="profilePage" tabTitle="{{ 'TABS.profile' | translate }}" tabIcon="settings"></ion-tab>
+<ion-tabs class="otcgo-tabs" #ionTabs [selectedIndex]="selectedIndex">
+    <ion-tab
+      *ngFor="let tab of tabs; index as i"
+      tabsHighlight
+      [root]="tab.root"
+      [tabTitle]="tab.title"
+      [tabIcon]="tab.icon"
+      [enabled]="tab.enabled"
+      (ionSelect)="selectTab($event)"
+    ></ion-tab>
 </ion-tabs>

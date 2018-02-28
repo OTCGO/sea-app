@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch'
 @Injectable()
 export class StorageProvider {
 
-	dataDirectory: string = this.platform.is('android')
+	private storageDirectory: string = this.platform.is('android')
 		? this.file.dataDirectory
 		: this.file.applicationDirectory
 
@@ -17,12 +17,22 @@ export class StorageProvider {
 	read (fileName) {
 		return fromPromise(
 			this.file.readAsText(
-				this.dataDirectory, fileName
+				this.storageDirectory, fileName
 			)
 		)
 	}
 
-	save () {
-
+	save (fileName, text) {
+		return fromPromise(
+			this.file
+			    .checkFile(this.storageDirectory, fileName)
+			    .then(
+			    	bool => bool
+					    ? this.file.writeExistingFile(this.storageDirectory, fileName, text)
+					    : this.file.writeFile(this.storageDirectory, fileName, text)
+			    )
+		)
 	}
+
+
 }

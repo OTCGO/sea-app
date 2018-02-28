@@ -27,7 +27,7 @@ export class MarketsPage {
 		private loadingCtrl: LoadingController
 	) {}
 
-	ionViewDidLoad () {
+	ionViewDidEnter () {
 		this.initData()
 	}
 

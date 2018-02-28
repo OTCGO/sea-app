@@ -41,7 +41,7 @@ export class SendModalProvider {
 
 	private generateSignature (transaction) {
 
-		const publicKey = this.accountProvider.getPublicKey()
+		const publicKey = this.accountProvider.getPublicKey(true)
 		const signature = generateSignature(transaction, this._account.privateKey)
 
 		return {

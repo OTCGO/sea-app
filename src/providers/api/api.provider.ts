@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core'
 
 import { dev } from '../../environments/environment'
 import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/operator/timeout';
+
 
 @Injectable()
 export class ApiProvider {
@@ -31,20 +33,20 @@ export class ApiProvider {
 	}
 
 	request (method, url, options?: any) {
-		return this.http.request(method, this.getAPIEndpoint() + '/' + url, options)
+		return this.http.request(method, this.getAPIEndpoint() + '/' + url, options).timeout(10000)
 	}
 
 	get (endpoint: string, options?: any): Observable<any> {
 		console.log(endpoint)
-		return this.http.get(this.getAPIEndpoint() + '/' + endpoint, options)
+		return this.http.get(this.getAPIEndpoint() + '/' + endpoint, options).timeout(10000)
 	}
 
 	post (endpoint: string, body: any, options?: any) {
-		return this.http.post(this.getAPIEndpoint() + '/' + endpoint, body, options)
+		return this.http.post(this.getAPIEndpoint() + '/' + endpoint, body, options).timeout(10000)
 	}
 
 	broadcast (body) {
-		return this.http.post(`${this.getAPIEndpoint()}/broadcast`, body)
+		return this.http.post(`${this.getAPIEndpoint()}/broadcast`, body).timeout(10000)
 	}
 
 }

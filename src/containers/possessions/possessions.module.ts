@@ -3,19 +3,22 @@ import { PossessionsPage } from './possessions'
 import { IonicPageModule } from 'ionic-angular'
 import { PipesModule } from '../../pipes/pipes.module'
 import { TranslateModule } from '@ngx-translate/core'
+import { PossessionsInfoComponent } from '../../components/possessions/info'
+import { PossessionsListComponent } from '../../components/possessions/list'
 
+const COMPONENTS = [
+	PossessionsPage,
+	PossessionsInfoComponent,
+	PossessionsListComponent
+]
 
 @NgModule({
-	declarations: [
-		PossessionsPage
-	],
 	imports: [
-		PipesModule,
+		IonicPageModule.forChild(PossessionsPage),
 		TranslateModule.forChild(),
-		IonicPageModule.forChild(PossessionsPage)
+		PipesModule
 	],
-	exports: [
-		PossessionsPage
-	]
+	declarations: COMPONENTS,
+	exports: COMPONENTS
 })
 export class PossessionsPageModule {}

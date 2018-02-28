@@ -58,6 +58,7 @@ page-possessions {
     .card-list {
       margin: 8px auto;
       border-radius: 5px;
+      width: calc(100% - 40px);
       
       .possessions__icon {
         height: 40px;

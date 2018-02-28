@@ -58,7 +58,7 @@ export class MyApp {
 					        })
 
 				    } else {
-					    console.error('can not find wallet')
+					    console.warn('Wallet was not found')
 					    this.walletProvider.initWallet()
 					    this.rootPage = 'Login'
 				    }

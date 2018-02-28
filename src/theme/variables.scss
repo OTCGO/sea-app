@@ -115,7 +115,6 @@ ion-title {
 }
 
 $toast-max-width: fit-content;
-
 ion-toast {
   .toast-wrapper.toast-bottom {
     width: auto;
@@ -131,3 +130,5 @@ ion-toast {
     }
   }
 }
+
+$tabs-background: inherit;

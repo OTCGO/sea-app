@@ -15,12 +15,8 @@ export class AccountProvider {
 
 	constructor (private walletProvider: WalletProvider) {}
 
-	getPublicKey () {
-		return this.defaultAccount.publicKey
-	}
-
-	getAddress () {
-		return this.defaultAccount.address
+	getPublicKey (encoded: boolean) {
+		return this.defaultAccount.getPublicKey(encoded)
 	}
 
 	decrypt (passphrase) {

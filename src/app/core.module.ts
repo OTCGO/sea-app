@@ -5,12 +5,13 @@ import { SocialSharing } from '@ionic-native/social-sharing'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { File } from '@ionic-native/file'
+import { BarcodeScanner } from '@ionic-native/barcode-scanner'
 
 import { ApiProvider, AccountProvider, WalletProvider, PriceProvider } from '../providers'
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
-import { ClaimsProvider } from '../containers/claims/claims.provider'
-import { BarcodeScanner } from '@ionic-native/barcode-scanner'
+import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
+
 
 
 @NgModule({

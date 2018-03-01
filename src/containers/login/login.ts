@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import {
 	AlertController, IonicPage,
 	NavController,
@@ -10,8 +10,18 @@ import { wallet } from '../../libs/neon'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 import { TabsPage } from '../tabs/tabs'
 import TEST_WALLET from '../../shared/userWallet'
-import { debug } from '../../shared/utils'
+import { contains } from '../../shared/utils'
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
 
+
+
+interface LoginFormValue {
+	wif: string,
+	passphrase: string
+}
 
 @IonicPage({
 	name: 'Login',
@@ -21,51 +31,68 @@ import { debug } from '../../shared/utils'
 	selector: 'page-login',
 	templateUrl: 'login.html',
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
 	private _file
 	createWalletPage = CreateWalletPage
 	importText: string = '导入'
 	isWIFKey: boolean = true
-	WIFKey: string
-	passphrase: string
-	isOldWallet: boolean = false
+	loginForm: FormGroup
+
+	get wif () { return this.loginForm.get('wif') }
+	get passphrase () { return this.loginForm.get('passphrase') }
 
 	constructor (
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		public alertCtrl: AlertController,
-		private walletProvider: WalletProvider
+		private walletProvider: WalletProvider,
+		private fb: FormBuilder
 	) { }
 
-	get disabledBtn () {
-		if (!this.isOldWallet && this._file) return false
-		if (this.isOldWallet && this._file && this.passphrase) return false
-		if (this.isWIFKey && this.WIFKey && this.passphrase) return false
+	ngOnInit () {
+		this.loginForm = this.fb.group({
+			wif: [
+				'', [
+					Validators.required
+				], [
+					wifValidator.bind(this)
+				]
+			],
+			passphrase: [
+				'', [
+					Validators.required,
+					Validators.minLength(4)
+				]
+			]
+		})
 	}
 
-	openImportBox (fileInput: HTMLInputElement) {
+	switchImportBox (fileInput: HTMLInputElement) {
 		this.isWIFKey = false
 		this.importText = '导入钱包文件'
-
-		// if (window.navigator && !this.WIFKey) fileInput.click()
+		if (window.navigator && !this.wif.value) fileInput.click()
 	}
 
-	openWIFKeyBox () {
+	switchWIFKeyBox () {
 		this.isWIFKey = true
 		this.importText = '导入'
 	}
 
 	fileChange (file) {
-		if (file) {
+		if (contains(file.name, '.json')) {
 			this.importText = file.name.slice()
 			const reader = new FileReader()
 			const ng = this
 
+			// In onload function `this` is reference to reader itself
 			reader.onload = function () {
 				try {
 					const JSONFile = JSON.parse(this.result)
-					ng.isOldWallet = ng.walletProvider.isOldWallet(JSONFile)
-					ng._file = JSONFile
+					if (ng.walletProvider.isOldWallet(JSONFile) || ng.walletProvider.isWallet(JSONFile)) {
+						ng._file = JSONFile
+					} else {
+						throw new Error('钱包格式错误！')
+					}
 				} catch (e) {
 					console.log('file change error', e)
 					ng.showPrompt(e)
@@ -83,33 +110,45 @@ export class LoginPage {
 		prompt.present()
 	}
 
-	login () {
-		// For dev
-		if (this.WIFKey === 'test') {
+	login ({
+					 controls,
+					 value,
+					 valid
+				 }: {
+		controls: FormControl[],
+		value: LoginFormValue,
+		valid: boolean
+	}) {
+
+		const { wif: wifValue, passphrase: passphraseValue } = value
+		const { wif, passphrase } = controls
+
+		if (wifValue === 'test') {
 			this.walletProvider.wallet = JSON.parse(JSON.stringify(TEST_WALLET))
 			return this.navCtrl.setRoot(TabsPage)
 		}
 
-		if (this.WIFKey && this.isWIFKey && this.passphrase) {
-			if (!wallet.isWIF(this.WIFKey)) return this.showPrompt('WIF 格式错误！')
-			const account = new wallet.Account(this.WIFKey)
-			account.encrypt(this.passphrase)
+		if (!passphrase.valid) return
+
+		if (wifValue && this.isWIFKey && passphraseValue) {
+
+			const account = new wallet.Account(wifValue)
+			account.encrypt(passphraseValue)
 			account.isDefault = true
 			this.walletProvider.addAccount(account)
-			debug('Login with wif key after add acount')(this.walletProvider)
 			this.walletProvider.saveWallet()
 			return this.navCtrl.setRoot(TabsPage)
 		}
 
-		if (this._file && !this.isWIFKey && !this.WIFKey) {
+		if (this._file && !this.isWIFKey && !wifValue) {
 			if (this.walletProvider.isOldWallet(this._file)) {
-				this.walletProvider.upgradeAndAddToAccount(this._file, this.passphrase)
-				    .then(_ => {
-					    this.navCtrl.setRoot(TabsPage)
-				    })
-				    .catch(e => {
-					    this.showPrompt('Incorrect Password! Retry again.')
-				    })
+				this.walletProvider.upgradeAndAddToAccount(this._file, passphraseValue)
+						.then(_ => {
+							this.navCtrl.setRoot(TabsPage)
+						})
+						.catch(e => {
+							this.showPrompt('Incorrect Password! Retry again.')
+						})
 			}
 
 			if (this.walletProvider.isWallet(this._file)) {
@@ -118,4 +157,27 @@ export class LoginPage {
 			}
 		}
 	}
+}
+
+function wifValidator (wifCtrl: FormControl): Observable<ValidationErrors | null> {
+	return Observable.create(obs =>
+		wifCtrl
+			.valueChanges
+			.debounceTime(400)
+			.map(value => value.trim())
+			.map(value => {
+				if (value && wallet.isWIF(value)) {
+					return null
+				}
+				throw new Error ('invalidWIF')
+			})
+			.subscribe(
+				value => obs.next(null),
+				error => {
+					obs.next({ [error.message]: true })
+					obs.complete()
+				}
+			)
+
+	)
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core'
 import {
-	IonicPage, Loading, LoadingController, NavController, NavParams, Refresher,
-	ToastController
+	IonicPage, Loading, LoadingController, NavController, NavParams, Refresher
 } from 'ionic-angular'
 import { PriceProvider } from '../../providers/api/price.provider'
 import { MarketDetailPage } from './market-detail/market-detail'
@@ -36,7 +35,7 @@ export class MarketsPage {
 		this.loading = this.loadingCtrl.create()
 		this.loading.present()
 
-		api.cmc.getMarkets('cny')
+		api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS,  'cny')
 		    .then(
 			    coins => {
 				    console.log('expect cny price', coins)

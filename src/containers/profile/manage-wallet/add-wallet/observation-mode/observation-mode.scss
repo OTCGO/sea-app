@@ -12,14 +12,14 @@ page-import-observation {
         position: relative;
         top: 80px;
         width: 80%;
-        ion-item.login-input {
+        ion-item.login__wif-input {
             width: 95%;
             transition: all 0.2s ease-in-out;
             margin-bottom: 10px;
-            &.item-input-has-focus.input-has-focus+button.login-import {
+            &.item-input-has-focus.input-has-focus+button.login__import-button {
                 opacity: 0;
             }
-            &.ng-dirty.ng-valid+button.login-import {
+            &.ng-dirty.ng-valid+button.login__import-button {
                 opacity: 0;
             }
             .item-inner {
@@ -33,7 +33,7 @@ page-import-observation {
                 border: 1px solid rgb(222, 222, 222);
             }
         }
-        ion-item.pws-input {
+        ion-item.login__password-input {
             margin-bottom: 10px;
             width: 95%;
             &.rounded {
@@ -45,7 +45,7 @@ page-import-observation {
             }
         }
     }
-    button.login-import {
+    button.login__import-button {
         position: absolute;
         top: 1px;
         right: 1px;
@@ -64,7 +64,7 @@ page-import-observation {
             height: 1.4rem;
         }
     }
-    button.login-encryptedKey-switcher {
+    button.login__wif-switcher {
         position: absolute;
         top: 2px;
         right: 3px;
@@ -89,7 +89,7 @@ page-import-observation {
             background-color: #488aff !important;
         }
     }
-    .login-button {
+    .login__button {
         // width: 80%;
         // margin-top: 30px;
         // button {

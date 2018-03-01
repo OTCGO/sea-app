@@ -111,7 +111,7 @@ export class SendModalComponent {
 }
 
 function addressValidator (addressCtrl: FormControl): ValidationErrors {
-	const value = addressCtrl.value
+	const { value } = addressCtrl
 	return (!value || !isAddress(value))
 		? { invalidAddress: true }
 		: null

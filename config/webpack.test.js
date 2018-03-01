@@ -1,5 +1,7 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+
+
 
 module.exports = {
 	devtool: 'inline-source-map',
@@ -12,7 +14,7 @@ module.exports = {
 		rules: [{
 			test: /\.ts$/,
 			loaders: [{
-				loader: 'ts-loader'
+				loader: 'awesome-ts-loader'
 			}, 'angular2-template-loader']
 		},
 			{

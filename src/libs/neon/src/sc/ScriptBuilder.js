@@ -1,4 +1,4 @@
-import { StringStream, num2hexstring, reverseHex, int2hex, str2ab, ab2hexstring, str2hexstring } from '../utils.js'
+import { StringStream, num2hexstring, reverseHex, ensureHex, int2hex, str2ab, ab2hexstring, str2hexstring } from '../utils.js'
 import OpCode from './opCode.js'
 
 /**
@@ -14,7 +14,8 @@ class ScriptBuilder extends StringStream {
    * @return {ScriptBuilder} this
    */
   _emitAppCall (scriptHash, useTailCall = false) {
-    if (scriptHash.length !== 40) throw new Error()
+    ensureHex(scriptHash)
+    if (scriptHash.length !== 40) throw new Error('ScriptHash should be 20 bytes long!')
     return this.emit(useTailCall ? OpCode.TAILCALL : OpCode.APPCALL, reverseHex(scriptHash))
   }
 
@@ -38,6 +39,7 @@ class ScriptBuilder extends StringStream {
    * @return {ScriptBuilder} this
    */
   _emitString (hexstring) {
+    ensureHex(hexstring)
     const size = hexstring.length / 2
     if (size <= OpCode.PUSHBYTES75) {
       this.str += num2hexstring(size)
@@ -80,7 +82,7 @@ class ScriptBuilder extends StringStream {
    */
   _emitParam (param) {
     if (!param.type) throw new Error('No type available!')
-    if (!param.value) throw new Error('No value available!')
+    if (!isValidValue(param.value)) throw new Error('Invalid value provided!')
     switch (param.type) {
       case 'String':
         return this._emitString(str2hexstring(param.value))
@@ -170,6 +172,17 @@ class ScriptBuilder extends StringStream {
         throw new Error()
     }
   }
+}
+
+const isValidValue = (value) => {
+  if (value) {
+    return true
+  } else if (value === 0) {
+    return true
+  } else if (value === '') {
+    return true
+  }
+  return false
 }
 
 export default ScriptBuilder

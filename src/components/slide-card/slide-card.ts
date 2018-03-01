@@ -165,8 +165,8 @@ export class SlideCard extends SlideCardProps {
   /* TODO: try out using the ngOnChanges strategy */
 
   ngOnInit () {
-    this.throttledArrowClick$.throttle(ev => interval(300)).subscribe(this.setActiveItem.bind(this))
-    this.throttledIndicatorHover$.throttle(ev => interval(300)).subscribe(this.handleIndicatorHover.bind(this))
+    this.throttledArrowClick$.throttle(_ => interval(300)).subscribe(this.setActiveItem.bind(this))
+    this.throttledIndicatorHover$.throttle(_ => interval(300)).subscribe(this.handleIndicatorHover.bind(this))
   }
 
   ngAfterViewInit () {

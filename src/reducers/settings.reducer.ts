@@ -51,6 +51,6 @@ const initialSettingsState: SettingsState = {
 
 export const reducer = (state = initialSettingsState, action) => {
 	switch (action.type) {
-
+		default: return state
 	}
 }

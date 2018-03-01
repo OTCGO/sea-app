@@ -29,9 +29,9 @@ const log = logger('api')
  * @return {Promise<object>} Configuration object.
  */
 export const sendAsset = config => {
-  return loadBalance(getRPCEndpointFrom, config)
-    .then(url => Object.assign(config, { url }))
-    .then(c => loadBalance(getBalanceFrom, config))
+  return fillUrl(config)
+    .then(fillKeys)
+    .then(fillBalance)
     .then(c => createTx(c, 'contract'))
     .then(c => addAttributesIfExecutingAsSmartContract(c))
     .then(c => signTx(c))
@@ -61,8 +61,8 @@ export const sendAsset = config => {
  * @return {Promise<object>} Configuration object.
  */
 export const claimGas = config => {
-  return loadBalance(getRPCEndpointFrom, config)
-    .then(url => Object.assign(config, { url }))
+  return fillUrl(config)
+    .then(fillKeys)
     .then(c => loadBalance(getClaimsFrom, config))
     .then(c => createTx(c, 'claim'))
     .then(c => signTx(c))
@@ -91,9 +91,9 @@ export const claimGas = config => {
  * @return {Promise<object>} Configuration object.
  */
 export const doInvoke = config => {
-  return loadBalance(getRPCEndpointFrom, config)
-    .then(url => Object.assign(config, { url }))
-    .then(c => loadBalance(getBalanceFrom, config))
+  return fillUrl(config)
+    .then(fillKeys)
+    .then(fillBalance)
     .then(c => createTx(c, 'invocation'))
     .then(c => addAttributesIfExecutingAsSmartContract(c))
     .then(c => addAttributesForMintToken(c))
@@ -110,6 +110,36 @@ export const doInvoke = config => {
     })
 }
 
+export const fillUrl = config => {
+  if (config.url) return Promise.resolve(config)
+  return loadBalance(getRPCEndpointFrom, config)
+    .then(url => {
+      return Object.assign(config, { url })
+    })
+}
+/**
+ * Retrieves Balance if no balance has been attached
+ * @param {object} config
+ * @return {Promise<object>} Configuration object.
+ */
+export const fillBalance = config => {
+  if (config.balance) return Promise.resolve(config)
+  return loadBalance(getBalanceFrom, config)
+}
+
+/**
+ * Fills the relevant key fields if account has been attached.
+ * @param {object} config
+ * @return {Promise<object>} Configuration object.
+ */
+export const fillKeys = config => {
+  if (config.account) {
+    if (!config.address) config.address = config.account.address
+    if (!config.privateKey && !config.signingFunction) config.privateKey = config.account.privateKey
+    if (!config.publicKey && config.signingFunction) config.publicKey = config.account.publicKey
+  }
+  return Promise.resolve(config)
+}
 /**
  * Creates a transaction with the given config and txType.
  * @param {object} config - Configuration object.
@@ -117,6 +147,7 @@ export const doInvoke = config => {
  * @return {Promise<object>} Configuration object + tx
  */
 export const createTx = (config, txType) => {
+  if (config.tx) return config
   if (typeof txType === 'string') txType = txType.toLowerCase()
   let tx
   switch (txType) {
@@ -196,7 +227,7 @@ export const sendTx = config => {
       if (res.result === true) {
         res.txid = config.tx.hash
         if (config.balance) {
-          config.balance.applyTx(config.tx, true)
+          config.balance.applyTx(config.tx, false)
         }
       } else {
         const dump = {
@@ -404,7 +435,7 @@ export const getRPCEndpointFrom = (config, api) => {
  * @param {string} config.net - 'MainNet', 'TestNet' or a custom URL.
  * @param {string} config.address - Wallet address
  * @param {object} api - The endpoint API object. eg, neonDB or Neoscan.
- * @return {Promise<string>} - Transaction history
+ * @return {Promise<History>} - Transaction history
  */
 export const getTransactionHistoryFrom = (config, api) => {
   return new Promise((resolve) => {
@@ -422,7 +453,7 @@ export const getTransactionHistoryFrom = (config, api) => {
  * @param {object} config - Configuration object.
  * @param {string} config.net - 'MainNet', 'TestNet' or a custom URL.
  * @param {object} api - The endpoint API object. eg, neonDB or Neoscan.
- * @return {Promise<string>} - URL
+ * @return {Promise<number>} Current height.
  */
 export const getWalletDBHeightFrom = (config, api) => {
   return new Promise((resolve) => {

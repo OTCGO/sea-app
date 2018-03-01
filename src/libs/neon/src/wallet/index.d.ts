@@ -1,5 +1,13 @@
 import { Fixed8 } from '../utils'
-import { Transaction } from '../transactions/index'
+import { Transaction } from '../transactions'
+
+export interface Account {
+  WIF: string
+  privateKey: string
+  publicKey: string
+  scriptHash: string
+  address: string
+}
 
 export interface AssetBalance {
   balance: Fixed8
@@ -31,9 +39,8 @@ export interface ScryptParams {
 
 export interface WalletFile {
   name: string
-  version: string
   scrypt: WalletScryptParams
-  accounts: Account[]
+  accounts: WalletAccount[]
   extra: object
 }
 
@@ -62,13 +69,13 @@ export class Account implements WalletAccount {
   publicKey: string
   scriptHash: string
   address: string
+
   label: string
   isDefault: boolean
   lock: boolean
-  extra: any
   key: string
-  contract
-
+  contract: Object | any
+  extra: Object
 
   getPublicKey(encoded: boolean): string
   encrypt(keyphrase: string, scryptParams?: ScryptParams): Account
@@ -127,8 +134,8 @@ export function generateRandomArray(length: number): string
 //nep2
 export function encrypt(wifKey: string, keyphrase: string, scryptParams?: ScryptParams): string
 export function decrypt(encryptedKey: string, keyphrase: string, scryptParams?: ScryptParams): string
-export function encryptAsync(wifKey: string, keyphrase: string, scryptParams?: ScryptParams): Promise<string>
-export function decryptAsync(encryptedKey: string, keyphrase: string, scryptParams?: ScryptParams): Promise<string>
+export function encryptAsync(wifKey: string, keyphrase: string, scryptParams?: ScryptParams): string
+export function decryptAsync(encryptedKey: string, keyphrase: string, scryptParams?: ScryptParams): string
 
 //verify
 export function isNEP2(nep2: string): boolean
@@ -143,7 +150,6 @@ export class Wallet {
   scrypt: WalletScryptParams
   accounts: Account[]
   extra: object
-  defaultAccount: Account
 
   constructor(file: WalletFile)
 
@@ -159,3 +165,5 @@ export class Wallet {
   setDefault(index: number): this
   writeFile(filepath: string): boolean
 }
+
+

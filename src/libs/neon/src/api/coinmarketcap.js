@@ -3,9 +3,40 @@ import logger from '../logging'
 
 const log = logger('api')
 
-const CURRENCY = ['aud', 'brl', 'cad', 'chf', 'clp', 'cny', 'czk', 'dkk', 'eur', 'gbp', 'hkd', 'huf', 'idr', 'ils', 'inr', 'jpy', 'krw', 'mxn', 'myr', 'nok', 'nzd', 'php', 'pkr', 'pln', 'rub', 'sek', 'sgd', 'thb', 'try', 'twd', 'usd', 'zar']
-
-const NEO_CHAIN_COINS = ['NEO', 'GAS', 'TNC', 'QLC', 'TKY', 'RHT', 'CPX', 'ACAT', 'ZPT', 'APH', 'DBC', 'RPX', 'BCS']
+const CURRENCY = [
+  'aud',
+  'brl',
+  'cad',
+  'chf',
+  'clp',
+  'cny',
+  'czk',
+  'dkk',
+  'eur',
+  'gbp',
+  'hkd',
+  'huf',
+  'idr',
+  'ils',
+  'inr',
+  'jpy',
+  'krw',
+  'mxn',
+  'myr',
+  'nok',
+  'nzd',
+  'php',
+  'pkr',
+  'pln',
+  'rub',
+  'sek',
+  'sgd',
+  'thb',
+  'try',
+  'twd',
+  'usd',
+  'zar'
+]
 
 /**
  * Returns the price of coin in the symbol given
@@ -14,17 +45,17 @@ const NEO_CHAIN_COINS = ['NEO', 'GAS', 'TNC', 'QLC', 'TKY', 'RHT', 'CPX', 'ACAT'
  * @return {Promise<number>} price
  */
 export const getPrice = (coin = 'NEO', currency = 'usd') => {
-	log.warn(`This is deprecated in favor of getPrices. There is a known bug for NEP5 tokens with this function.`)
-	return query(`https://api.coinmarketcap.com/v1/ticker/${coin.toLowerCase()}/`, currency)
-		.then((mapping) => {
-			const price = mapping[coin.toUpperCase()]
-			if (price) return price
-			else throw new Error('Something went wrong with the CoinMarketCap API!')
-		})
-		.catch(err => {
-			log.error(err.message)
-			throw err
-		})
+  log.warn(`This is deprecated in favor of getPrices. There is a known bug for NEP5 tokens with this function.`)
+  return query(`https://api.coinmarketcap.com/v1/ticker/${coin.toLowerCase()}/`, currency)
+    .then((mapping) => {
+      const price = mapping[coin.toUpperCase()]
+      if (price) return price
+      else throw new Error('Something went wrong with the CoinMarketCap API!')
+    })
+    .catch(err => {
+      log.error(err.message)
+      throw err
+    })
 }
 
 /**
@@ -34,60 +65,63 @@ export const getPrice = (coin = 'NEO', currency = 'usd') => {
  * @return {Promise<object>} object mapping symbol to price
  */
 export const getPrices = (coins = ['NEO'], currency = 'usd') => {
-	return query(`https://api.coinmarketcap.com/v1/ticker/`, currency)
-		.then((response) => {
-			const { data } = response
-			if (data.error) throw new Error(data.error)
-			return mapPrices(data, currency)
-		})
-		.then((mapping) => {
-			coins = coins.map((coin) => coin.toUpperCase())
-			const prices = pick(mapping, ...coins)
+  return query(`https://api.coinmarketcap.com/v1/ticker/`, currency)
+    .then((response) => {
+      const { data } = response
+      if (data.error) throw new Error(data.error)
+      return mapPrices(data, currency)
+    })
+    .then((mapping) => {
+      coins = coins.map((coin) => coin.toUpperCase())
+      const prices = pick(mapping, ...coins)
 
-			if (!coins.some((coin) => !prices[coin])) return prices
-			else throw new Error('None of the coin symbols are supported by CoinMarketCap!')
-		})
-		.catch(err => {
-			log.error(err.message)
-			throw err
-		})
+      if (!coins.some((coin) => !prices[coin])) return prices
+      else throw new Error('None of the coin symbols are supported by CoinMarketCap!')
+    })
+    .catch(err => {
+      log.error(err.message)
+      throw err
+    })
 }
 
-export const getMarkets = (coins = ['NEO'], currency = 'usd') => {
-	return query(`https://api.coinmarketcap.com/v1/ticker/`, currency)
-		.then((response) => {
-			const { data } = response
-			if (data.error) throw new Error(data.error)
-			return mapMarkets(data, currency)
-		})
-		.catch(err => {
-			log.error(err.message)
-			throw err
-		})
-}
+export const getMarkets = (coins, currency = 'usd') =>
+  query(`https://api.coinmarketcap.com/v1/ticker/`, currency)
+	  .then((response) => {
+		  const { data } = response
+		  if (data.error) throw new Error(data.error)
+		  return mapMarkets(coins, data, currency)
+	  })
+    .catch(err => {
+      log.error(err.message)
+      throw err
+    })
 
 function query (url, currency) {
-	currency = currency.toLowerCase()
+  currency = currency.toLowerCase()
 
-	if (CURRENCY.includes(currency)) {
-		return axios.get(`${url}?limit=0&convert=${currency}`)
-	} else {
-		return Promise.reject(new ReferenceError(`${currency} is not one of the accepted currencies!`))
-	}
+  if (CURRENCY.includes(currency)) {
+    return axios.get(`${url}?limit=0&convert=${currency}`)
+  } else {
+    return Promise.reject(new ReferenceError(`${currency} is not one of the accepted currencies!`))
+  }
 }
 
 function mapPrices (tickers, currency) {
-	const mapping = {}
+  const mapping = {}
 
-	tickers.forEach((ticker) => {
-		mapping[ticker.symbol] = parseFloat(ticker[`price_${currency.toLowerCase()}`])
-	})
+  tickers.forEach((ticker) => {
+    mapping[ticker.symbol] = parseFloat(ticker[`price_${currency.toLowerCase()}`])
+  })
 
-	return mapping
+  return mapping
 }
 
-function mapMarkets (tickers, currency) {
-	return tickers.filter(data => NEO_CHAIN_COINS.includes(data['symbol']))
+function pick (obj, ...props) {
+  return Object.assign({}, ...props.map((prop) => ({ [prop]: obj[prop] })))
+}
+
+function mapMarkets (coins, tickers, currency) {
+  return tickers.filter(data => coins.includes(data['symbol']))
 	              .map(
 		              ticker => ({
 			              symbol: ticker.symbol,
@@ -97,8 +131,4 @@ function mapMarkets (tickers, currency) {
 			              percent_change_7d: ticker['percent_change_7d']
 		              })
 	              )
-}
-
-function pick (obj, ...props) {
-	return Object.assign({}, ...props.map((prop) => ({ [prop]: obj[prop] })))
 }

@@ -10,18 +10,20 @@ import 'rxjs/add/operator/distinctUntilChanged'
 
 import { includes } from 'lodash'
 
-
+/**
+ * TODO: Temporary using Neon.api.cmc instead
+ */
 @Injectable()
 export class PriceProvider {
 	fixerApi = '//api.fixer.io'
 	ccmApi = 'https://api.coinmarketcap.com/v1'
 	ticker = 'ticker'
 
-	CURRENCIES: string[] = ['aud', 'brl', 'cad', 'chf', 'clp', 'cny', 'czk', 'dkk', 'eur', 'gbp', 'hkd', 'huf', 'idr',
+	static CURRENCIES: string[] = ['aud', 'brl', 'cad', 'chf', 'clp', 'cny', 'czk', 'dkk', 'eur', 'gbp', 'hkd', 'huf', 'idr',
 	                        'ils', 'inr', 'jpy', 'krw', 'mxn', 'myr', 'nok', 'nzd', 'php', 'pkr', 'pln', 'rub', 'sek',
 	                        'sgd', 'thb', 'try', 'twd', 'usd', 'zar']
 
-	NEO_CHAIN_COINS: string[] = ['NEO', 'GAS', 'TNC', 'QLC', 'TKY', 'RHT', 'CPX', 'ACAT', 'ZPT', 'APH', 'DBC', 'RPX', 'BCS']
+	static NEO_CHAIN_COINS: string[] = ['NEO', 'GAS', 'TNC', 'QLC', 'TKY', 'RHT', 'CPX', 'ACAT', 'ZPT', 'APH', 'DBC', 'RPX', 'BCS', 'ONT']
 
 
 	constructor (private http: HttpClient) {}
@@ -37,7 +39,7 @@ export class PriceProvider {
 	private query (url, currency) {
 		currency = currency.toLowerCase()
 
-		if (includes(this.CURRENCIES, currency)) {
+		if (includes(PriceProvider.CURRENCIES, currency)) {
 			return this.http
 			           .get(url, { params: { limit: 0, convert: currency } } as any)
 			           .map((res: any) => {
@@ -52,7 +54,7 @@ export class PriceProvider {
 	}
 
 	private mapPrices (tickers, currency) {
-		return tickers.filter(data => includes(this.NEO_CHAIN_COINS, data['symbol']))
+		return tickers.filter(data => includes(PriceProvider.NEO_CHAIN_COINS, data['symbol']))
 		              .map(
 			              ticker => ({
 				              symbol: ticker.symbol,

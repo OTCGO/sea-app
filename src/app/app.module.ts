@@ -57,4 +57,3 @@ import { BalancesEffects } from '../effects/balances.effect'
   ]
 })
 export class AppModule { }
-console.log()

@@ -1,30 +1,132 @@
 page-login {
-    ion-content .scroll-content {
-        margin-bottom: 67px;
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 0 !important;
-        overflow-y: hidden;
-    }
+    .login {
+        .scroll-content {
+            margin-top: 0!important;
+        }
+        &__container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            padding: 5vw;
+            text-align: center;
+            width: 100%;
+            margin: 0 auto;
+            z-index: 2;
+        }
 
-    ion-row {
-        align-items: center;
-        text-align: center;
-        @media only screen and (min-width: 768px) {
-            ion-col.col {
-                margin: 0 auto;
-                max-width: 40%;
+        &__title {
+            padding-top: 5vh;
+            margin-bottom: 5vh;
+        }
+
+        &__error {
+            color: rgb(232, 61, 0);
+            height: 10vh;
+        }
+
+        &__tip {
+            padding-top: 10vh;
+            a {
+                cursor: pointer;
+                color: rgb(193, 193, 193);
+                text-decoration: none;
+            }
+        }
+
+        &__button {
+            margin-top: 30px;
+
+            button {
+                border: 1px solid #008cd9;
+                &:hover:not(.disable-hover) {
+                    background: none;
+                }
+            }
+        }
+
+        &__password-section {
+            padding-left: 2vh;
+            padding-right: 2vh;
+        }
+
+        .item {
+            padding-left: 0;
+        }
+
+        .login__wif-section {
+            .login__wif-input {
+                transition: all 0.2s ease-in-out;
+                padding-left: 2vh;
+                margin-bottom: 10px;
+                min-height: 3.8rem;
+                max-height: 3.8rem;
+
+                &.item-input-has-focus.input-has-focus + button.login__import-button,
+                &.ng-dirty + button.login__import-button {
+                    opacity: 0;
+                }
+
+                .item-inner {
+                    border: none;
+                }
+
+                &.rounded {
+                    width: 100%;
+                    -moz-border-radius: 50px;
+                    -webkit-border-radius: 50px;
+                    border-radius: 50px;
+                    border: 1px solid rgb(222, 222, 222);
+                }
+            }
+
+            .login__import-button,
+            .login__wif-switcher {
+                position: absolute;
+                top: 7px;
+                right: 8px;
+                width: 3.4rem;
+                min-height: 3.4rem;
+                border-radius: 50%;
+                transition: all 0.2s ease-in-out;
+
+                box-shadow: rgba(0, 147, 211, 0.5) -3px 0 4px 0px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                & .icon {
+                    height: 1.6rem;
+                    width: 1.6rem;
+                }
+            }
+
+            .login__import-button {
+                color: #fff;
+                background: linear-gradient(270deg, rgb(47, 177, 213), rgb(47, 177, 213) 6%, rgb(50, 118, 217));
+
+                &:active,
+                &:focus,
+                &.is-active {
+                    top: 5px;
+                    right: 5px;
+                    height: 3.8rem;
+                    width: 100%;
+                    border-radius: 50px;
+                    box-shadow: none;
+
+                    & .icon {
+                        display: none;
+                    }
+                }
+            }
+
+            .login__wif-switcher {
+                background-color: #fff;
             }
         }
     }
 
-    button[ion-button] {
-        width: 80%;
-        margin: 0 auto;
-    }
-    .title {
-        top: 20px;
-    }
     input {
         &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
             text-align: center;
@@ -37,128 +139,6 @@ page-login {
         }
         &:-moz-placeholder { /* Firefox 18- */
             text-align: center;
-        }
-    }
-    ion-list.login-list {
-        position: relative;
-        width: 80%;
-        margin: 0 auto;
-
-        ion-item.login-input {
-            width: 95%;
-            transition: all 0.2s ease-in-out;
-            margin-bottom: 10px;
-            min-height: 3.8rem;
-            max-height: 3.8rem;
-
-            &.item-input-has-focus.input-has-focus + button.login-import {
-                opacity: 0;
-            }
-
-            &.ng-dirty.ng-valid + button.login-import {
-                opacity: 0;
-            }
-            .item-inner {
-                border: none;
-            }
-            &.rounded {
-                width: 100%;
-                -moz-border-radius: 50px;
-                -webkit-border-radius: 50px;
-                border-radius: 50px;
-                border: 1px solid rgb(222, 222, 222);
-            }
-        }
-        ion-item.pws-input {
-            width: 95%;
-        }
-    }
-    button.login-import {
-        position: absolute;
-        top: 2px;
-        right: 3px;
-        font-size: 1.4rem;
-        z-index: 20;
-        padding: 0 6px;
-
-        min-height: 3.4rem;
-        width: 3.4rem;
-
-        color: #fff;
-        background: linear-gradient(270deg, rgb(47, 177, 213), rgb(47, 177, 213) 6%, rgb(50, 118, 217));
-        box-shadow: rgba(0, 147, 211, 0.5) -3px 0 4px 0px;
-        border-radius: 50px;
-
-        transition: all 0.2s ease-in-out;
-
-        & .icon {
-            width: 1.4rem;
-            height: 1.4rem;
-        }
-
-        &:active,
-        &:focus,
-        &.is-active {
-            & .icon {
-                display: none;
-            }
-            top: 0;
-            right: 0;
-            height: 3.8rem;
-            width: 100%;
-            border-radius: 50px;
-            box-shadow: none;
-            background: linear-gradient(270deg, rgb(47, 177, 213), rgb(50, 118, 217));
-        }
-    }
-    button.login-encryptedKey-switcher {
-        position: absolute;
-        top: 2px;
-        right: 3px;
-        z-index: 30;
-        background-color: #fff;
-        box-shadow: rgba(27, 119, 179, 0.95) -3px 0 4px 0px;
-        font-weight: bolder;
-
-        height: 3.4rem;
-        width: 3.4rem;
-        border-radius: 50px;
-
-        transition: all 0.2s ease-in;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        & .icon {
-            height: 1.6rem;
-            width: 1.6rem;
-        }
-
-        &:active,
-        &:focus,
-        &.is-active {
-            background-color: #008cd9 !important;
-        }
-    }
-    .login-button {
-        width: 80%;
-        margin-top: 30px;
-
-        button {
-            border: 1px solid #008cd9;
-            &:hover:not(.disable-hover) {
-                background: none;
-            }
-        }
-    }
-    .login-tip {
-        position: absolute;
-        bottom: 20px;
-        cursor: pointer;
-        a {
-            color: rgb(193, 193, 193);
-            text-decoration: none;
         }
     }
 }

@@ -21,17 +21,19 @@ export class FileStorageProvider {
 		)
 	}
 
-	save (fileName, text) {
-		return this.file
-		           .checkFile(this.storageDirectory, fileName)
-		           .then(_ => this.file.writeExistingFile(this.storageDirectory, fileName, text))
-		           .catch(_ => this.file.writeFile(this.storageDirectory, fileName, text))
+	async save (fileName, text) {
+		const fileExits = await this.file
+																.checkFile(this.storageDirectory, fileName)
+																.then(_ => this.file.writeExistingFile(this.storageDirectory, fileName, text))
+																.catch(_ => this.file.writeFile(this.storageDirectory, fileName, text))
 	}
 
 	async checkFile (fileName) {
 		try {
+			console.log('No error on check file')
 			return await this.file.checkFile(this.storageDirectory, fileName)
 		} catch (e) {
+			console.log('Error on check file', e)
 			return Promise.resolve(false)
 		}
 	}

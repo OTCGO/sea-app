@@ -3,7 +3,6 @@ import {
 	ChangeDetectorRef,
 	Component,
 	Directive,
-	ElementRef,
 	Host,
 	Input,
 	OnDestroy,
@@ -50,7 +49,6 @@ export class ExpansionPanelHeader implements OnDestroy {
 
 	constructor (
 		@Host() public panel: ExpansionPanel,
-		private _element: ElementRef,
 		private _changeDetectorRef: ChangeDetectorRef
 	) {
 		this._parentChangeSubscription = merge(

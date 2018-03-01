@@ -45,7 +45,7 @@ export class WalletProvider {
 
 	async upgradeAndAddToAccount (oldWalletJSON: object, passphrase: string): Promise<boolean | Error> {
 		if (!this.isOldWallet(oldWalletJSON))
-			return Promise.reject(new Error('Is not an old wallet, Please check again!'))
+			return await Promise.reject(new Error('Is not an old wallet, Please check again!'))
 
 		let account
 		try {
@@ -53,14 +53,15 @@ export class WalletProvider {
 			account.isDefault = true
 			this.wallet.addAccount(account)
 			this.saveWallet()
-			return Promise.resolve(true)
+			return await Promise.resolve(true)
 		} catch (e) {
-			return Promise.reject(new Error('Incorrect password!'))
+			return await Promise.reject(new Error('Incorrect password!'))
 		}
 	}
 
-	saveWallet () {
-		this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, this.wallet.export())
+	async saveWallet () {
+		const walletTextFile = JSON.stringify(this.wallet.export())
+		return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
 	}
 
 	private _upgradeWallet (oldWalletJSON, passphrase) {

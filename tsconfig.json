@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "lib": [
       "dom",
       "es2015",

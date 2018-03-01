@@ -46,6 +46,9 @@ class RPCClient {
     }
   }
 
+  get [Symbol.toStringTag] () {
+    return 'RPC Client'
+  }
   /**
    * Takes an Query object and executes it. Adds the Query object to history.
    * @param {Query} query
@@ -108,7 +111,7 @@ class RPCClient {
    * @param {number} index
    * @return {Promise<string>}
    */
-  getBlockHash(index) {
+  getBlockHash (index) {
     return this.execute(Query.getBlockHash(index))
       .then((res) => {
         return res.result

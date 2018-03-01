@@ -7,7 +7,7 @@ import { AlertController, IonicModule, NavController, NavParams } from 'ionic-an
 import { AlertControllerMock } from 'ionic-mocks'
 import { NavMock } from '../../../config/mocks'
 import { FileStorageProvider } from '../../providers/file-storage.provider'
-import { File } from '@ionic-native/file'
+import { File as IonFile } from '@ionic-native/file'
 import { FileMock } from '@ionic-native-mocks/file'
 
 class NavParamsMock {
@@ -16,6 +16,10 @@ class NavParamsMock {
 	get () {
 
 	}
+}
+
+const mockFile: File = {
+
 }
 
 const wrongWIF = 'APSXOIJA_)(*'
@@ -38,7 +42,7 @@ describe('Login page', () => {
 			providers: [
 				WalletProvider,
 				FileStorageProvider,
-				{ provide: File, useClass: FileMock },
+				{ provide: IonFile, useClass: FileMock },
 				{ provide: NavController, useClass: NavMock },
 				{ provide: NavParams, useClass: NavParamsMock },
 				{ provide: AlertController, useFactory: () => AlertControllerMock.instance() }

@@ -1,4 +1,3 @@
-
 class Account {
 	wallet
 

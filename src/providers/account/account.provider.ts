@@ -4,7 +4,6 @@ import { WalletProvider } from '../wallet/wallet.provider'
 
 const { Account } = wallet
 
-// Abstract Account level from wallet
 @Injectable()
 export class AccountProvider {
 	accounts = this.walletProvider.wallet.accounts

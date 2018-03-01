@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core'
 import {
-	IonicPage, Loading, LoadingController, NavController, Refresher,
-	ToastController
+	IonicPage,
+	Loading,
+	LoadingController,
+	NavController,
+	Refresher
 } from 'ionic-angular'
 
-import { Store } from '@ngrx/store'
+import { select, Store } from '@ngrx/store'
 
 import { PossessionDetailPage } from './possession-detail/possession-detail'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
@@ -13,6 +16,7 @@ import * as fromBalances from '../../reducers/balances.reducer'
 import * as balancesAction from '../../actions/balances.action'
 import { BalancesState } from '../../reducers/balances.reducer'
 import { AccountProvider } from '../../providers/account/account.provider'
+import { NotificationProvider } from '../../providers/notification.provider'
 
 @IonicPage({
 	name: 'Possessions',
@@ -27,13 +31,15 @@ export class PossessionsPage implements OnInit {
 	possessionDetailPage = PossessionDetailPage
 	account = this.accountProvider.defaultAccount
 	loading: Loading = this.loadingCtrl.create()
+	balances$ = this.store.pipe(select(fromBalances.selectEntities));
+
 
 	constructor (
 		public navCtrl: NavController,
-		private toastCtrl: ToastController,
 		private walletProvider: WalletProvider,
 		private loadingCtrl: LoadingController,
 		private accountProvider: AccountProvider,
+		private notificationProvider: NotificationProvider,
 		private store: Store<BalancesState>
 	) {}
 
@@ -43,31 +49,20 @@ export class PossessionsPage implements OnInit {
 
 	async ngOnInit () {
 		await this.loading.present()
-
-		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.store.select(fromBalances.selectError).subscribe(
-			error => error && this.showMsg(error)
-		)
-
+		this.loadBalance()
 		await this.loading.dismiss()
 	}
 
 	loadBalance () {
-
+		this.store.dispatch(new balancesAction.Get(this.account.address))
+		this.store.select(fromBalances.selectError).subscribe(
+			error => error && this.notificationProvider.emit({ message: error })
+		)
 	}
 
 	doRefresh (e: Refresher) {
 		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.showMsg('刷新成功！')
+		this.notificationProvider.emit({ message:'刷新成功！' })
 		e.complete()
-	}
-
-	showMsg (message) {
-		const toast = this.toastCtrl.create({
-			message,
-			duration: 2000
-		})
-
-		return toast.present()
 	}
 }

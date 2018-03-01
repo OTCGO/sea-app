@@ -1,12 +1,9 @@
-import { Component } from '@angular/core'
-import { Observable } from 'rxjs/Observable'
-import { select, Store } from '@ngrx/store'
-import * as fromBalances from '../../reducers/balances.reducer'
+import { Component, Input } from '@angular/core'
 
 @Component({
 	selector: 'possessions-list',
 	template: `
-	  <ion-card class="card-list" *ngFor="let balance of balances$ | async">
+	  <ion-card class="card-list" *ngFor="let balance of balances">
 			  
 		  <ion-item [navPush]="possessionDetailPage" [navParams]="balance">
 			  <div class="possessions__icon" item-start>
@@ -24,14 +21,5 @@ import * as fromBalances from '../../reducers/balances.reducer'
 	`
 })
 export class PossessionsListComponent {
-	balances$: Observable<Array<any>>
-
-	constructor (private store: Store<fromBalances.BalancesState>) { }
-
-	ngOnInit () {
-		this.balances$ = this.store.pipe(
-			select(fromBalances.selectEntities)
-		)
-	}
-
+	@Input() balances: Array<any>
 }

@@ -12,6 +12,7 @@ import { PossessionDetailProvider } from '../containers/possessions/possession-d
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
 import { FileStorageProvider } from '../providers/file-storage.provider'
+import { NotificationProvider } from '../providers/notification.provider'
 
 
 
@@ -30,7 +31,8 @@ import { FileStorageProvider } from '../providers/file-storage.provider'
 		SendModalProvider,
 		AccountProvider,
 		ClaimsProvider,
-	  FileStorageProvider
+	  FileStorageProvider,
+	  NotificationProvider
 	]
 })
 export class CoreModule {

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
-import { Platform } from 'ionic-angular'
+import { Platform, ToastController, ToastOptions } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
-import { File } from '@ionic-native/file'
 import { TranslateService } from '@ngx-translate/core'
 
 import { WalletProvider } from '../providers/wallet/wallet.provider'
+import { NotificationProvider } from '../providers/notification.provider'
 
 
 @Component({
@@ -15,13 +15,18 @@ export class MyApp {
 	rootPage: any
 
 	constructor (
-		private file: File,
 		private platform: Platform,
 		private statusBar: StatusBar,
 		private splashScreen: SplashScreen,
+		private toastCtrl: ToastController,
 		private walletProvider: WalletProvider,
+	  private notificationProvider: NotificationProvider,
 	  private translateService: TranslateService
 	) {
+
+	}
+
+	ngOnInit () {
 		this.initApp()
 	}
 
@@ -32,14 +37,19 @@ export class MyApp {
 			this.splashScreen.hide()
 
 			this.initWallet().then(
-				_=> this.initTranslate()
+				_=> {
+					this.initTranslate()
+					this.subscribeNotification()
+				}
 			)
 		})
 	}
 
-	initWallet () {
-		if (this.platform.is('mobile'))
-			this.walletProvider.initWallet()
+	async initWallet () {
+		const fileExits = await this.walletProvider.checkWalletFile()
+		if (!fileExits)
+			this.walletProvider.setWallet()
+		this.rootPage = fileExits ? 'Tabs' : 'Login'
 	}
 
 	initTranslate () {
@@ -52,8 +62,20 @@ export class MyApp {
 		} else {
 			this.translateService.use('en');
 		}
+	}
 
+	subscribeNotification () {
+		this.notificationProvider.notification$.subscribe((opts: ToastOptions) => this.showNotification(opts))
+	}
 
+	showNotification (opts: ToastOptions) {
+		const toastOptions = Object.assign({
+			dismissOnPageChange: true,
+			position: 'bottom',
+			duration: 3000
+		}, opts)
 
+		const toast = this.toastCtrl.create(toastOptions)
+		toast.present()
 	}
 }

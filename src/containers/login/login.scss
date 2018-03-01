@@ -2,14 +2,27 @@ page-login {
     ion-content .scroll-content {
         margin-bottom: 67px;
         display: flex;
-        justify-content: center;
-        align-items: center;
         flex-direction: column;
         padding-bottom: 0 !important;
         overflow-y: hidden;
     }
+
+    ion-row {
+        align-items: center;
+        text-align: center;
+        @media only screen and (min-width: 768px) {
+            ion-col.col {
+                margin: 0 auto;
+                max-width: 40%;
+            }
+        }
+    }
+
+    button[ion-button] {
+        width: 80%;
+        margin: 0 auto;
+    }
     .title {
-        position: absolute;
         top: 20px;
     }
     input {
@@ -29,7 +42,7 @@ page-login {
     ion-list.login-list {
         position: relative;
         width: 80%;
-        margin: 0;
+        margin: 0 auto;
 
         ion-item.login-input {
             width: 95%;

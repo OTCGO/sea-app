@@ -6,6 +6,5 @@
 
 	<possessions-info [address]="account.address"></possessions-info>
 
-	<possessions-list></possessions-list>
-
+	<possessions-list [balances]="balances$ | async"></possessions-list>
 </ion-content>

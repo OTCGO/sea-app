@@ -1,5 +1,3 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity'
-
 type I18n = {
 	"zh-cn": 'chinease'
 	"en": 'english'

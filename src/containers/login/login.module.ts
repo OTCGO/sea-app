@@ -13,7 +13,6 @@ const COMPONENTS = [
   imports: [
     TranslateModule.forChild(),
     IonicPageModule.forChild(LoginPage)
-  ],
-  exports: COMPONENTS
+  ]
 })
 export class LoginPageModule {}

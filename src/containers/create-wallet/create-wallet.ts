@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import {
   IonicPage, LoadingController, NavController,
-  NavParams, ToastController
+  NavParams
 } from 'ionic-angular'
 import { LoginPage } from '../login/login'
 
@@ -10,6 +10,7 @@ import { WalletProvider } from '../../providers/wallet/wallet.provider'
 import { BackupWalletPage } from './backup-wallet/backup-wallet'
 import { debug } from '../../shared/utils'
 import { TranslateService } from '@ngx-translate/core'
+import { NotificationProvider } from '../../providers/notification.provider'
 
 @IonicPage({
   name: 'CreateWallet',
@@ -33,10 +34,9 @@ export class CreateWalletPage {
 
   constructor (
     private navCtrl: NavController,
-    private navParams: NavParams,
     private loadingCtrl: LoadingController,
     private walletProvider: WalletProvider,
-    private toastCtrl: ToastController,
+    private notificationProvider: NotificationProvider,
     private translateService: TranslateService
   ) {
     this.translateService.onLangChange.subscribe(value => {
@@ -60,11 +60,12 @@ export class CreateWalletPage {
   async createWallet () {
     if (this.passphrase1 &&
        !this.validatePassphraseStrength(this.passphrase1))
-      return this.showPrompt('Password too short')
-    if (this.passphrase1 !== this.passphrase2)
-      return
+      this.notificationProvider.emit({ message: 'Password too short' })
+
+    if (this.passphrase1 !== this.passphrase2) return
+
     if (this.wif && !wallet.isWIF(this.wif))
-      return this.showPrompt('WIF 错误')
+      return this.notificationProvider.emit({ message: 'Password too short' })
 
     let i = await this.createLoading('Creating wallet!')
 
@@ -93,7 +94,7 @@ export class CreateWalletPage {
       await this.navCtrl.push(this.backupWalletPage)
     } catch (e) {
       console.log(e)
-      this.showPrompt(e)
+      this.notificationProvider.emit({ message: e })
     }
 
   }
@@ -110,14 +111,4 @@ export class CreateWalletPage {
 
     return Promise.resolve(loading)
   }
-
-  showPrompt (message) {
-    const toast = this.toastCtrl.create({
-      message,
-      duration: 3000
-    })
-
-    return toast.present()
-  }
-
 }

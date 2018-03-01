@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core'
 import {
 	AlertController,
-	IonicPage, LoadingController, NavParams, ToastController,
+	IonicPage,
+	LoadingController,
+	NavParams,
 	ViewController
 } from 'ionic-angular'
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
@@ -9,6 +11,7 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } fro
 import { SendModalProvider } from './send-modal.provider'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { isAddress } from './send-modal.provider'
+import { NotificationProvider } from '../../../providers/notification.provider'
 
 
 @IonicPage({
@@ -26,7 +29,7 @@ export class SendModalComponent {
 		public viewCtrl: ViewController,
 		public navParams: NavParams,
 		private barcodeScanner: BarcodeScanner,
-		private toastCtrl: ToastController,
+		private notificationProvider: NotificationProvider,
 		private alertCtrl: AlertController,
 		private loadingCtrl: LoadingController,
 		private sendModalProvider: SendModalProvider,
@@ -79,7 +82,7 @@ export class SendModalComponent {
 			    })
 			    if (result) {
 				    await this.dismiss()
-				    await this.toastCtrl.create({ message: '转账成功', duration: 3000 }).present()
+				    this.notificationProvider.emit({ message: '转账成功' })
 			    }
 		    })
 		    .catch(err => {
@@ -102,10 +105,7 @@ export class SendModalComponent {
 			    this.toAddress.setValue(data.text)
 		    })
 		    .catch(err => {
-			    const toast = this.toastCtrl.create({
-				    message: err
-			    })
-			    toast.present()
+			    this.notificationProvider.emit({ message: err })
 		    })
 	}
 }

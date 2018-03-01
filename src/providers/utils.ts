@@ -26,11 +26,11 @@ export const doVerify = (pubkey, msg, sigval) => {
 	return provSignature.verify(sigval)
 }
 
-export const decryptOldWallet = (enckey, pwd) => (<any>CryptoJS).AES
+export const decryptPrv = (enckey, pwd) => CryptoJS.AES
                                                    .decrypt(enckey, pwd)
                                                    .toString((<any>CryptoJS).enc.Utf8)
 
-export const verifyOldWallet = (prvkey, pubkey) => {
+export const verifyKeyPair = (prvkey, pubkey) => {
 	const msg = 'aaa'
 	const sigval = doSign(prvkey, msg)
 	return doVerify(pubkey, msg, sigval)

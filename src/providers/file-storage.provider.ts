@@ -5,11 +5,15 @@ import { Platform } from 'ionic-angular'
 @Injectable()
 export class FileStorageProvider {
 
-	private storageDirectory: string = this.platform.is('android')
-		? this.file.dataDirectory
-		: this.file.applicationDirectory
+	private storageDirectory: string
 
-	constructor (private file: File, private platform: Platform) {}
+	constructor (private file: File, private platform: Platform) {
+		this.storageDirectory = this.platform.is('android')
+			? this.file.dataDirectory
+			: this.platform.is('ios')
+				? this.file.applicationDirectory
+				: ''
+	}
 
 	read (fileName) {
 		return this.file.readAsText(
@@ -20,16 +24,16 @@ export class FileStorageProvider {
 	save (fileName, text) {
 		return this.file
 		           .checkFile(this.storageDirectory, fileName)
-		           .then(
-			           bool => bool
-				           ? this.file.writeExistingFile(this.storageDirectory, fileName, text)
-				           : this.file.writeFile(this.storageDirectory, fileName, text)
-		           )
-
+		           .then(_ => this.file.writeExistingFile(this.storageDirectory, fileName, text))
+		           .catch(_ => this.file.writeFile(this.storageDirectory, fileName, text))
 	}
 
-	checkFile (fileName) {
-		return this.file.checkFile(this.storageDirectory, fileName)
+	async checkFile (fileName) {
+		try {
+			return await this.file.checkFile(this.storageDirectory, fileName)
+		} catch (e) {
+			return Promise.resolve(false)
+		}
 	}
 
 }

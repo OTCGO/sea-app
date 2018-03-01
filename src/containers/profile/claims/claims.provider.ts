@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { LoadingController } from 'ionic-angular'
 import { NEO_HASH } from '../../../shared/constants'
-import { ApiProvider, AccountProvider, WalletProvider } from '../../../providers'
+import { ApiProvider, AccountProvider } from '../../../providers'
 
 
 import { Store, select } from '@ngrx/store'

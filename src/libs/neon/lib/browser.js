@@ -42333,8 +42333,7 @@ function da(a, b) {
     case 57:
       return 99;
     case 68:
-    ;
-    case 58:
+	  case 58:
       return 2048;
     case 0:
       return 2097152;
@@ -47113,7 +47112,7 @@ SemVer.prototype.comparePre = function(other) {
     else if (a === undefined)
       return -1;
     else if (a === b)
-      continue;
+
     else
       return compareIdentifiers(a, b);
   } while (++i);

@@ -77,8 +77,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory();
 	}
@@ -100,9 +100,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Local polyfil of Object.create
 	     */
 	    var create = Object.create || (function () {
-	        function F() {};
-
-	        return function (obj) {
+			    function F () {}
+			    return function (obj) {
 	            var subtype;
 
 	            F.prototype = obj;
@@ -581,7 +580,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *
 	     * The property blockSize must be implemented in a concrete subtype.
 	     *
-	     * @property {number} _minBufferSize The number of blocks that should be kept unprocessed in the buffer. Default: 0
+	     * @property {number} _minBufferSize The number of blocks that should be kept unprocessed in the buffer. Default:
+	     *   0
 	     */
 	    var BufferedBlockAlgorithm = C_lib.BufferedBlockAlgorithm = Base.extend({
 	        /**
@@ -1407,8 +1407,8 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(11));
 	}
@@ -1499,7 +1499,8 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	         *
 	         * @example
 	         *
-	         *     var cipher = CryptoJS.algo.AES.create(CryptoJS.algo.AES._ENC_XFORM_MODE, keyWordArray, { iv: ivWordArray });
+	         *     var cipher = CryptoJS.algo.AES.create(CryptoJS.algo.AES._ENC_XFORM_MODE, keyWordArray, { iv:
+	         *   ivWordArray });
 	         */
 	        init: function (xformMode, key, cfg) {
 	            // Apply config defaults
@@ -2051,7 +2052,8 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	        /**
 	         * Configuration options.
 	         *
-	         * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string. Default: OpenSSL
+	         * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string.
+	         *   Default: OpenSSL
 	         */
 	        cfg: Base.extend({
 	            format: OpenSSLFormatter
@@ -2072,8 +2074,9 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	         * @example
 	         *
 	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key);
-	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv });
-	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv:
+	         *   iv }); var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, {
+	         *   iv: iv, format: CryptoJS.format.OpenSSL });
 	         */
 	        encrypt: function (cipher, message, key, cfg) {
 	            // Apply config defaults
@@ -2113,8 +2116,10 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	         *
 	         * @example
 	         *
-	         *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, key, { iv: iv, format: CryptoJS.format.OpenSSL });
-	         *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, key, {
+	         *   iv: iv, format: CryptoJS.format.OpenSSL }); var plaintext =
+	         *   CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, key, { iv: iv, format:
+	         *   CryptoJS.format.OpenSSL });
 	         */
 	        decrypt: function (cipher, ciphertext, key, cfg) {
 	            // Apply config defaults
@@ -2168,7 +2173,8 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	         * @param {string} password The password to derive from.
 	         * @param {number} keySize The size in words of the key to generate.
 	         * @param {number} ivSize The size in words of the IV to generate.
-	         * @param {WordArray|string} salt (Optional) A 64-bit salt to use. If omitted, a salt will be generated randomly.
+	         * @param {WordArray|string} salt (Optional) A 64-bit salt to use. If omitted, a salt will be generated
+	         *   randomly.
 	         *
 	         * @return {CipherParams} A cipher params object with the key, IV, and salt.
 	         *
@@ -2205,7 +2211,8 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	        /**
 	         * Configuration options.
 	         *
-	         * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password. Default: OpenSSL
+	         * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password. Default:
+	         *   OpenSSL
 	         */
 	        cfg: SerializableCipher.cfg.extend({
 	            kdf: OpenSSLKdf
@@ -2225,8 +2232,9 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	         *
 	         * @example
 	         *
-	         *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password');
-	         *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password', { format: CryptoJS.format.OpenSSL });
+	         *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message,
+	         *   'password'); var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message,
+	         *   'password', { format: CryptoJS.format.OpenSSL });
 	         */
 	        encrypt: function (cipher, message, password, cfg) {
 	            // Apply config defaults
@@ -2261,8 +2269,10 @@ var Fixed8 = exports.Fixed8 = function (_BN) {
 	         *
 	         * @example
 	         *
-	         *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, 'password', { format: CryptoJS.format.OpenSSL });
-	         *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, 'password', { format: CryptoJS.format.OpenSSL });
+	         *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext,
+	         *   'password', { format: CryptoJS.format.OpenSSL }); var plaintext =
+	         *   CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, 'password', { format:
+	         *   CryptoJS.format.OpenSSL });
 	         */
 	        decrypt: function (cipher, ciphertext, password, cfg) {
 	            // Apply config defaults
@@ -6586,8 +6596,8 @@ assert.equal = function assertEqual(l, r, msg) {
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(27), __webpack_require__(28));
 	}
@@ -6723,8 +6733,8 @@ assert.equal = function assertEqual(l, r, msg) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -6863,8 +6873,8 @@ assert.equal = function assertEqual(l, r, msg) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -7443,8 +7453,8 @@ try {
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -8034,7 +8044,8 @@ var getPublicKeyFromPrivateKey = exports.getPublicKeyFromPrivateKey = function g
 /**
  * VerificationScript serves a very niche purpose.
  * It is attached as part of the signature when signing a transaction.
- * Thus, the name 'scriptHash' instead of 'keyHash' is because we are hashing the verificationScript and not the PublicKey.
+ * Thus, the name 'scriptHash' instead of 'keyHash' is because we are hashing the verificationScript and not the
+ * PublicKey.
  * @param {string} publicKey
  * @return {string}
  */
@@ -8149,8 +8160,8 @@ hash.ripemd160 = hash.ripemd.ripemd160;
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -8304,8 +8315,8 @@ hash.ripemd160 = hash.ripemd.ripemd160;
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -8494,8 +8505,9 @@ var log = (0, _logging2.default)('wallet');
  * @classdesc
  * This allows for simple utilisation and manipulating of keys without need the long access methods.
  * Key formats are derived from each other lazily and stored for future access.
- * If the previous key (one level higher) is not found, it will attempt to generate it or throw an Error if insufficient information was provided (eg. trying to generate private key when only address was given.)
- * NEP2 <=> WIF <=> Private => Public => ScriptHash <=> Address
+ * If the previous key (one level higher) is not found, it will attempt to generate it or throw an Error if
+ *   insufficient information was provided (eg. trying to generate private key when only address was given.) NEP2 <=>
+ *   WIF <=> Private => Public => ScriptHash <=> Address
  * @param {string|object} str - WIF/ Private Key / Public Key / Address or a Wallet Account object.
  */
 
@@ -8585,7 +8597,8 @@ var Account = function () {
     }
 
     /**
-     * Script hash of the key. This format is usually used in the code instead of address as this is a non case sensitive version.
+     * Script hash of the key. This format is usually used in the code instead of address as this is a non case
+     * sensitive version.
      * @type {string}
      */
 
@@ -8696,7 +8709,8 @@ var Account = function () {
     }
 
     /**
-     * Returns the public key in encoded form. This is the form that is the short version (starts with 02 or 03). If you require the unencoded form, do use the publicKey method instead of this getter.
+     * Returns the public key in encoded form. This is the form that is the short version (starts with 02 or 03). If
+     * you require the unencoded form, do use the publicKey method instead of this getter.
      * @type {string}
      *  */
 
@@ -10134,8 +10148,8 @@ function g1_512_lo(xh, xl) {
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(20), __webpack_require__(99), __webpack_require__(100), __webpack_require__(12), __webpack_require__(13), __webpack_require__(27), __webpack_require__(45), __webpack_require__(101), __webpack_require__(46), __webpack_require__(102), __webpack_require__(103), __webpack_require__(104), __webpack_require__(28), __webpack_require__(105), __webpack_require__(11), __webpack_require__(2), __webpack_require__(106), __webpack_require__(107), __webpack_require__(108), __webpack_require__(109), __webpack_require__(110), __webpack_require__(111), __webpack_require__(112), __webpack_require__(113), __webpack_require__(114), __webpack_require__(115), __webpack_require__(116), __webpack_require__(117), __webpack_require__(118), __webpack_require__(119), __webpack_require__(120), __webpack_require__(121));
 	}
@@ -10157,8 +10171,8 @@ function g1_512_lo(xh, xl) {
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -10361,8 +10375,8 @@ function g1_512_lo(xh, xl) {
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(20));
 	}
@@ -10766,7 +10780,9 @@ var isPrivateKey = exports.isPrivateKey = function isPrivateKey(key) {
 /**
  * Checks if hexstring is a valid Public Key. Accepts both encoded and unencoded forms.
  * @param {string} key
- * @param {boolean} [encoded] - Optional parameter to specify for a specific form. If this is omitted, this function will return true for both forms. If this parameter is provided, this function will only return true for the specific form.
+ * @param {boolean} [encoded] - Optional parameter to specify for a specific form. If this is omitted, this function
+ *   will return true for both forms. If this parameter is provided, this function will only return true for the
+ *   specific form.
  * @return {boolean}
  */
 var isPublicKey = exports.isPublicKey = function isPublicKey(key, encoded) {
@@ -10875,7 +10891,8 @@ log.warn('ScryptParams will be changing to use n,r,p in place of cost, blockSize
 /**
  * Encrypts a WIF key using a given keyphrase under NEP-2 Standard.
  * @param {string} wifKey - WIF key to encrypt (52 chars long).
- * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C (NFC).
+ * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C
+ *   (NFC).
  * @param {scryptParams} [scryptParams] - Parameters for Scrypt. Defaults to NEP2 specified parameters.
  * @returns {string} The encrypted key in Base58 (Case sensitive).
  */
@@ -10904,7 +10921,8 @@ var encrypt = exports.encrypt = function encrypt(wifKey, keyphrase) {
 /**
  * Encrypts a WIF key using a given keyphrase under NEP-2 Standard.
  * @param {string} wifKey - WIF key to encrypt (52 chars long).
- * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C (NFC).
+ * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C
+ *   (NFC).
  * @param {scryptParams} [scryptParams] - Parameters for Scrypt. Defaults to NEP2 specified parameters.
  * @returns {string} The encrypted key in Base58 (Case sensitive).
  */
@@ -10943,7 +10961,8 @@ var encryptAsync = exports.encryptAsync = function encryptAsync(wifKey, keyphras
 /**
  * Decrypts an encrypted key using a given keyphrase under NEP-2 Standard.
  * @param {string} encryptedKey - The encrypted key (58 chars long).
- * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C (NFC).
+ * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C
+ *   (NFC).
  * @param {scryptParams} [scryptParams] - Parameters for Scrypt. Defaults to NEP2 specified parameters.
  * @returns {string} The decrypted WIF key.
  */
@@ -10971,7 +10990,8 @@ var decrypt = exports.decrypt = function decrypt(encryptedKey, keyphrase) {
 /**
  * Decrypts an encrypted key using a given keyphrase under NEP-2 Standard.
  * @param {string} encryptedKey - The encrypted key (58 chars long).
- * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C (NFC).
+ * @param {string} keyphrase - The password will be encoded as UTF-8 and normalized using Unicode Normalization Form C
+ *   (NFC).
  * @param {scryptParams} [scryptParams] - Parameters for Scrypt. Defaults to NEP2 specified parameters.
  * @returns {string} The decrypted WIF key.
  */
@@ -11138,7 +11158,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var log = (0, _logging2.default)('tx');
 
 /**
- * Calculate the inputs required given the intents and gasCost. gasCost has to be seperate because it will not be reflected as an TransactionOutput.
+ * Calculate the inputs required given the intents and gasCost. gasCost has to be seperate because it will not be
+ * reflected as an TransactionOutput.
  * @param {Balance} balances - Balance of all assets available.
  * @param {TransactionOutput[]} intents - All sending intents
  * @param {number|Fixed8} gasCost - gasCost required for the transaction.
@@ -11365,9 +11386,11 @@ var deserializeTransaction = exports.deserializeTransaction = function deseriali
 };
 
 /**
- * Signs a transaction with the corresponding privateKey. We are dealing with it as an Transaction object as multi-sig transactions require us to sign the transaction without signatures.
+ * Signs a transaction with the corresponding privateKey. We are dealing with it as an Transaction object as multi-sig
+ * transactions require us to sign the transaction without signatures.
  * @param {Transaction} transaction - Transaction as an object
- * @param {string} privateKey - The private key. This method does not check if the private key is valid (aka that the inputs come from the corresponding address)
+ * @param {string} privateKey - The private key. This method does not check if the private key is valid (aka that the
+ *   inputs come from the corresponding address)
  * @return {Transaction} Signed transaction as an object.
  */
 var signTransaction = exports.signTransaction = function signTransaction(transaction, privateKey) {
@@ -13005,8 +13028,9 @@ var setApiSwitch = exports.setApiSwitch = function setApiSwitch(newSetting) {
 };
 
 /**
- * Sets the freeze setting for the API switch. A frozen switch will not dynamically shift towards the other provider when the main provider fails.
- *  This does not mean that we do not use the other provider. This only means that we will not change our preference for the main provider.
+ * Sets the freeze setting for the API switch. A frozen switch will not dynamically shift towards the other provider
+ * when the main provider fails. This does not mean that we do not use the other provider. This only means that we will
+ * not change our preference for the main provider.
  * @param {bool} newSetting - The new setting for freeze.
  */
 var setSwitchFreeze = exports.setSwitchFreeze = function setSwitchFreeze(newSetting) {
@@ -13476,11 +13500,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var log = (0, _logging2.default)('api');
 
 /**
- * The core API methods are series of methods defined to aid conducting core functionality while making it easy to modify any parts of it.
- * The core functionality are sendAsset, claimGas and doInvoke.
- * These methods are designed to be modular in nature and intended for developers to create their own custom methods.
- * The methods revolve around a configuration object in which everything is placed. Each method will take in the configuration object, check for its required fields and perform its operations, adding its results to the configuration object and returning it.
- * For example, the getBalanceFrom function requires net and address fields and appends the url and balance fields to the object.
+ * The core API methods are series of methods defined to aid conducting core functionality while making it easy to
+ * modify any parts of it. The core functionality are sendAsset, claimGas and doInvoke. These methods are designed to
+ * be modular in nature and intended for developers to create their own custom methods. The methods revolve around a
+ * configuration object in which everything is placed. Each method will take in the configuration object, check for its
+ * required fields and perform its operations, adding its results to the configuration object and returning it. For
+ * example, the getBalanceFrom function requires net and address fields and appends the url and balance fields to the
+ * object.
  */
 
 /**
@@ -13488,11 +13514,14 @@ var log = (0, _logging2.default)('api');
  * @param {object} config - Configuration object.
  * @param {string} config.net - 'MainNet', 'TestNet' or a neon-wallet-db URL.
  * @param {string} config.address - Wallet address
- * @param {string} [config.privateKey] - private key to sign with. Either this or signingFunction and public key is required.
- * @param {function} [config.signingFunction] - An external signing function to sign with. Either this or privateKey is required.
+ * @param {string} [config.privateKey] - private key to sign with. Either this or signingFunction and public key is
+ *   required.
+ * @param {function} [config.signingFunction] - An external signing function to sign with. Either this or privateKey is
+ *   required.
  * @param {string} [config.publicKey] - A public key for the singing function. Either this or privateKey is required.
  * @param {TransactionOutput[]} config.intents - Intents.
- * @param {bool} [config.sendingFromSmartContract] - Optionally specify that the source address is a smart contract that doesn't correspond to the private key.
+ * @param {bool} [config.sendingFromSmartContract] - Optionally specify that the source address is a smart contract
+ *   that doesn't correspond to the private key.
  * @return {Promise<object>} Configuration object.
  */
 var sendAsset = exports.sendAsset = function sendAsset(config) {
@@ -13528,8 +13557,10 @@ var sendAsset = exports.sendAsset = function sendAsset(config) {
  * @param {object} config - Configuration object.
  * @param {string} config.net - 'MainNet', 'TestNet' or a neon-wallet-db URL.
  * @param {string} config.address - Wallet address
- * @param {string} [config.privateKey] - private key to sign with. Either this or signingFunction and publicKey is required.
- * @param {function} [config.signingFunction] - An external signing function to sign with. Either this or privateKey is required.
+ * @param {string} [config.privateKey] - private key to sign with. Either this or signingFunction and publicKey is
+ *   required.
+ * @param {function} [config.signingFunction] - An external signing function to sign with. Either this or privateKey is
+ *   required.
  * @param {string} [config.publicKey] - A public key for the singing function. Either this or privateKey is required.
  * @return {Promise<object>} Configuration object.
  */
@@ -13558,13 +13589,16 @@ var claimGas = exports.claimGas = function claimGas(config) {
  * @param {object} config - Configuration object.
  * @param {string} config.net - 'MainNet', 'TestNet' or a neon-wallet-db URL.
  * @param {string} config.address - Wallet address
- * @param {string} [config.privateKey] - private key to sign with. Either this or signingFunction and publicKey is required.
- * @param {function} [config.signingFunction] - An external signing function to sign with. Either this or privateKey is required.
+ * @param {string} [config.privateKey] - private key to sign with. Either this or signingFunction and publicKey is
+ *   required.
+ * @param {function} [config.signingFunction] - An external signing function to sign with. Either this or privateKey is
+ *   required.
  * @param {string} [config.publicKey] - A public key for the singing function. Either this or privateKey is required.
  * @param {object} [config.intents] - Intents
  * @param {string} config.script - VM script. Must include empty args parameter even if no args are present
  * @param {number} config.gas - gasCost of VM script.
- * @param {bool} [config.sendingFromSmartContract] - Optionally specify that the source address is a smart contract that doesn't correspond to the private key.
+ * @param {bool} [config.sendingFromSmartContract] - Optionally specify that the source address is a smart contract
+ *   that doesn't correspond to the private key.
  * @return {Promise<object>} Configuration object.
  */
 var doInvoke = exports.doInvoke = function doInvoke(config) {
@@ -13598,7 +13632,8 @@ var doInvoke = exports.doInvoke = function doInvoke(config) {
 /**
  * Creates a transaction with the given config and txType.
  * @param {object} config - Configuration object.
- * @param {string|number} txType - Transaction Type. Name of transaction or the transaction type number. eg, 'claim' or 2.
+ * @param {string|number} txType - Transaction Type. Name of transaction or the transaction type number. eg, 'claim' or
+ *   2.
  * @return {Promise<object>} Configuration object + tx
  */
 var createTx = exports.createTx = function createTx(config, txType) {
@@ -13634,7 +13669,8 @@ var createTx = exports.createTx = function createTx(config, txType) {
  * @param {string} [config.privateKey] - private key to sign with.
  * @param {string} [config.publicKey] - public key. Required if using signingFunction.
  * @param {function} [config.signingFunction] - External signing function. Requires publicKey.
- * @param {bool} [config.sendingFromSmartContract] - Optionally specify that the source address is a smart contract that doesn't correspond to the private key.
+ * @param {bool} [config.sendingFromSmartContract] - Optionally specify that the source address is a smart contract
+ *   that doesn't correspond to the private key.
  * @return {Promise<object>} Configuration object.
  */
 var signTx = exports.signTx = function signTx(config) {
@@ -13827,7 +13863,8 @@ var checkProperty = function checkProperty(obj) {
   }
 };
 /**
- * These are a set of helper methods that can be used to retrieve information from 3rd party API in conjunction with the API chain methods
+ * These are a set of helper methods that can be used to retrieve information from 3rd party API in conjunction with
+ * the API chain methods
  */
 
 /**
@@ -18705,8 +18742,8 @@ module.exports = Signature;
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -18786,8 +18823,8 @@ module.exports = Signature;
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -18940,8 +18977,8 @@ module.exports = Signature;
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(45));
 	}
@@ -19025,8 +19062,8 @@ module.exports = Signature;
 /* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(20), __webpack_require__(46));
 	}
@@ -19113,8 +19150,8 @@ module.exports = Signature;
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(20));
 	}
@@ -19335,7 +19372,7 @@ module.exports = Signature;
 	                var lane = state[0];
 	                var roundConstant = ROUND_CONSTANTS[round];
 	                lane.high ^= roundConstant.high;
-	                lane.low  ^= roundConstant.low;;
+		            lane.low ^= roundConstant.low
 	            }
 	        },
 
@@ -19441,8 +19478,8 @@ module.exports = Signature;
 /* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory) {
-	if (true) {
+(function(root, factory) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0));
 	}
@@ -19458,12 +19495,9 @@ module.exports = Signature;
 
 	/** @preserve
 	(c) 2012 by Cédric Mesnil. All rights reserved.
-
 	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
 	    - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 	    - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
 	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	*/
 
@@ -19713,8 +19747,8 @@ module.exports = Signature;
 /* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(27), __webpack_require__(28));
 	}
@@ -19863,8 +19897,8 @@ module.exports = Signature;
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -19946,8 +19980,8 @@ module.exports = Signature;
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20009,8 +20043,8 @@ module.exports = Signature;
 /* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20130,8 +20164,8 @@ module.exports = Signature;
 /* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20189,8 +20223,8 @@ module.exports = Signature;
 /* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20234,8 +20268,8 @@ module.exports = Signature;
 /* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20288,8 +20322,8 @@ module.exports = Signature;
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20337,8 +20371,8 @@ module.exports = Signature;
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20382,8 +20416,8 @@ module.exports = Signature;
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20432,8 +20466,8 @@ module.exports = Signature;
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20467,8 +20501,8 @@ module.exports = Signature;
 /* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(2));
 	}
@@ -20538,8 +20572,8 @@ module.exports = Signature;
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(12), __webpack_require__(13), __webpack_require__(11), __webpack_require__(2));
 	}
@@ -20775,8 +20809,8 @@ module.exports = Signature;
 /* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(12), __webpack_require__(13), __webpack_require__(11), __webpack_require__(2));
 	}
@@ -21550,8 +21584,8 @@ module.exports = Signature;
 /* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(12), __webpack_require__(13), __webpack_require__(11), __webpack_require__(2));
 	}
@@ -21694,8 +21728,8 @@ module.exports = Signature;
 /* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(12), __webpack_require__(13), __webpack_require__(11), __webpack_require__(2));
 	}
@@ -21891,8 +21925,8 @@ module.exports = Signature;
 /* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
-;(function (root, factory, undef) {
-	if (true) {
+(function(root, factory, undef) {
+			if (true) {
 		// CommonJS
 		module.exports = exports = factory(__webpack_require__(0), __webpack_require__(12), __webpack_require__(13), __webpack_require__(11), __webpack_require__(2));
 	}
@@ -22078,7 +22112,7 @@ module.exports = Signature;
 	}());
 
 
-	return CryptoJS.RabbitLegacy;
+	return CryptoJS.RabbitLegacy
 
 }));
 
@@ -22088,8 +22122,8 @@ module.exports = Signature;
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*! bignumber.js v5.0.0 https://github.com/MikeMcl/bignumber.js/LICENCE */
 
-;(function (globalObj) {
-    'use strict';
+(function(globalObj) {
+			'use strict'
 
     /*
       bignumber.js v5.0.0
@@ -26511,8 +26545,7 @@ function kc(a, b) {
               C = l;
               break
             }
-          ;
-          default:
+	        default:
             break a
         }
         d++;
@@ -26558,17 +26591,13 @@ function kc(a, b) {
           108 == i ? (d++, x = 8) : x = 4;
           break;
         case "L":
-        ;
-        case "q":
-        ;
-        case "j":
+	      case "q":
+	      case "j":
           x = 8;
           break;
         case "z":
-        ;
-        case "t":
-        ;
-        case "I":
+	      case "t":
+	      case "I":
           x = 4;
           break;
         default:
@@ -26578,18 +26607,12 @@ function kc(a, b) {
       i = A[d + 1 | 0];
       switch(String.fromCharCode(i)) {
         case "d":
-        ;
-        case "i":
-        ;
-        case "u":
-        ;
-        case "o":
-        ;
-        case "x":
-        ;
-        case "X":
-        ;
-        case "p":
+	      case "i":
+	      case "u":
+	      case "o":
+	      case "x":
+	      case "X":
+	      case "p":
           j = 100 == i || 105 == i;
           x = x || 4;
           var P = h = c("i" + 8 * x), r;
@@ -26653,16 +26676,11 @@ function kc(a, b) {
           });
           break;
         case "f":
-        ;
-        case "F":
-        ;
-        case "e":
-        ;
-        case "E":
-        ;
-        case "g":
-        ;
-        case "G":
+	      case "F":
+	      case "e":
+	      case "E":
+	      case "g":
+	      case "G":
           h = c("double");
           if(isNaN(h)) {
             r = "nan", C = p
@@ -27567,7 +27585,7 @@ function bo(b, c, d) {
   a[b + e | 0] = a[c + e | 0] | 0;
   e = e + 1 | 0;
  } while (e >>> 0 < d >>> 0);
- return;
+
 }
 function bp(b, c, d) {
  b = b | 0;
@@ -27584,7 +27602,7 @@ function bp(b, c, d) {
   a[f] = a[f] ^ a[c + e | 0];
   e = e + 1 | 0;
  } while (e >>> 0 < d >>> 0);
- return;
+
 }
 function bq(a) {
  a = a | 0;
@@ -27607,7 +27625,7 @@ function bs(b, c) {
  a[b + 1 | 0] = c >>> 8 & 255;
  a[b + 2 | 0] = c >>> 16 & 255;
  a[b + 3 | 0] = c >>> 24 & 255;
- return;
+
 }
 function bt(a) {
  a = a | 0;
@@ -27621,7 +27639,7 @@ function bt(a) {
  c[a + 20 >> 2] = -1694144372;
  c[a + 24 >> 2] = 528734635;
  c[a + 28 >> 2] = 1541459225;
- return;
+
 }
 function bu(a, b, d, e, f, g, h, i, j, k) {
  a = a | 0;
@@ -27742,7 +27760,7 @@ function bv(a, b, c, d, e, f) {
   m = H;
  } while (m >>> 0 < d >>> 0 | m >>> 0 == d >>> 0 & n >>> 0 < c >>> 0);
  bo(a, f, g);
- return;
+
 }
 function bw(a, b, c) {
  a = a | 0;
@@ -27785,7 +27803,7 @@ function bw(a, b, c) {
   k = k + 1 | 0;
  } while (k >>> 0 < c >>> 0);
  i = d;
- return;
+
 }
 function bx(a, b) {
  a = a | 0;
@@ -27963,7 +27981,7 @@ function by(a) {
   e = e + 1 | 0;
  } while (e >>> 0 < 16);
  i = b;
- return;
+
 }
 function bz(a, b, d) {
  a = a | 0;
@@ -28015,7 +28033,7 @@ function bz(a, b, d) {
   k = a;
  }
  cK(h | 0, k | 0, j) | 0;
- return;
+
 }
 function bA(a, b) {
  a = a | 0;
@@ -28574,7 +28592,7 @@ function bA(a, b) {
  b = a + 28 | 0;
  c[b >> 2] = (c[b >> 2] | 0) + (c[f + 28 >> 2] | 0);
  i = d;
- return;
+
 }
 function bB(b, c) {
  b = b | 0;
@@ -28583,7 +28601,7 @@ function bB(b, c) {
  a[b + 2 | 0] = c >>> 8 & 255;
  a[b + 1 | 0] = c >>> 16 & 255;
  a[b] = c >>> 24 & 255;
- return;
+
 }
 function bC(a) {
  a = a | 0;
@@ -28595,7 +28613,7 @@ function bD(a, b) {
  bE(b);
  bF(a, b | 0, 32);
  cL(b | 0, 0, 104);
- return;
+
 }
 function bE(a) {
  a = a | 0;
@@ -28608,7 +28626,7 @@ function bE(a) {
  bz(a, 720, (e >>> 0 < 56 ? 56 : 120) - e | 0);
  bz(a, d, 8);
  i = b;
- return;
+
 }
 function bF(a, b, d) {
  a = a | 0;
@@ -28625,7 +28643,7 @@ function bF(a, b, d) {
   bB(a + (f << 2) | 0, c[b + (f << 2) >> 2] | 0);
   f = f + 1 | 0;
  } while (f >>> 0 < e >>> 0);
- return;
+
 }
 function bG(b, c, d) {
  b = b | 0;
@@ -28677,14 +28695,14 @@ function bG(b, c, d) {
  } while (l >>> 0 < k >>> 0);
  bz(d, c, 64);
  i = e;
- return;
+
 }
 function bH(a, b, c) {
  a = a | 0;
  b = b | 0;
  c = c | 0;
  bz(a | 0, b, c);
- return;
+
 }
 function bI(a, b) {
  a = a | 0;
@@ -28698,7 +28716,7 @@ function bI(a, b) {
  bz(e, d, 32);
  bD(a, e);
  i = c;
- return;
+
 }
 function bJ(b, c, d, e, f, g, h, j) {
  b = b | 0;
@@ -28762,7 +28780,7 @@ function bJ(b, c, d, e, f, g, h, j) {
   t = r << 5;
  } while (t >>> 0 < j >>> 0);
  i = k;
- return;
+
 }
 function bK(a, b) {
  a = a | 0;
@@ -28773,7 +28791,7 @@ function bK(a, b) {
   c[a + (d << 2) >> 2] = bC(b + (d << 2) | 0) | 0;
   d = d + 1 | 0;
  } while (d >>> 0 < 16);
- return;
+
 }
 function bL(a) {
  a = a | 0;
@@ -30987,7 +31005,7 @@ function bM(a) {
   }
  }
  c[216] = -1;
- return;
+
 }
 function bN(a, b) {
  a = a | 0;
@@ -32090,7 +32108,7 @@ function b5(a) {
  c[a + 28 >> 2] = i;
  c[a + 32 >> 2] = j;
  c[a + 36 >> 2] = d;
- return;
+
 }
 function b6() {
  var a = 0, b = 0, d = 0, e = 0, f = 0, g = 0, h = 0, j = 0, k = 0, l = 0, m = 0, n = 0, p = 0, q = 0, r = 0, s = 0, t = 0, u = 0;
@@ -32170,7 +32188,7 @@ function b6() {
  av(c[o >> 2] | 0, 488, (y = i, i = i + 8 | 0, c[y >> 2] = e, y) | 0) | 0;
  av(c[o >> 2] | 0, 400, (y = i, i = i + 8 | 0, c[y >> 2] = d, y) | 0) | 0;
  i = a;
- return;
+
 }
 function b7(a, b) {
  a = a | 0;
@@ -32748,7 +32766,7 @@ function b9(a, b) {
  c[n + 8 >> 2] = L;
  c[n + 12 >> 2] = J;
  c[n + 24 >> 2] = 0;
- return;
+
 }
 function ca(a) {
  a = a | 0;
@@ -32781,7 +32799,7 @@ function cb(a, b) {
 }
 function cc(a) {
  a = a | 0;
- return;
+
 }
 function cd(a) {
  a = a | 0;
@@ -32798,46 +32816,46 @@ function cf(a) {
 function cg(a) {
  a = a | 0;
  c[a >> 2] = 560;
- return;
+
 }
 function ch(a) {
  a = a | 0;
  c[a >> 2] = 592;
- return;
+
 }
 function ci(a) {
  a = a | 0;
  if ((a | 0) != 0) {
   bM(a);
  }
- return;
+
 }
 function cj(a, b) {
  a = a | 0;
  b = b | 0;
  ci(a);
- return;
+
 }
 function ck(a) {
  a = a | 0;
  ci(a);
- return;
+
 }
 function cl(a, b) {
  a = a | 0;
  b = b | 0;
  ck(a);
- return;
+
 }
 function cm(a) {
  a = a | 0;
  ci(a);
- return;
+
 }
 function cn(a) {
  a = a | 0;
  ci(a);
- return;
+
 }
 function co(a, b, c) {
  a = a | 0;
@@ -33636,7 +33654,7 @@ function cw(a, b) {
  c[f + 4 >> 2] = 0;
  cy(a, e | 0);
  i = d;
- return;
+
 }
 function cx(a, b) {
  a = a | 0;
@@ -33650,7 +33668,7 @@ function cx(a, b) {
  c[f + 4 >> 2] = 0;
  cz(a, e | 0);
  i = d;
- return;
+
 }
 function cy(a, b) {
  a = a | 0;
@@ -33670,7 +33688,7 @@ function cy(a, b) {
  a = at(e | 0) | 0;
  av(b | 0, 384, (y = i, i = i + 8 | 0, c[y >> 2] = a, y) | 0) | 0;
  i = d;
- return;
+
 }
 function cz(a, b) {
  a = a | 0;
@@ -33685,7 +33703,7 @@ function cz(a, b) {
  }
  aC(10, c[o >> 2] | 0) | 0;
  i = d;
- return;
+
 }
 function cA(b, d) {
  b = b | 0;
@@ -34590,214 +34608,118 @@ function da(a, b) {
     case 8:
       return 4096;
     case 54:
-    ;
-    case 56:
-    ;
-    case 21:
-    ;
-    case 61:
-    ;
-    case 63:
-    ;
-    case 22:
-    ;
-    case 67:
-    ;
-    case 23:
-    ;
-    case 24:
-    ;
-    case 25:
-    ;
-    case 26:
-    ;
-    case 27:
-    ;
-    case 69:
-    ;
-    case 28:
-    ;
-    case 101:
-    ;
-    case 70:
-    ;
-    case 71:
-    ;
-    case 29:
-    ;
-    case 30:
-    ;
-    case 199:
-    ;
-    case 75:
-    ;
-    case 76:
-    ;
-    case 32:
-    ;
-    case 43:
-    ;
-    case 44:
-    ;
-    case 80:
-    ;
-    case 46:
-    ;
-    case 47:
-    ;
-    case 45:
-    ;
-    case 48:
-    ;
-    case 49:
-    ;
-    case 42:
-    ;
-    case 82:
-    ;
-    case 33:
-    ;
-    case 7:
-    ;
-    case 108:
-    ;
-    case 109:
-    ;
-    case 107:
-    ;
-    case 112:
-    ;
-    case 119:
-    ;
-    case 121:
+	  case 56:
+	  case 21:
+	  case 61:
+	  case 63:
+	  case 22:
+	  case 67:
+	  case 23:
+	  case 24:
+	  case 25:
+	  case 26:
+	  case 27:
+	  case 69:
+	  case 28:
+	  case 101:
+	  case 70:
+	  case 71:
+	  case 29:
+	  case 30:
+	  case 199:
+	  case 75:
+	  case 76:
+	  case 32:
+	  case 43:
+	  case 44:
+	  case 80:
+	  case 46:
+	  case 47:
+	  case 45:
+	  case 48:
+	  case 49:
+	  case 42:
+	  case 82:
+	  case 33:
+	  case 7:
+	  case 108:
+	  case 109:
+	  case 107:
+	  case 112:
+	  case 119:
+	  case 121:
       return 200809;
     case 13:
-    ;
-    case 104:
-    ;
-    case 94:
-    ;
-    case 95:
-    ;
-    case 34:
-    ;
-    case 35:
-    ;
-    case 77:
-    ;
-    case 81:
-    ;
-    case 83:
-    ;
-    case 84:
-    ;
-    case 85:
-    ;
-    case 86:
-    ;
-    case 87:
-    ;
-    case 88:
-    ;
-    case 89:
-    ;
-    case 90:
-    ;
-    case 91:
-    ;
-    case 94:
-    ;
-    case 95:
-    ;
-    case 110:
-    ;
-    case 111:
-    ;
-    case 113:
-    ;
-    case 114:
-    ;
-    case 115:
-    ;
-    case 116:
-    ;
-    case 117:
-    ;
-    case 118:
-    ;
-    case 120:
-    ;
-    case 40:
-    ;
-    case 16:
-    ;
-    case 79:
-    ;
-    case 19:
+	  case 104:
+	  case 94:
+	  case 95:
+	  case 34:
+	  case 35:
+	  case 77:
+	  case 81:
+	  case 83:
+	  case 84:
+	  case 85:
+	  case 86:
+	  case 87:
+	  case 88:
+	  case 89:
+	  case 90:
+	  case 91:
+	  case 94:
+	  case 95:
+	  case 110:
+	  case 111:
+	  case 113:
+	  case 114:
+	  case 115:
+	  case 116:
+	  case 117:
+	  case 118:
+	  case 120:
+	  case 40:
+	  case 16:
+	  case 79:
+	  case 19:
       return-1;
     case 92:
-    ;
-    case 93:
-    ;
-    case 5:
-    ;
-    case 72:
-    ;
-    case 6:
-    ;
-    case 74:
-    ;
-    case 92:
-    ;
-    case 93:
-    ;
-    case 96:
-    ;
-    case 97:
-    ;
-    case 98:
-    ;
-    case 99:
-    ;
-    case 102:
-    ;
-    case 103:
-    ;
-    case 105:
+	  case 93:
+	  case 5:
+	  case 72:
+	  case 6:
+	  case 74:
+	  case 92:
+	  case 93:
+	  case 96:
+	  case 97:
+	  case 98:
+	  case 99:
+	  case 102:
+	  case 103:
+	  case 105:
       return 1;
     case 38:
-    ;
-    case 66:
-    ;
-    case 50:
-    ;
-    case 51:
-    ;
-    case 4:
+	  case 66:
+	  case 50:
+	  case 51:
+	  case 4:
       return 1024;
     case 15:
-    ;
-    case 64:
-    ;
-    case 41:
+	  case 64:
+	  case 41:
       return 32;
     case 55:
-    ;
-    case 37:
-    ;
-    case 17:
+	  case 37:
+	  case 17:
       return 2147483647;
     case 18:
-    ;
-    case 1:
+	  case 1:
       return 47839;
     case 59:
-    ;
-    case 57:
+	  case 57:
       return 99;
     case 68:
-    ;
-    case 58:
+	  case 58:
       return 2048;
     case 0:
       return 2097152;
@@ -36654,7 +36576,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * @class Balance
- * @classdesc object describing the coins found within an Account. Look up various balances through its symbol. For example, NEO or GAS.
+ * @classdesc object describing the coins found within an Account. Look up various balances through its symbol. For
+ *   example, NEO or GAS.
  * @param {object} bal - Balance object as a JSON.
  * @param {string} bal.net - 'MainNet' or 'TestNet'
  * @param {string} bal.address - The address of the Account
@@ -36738,9 +36661,11 @@ var Balance = function () {
     }
 
     /**
-     * Applies a Transaction to a Balance, removing spent coins and adding new coins. This currently applies only to Assets.
+     * Applies a Transaction to a Balance, removing spent coins and adding new coins. This currently applies only to
+     * Assets.
      * @param {Transaction|string} tx - Transaction that has been sent and accepted by Node.
-     * @param {boolean} confirmed - If confirmed, new coins will be added to unspent. Else, new coins will be added to unconfirmed property first.
+     * @param {boolean} confirmed - If confirmed, new coins will be added to unspent. Else, new coins will be added to
+     *   unconfirmed property first.
      * @return {Balance} this
      */
 
@@ -37075,8 +37000,9 @@ var log = (0, _logging2.default)('tx');
  * @classdesc
  * Transactions are what you use to interact with the blockchain.
  * A transaction is made up of components found in the component file.
- * Besides those components which are found in every transaction, there are also special data that is unique to each transaction type. These 'exclusive' data can be found in the exclusive file.
- * This class is a wrapper around the various transaction building methods found in this folder.
+ * Besides those components which are found in every transaction, there are also special data that is unique to each
+ *   transaction type. These 'exclusive' data can be found in the exclusive file. This class is a wrapper around the
+ *   various transaction building methods found in this folder.
  * @param {object} tx - A Transaction-like object.
  * @param {number} tx.type - Transaction type. Default is 128 (ContractTransaction).
  * @param {number} tx.version - Transaction version. Default is latest version for ContractTransaction.
@@ -37130,8 +37056,10 @@ var Transaction = function () {
 
 
     /**
-     * Adds a TransactionOutput. TransactionOutput can be given as a TransactionOutput object or as human-friendly values. This is detected by the number of arguments provided.
-     * @param {string|Object} assetSymOrTxOut - The symbol of the asset (eg NEO or GAS) or the TransactionOutput object.
+     * Adds a TransactionOutput. TransactionOutput can be given as a TransactionOutput object or as human-friendly
+     * values. This is detected by the number of arguments provided.
+     * @param {string|Object} assetSymOrTxOut - The symbol of the asset (eg NEO or GAS) or the TransactionOutput
+     *   object.
      * @param {number} [value] - The value to send. Required if providing human-friendly values.
      * @param {string} [address] - The address to send to. Required if providing human-friendly values.
      * @return {Transaction} this
@@ -37175,7 +37103,8 @@ var Transaction = function () {
     }
 
     /**
-     * Calculate the inputs required based on existing outputs provided. Also takes into account the fees required through the gas property.
+     * Calculate the inputs required based on existing outputs provided. Also takes into account the fees required
+     * through the gas property.
      * @param {Balance} balance - Balance to retrieve inputs from.
      * @return {Transaction} this
      */
@@ -37196,7 +37125,8 @@ var Transaction = function () {
 
     /**
      * Serialize the transaction and return it as a hexstring.
-     * @param {boolean} signed  - Whether to serialize the signatures. Signing requires it to be serialized without the signatures.
+     * @param {boolean} signed  - Whether to serialize the signatures. Signing requires it to be serialized without the
+     *   signatures.
      * @return {string} Hexstring.
      */
 
@@ -37476,8 +37406,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * @class ContractParam
  * @classdesc
- * ContractParam models after the ContractParameter class in C#. It is useful to craft arguments that are used in invoke and invokefunction RPC calls.
- * ContractParams come with convenient static methods to create arguments. For example, the byteArray method helps convert an address into reversed ScriptHash form used in smart contracts.
+ * ContractParam models after the ContractParameter class in C#. It is useful to craft arguments that are used in
+ *   invoke and invokefunction RPC calls. ContractParams come with convenient static methods to create arguments. For
+ *   example, the byteArray method helps convert an address into reversed ScriptHash form used in smart contracts.
  */
 var ContractParam = function () {
   function ContractParam(type, value) {
@@ -37515,8 +37446,10 @@ var ContractParam = function () {
     }
 
     /**
-     * Creates a Hash160 ContractParam. This is used for containing a scriptHash. Do not reverse the input if using this format.
-     * @param {string} value - A 40 character long hexstring. Automatically converts an address to scripthash if provided.
+     * Creates a Hash160 ContractParam. This is used for containing a scriptHash. Do not reverse the input if using
+     * this format.
+     * @param {string} value - A 40 character long hexstring. Automatically converts an address to scripthash if
+     *   provided.
      * @return {ContractParam}
      */
 
@@ -37687,8 +37620,10 @@ var versionRegex = /NEO:(\d+\.\d+\.\d+)/;
  * @class RPCClient
  * @classdesc
  * RPC Client model to query a NEO node. Contains built-in methods to query using RPC calls.
- * @param {string} net - 'MainNet' or 'TestNet' will query the default RPC address found in consts. You may provide a custom URL.
- * @param {string} version - Version of NEO node. Used to check if RPC methods have been implemented. it will default to DEFAULT_RPC found in CONST
+ * @param {string} net - 'MainNet' or 'TestNet' will query the default RPC address found in consts. You may provide a
+ *   custom URL.
+ * @param {string} version - Version of NEO node. Used to check if RPC methods have been implemented. it will default
+ *   to DEFAULT_RPC found in CONST
  */
 
 var RPCClient = function () {
@@ -37953,7 +37888,8 @@ var RPCClient = function () {
     }
 
     /**
-     * Gets the version of the NEO node. This method will never be blocked by version. This method will also update the current Client's version to the one received.
+     * Gets the version of the NEO node. This method will never be blocked by version. This method will also update the
+     * current Client's version to the one received.
      * @return {Promise<string>}
      */
 
@@ -37976,7 +37912,8 @@ var RPCClient = function () {
       });
     }
     /**
-     * Calls a smart contract with the given parameters. This method is a local invoke, results are not reflected on the blockchain.
+     * Calls a smart contract with the given parameters. This method is a local invoke, results are not reflected on
+     * the blockchain.
      * @param {string} scriptHash
      * @param {Array} params
      * @return {Promise<object>}
@@ -37992,7 +37929,8 @@ var RPCClient = function () {
     }
 
     /**
-     * Submits a contract method call with parameters for the node to run. This method is a local invoke, results are not reflected on the blockchain.
+     * Submits a contract method call with parameters for the node to run. This method is a local invoke, results are
+     * not reflected on the blockchain.
      * @param {string} scriptHash
      * @param {string} operation
      * @param {Array} params
@@ -40290,7 +40228,7 @@ SemVer.prototype.comparePre = function(other) {
     else if (a === undefined)
       return -1;
     else if (a === b)
-      continue;
+
     else
       return compareIdentifiers(a, b);
   } while (++i);
@@ -41284,7 +41222,8 @@ var log = (0, _logging2.default)('wallet');
  */
 
 /**
- * Wallet class to read and integrate a Wallet file into the library. This class is responsible for ensuring that the Wallet File is read correctly and usable by the library.
+ * Wallet class to read and integrate a Wallet file into the library. This class is responsible for ensuring that the
+ * Wallet File is read correctly and usable by the library.
  * @param {WalletFile} file - Wallet file
  * @param {string} file.name - Name of wallet
  * @param {WalletScryptParams} file.scrypt - Scrypt parameters
@@ -41949,7 +41888,8 @@ var getTokenBalance = exports.getTokenBalance = function getTokenBalance(url, sc
  * @param {string} url - URL of the NEO node to query.
  * @param {string} scriptHash - Contract scriptHash.
  * @param {string} [address] - Address to query for balance of tokens.
- * @return {Promise<object>} Object containing name, symbol, decimals, totalSupply. balance will be included if address is provided.
+ * @return {Promise<object>} Object containing name, symbol, decimals, totalSupply. balance will be included if address
+ *   is provided.
  */
 var getToken = exports.getToken = function getToken(url, scriptHash, address) {
   var parser = address ? parseTokenInfoAndBalance : parseTokenInfo;

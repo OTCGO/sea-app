@@ -150,8 +150,6 @@ export class Wallet {
   static import(jsonString: string): Wallet
   static readFile(filepath: string): Wallet
 
-
-
   addAccount(acct: Account | object): number
   decrypt(index: number, keyphrase: string): boolean
   decryptAll(keyphrase: string): boolean[]

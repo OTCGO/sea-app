@@ -10,6 +10,7 @@ import { wallet } from '../../libs/neon'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 import { TabsPage } from '../tabs/tabs'
 import TEST_WALLET from '../../shared/userWallet'
+import { debug } from '../../shared/utils'
 
 
 @IonicPage({
@@ -21,7 +22,7 @@ import TEST_WALLET from '../../shared/userWallet'
 	templateUrl: 'login.html',
 })
 export class LoginPage {
-	private _file: File
+	private _file
 	createWalletPage = CreateWalletPage
 	importText: string = '导入'
 	isWIFKey: boolean = true
@@ -93,7 +94,9 @@ export class LoginPage {
 			if (!wallet.isWIF(this.WIFKey)) return this.showPrompt('WIF 格式错误！')
 			const account = new wallet.Account(this.WIFKey)
 			account.encrypt(this.passphrase)
+			account.isDefault = true
 			this.walletProvider.addAccount(account)
+			debug('Login with wif key after add acount')(this.walletProvider)
 			this.walletProvider.saveWallet()
 			return this.navCtrl.setRoot(TabsPage)
 		}

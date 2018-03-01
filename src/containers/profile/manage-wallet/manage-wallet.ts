@@ -153,7 +153,7 @@ export class ManageWalletPage {
 
 	deleteAccount (toBeDeletedAccount) {
 		const wallet = this.walletProvider.wallet
-		this.walletProvider.wallet = {
+		this.walletProvider.wallet = <any>{
 			...wallet,
 			accounts: wallet.accounts.filter(account => JSON.stringify(account) !== JSON.stringify(toBeDeletedAccount))
 		}
@@ -162,7 +162,7 @@ export class ManageWalletPage {
 
 	setDefaultAccount (toBeSettedAccount) {
 		const wallet = this.walletProvider.wallet
-		this.walletProvider.wallet = {
+		this.walletProvider.wallet = <any>{
 			...wallet,
 			accounts: wallet.accounts.map(account => {
 				account.isDefault = JSON.stringify(account) == JSON.stringify(toBeSettedAccount)

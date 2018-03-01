@@ -1,41 +1,55 @@
 <ion-content class="login">
-	<div class="title">
-		<ion-label>
-			<h2>{{ 'LOGIN.title' | translate }}</h2>
-		</ion-label>
-	</div>
-	<ion-list class="login-list">
-		<ion-item class="login-input rounded" [class.item-input-has-focus]="!!WIFKey">
-			<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" [(ngModel)]="WIFKey" required></ion-input>
-		</ion-item>
 
-		<button class="login-import" [class.is-active]="!isWIFKey" (click)="openImportBox(fileInput)">
-			<span *ngIf="!isWIFKey">{{ importText }}</span>
-			<img src="assets/imgs/icon-login_file.svg" alt="" class="icon">
-		</button>
+	<div padding>
+		<ion-row>
+			<ion-col class="title">
+				<ion-label>
+					<h2>{{ 'LOGIN.title' | translate }}</h2>
+				</ion-label>
+			</ion-col>
+		</ion-row>
 
-		<input type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
+		<ion-row>
+			<ion-col>
+				<ion-list class="login-list">
+					<ion-item class="login-input rounded" [class.item-input-has-focus]="!!WIFKey">
+						<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" [(ngModel)]="WIFKey" required></ion-input>
+					</ion-item>
 
-		<button class="login-encryptedKey-switcher" *ngIf="!isWIFKey" (click)="openWIFKeyBox()">
-			<img src="assets/imgs/icon-login_WIF.svg" alt="" class="icon">
-		</button>
+					<button class="login-import" [class.is-active]="!isWIFKey" (click)="openImportBox(fileInput)">
+						<span *ngIf="!isWIFKey">{{ importText }}</span>
+						<img src="assets/imgs/icon-login_file.svg" alt="" class="icon">
+					</button>
 
-		<ion-item class="pws-input" *ngIf="isOldWallet || WIFKey">
-			<ion-input type="password" placeholder="{{ 'LOGIN.password' | translate }}" [(ngModel)]="passphrase" required></ion-input>
-		</ion-item>
+					<input type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
 
-	</ion-list>
+					<button class="login-encryptedKey-switcher" *ngIf="!isWIFKey" (click)="openWIFKeyBox()">
+						<img src="assets/imgs/icon-login_WIF.svg" alt="" class="icon">
+					</button>
 
-	<div class="login-button">
-		<button
-			ion-button round block outline
-			[disabled]="disabledBtn"
-			(click)="login()"
-		>{{ 'LOGIN.login_wallet' | translate }}</button>
-	</div>
+					<ion-item class="pws-input" *ngIf="isOldWallet || WIFKey">
+						<ion-input type="password" placeholder="{{ 'LOGIN.password' | translate }}" [(ngModel)]="passphrase" required></ion-input>
+					</ion-item>
 
-	<div class="login-tip">
-		<a (click)="navCtrl.setRoot(createWalletPage)">{{ 'LOGIN.tip' | translate }}</a>
+				</ion-list>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col class="login-button">
+				<button
+				ion-button round block outline
+				[disabled]="disabledBtn"
+				(click)="login()"
+				>{{ 'LOGIN.login_wallet' | translate }}</button>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col class="login-tip">
+				<a (click)="navCtrl.setRoot(createWalletPage)">{{ 'LOGIN.tip' | translate }}</a>
+			</ion-col>
+		</ion-row>
 	</div>
 
 </ion-content>

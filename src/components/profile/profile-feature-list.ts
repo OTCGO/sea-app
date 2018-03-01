@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular'
 
 @Component({
   selector: 'profile-feature-list',
-  templateUrl: 'feature-list.html'
+  templateUrl: 'profile-feature-list.html'
 })
 export class ProfileFeatureListComponent {
- constructor () { }
+ constructor (private navCtrl: NavController) { }
 }

@@ -4,11 +4,12 @@ import * as API_CONSTANTS from '../../../providers/api/api.consts'
 import { ASSET_ENUM } from '../../../shared/constants'
 import { api } from '../../../libs/neon'
 
+import { ApiProvider } from '../../../providers'
+import { AccountProvider } from '../../../providers/account/account.provider'
+
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
 
-import { ApiProvider } from '../../../providers'
-import { AccountProvider } from '../../../providers/account/account.provider'
 
 @Injectable()
 export class PossessionDetailProvider {

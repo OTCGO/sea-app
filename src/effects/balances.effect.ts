@@ -22,12 +22,6 @@ import { ASSET_ENUM } from '../shared/constants'
 const SEARCH_DEBOUNCE = new InjectionToken<number>('GetBalances Debounce')
 const SEARCH_SCHEDULER = new InjectionToken<Scheduler>('Search Scheduler')
 
-interface IRes {
-	balances: {}
-	utxo
-	error?: string
-}
-
 @Injectable()
 export class BalancesEffects {
 	@Effect()

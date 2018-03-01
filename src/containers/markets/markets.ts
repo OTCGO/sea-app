@@ -6,6 +6,7 @@ import {
 import { PriceProvider } from '../../providers/api/price.provider'
 import { MarketDetailPage } from './market-detail/market-detail'
 import { api } from '../../libs/neon'
+import { NotificationProvider } from '../../providers/notification.provider'
 
 @IonicPage()
 @Component({
@@ -23,7 +24,7 @@ export class MarketsPage {
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		private priceProvider: PriceProvider,
-		private toastCtrl: ToastController,
+		private notificationProvider: NotificationProvider,
 		private loadingCtrl: LoadingController
 	) {}
 
@@ -46,8 +47,7 @@ export class MarketsPage {
 		    )
 		    .catch(err => {
 			    this.loading.dismiss().then(_ => {
-				    this.toastCtrl.create({ message: '对不起，找不到数据！' + err, duration: 4000 }).present()
-				    console.log(err)
+				    this.notificationProvider.emit({ message: '对不起，找不到数据！' + err})
 			    })
 		    })
 
@@ -76,16 +76,15 @@ export class MarketsPage {
 				   this.coins = coins
 				   this.GASPrice = this.coins.find(coin => coin['symbol'] === 'GAS').currentPrice
 				   refresher.complete()
-				   const toast = this.toastCtrl.create({
+				   this.notificationProvider.emit({
 					   message: '行情数据已更新！',
 					   duration: 3000
 				   })
-				   toast.present()
 			   }
 		   )
 		   .catch(err => {
 			   this.loading.dismiss().then(_ => {
-				   this.toastCtrl.create({ message: '对不起，找不到数据！' + err, duration: 4000 }).present()
+				   this.notificationProvider.emit({ message: '对不起，找不到数据！' + err})
 				   console.log(err)
 			   })
 		   })

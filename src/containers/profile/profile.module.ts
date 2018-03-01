@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 import { ProfilePage } from './profile'
 import { TranslateModule } from '@ngx-translate/core'
-import { ProfileRoundMenuComponent } from '../../components/profile/round-menu'
-import { ProfileNavComponent } from '../../components/profile/nav'
-import { ProfileFeatureListComponent } from '../../components/profile/feature-list'
+import { ProfileRoundMenuComponent } from '../../components/profile/profile-round-menu'
+import { ProfileNavComponent } from '../../components/profile/profile-nav'
+import { ProfileFeatureListComponent } from '../../components/profile/profile-feature-list'
 
 const COMPONENTS = [
 	ProfilePage,

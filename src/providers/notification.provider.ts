@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
+import { ToastOptions } from "ionic-angular"
 
 @Injectable()
 export class NotificationProvider {
@@ -10,7 +11,7 @@ export class NotificationProvider {
 
 	}
 
-	emit (text) {
-		this.subject.next(text)
+	emit (opts: ToastOptions) {
+		this.subject.next(opts)
 	}
 }

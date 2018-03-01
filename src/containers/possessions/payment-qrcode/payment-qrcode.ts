@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { IonicPage, NavParams } from 'ionic-angular'
 import { Clipboard } from '@ionic-native/clipboard'
 import { SocialSharing } from '@ionic-native/social-sharing'
+import { NotificationProvider } from "../../../providers/notification.provider"
 
 @IonicPage({
   name: 'payment-qrcode'
@@ -32,12 +33,15 @@ export class PaymentQRCodePage {
   	navParams: NavParams,
 	  private clipboard: Clipboard,
 	  private socialSharing: SocialSharing,
+    private ns: NotificationProvider
   ) {
     this.address = navParams.get('address')
   }
 
   copy () {
     this.clipboard.copy(this.address)
+    console.log('copy action')
+    this.ns.emit({ message: 'copy success' })
   }
 
   share () {

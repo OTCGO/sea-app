@@ -115,7 +115,7 @@ export class LoginPage implements OnInit {
 					 value,
 					 valid
 				 }: {
-		controls: FormControl[],
+		controls: any,
 		value: LoginFormValue,
 		valid: boolean
 	}) {

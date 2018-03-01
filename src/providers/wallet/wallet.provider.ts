@@ -39,7 +39,10 @@ export class WalletProvider {
 
 	addAccount (account) { if (this.wallet) this.wallet.addAccount(account) }
 
-	hasAccounts (): boolean { return !!this.wallet && !!this.wallet.accounts.length }
+	hasAccounts (): boolean {
+	  console.log('checking has Accounts', this.wallet, '')
+	  return !!this.wallet && !!this.wallet.accounts.length
+	}
 
 	getDefaultAccount () { if (this.hasAccounts()) return this.wallet.defaultAccount }
 

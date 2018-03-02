@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core'
 	template: `
 	  <ion-card class="card-list" *ngFor="let balance of balances">
 			  
-		  <ion-item [navPush]="possessionDetailPage" [navParams]="balance">
+		  <ion-item [navPush]="'PossessionDetail'" [navParams]="balance">
 			  <div class="possessions__icon" item-start>
 				  <img src="{{ 'assets/icon/'+balance?.symbol+'.png' }}" onerror="this.src='assets/icon/申一币.png'" />
 			  </div>

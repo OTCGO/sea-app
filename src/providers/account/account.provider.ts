@@ -6,7 +6,10 @@ const { Account } = wallet
 
 @Injectable()
 export class AccountProvider {
-	accounts = this.walletProvider.wallet.accounts
+	get accounts () {
+	  console.log(JSON.stringify(this.walletProvider.wallet, null, 4))
+	  return this.walletProvider.wallet.accounts
+  }
 
 	get defaultAccount () {
 		return this.accounts.find(account => account.isDefault)

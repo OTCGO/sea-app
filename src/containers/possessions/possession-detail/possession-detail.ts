@@ -42,6 +42,7 @@ export class PossessionDetailPage implements OnInit {
 	ngOnInit() {
 		this.loading.present()
 		this.possessionData = this.navParams.data
+    console.log('detail entered')
 
 		this.possessionDetailProvider
 		    .getPrices()

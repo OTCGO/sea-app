@@ -8,12 +8,18 @@ export class FileStorageProvider {
 	private storageDirectory: string
 
 	constructor (private file: File, private platform: Platform) {
-		this.storageDirectory = this.platform.is('android')
-			? this.file.dataDirectory
-			: this.platform.is('ios')
-				? this.file.applicationDirectory
-				: ''
+	  this.init()
 	}
+
+	init () {
+	  this.platform.ready().then(_ => {
+      this.storageDirectory = this.platform.is('android')
+        ? this.file.dataDirectory
+        : this.platform.is('ios')
+          ? this.file.applicationDirectory
+          : ''
+    })
+  }
 
 	read (fileName) {
 		return this.file.readAsText(
@@ -22,10 +28,10 @@ export class FileStorageProvider {
 	}
 
 	async save (fileName, text) {
-		const fileExits = await this.file
-																.checkFile(this.storageDirectory, fileName)
-																.then(_ => this.file.writeExistingFile(this.storageDirectory, fileName, text))
-																.catch(_ => this.file.writeFile(this.storageDirectory, fileName, text))
+		const fileExits = await this.file.checkFile(this.storageDirectory, fileName)
+    if (fileExits)
+      return this.file.writeExistingFile(this.storageDirectory, fileName, text)
+    return this.file.writeFile(this.storageDirectory, fileName, text)
 	}
 
 	async checkFile (fileName) {
@@ -33,7 +39,7 @@ export class FileStorageProvider {
 			console.log('No error on check file')
 			return await this.file.checkFile(this.storageDirectory, fileName)
 		} catch (e) {
-			console.log('Error on check file', e)
+			console.log('Error on check file', e.message)
 			return Promise.resolve(false)
 		}
 	}

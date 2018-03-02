@@ -33,9 +33,14 @@ export class WalletProvider {
 		return await this.fileStorageProvider.checkFile(OTCGO_WALLET_FILE_NAME)
 	}
 
-	readWalletFile () {
+  readWalletFile () {
 		return this.fileStorageProvider.read(OTCGO_WALLET_FILE_NAME)
 	}
+
+  async saveWallet () {
+    const walletTextFile = JSON.stringify(this.wallet.export())
+    return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
+  }
 
 	addAccount (account) { if (this.wallet) this.wallet.addAccount(account) }
 
@@ -60,11 +65,6 @@ export class WalletProvider {
 		} catch (e) {
 			return await Promise.reject(new Error('Incorrect password!'))
 		}
-	}
-
-	async saveWallet () {
-		const walletTextFile = JSON.stringify(this.wallet.export())
-		return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
 	}
 
 	private _upgradeWallet (oldWalletJSON, passphrase) {

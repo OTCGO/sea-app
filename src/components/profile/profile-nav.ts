@@ -13,4 +13,8 @@ export class ProfileNavComponent {
 	}
 
 	constructor (private navCtrl: NavController) {}
+
+	navPush (item) {
+    item.enabled && this.navCtrl.push(item.page)
+  }
 }

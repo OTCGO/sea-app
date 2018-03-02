@@ -47,9 +47,16 @@ export class MyApp {
 
 	async initWallet () {
 		const fileExits = await this.walletProvider.checkWalletFile()
-		if (!fileExits)
-			this.walletProvider.setWallet()
-		this.rootPage = fileExits ? 'Tabs' : 'Login'
+		if (!fileExits) {
+      this.rootPage = 'Login'
+      return await this.walletProvider.setWallet()
+    }
+		const file = JSON.parse(await this.walletProvider.readWalletFile())
+    this.walletProvider.setWallet(file)
+      .then(_ => {
+        this.rootPage = 'Tabs'
+      }
+    )
 	}
 
 	initTranslate () {

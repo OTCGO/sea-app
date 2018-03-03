@@ -1,7 +1,7 @@
 
 export enum SettingsActionTypes {
-	getSettings = '[GET SETTINGS]'
-	
+	getSettings = '[Settings] Get'
+
 }
 
 export class GetSettings {

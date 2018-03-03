@@ -96,7 +96,6 @@ export class CreateWalletPage {
       console.log(e)
       this.notificationProvider.emit({ message: e })
     }
-
   }
 
   validatePassphraseStrength (passphrase) {

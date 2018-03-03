@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { Injectable, OnDestroy } from '@angular/core'
 
 import { dev } from '../../environments/environment'
 import { Observable } from 'rxjs/Observable'
-import { timeout } from 'rxjs/operators'
-import 'rxjs/add/operator/timeout';
+import { Subject } from 'rxjs/Subject'
+import { takeUntil, timeout } from 'rxjs/operators'
 
 
 @Injectable()
-export class ApiProvider {
+export class ApiProvider implements OnDestroy {
 	otcgoApi = 'http://api.otcgo.cn'
-	nep5Api = 'http://nep5.otcgo.cn'
-	futureApi = 'http://future.otcgo.cn'
+	onDestroy = new Subject()
 
 	constructor (private http: HttpClient) {}
 
@@ -21,24 +20,17 @@ export class ApiProvider {
 			: `${this.otcgoApi}/mainnet`
 	}
 
-	getScanAPI () {
-		return dev
-			? 'https://api.neoscan.io/api/main_net'
-			: 'https://neoscan-testnet.io/api/test_net'
-	}
-
-	getNeonDBAPI () {
-		return dev
-			? 'http://api.wallet.cityofzion.io'
-			: 'http://testnet-api.wallet.cityofzion.io'
+	ngOnDestroy () {
+		this.onDestroy.next()
 	}
 
 	request (method, url, options?: any) {
 		return this.http
-		           .request(method, this.getAPIEndpoint() + '/' + url, options)
+		           .request(method, url, options)
 		           .pipe(
-			           timeout(10000)
-		           )
+								 takeUntil(this.onDestroy),
+								 timeout(300)
+							 )
 		
 	}
 

@@ -1,9 +1,9 @@
-type I18n = {
-	"zh-cn": 'chinease'
-	"en": 'english'
+interface I18n {
+	'zh-cn': 'chinease'
+	'en': 'english'
 }
 
-type Currency = {
+interface Currency {
 	aud: { symbol: '$' },
 	brl: { symbol: 'R$' },
 	cad: { symbol: '$' },
@@ -39,7 +39,7 @@ type Currency = {
 	gas: { symbol: 'gas' }
 }
 
-export type SettingsState = {
+export interface SettingsState {
 	lang: keyof I18n
 	currency: keyof Currency
 }

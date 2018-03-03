@@ -16,7 +16,7 @@ import {
 	catchError, skip, takeUntil
 } from 'rxjs/operators'
 
-import { GET_BALANCES_TYPES, Get, GetError, GetSuccess } from '../actions/balances.action'
+import { BalancesActionTypes, Get, GetError, GetSuccess } from '../actions/balances.action'
 import { ASSET_ENUM } from '../shared/constants'
 
 const SEARCH_DEBOUNCE = new InjectionToken<number>('GetBalances Debounce')
@@ -27,15 +27,16 @@ export class BalancesEffects {
 	@Effect()
 	GET$: Observable<Action> =
 		this.actions$.pipe(
-			ofType<Get>(GET_BALANCES_TYPES.GET),
+			ofType<Get>(BalancesActionTypes.GET),
 			debounceTime(this.debounce || 300, this.scheduler || async),
 			map(action => action.payload),
 			switchMap(query => {
-				if (query === '')
+				if (query === '') {
 					return empty()
+				}
 
 				const nextGet$ = this.actions$.pipe(
-					ofType(GET_BALANCES_TYPES.GET),
+					ofType(BalancesActionTypes.GET),
 					skip(1)
 				)
 

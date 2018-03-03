@@ -22,25 +22,22 @@ page-possession-detail {
       left: 0;
       z-index: 1;
 
-      height: 55%;
+      height: 55vh;
       width: 100%;
       margin: 0;
 
       text-align: center;
-      padding-top: calc(40% - 3.6rem);
       box-shadow: 0 2px 2px 0 rgba(42, 114, 218, 0.14),
                   0 3px 1px -2px rgba(42, 114, 218, 0.2),
                   0 1px 5px 0 rgba(42, 114, 218, 0.12);
 
       display: flex;
-      justify-content: center;
       align-items: center;
       flex-direction: column;
       color: white;
 
       .possession-data-amount {
-        position: absolute;
-        top: 20%;
+        padding-top: 50px;
 
         font-size: 4.4rem;
         text-shadow: 0 2px 2px rgba(0, 0, 0, 0.14),
@@ -48,9 +45,6 @@ page-possession-detail {
                      0 1px 5px rgba(0, 0, 0, 0.12);;
       }
       .possession-data-approximation {
-        position: absolute;
-        top: 35%;
-
         font-size: 1.2rem;
         font-weight: lighter;
         letter-spacing: 0.07rem;
@@ -58,10 +52,9 @@ page-possession-detail {
     }
 
     button.otcgo-button {
+      margin-top: calc(25vh - 3.8rem);
       width: 60%;
       color: #efefef;
-      position: absolute;
-      bottom: 5%;
 
       span {
         background-image: -webkit-linear-gradient(0deg, rgb(47, 177, 213), #2a72da); /* For Chrome and Safari */

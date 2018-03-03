@@ -74,20 +74,22 @@ export class SendModalComponent {
 
 		this.sendModalProvider
 		    .decrypt(this.passphrase.value)
-		    .then(async _=> {
+		    .then(async pr => {
 			    const result = await this.sendModalProvider.doSendAsset({
 				    dests: this.toAddress.value,
 				    amounts: this.amount.value,
 				    assetId: this.possessionData.hash
-			    })
+			    }, pr)
 			    if (result) {
 				    await this.dismiss()
 				    this.notificationProvider.emit({ message: '转账成功' })
 			    }
 		    })
 		    .catch(err => {
-		    	this.showPrompt({ message: err, title: '错误' })
-		    })
+		    	if (err.message)
+						return this.showPrompt({ message: err.message, title: '错误' })
+					this.showPrompt({ message: err, title: '错误' })
+				})
 		    .then(_=> {
 		    	loading.dismissAll()
 		    })

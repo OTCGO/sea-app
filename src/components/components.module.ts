@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'
 import { TimelineModule } from './timeline'
 import { SendModalModule } from './modals'
 import { SlideCardModule } from './slide-card'

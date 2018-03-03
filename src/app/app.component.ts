@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Platform, ToastController, ToastOptions } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
@@ -11,7 +11,7 @@ import { NotificationProvider } from '../providers/notification.provider'
 @Component({
 	templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements OnInit {
 	rootPage: any
 
 	constructor (
@@ -19,12 +19,10 @@ export class MyApp {
 		private statusBar: StatusBar,
 		private splashScreen: SplashScreen,
 		private toastCtrl: ToastController,
+		private notificationProvider: NotificationProvider,
 		private walletProvider: WalletProvider,
-	  private notificationProvider: NotificationProvider,
 	  private translateService: TranslateService
-	) {
-
-	}
+	) {}
 
 	ngOnInit () {
 		this.initApp()
@@ -37,7 +35,7 @@ export class MyApp {
 			this.splashScreen.hide()
 
 			this.initWallet().then(
-				_=> {
+				_ => {
 					this.initTranslate()
 					this.subscribeNotification()
 				}
@@ -52,6 +50,7 @@ export class MyApp {
       return await this.walletProvider.setWallet()
     }
 		const file = JSON.parse(await this.walletProvider.readWalletFile())
+		console.log(file)
     this.walletProvider.setWallet(file)
       .then(_ => {
         this.rootPage = 'Tabs'
@@ -65,9 +64,9 @@ export class MyApp {
 		if (this.translateService.getBrowserLang() !== undefined) {
 			const locale = this.translateService.getBrowserLang()
 
-			this.translateService.use(locale);
+			this.translateService.use(locale)
 		} else {
-			this.translateService.use('en');
+			this.translateService.use('en')
 		}
 	}
 
@@ -77,7 +76,6 @@ export class MyApp {
 
 	showNotification (opts: ToastOptions) {
 		const toastOptions = Object.assign({
-			dismissOnPageChange: true,
 			position: 'bottom',
 			duration: 3000
 		}, opts)

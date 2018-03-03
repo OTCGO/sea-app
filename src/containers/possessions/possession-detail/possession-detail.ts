@@ -25,10 +25,10 @@ interface TransactionHistory {
 	selector: 'page-possession-detail',
 	templateUrl: 'possession-detail.html',
 })
-export class PossessionDetailPage implements OnInit {
+export class PossessionDetailPage {
 	possessionData
 	transactionHistories: TransactionHistory[] = []
-	loading = this.loadingCtrl.create()
+	loading
 	totalValue
 
 	constructor (
@@ -39,10 +39,10 @@ export class PossessionDetailPage implements OnInit {
 	  private possessionDetailProvider: PossessionDetailProvider
 	) {}
 
-	ngOnInit() {
+	ngOnInit () {
+		this.loading = this.loadingCtrl.create()
 		this.loading.present()
 		this.possessionData = this.navParams.data
-    console.log('detail entered')
 
 		this.possessionDetailProvider
 		    .getPrices()
@@ -61,7 +61,7 @@ export class PossessionDetailPage implements OnInit {
 				        this.transactionHistories = histories
 			        })
 		    })
-		    .then(_=> this.loading.dismissAll())
+		    .then(_=> this.loading.dismiss())
 	}
 
 	showSendModal () {

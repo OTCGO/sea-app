@@ -9,9 +9,9 @@ import { CreateWalletPage } from '../create-wallet/create-wallet'
 import { wallet } from '../../libs/neon'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 import { TabsPage } from '../tabs/tabs'
-import TEST_WALLET from '../../shared/userWallet'
+import { nep5Wallet } from '../../shared/userWallet'
 import { contains } from '../../shared/utils'
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
@@ -32,11 +32,12 @@ interface LoginFormValue {
 	templateUrl: 'login.html',
 })
 export class LoginPage implements OnInit {
-	private _file
+	file
 	createWalletPage = CreateWalletPage
 	importText: string = '导入'
 	isWIFKey: boolean = true
 	loginForm: FormGroup
+	isNEP5: boolean = false
 
 	get wif () { return this.loginForm.get('wif') }
 	get passphrase () { return this.loginForm.get('passphrase') }
@@ -45,7 +46,7 @@ export class LoginPage implements OnInit {
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		public alertCtrl: AlertController,
-		private walletProvider: WalletProvider,
+		public walletProvider: WalletProvider,
 		private fb: FormBuilder
 	) { }
 
@@ -88,8 +89,11 @@ export class LoginPage implements OnInit {
 			reader.onload = function () {
 				try {
 					const JSONFile = JSON.parse(this.result)
-					if (ng.walletProvider.isOldWallet(JSONFile) || ng.walletProvider.isWallet(JSONFile)) {
-						ng._file = JSONFile
+					if (ng.walletProvider.isOldWallet(JSONFile)) {
+						ng.file = JSONFile
+					} else if (ng.walletProvider.isWallet(JSONFile)) {
+						ng.file = JSONFile
+						ng.isNEP5 = true
 					} else {
 						throw new Error('钱包格式错误！')
 					}
@@ -111,26 +115,31 @@ export class LoginPage implements OnInit {
 	}
 
 	login ({
-					 controls,
-					 value,
-					 valid
-				 }: {
-		controls: any,
+    controls,
+		value,
+		valid
+	}: {
+		controls: {
+			[key: string]: AbstractControl
+		},
 		value: LoginFormValue,
 		valid: boolean
 	}) {
+		const { wif, passphrase } = controls
+		if (this.file) {
+			wif.setValue('')
+		}
 
 		const { wif: wifValue, passphrase: passphraseValue } = value
-		const { wif, passphrase } = controls
+
 
 		if (wifValue === 'test') {
-			this.walletProvider.wallet = JSON.parse(JSON.stringify(TEST_WALLET))
+			this.walletProvider.wallet = nep5Wallet
 			return this.navCtrl.setRoot(TabsPage)
 		}
 
-		if (!passphrase.valid) return
-
 		if (wifValue && this.isWIFKey && passphraseValue) {
+			if (!passphrase.valid) return
 
 			const account = new wallet.Account(wifValue)
 			account.encrypt(passphraseValue)
@@ -140,9 +149,10 @@ export class LoginPage implements OnInit {
 			return this.navCtrl.setRoot(TabsPage)
 		}
 
-		if (this._file && !this.isWIFKey && !wifValue) {
-			if (this.walletProvider.isOldWallet(this._file)) {
-				this.walletProvider.upgradeAndAddToAccount(this._file, passphraseValue)
+		if (this.file && !this.isWIFKey && !wifValue) {
+			if (this.walletProvider.isOldWallet(this.file)) {
+				if (!passphrase.valid) return
+				this.walletProvider.upgradeAndAddToAccount(this.file, passphraseValue)
 						.then(_ => {
 							this.navCtrl.setRoot(TabsPage)
 						})
@@ -151,8 +161,8 @@ export class LoginPage implements OnInit {
 						})
 			}
 
-			if (this.walletProvider.isWallet(this._file)) {
-				this.walletProvider.wallet = this._file
+			if (this.walletProvider.isWallet(this.file)) {
+				this.walletProvider.wallet = this.file
 				this.navCtrl.setRoot(TabsPage)
 			}
 		}

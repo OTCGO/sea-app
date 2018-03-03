@@ -29,8 +29,9 @@ export class FileStorageProvider {
 
 	async save (fileName, text) {
 		const fileExits = await this.file.checkFile(this.storageDirectory, fileName)
-    if (fileExits)
+    if (fileExits) {
       return this.file.writeExistingFile(this.storageDirectory, fileName, text)
+    }
     return this.file.writeFile(this.storageDirectory, fileName, text)
 	}
 

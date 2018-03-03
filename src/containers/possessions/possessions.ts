@@ -7,16 +7,17 @@ import {
 	Refresher
 } from 'ionic-angular'
 
-import { select, Store } from '@ngrx/store'
+import { Store } from '@ngrx/store'
 
 import { PossessionDetailPage } from './possession-detail/possession-detail'
 import { WalletProvider } from '../../providers/wallet/wallet.provider'
 
 import * as fromBalances from '../../reducers/balances.reducer'
 import * as balancesAction from '../../actions/balances.action'
-import { BalancesState } from '../../reducers/balances.reducer'
+import { State } from '../../reducers/balances.reducer'
 import { AccountProvider } from '../../providers/account/account.provider'
 import { NotificationProvider } from '../../providers/notification.provider'
+
 
 @IonicPage({
 	name: 'Possessions',
@@ -31,7 +32,7 @@ export class PossessionsPage implements OnInit {
 	possessionDetailPage = PossessionDetailPage
 	account = this.accountProvider.defaultAccount
 	loading: Loading = this.loadingCtrl.create()
-	balances$ = this.store.pipe(select(fromBalances.selectEntities));
+	balances: Array<any>
 
 
 	constructor (
@@ -40,7 +41,7 @@ export class PossessionsPage implements OnInit {
 		private loadingCtrl: LoadingController,
 		private accountProvider: AccountProvider,
 		private notificationProvider: NotificationProvider,
-		private store: Store<BalancesState>
+		private store: Store<State>
 	) {}
 
 	ionViewCanEnter () {
@@ -54,10 +55,17 @@ export class PossessionsPage implements OnInit {
 	}
 
 	loadBalance () {
+		this.store.select(fromBalances.selectEntities)
+				.subscribe(
+					balances => {
+						this.balances = balances
+					}
+				)
 		this.store.dispatch(new balancesAction.Get(this.account.address))
 		this.store.select(fromBalances.selectError).subscribe(
 			error => error && this.notificationProvider.emit({ message: error })
 		)
+
 	}
 
 	doRefresh (e: Refresher) {

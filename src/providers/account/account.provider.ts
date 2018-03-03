@@ -7,7 +7,6 @@ const { Account } = wallet
 @Injectable()
 export class AccountProvider {
 	get accounts () {
-	  console.log(JSON.stringify(this.walletProvider.wallet, null, 4))
 	  return this.walletProvider.wallet.accounts
   }
 

@@ -10,10 +10,6 @@ export const DEFAULT_EMPTY_WALLET = {
 	name: 'OTCGO-mobile-wallet',
 	scrypt: DEFAULT_SCRYPT,
 	accounts: [],
-	version: 'beta-0.2',
-	extra: {
-		addressBook: [
-			{ name: { firstname: '', lastname: '' }, address: 'aosinxpiasnxpioasn', gender: 'male', phone: '', email: '', Description: '' }
-		]
-	}
+	version: 'beta-0.6',
+	extra: null
 }

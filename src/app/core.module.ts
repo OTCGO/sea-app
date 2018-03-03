@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core'
 
 import { Clipboard } from '@ionic-native/clipboard'
 import { SocialSharing } from '@ionic-native/social-sharing'
@@ -13,6 +13,9 @@ import { SendModalProvider } from '../components/modals/send-modal/send-modal.pr
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
 import { FileStorageProvider } from '../providers/file-storage.provider'
 import { NotificationProvider } from '../providers/notification.provider'
+import { LoadingProvider } from '../providers/loading.provider'
+import { IonicErrorHandler } from 'ionic-angular'
+import { Logger } from '../providers/Logger.provider'
 
 
 
@@ -22,6 +25,7 @@ import { NotificationProvider } from '../providers/notification.provider'
 		SplashScreen,
 		File,
 		Clipboard,
+		Logger,
 		BarcodeScanner,
 		SocialSharing,
 		WalletProvider,
@@ -32,7 +36,9 @@ import { NotificationProvider } from '../providers/notification.provider'
 		AccountProvider,
 		ClaimsProvider,
 	  FileStorageProvider,
-	  NotificationProvider
+	  NotificationProvider,
+		LoadingProvider,
+		{ provide: ErrorHandler, useClass: IonicErrorHandler },
 	]
 })
 export class CoreModule {

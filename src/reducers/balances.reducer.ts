@@ -1,26 +1,27 @@
 import { ActionReducer, createSelector } from '@ngrx/store'
 import { IBalance } from '../shared/balances.model'
-import { BALANCES_ACTIONS, GET_BALANCES_TYPES } from '../actions'
+import { BalancesActions, BalancesActionTypes } from '../actions'
+import { getBalancesState } from './'
 
-export interface BalancesState {
+export interface State {
 	entities?: IBalance[]
 	error?: string
 }
 
-const initialBalancesState: BalancesState = {
+const initialBalancesState: State = {
 	entities: null,
 	error: null
 }
 
-export const reducer: ActionReducer<BalancesState> = (state = initialBalancesState, action: BALANCES_ACTIONS): BalancesState => {
+export const reducer: ActionReducer<State> = function reducer (state = initialBalancesState, action: BalancesActions): State {
 	switch (action.type) {
-		case GET_BALANCES_TYPES.GET_ERROR:
+		case BalancesActionTypes.GET_ERROR:
 			return {
 				...state,
 				error: action.payload
 			}
 
-		case GET_BALANCES_TYPES.GET_SUCCESS:
+		case BalancesActionTypes.GET_SUCCESS:
 			return {
 				...state,
 				entities: action.payload
@@ -31,14 +32,12 @@ export const reducer: ActionReducer<BalancesState> = (state = initialBalancesSta
 	}
 }
 
-export const selectBalancesFeature = (state) => state.balances
-
 export const selectEntities = createSelector(
-	selectBalancesFeature,
-	(state: BalancesState) => state.entities
+	getBalancesState,
+	(state: State) => state.entities
 )
 
 export const selectError = createSelector(
-	selectBalancesFeature,
-	(state: BalancesState) => state.error
+	getBalancesState,
+	(state: State) => state.error
 )

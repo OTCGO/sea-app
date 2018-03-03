@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { FileStorageProvider } from '../file-storage.provider'
 
 import { wallet } from '../../libs/neon'
+
 import { decryptPrv, verifyKeyPair } from '../utils'
 import {
 	DEFAULT_EMPTY_WALLET,
@@ -45,7 +46,7 @@ export class WalletProvider {
 	addAccount (account) { if (this.wallet) this.wallet.addAccount(account) }
 
 	hasAccounts (): boolean {
-	  console.log('checking has Accounts', this.wallet, '')
+	  console.log('checking has Accounts', this.wallet)
 	  return !!this.wallet && !!this.wallet.accounts.length
 	}
 
@@ -60,7 +61,7 @@ export class WalletProvider {
 			account = await this._upgradeWallet(oldWalletJSON, passphrase)
 			account.isDefault = true
 			this.wallet.addAccount(account)
-			this.saveWallet()
+			await this.saveWallet()
 			return await Promise.resolve(true)
 		} catch (e) {
 			return await Promise.reject(new Error('Incorrect password!'))

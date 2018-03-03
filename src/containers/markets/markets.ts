@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import {
 	IonicPage, Loading, LoadingController, NavController, NavParams, Refresher
 } from 'ionic-angular'
@@ -12,7 +12,7 @@ import { NotificationProvider } from '../../providers/notification.provider'
 	selector: 'page-markets',
 	templateUrl: 'markets.html',
 })
-export class MarketsPage {
+export class MarketsPage implements OnInit {
 	coins
 	loading: Loading
 	GASPrice
@@ -27,7 +27,7 @@ export class MarketsPage {
 		private loadingCtrl: LoadingController
 	) {}
 
-	ionViewDidEnter () {
+	ngOnInit () {
 		this.initData()
 	}
 
@@ -69,7 +69,7 @@ export class MarketsPage {
 	}
 
 	doRefresh (refresher: Refresher) {
-		api.cmc.getMarkets('cny')
+		api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS, 'cny')
 		   .then(
 			   coins => {
 				   this.coins = coins

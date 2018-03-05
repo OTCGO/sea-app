@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core'
-import { PriceProvider } from '../providers'
+import { PriceProvider } from '../../providers/index'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 
 import { of } from 'rxjs/observable/of'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 
 import {
-	map,
 	skip,
+	timeout,
+	mergeMap,
 	takeUntil,
 	switchMap,
 	catchError,
-	debounceTime,
+	debounceTime, publishLast, refCount
 } from 'rxjs/operators'
 
 import { Load, LoadFail, LoadSuccess, MarketsActionTypes } from '../actions/markets.action'
+import { Load as LoadPricesSuccess } from '../actions/prices.action'
 
-import * as Neon from '../libs/neon'
+import { api } from '../../libs/neon'
 import { Observable } from 'rxjs/Observable'
 import { Action } from '@ngrx/store'
 
@@ -34,15 +36,30 @@ export class MarketsEffects {
 					skip(1)
 				)
 
-				return fromPromise(
-					Neon.api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS,  'cny')
-				).pipe(
-					takeUntil(nextLoad$),
-					map(markets => new LoadSuccess(markets)),
-					catchError(error => of(new LoadFail(error)))
-				)
+				return loadMarkets(nextLoad$)
 			})
 		)
 
 	constructor (private actions$: Actions) {}
+}
+
+function loadMarkets (nextLoad$, baseCurrency = 'cny') {
+	return fromPromise(
+		api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS,  baseCurrency)
+	).pipe(
+		takeUntil(nextLoad$),
+		timeout(2628),
+		publishLast(),
+		refCount(),
+		mergeMap(
+			markets => [
+				new LoadPricesSuccess(
+					markets.map(ticker => ({ [ticker.symbol]: ticker.currentPrice }))
+								 .reduce((acc, cur) => ({...acc, ...cur}), {})
+				),
+				new LoadSuccess(markets)
+			]
+		),
+		catchError(error => of(new LoadFail(error)))
+	)
 }

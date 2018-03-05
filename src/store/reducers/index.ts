@@ -1,24 +1,22 @@
-import { ActionReducer, ActionReducerMap, createFeatureSelector, MetaReducer } from '@ngrx/store'
+import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store'
 import { storeFreeze } from 'ngrx-store-freeze'
-import { dev } from '../environments/environment'
+import { dev } from '../../environments/environment'
+
 import * as fromBalances from './balances.reducer'
 import * as fromMarkets from './markets.reducer'
-import { InjectionToken } from '@angular/core'
+import * as fromPrices from './prices.reducer'
 
 export interface RootState {
 	balances: fromBalances.State
+	markets: fromMarkets.State,
+	prices: fromPrices.State
 }
 
-export const reducers = {
-	balances: fromBalances.reducer
+export const reducers: ActionReducerMap<RootState> = {
+	balances: fromBalances.reducer,
+	markets: fromMarkets.reducer,
+	prices: fromPrices.reducer
 }
-
-export const reducerToken = new InjectionToken<ActionReducerMap<RootState>>('Reducers')
-
-export const reducerProvider = [
-	{ provide: reducerToken, useValue: reducers }
-]
-
 
 
 function logger (reducer: ActionReducer<RootState>): ActionReducer<RootState> {
@@ -35,9 +33,6 @@ function logger (reducer: ActionReducer<RootState>): ActionReducer<RootState> {
 }
 
 export const metaReducers: MetaReducer<RootState>[] = dev ? [logger, storeFreeze] : []
-
-export const getBalancesState = createFeatureSelector<fromBalances.State>('balances')
-export const getMarketsState = createFeatureSelector<fromMarkets.State>('markets')
 
 export {
 	fromBalances,

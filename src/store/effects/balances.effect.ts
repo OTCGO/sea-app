@@ -2,7 +2,7 @@ import { Optional, Inject, Injectable, InjectionToken } from '@angular/core'
 import { Action } from '@ngrx/store'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { BigNumber } from 'bignumber.js'
-import { ApiProvider } from '../providers/api/api.provider'
+import { ApiProvider } from '../../providers/api/api.provider'
 
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
@@ -13,11 +13,15 @@ import {
 	debounceTime,
 	map,
 	switchMap,
-	catchError, skip, takeUntil
+	catchError,
+	skip,
+	takeUntil,
+	publishLast,
+	refCount, timeout
 } from 'rxjs/operators'
 
 import { BalancesActionTypes, Get, GetError, GetSuccess } from '../actions/balances.action'
-import { ASSET_ENUM } from '../shared/constants'
+import { ASSET_ENUM } from '../../shared/constants'
 
 const SEARCH_DEBOUNCE = new InjectionToken<number>('GetBalances Debounce')
 const SEARCH_SCHEDULER = new InjectionToken<Scheduler>('Search Scheduler')
@@ -27,7 +31,7 @@ export class BalancesEffects {
 	@Effect()
 	GET$: Observable<Action> =
 		this.actions$.pipe(
-			ofType<Get>(BalancesActionTypes.GET),
+			ofType<Get>(BalancesActionTypes.LOAD),
 			debounceTime(this.debounce || 300, this.scheduler || async),
 			map(action => action.payload),
 			switchMap(query => {
@@ -36,7 +40,7 @@ export class BalancesEffects {
 				}
 
 				const nextGet$ = this.actions$.pipe(
-					ofType(BalancesActionTypes.GET),
+					ofType(BalancesActionTypes.LOAD),
 					skip(1)
 				)
 
@@ -44,6 +48,9 @@ export class BalancesEffects {
 				           .get('address/' + query)
 				           .pipe(
 					           takeUntil(nextGet$),
+					           timeout(2628),
+					           publishLast(),
+					           refCount(),
 					           map(
 						           (res: any) => res.error
 							           ? Observable.throw(res.error)

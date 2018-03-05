@@ -2,6 +2,7 @@
   "TABS": {
     "possessions": "Balances",
     "markets": "Markets",
+    "discover": "Discover",
     "profile": "Profile"
   },
   "LOGIN": {
@@ -9,7 +10,8 @@
     "tip": "Not yet have a wallet? create one!",
     "login_wallet": "Login",
     "wif_placeholder": "Using WIF Key",
-    "password": "Enter your passphrase here"
+    "password": "Enter your passphrase here",
+    "wif_error": "Invalid WIF format, please retry."
   },
   "CW": {
     "title": "Create Wallet",

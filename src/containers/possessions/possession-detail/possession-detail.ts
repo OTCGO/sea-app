@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
 import {
 	NavParams,
 	IonicPage,
@@ -6,6 +7,8 @@ import {
 	ModalController,
 	LoadingController,
 } from 'ionic-angular'
+import { RootState } from '../../../store/reducers'
+import * as PricesSelectors from '../../../store/selectors/prices.selector'
 
 import { PossessionDetailProvider } from './possession-detail.provider'
 
@@ -36,7 +39,8 @@ export class PossessionDetailPage {
 		public navParams: NavParams,
 		private modalCtrl: ModalController,
 		private loadingCtrl: LoadingController,
-	  private possessionDetailProvider: PossessionDetailProvider
+	  private possessionDetailProvider: PossessionDetailProvider,
+		private store: Store<RootState>
 	) {}
 
 	ngOnInit () {
@@ -44,24 +48,15 @@ export class PossessionDetailPage {
 		this.loading.present()
 		this.possessionData = this.navParams.data
 
+		this.store
+				.select(PricesSelectors.getEntities)
+				.subscribe(prices => this.totalValue = this.possessionData.amount.times(prices[this.possessionData.symbol]))
 		this.possessionDetailProvider
-		    .getPrices()
-		    .then(prices => {
-		    	const price = prices[this.possessionData.symbol]
-			    this.totalValue = this.possessionData.amount.times(price)
-		    })
-		    .catch(error => {
-			    console.error('Possession detail', error)
-			    this.totalValue = NaN
-		    })
-		    .then(_=> {
-			    this.possessionDetailProvider
-			        .getHistories(this.possessionData.symbol)
-			        .then(histories => {
-				        this.transactionHistories = histories
-			        })
-		    })
-		    .then(_=> this.loading.dismiss())
+				.getHistories(this.possessionData.symbol)
+				.then(histories => {
+					this.transactionHistories = histories
+				})
+				.then(_=> this.loading.dismiss())
 	}
 
 	showSendModal () {

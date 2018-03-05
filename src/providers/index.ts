@@ -1,3 +1,8 @@
-export * from './wallet/wallet.provider'
-export * from './account/account.provider'
 export * from './api'
+
+export { WalletProvider } from './wallet/wallet.provider'
+export { AccountProvider } from './account/account.provider'
+export { LoadingProvider } from './loading.provider'
+export { NotificationProvider } from './notification.provider'
+
+export { Logger } from './logger.provider'

@@ -15,7 +15,7 @@ import { FileStorageProvider } from '../providers/file-storage.provider'
 import { NotificationProvider } from '../providers/notification.provider'
 import { LoadingProvider } from '../providers/loading.provider'
 import { IonicErrorHandler } from 'ionic-angular'
-import { Logger } from '../providers/Logger.provider'
+import { Logger } from '../providers/logger.provider'
 
 
 

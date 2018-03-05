@@ -1,14 +1,38 @@
-import { Injectable } from '@angular/core'
+import { Injectable, OnDestroy } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
-import { LoadingOptions } from 'ionic-angular'
-
+import { Loading, LoadingController } from 'ionic-angular'
 
 @Injectable()
-export class LoadingProvider {
+export class LoadingProvider implements OnDestroy {
 	subject = new Subject()
-	loading$ = this.subject.asObservable()
+	onDestroy = new Subject()
+	loading$ = this.subject.asObservable().takeUntil(this.onDestroy)
 
-	emit(opts: LoadingOptions) {
-		this.subject.next(opts)
+	constructor (private loadingCtrl: LoadingController) {
+		this.subscribeLoading()
+	}
+
+	loading: Loading
+
+	subscribeLoading () {
+		this.loading$
+				.distinctUntilChanged()
+				.subscribe(
+					bool => {
+						if (bool) {
+							this.loading = this.loadingCtrl.create()
+							return this.loading.present()
+						}
+						return this.loading.dismissAll()
+					}
+				)
+	}
+
+	emit (bool: boolean) {
+		this.subject.next(bool)
+	}
+
+	ngOnDestroy () {
+		this.onDestroy.next()
 	}
 }

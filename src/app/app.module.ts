@@ -15,9 +15,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
 import { MyApp } from './app.component'
 import { dev } from '../environments/environment'
-import * as fromRoot from '../reducers'
+import { reducers, metaReducers } from '../store/reducers'
 import { CoreModule } from './core.module'
-import { BalancesEffects, MarketsEffects } from '../effects'
+import { BalancesEffects, MarketsEffects } from '../store/effects'
 
 const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')
 
@@ -30,8 +30,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './ass
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(fromRoot.reducerToken),
-    // dev ? StoreDevtoolsModule.instrument() : [],
+    StoreModule.forRoot({ ...reducers }, { metaReducers: metaReducers }),
+    dev ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([BalancesEffects, MarketsEffects]),
     IonicModule.forRoot(MyApp, {
       tabbarPlacement: 'bottom',
@@ -52,9 +52,6 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './ass
     CoreModule.forRoot()
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp],
-  providers: [
-    fromRoot.reducerProvider
-  ]
+  entryComponents: [MyApp]
 })
 export class AppModule { }

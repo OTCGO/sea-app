@@ -23,8 +23,7 @@ export class WalletProvider {
 
 	constructor (
 	  private fileStorageProvider: FileStorageProvider
-	) {
-	}
+	) { }
 
 	async setWallet (walletFile = DEFAULT_EMPTY_WALLET) {
 		this.wallet = walletFile
@@ -46,7 +45,6 @@ export class WalletProvider {
 	addAccount (account) { if (this.wallet) this.wallet.addAccount(account) }
 
 	hasAccounts (): boolean {
-	  console.log('checking has Accounts', this.wallet)
 	  return !!this.wallet && !!this.wallet.accounts.length
 	}
 

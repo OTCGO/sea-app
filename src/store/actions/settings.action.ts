@@ -1,6 +1,6 @@
 
 export enum SettingsActionTypes {
-	getSettings = '[Settings] Get'
+	LOAD = '[Settings] Load'
 
 }
 

@@ -8,15 +8,14 @@ import {
 } from 'ionic-angular'
 
 import { Store } from '@ngrx/store'
+import { LoadingProvider, WalletProvider, AccountProvider, NotificationProvider } from '../../providers'
 
 import { PossessionDetailPage } from './possession-detail/possession-detail'
-import { WalletProvider } from '../../providers/wallet/wallet.provider'
 
-import * as fromBalances from '../../reducers/balances.reducer'
-import * as balancesAction from '../../actions/balances.action'
-import { State } from '../../reducers/balances.reducer'
-import { AccountProvider } from '../../providers/account/account.provider'
-import { NotificationProvider } from '../../providers/notification.provider'
+import * as fromBalances from '../../store/reducers/balances.reducer'
+import * as balancesAction from '../../store/actions/balances.action'
+import { State } from '../../store/reducers/balances.reducer'
+
 
 
 @IonicPage({
@@ -31,7 +30,7 @@ export class PossessionsPage implements OnInit {
 	splash: boolean = false
 	possessionDetailPage = PossessionDetailPage
 	account = this.accountProvider.defaultAccount
-	loading: Loading = this.loadingCtrl.create()
+	loading: Loading
 	balances: Array<any>
 
 
@@ -41,6 +40,7 @@ export class PossessionsPage implements OnInit {
 		private loadingCtrl: LoadingController,
 		private accountProvider: AccountProvider,
 		private notificationProvider: NotificationProvider,
+		private lp: LoadingProvider,
 		private store: Store<State>
 	) {}
 
@@ -48,29 +48,36 @@ export class PossessionsPage implements OnInit {
 		return this.walletProvider.hasAccounts()
 	}
 
-	async ngOnInit () {
-		await this.loading.present()
+	ngOnInit () {
 		this.loadBalance()
-		await this.loading.dismiss()
+	}
+
+	async presentLoading () {
+		this.loading = this.loadingCtrl.create()
+		await this.loading.present()
 	}
 
 	loadBalance () {
-		this.store.select(fromBalances.selectEntities)
-				.subscribe(
-					balances => {
-						this.balances = balances
-					}
-				)
 		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.store.select(fromBalances.selectError).subscribe(
-			error => error && this.notificationProvider.emit({ message: error })
+		this.store.select(fromBalances.getEntities)
+				.subscribe(balances => this.balances = balances)
+		this.store.select(fromBalances.getLoading)
+				.subscribe(loading => this.lp.emit(loading))
+
+		this.store.select(fromBalances.getError).subscribe(
+			error =>
+				error && this.notificationProvider
+										 .emit({
+											 message: error
+										 })
 		)
 
 	}
 
-	doRefresh (e: Refresher) {
+	doRefresh (refresher: Refresher) {
 		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.notificationProvider.emit({ message:'刷新成功！' })
-		e.complete()
+		this.store.select(fromBalances.getLoading)
+				.subscribe(loading => !loading && refresher.complete())
+
 	}
 }

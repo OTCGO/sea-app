@@ -37,18 +37,16 @@ export class TabsPage {
       { root: this.discoverPage, title: this.discoverTitle, icon: 'discover', enabled: false },
       { root: this.profilePage, title: this.profileTitle, icon: 'profile', enabled: true }
     ]
-
-    this.trs.get('POSSESSIONS').subscribe(
-      res => console.log(res)
-    )
   }
 
   selectTab () {
     const selectedTab = this.tabRef.getSelected()
     this.tabRef.getAllChildNavs().forEach(tab => {
-      tab.tabTitle = tab === selectedTab
-        ? ''
-        : this[tab.tabIcon + 'Title']
+			this.trs.get('TABS').subscribe(
+				TBAS => tab.tabTitle = (tab === selectedTab)
+          ? ''
+          : TBAS[this[tab.tabIcon + 'Title']]
+			)
     })
   }
 }

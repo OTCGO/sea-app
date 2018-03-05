@@ -2,6 +2,7 @@
 	"TABS": {
 		"possessions": "资产",
 		"markets": "行情",
+		"discover": "发现",
 		"profile": "个人"
 	},
 	"LOGIN": {
@@ -9,7 +10,8 @@
 		"tip": "还没有钱包？创建一个！",
 		"login_wallet": "确认",
 		"wif_placeholder": "WIF码登录",
-		"password": "请输入密码"
+		"password": "请输入密码",
+		"wif_error": "无法识别 WIF，请重试！"
 	},
 	"CW": {
 		"title": "创建钱包",

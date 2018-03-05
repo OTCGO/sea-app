@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { IonicPage } from 'ionic-angular'
 import { TranslateService } from '@ngx-translate/core'
+import { debug } from '../../../shared/utils'
 
 
 @IonicPage({

@@ -1,4 +1,4 @@
-import { Account } from '../wallet'
+import { AccountFile } from '../wallet'
 import { TX_VERSION, ASSET_ID } from '../consts'
 import { createScript } from '../sc'
 import { Fixed8, str2hexstring } from '../utils'
@@ -79,7 +79,7 @@ class Transaction {
    */
   static createClaimTx (publicKeyOrAddress, claimData, override = {}) {
     if (claimData.claims.length === 0) throw new Error('Useless transaction! There is no claims!')
-    const acct = new Account(publicKeyOrAddress)
+    const acct = new AccountFile(publicKeyOrAddress)
     const txConfig = Object.assign({
       type: 2,
       version: TX_VERSION.CLAIM
@@ -226,12 +226,12 @@ class Transaction {
 
   /**
    * Signs a transaction.
-   * @param {Account|string} signer - Account, privateKey or WIF
+   * @param {AccountFile|string} signer - Account, privateKey or WIF
    * @return {Transaction} this
    */
   sign (signer) {
     if (typeof signer === 'string') {
-      signer = new Account(signer)
+      signer = new AccountFile(signer)
     }
     core.signTransaction(this, signer.privateKey)
     log.info(`Signed Transaction with Account: ${signer.label}`)

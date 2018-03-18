@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Account, Balance, Claims } from '../wallet'
+import { AccountFile, Balance, Claims } from '../wallet'
 import { Transaction, TxAttrUsage } from '../transactions'
 import { Query } from '../rpc'
 import { ASSET_ID } from '../consts'
@@ -146,7 +146,7 @@ export const getWalletDBHeight = net => {
  */
 export const doClaimAllGas = (net, privateKey, signingFunction) => {
   log.warn('doClaimAllGas will be deprecated in favor of claimGas')
-  const account = new Account(privateKey)
+  const account = new AccountFile(privateKey)
   const rpcEndpointPromise = getRPCEndpoint(net)
   const claimsPromise = getClaims(net, account.address)
   let signedTx // Scope this outside so that all promises have this
@@ -188,7 +188,7 @@ export const doClaimAllGas = (net, privateKey, signingFunction) => {
  */
 export const doMintTokens = (net, scriptHash, fromWif, neo, gasCost, signingFunction) => {
   log.warn('doMintTokens will be deprecated in favor of doInvoke')
-  const account = new Account(fromWif)
+  const account = new AccountFile(fromWif)
   const intents = [
     { assetId: ASSET_ID.NEO, value: neo, scriptHash: scriptHash }
   ]
@@ -246,8 +246,8 @@ export const doMintTokens = (net, scriptHash, fromWif, neo, gasCost, signingFunc
  */
 export const doSendAsset = (net, toAddress, from, assetAmounts, signingFunction) => {
   log.warn('doSendAsset will be deprecated in favor of sendAsset')
-  const fromAcct = new Account(from)
-  const toAcct = new Account(toAddress)
+  const fromAcct = new AccountFile(from)
+  const toAcct = new AccountFile(toAddress)
   const rpcEndpointPromise = getRPCEndpoint(net)
   const balancePromise = getBalance(net, fromAcct.address)
   const intents = Object.keys(assetAmounts).map(key => {

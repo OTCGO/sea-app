@@ -1,4 +1,4 @@
-import { Account, getScriptHashFromAddress } from '../wallet'
+import { AccountFile, getScriptHashFromAddress } from '../wallet'
 import { ASSET_ID } from '../consts'
 import { Query } from '../rpc'
 import { Transaction, TransactionOutput, TxAttrUsage } from '../transactions'
@@ -187,14 +187,14 @@ export const signTx = config => {
   checkProperty(config, 'tx')
   let promise
   if (config.signingFunction) {
-    let acct = new Account(config.publicKey)
+    let acct = new AccountFile(config.publicKey)
     promise = config.signingFunction(config.tx, acct.publicKey)
       .then(res => {
         if (typeof (res) === 'string') { res = Transaction.deserialize(res) }
         return res
       })
   } else if (config.privateKey) {
-    let acct = new Account(config.privateKey)
+    let acct = new AccountFile(config.privateKey)
     if (config.address !== acct.address && !config.sendingFromSmartContract) {
       return Promise.reject(
         new Error('Private Key and Balance address does not match!')
@@ -251,7 +251,7 @@ export const sendTx = config => {
  * @return {TransactionOutput[]} TransactionOutput
  */
 export const makeIntent = (assetAmts, address) => {
-  const acct = new Account(address)
+  const acct = new AccountFile(address)
   return Object.keys(assetAmts).map(key => {
     return TransactionOutput({
       assetId: ASSET_ID[key],
@@ -313,7 +313,7 @@ const addAttributesIfExecutingAsSmartContract = config => {
   if (!config.override) config.override = {}
 
   if (config.sendingFromSmartContract) {
-    const acct = config.privateKey ? new Account(config.privateKey) : new Account(config.publicKey)
+    const acct = config.privateKey ? new AccountFile(config.privateKey) : new AccountFile(config.publicKey)
     config.tx.addAttribute(TxAttrUsage.Script, reverseHex(acct.scriptHash))
   }
 
@@ -339,7 +339,7 @@ const attachContractIfExecutingAsSmartContract = config => {
         }
 
         // We need to order this for the VM.
-        const acct = config.privateKey ? new Account(config.privateKey) : new Account(config.publicKey)
+        const acct = config.privateKey ? new AccountFile(config.privateKey) : new AccountFile(config.publicKey)
         if (parseInt(smartContractScriptHash, 16) > parseInt(acct.scriptHash, 16)) {
           config.tx.scripts.push(attachInvokedContract)
         } else {

@@ -13,9 +13,8 @@ import { nep5Wallet } from '../../shared/userWallet'
 import { contains } from '../../shared/utils'
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/map';
-
+import 'rxjs/add/operator/debounceTime'
+import 'rxjs/add/operator/map'
 
 
 interface LoginFormValue {

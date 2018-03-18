@@ -1,5 +1,5 @@
 import { ScriptBuilder } from '../sc'
-import { getScriptHashFromAddress, Account } from '../wallet'
+import { getScriptHashFromAddress, AccountFile } from '../wallet'
 import { Query, VMZip } from '../rpc'
 import { reverseHex, hexstring2str } from '../utils'
 import { getRPCEndpoint, getBalance } from './neonDB'
@@ -128,7 +128,7 @@ export const getToken = (url, scriptHash, address) => {
  */
 export const doTransferToken = (net, scriptHash, fromWif, toAddress, transferAmount, gasCost = 0, signingFunction = null) => {
   log.warn('doTransferToken will be deprecated in favor of doInvoke')
-  const account = new Account(fromWif)
+  const account = new AccountFile(fromWif)
   const rpcEndpointPromise = getRPCEndpoint(net)
   const balancePromise = getBalance(net, account.address)
   let signedTx

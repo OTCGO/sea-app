@@ -18,12 +18,12 @@ export const getLoading = createSelector(
 	(state: State) => state.loading
 )
 
-const getSelectedBalanceSymbol = createSelector(
+export const getSelectedBalanceSymbol = createSelector(
 	getState,
 	(state: State) => state.selectedBalanceSymbol
 )
 
-const getSelectedBalance = createSelector(
+export const getSelectedBalance = createSelector(
 	getEntities,
 	getSelectedBalanceSymbol,
 	(balances: any[], symbol) => balances && balances.find(balance => balance.symbol === symbol)

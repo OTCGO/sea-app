@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store'
-import { Account, Wallet } from '../../libs/neon/src/wallet'
+import { Account, Wallet } from '../../shared/typings'
 
 
 export enum WalletActionTypes {

@@ -2,7 +2,7 @@
 
 	<ion-navbar>
 		<ion-title>
-			{{ balance?.symbol }}
+			<!--{{ (balance | async)?.symbol }}-->
 		</ion-title>
 	</ion-navbar>
 
@@ -11,44 +11,18 @@
 
 <ion-content padding class="possession-detail-content" (ionScroll)="handleScroll($event)">
 
-	<ion-card class="possession-data-card" [ngClass]="{
-	  'is-scroll-up': isScrollUp,
-      'is-scroll-down': isScrollDown
-	}">
-		<div class="possession-data-amount">{{ balance.amount.toString() }}</div>
-		<div class="possession-data-approximation">≈ ￥ {{ totalValue }}</div>
-		<button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="balance.amount.lte(0)">
-			{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
-		</button>
-	</ion-card>
+	<possession-detail-bgcard
+		[balance]="balance | async"
+		[price]="price | async"
+		[isScrollDown]="isScrollDown"
+		[isScrollUp]="isScrollUp"
+	></possession-detail-bgcard>
 
-	<timeline endIcon="call" [showEnd]="!!transactionHistories.length" [ngClass]="{
-	  'is-scroll-up': isScrollUp,
-      'is-scroll-down': isScrollDown
-	}">
-		<h5 *ngIf="transactionHistories.length">{{ 'POSSESSIONS.DETAILS.title' | translate }}</h5>
-		<h5 *ngIf="!transactionHistories.length">{{ 'POSSESSIONS.DETAILS.nodata' | translate }}</h5>
-
-		<timeline-item *ngFor="let item of transactionHistories" ion-row>
-			<ion-col col-2>
-				<ion-icon></ion-icon>
-			</ion-col>
-
-			<ion-col col-4>
-				<timeline-time [time]="item.time"></timeline-time>
-			</ion-col>
-
-			<ion-col col-6>
-				<div class="content">
-					<span>
-						{{ item.operation === 'in' ? '转入' : '转出' }}
-					</span> {{ item.value }}
-					<span>
-						{{ balance.symbol }}
-					</span>
-				</div>
-			</ion-col>
-		</timeline-item>
-	</timeline>
+	<possession-detail-history
+		[balance]="balance | async"
+		[transactionHistories]="transactionHistories | async"
+		[isScrollDown]="isScrollDown"
+		[isScrollUp]="isScrollUp"
+	></possession-detail-history>
 
 </ion-content>

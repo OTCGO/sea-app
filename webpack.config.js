@@ -7,7 +7,7 @@ const config = {
 		{
 			test: /\.ts$/,
 			loaders: [{
-				loader: 'awesome-typescript-loader'
+				loader: 'ts-loader'
 			}, 'angular2-template-loader']
 		},
 		{
@@ -21,7 +21,8 @@ const config = {
 	],
 	// TODO: resolve alias didn't work
 	resolve: {
-		alias: {
+    extensions: [".d.ts", ".ts", ".js"],
+    alias: {
 			'@app': root('src'),
 			'neon': root('src', 'libs/neon/lib')
 		}

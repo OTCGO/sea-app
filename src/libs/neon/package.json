@@ -77,8 +77,7 @@
   },
   "homepage": "https://github.com/CityOfZion/neon-js#readme",
   "files": [
-    "lib/",
-    "src/"
+    "lib/"
   ],
   "nyc": {
     "require": [

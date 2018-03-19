@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store'
-import { IBalance } from '../../shared/models/balances.model'
 
 export enum TransactionHistoryActionTypes {
 	LOAD = "[Transaction History] Load",
@@ -9,8 +8,6 @@ export enum TransactionHistoryActionTypes {
 
 export class Load implements Action {
 	readonly type = TransactionHistoryActionTypes.LOAD
-
-	constructor (public payload: IBalance) {}
 }
 
 export class LoadSuccess implements Action {

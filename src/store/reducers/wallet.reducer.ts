@@ -2,7 +2,7 @@
 import { ActionReducer } from '@ngrx/store'
 import { WalletActions, WalletActionTypes } from '../actions/wallet.action'
 import { AuthActions, AuthActionTypes } from '../actions/auth.action'
-import { Wallet } from '../../libs/neon/src/wallet'
+import { Wallet } from '../../shared/typings'
 import { wallet } from '../../libs/neon'
 import { DEFAULT_EMPTY_WALLET } from '../../shared/constants'
 

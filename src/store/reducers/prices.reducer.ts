@@ -2,11 +2,13 @@ import { ActionReducer } from '@ngrx/store'
 import { PricesActionTypes, PricesActions } from '../actions/prices.action'
 
 export interface State {
-	entities: any[]
+	entities: {
+		[key: string]: string
+	}
 }
 
 const initialState: State = {
-	entities: []
+	entities: {}
 }
 
 export const reducer: ActionReducer<State> = (state = initialState, action: PricesActions) => {

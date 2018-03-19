@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { FileStorageProvider } from '../file-storage.provider'
 import { wallet } from '../../libs/neon'
-import { Account } from '../../libs/neon/src/wallet'
+import { Account } from '../../shared/typings'
 import { isOldWallet, decryptPrv, verifyKeyPair } from '../../shared/utils'
 import { OTCGO_WALLET_FILE_NAME } from '../../shared/constants'
 import { OldWalletFile } from '../../shared/models'

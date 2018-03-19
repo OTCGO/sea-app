@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import {
+	Component,
+	OnInit
+} from '@angular/core'
 import {
 	IonicPage,
 	NavController,
@@ -12,6 +15,8 @@ import { LoadingProvider, NotificationProvider } from '../../providers'
 import { BalancesActions } from '../../store/actions'
 import { WalletSelectors, BalancesSelectors } from '../../store/selectors'
 import { fromBalances, fromWallet } from '../../store/reducers'
+
+import 'rxjs/add/operator/distinctUntilChanged'
 
 
 @IonicPage({
@@ -32,10 +37,7 @@ export class PossessionsPage implements OnInit {
 		private notificationProvider: NotificationProvider,
 		private lp: LoadingProvider,
 		private store: Store<fromBalances.State | fromWallet.State>
-	) {
-		console.log(this.account)
-		console.log('woo')
-	}
+	) {}
 
 	ionViewCanEnter () {
 		return this.exits
@@ -68,5 +70,11 @@ export class PossessionsPage implements OnInit {
 
 	handleBalanceSelect (symbol) {
 		this.store.dispatch(new BalancesActions.Select(symbol))
+		this.store.select(BalancesSelectors.getSelectedBalance)
+			.distinctUntilChanged()
+			.subscribe(selectedBalance => {
+				console.log(selectedBalance)
+				selectedBalance && this.navCtrl.push('PossessionDetail')
+			})
 	}
 }

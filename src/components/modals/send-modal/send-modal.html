@@ -1,6 +1,6 @@
 <ion-content padding class="send-modal__content" fixed>
 	<div class="content-header">
-		<button ion-button icon-only clear (click)="dismiss()" float-end>
+		<button ion-button icon-only clear (click)="handleClose()" float-end>
 			<ion-icon name='close'></ion-icon>
 		</button>
 	</div>
@@ -38,17 +38,17 @@
 			<ion-input
 				type="number" placeholder="转账数量" formControlName="amount"
 				[value]="amount.value"
-				[max]="possessionData.amount"
+				[max]="selectedBalance.amount"
 				required></ion-input>
 			<ion-icon item-end *ngIf="amount.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
 			<ion-icon item-end *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.invalidAmount" name="close" style="color: red;"></ion-icon>
 		</ion-item>
 
 		<ion-list class="amount-range">
-			<ion-range step="1" min="0" [max]="possessionData.amount"
+			<ion-range step="1" min="0" [max]="selectedBalance.amount"
 			           formControlName="amount">
 				<ion-label range-left>0</ion-label>
-				<ion-label range-right>{{ possessionData.amount }}</ion-label>
+				<ion-label range-right>{{ selectedBalance.amount }}</ion-label>
 			</ion-range>
 		</ion-list>
 

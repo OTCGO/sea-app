@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
+import { TranslateModule } from '@ngx-translate/core'
 import { PossessionDetailPage } from './possession-detail'
 import { TimelineModule } from '../../../components'
-import { TranslateModule } from '@ngx-translate/core'
+import { PossessionDetailHistory, PossessionDetailBgcard } from '../../../components/possessions/possession-detail'
+
 
 @NgModule({
 	declarations: [
 		PossessionDetailPage,
+		PossessionDetailBgcard,
+		PossessionDetailHistory
 	],
 	imports: [
-		TranslateModule.forChild(),
 		TimelineModule,
+		TranslateModule.forChild(),
 		IonicPageModule.forChild(PossessionDetailPage)
-	],
-	exports: [
-		PossessionDetailPage
 	]
 })
 export class PossessionDetailPageModule {}

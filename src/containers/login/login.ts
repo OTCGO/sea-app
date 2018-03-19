@@ -148,22 +148,18 @@ export class LoginPage implements OnInit {
 		if (wifValue === 'test') {
 			this.store.dispatch(new AuthActions.Login(nep5Wallet))
 		}
-
 		// Using wif login
-		if (wifValue && this.isWIFKey && !passphraseValue) {
+		else if (wifValue && this.isWIFKey && !passphraseValue) {
 			this.store.dispatch(new AuthActions.LoginWif(wifValue))
-			console.log('Login using wif')
 		}
-
 		// Using file login
-		if (this.file && !this.isWIFKey && !wifValue) {
+		else if (this.file && !this.isWIFKey && !wifValue) {
 			if (isOldWallet(this.file)) {
 				if (!passphraseControl.valid) return
 				this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet: this.file, passphrase: passphraseValue }))
 				console.log('Login using oldWallet')
 			}
-
-			if (isWallet(this.file)) {
+			else if (isWallet(this.file)) {
 				this.store.dispatch(new AuthActions.Login(this.file))
 				console.log('Login using nepWallet')
 			}

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store'
 import { OldWalletFile } from '../../shared/models'
-import { Wallet, WalletFile } from '../../libs/neon/src/wallet'
+import { Wallet, WalletFile } from '../../shared/typings'
 
 
 // Data Definition

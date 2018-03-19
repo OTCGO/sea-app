@@ -1,17 +1,27 @@
-import { Component, Inject } from '@angular/core'
+import {
+	Component,
+	Inject,
+	OnInit
+} from '@angular/core'
 import {
 	AlertController,
 	IonicPage,
 	LoadingController,
-	NavParams,
 	ViewController
 } from 'ionic-angular'
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
-
-import { SendModalProvider } from './send-modal.provider'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
-import { isAddress } from './send-modal.provider'
-import { NotificationProvider } from '../../../providers/notification.provider'
+import { Store } from '@ngrx/store'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import {
+	addressValidator,
+	amountValidator
+} from './send-modal.validators'
+
+import { RootState } from '../../../store/reducers'
+import { IBalance } from '../../../shared/models'
+import { SendModalProvider } from './send-modal.provider'
+import { NotificationProvider } from '../../../providers'
+import { BalancesSelectors } from '../../../store/selectors'
 
 
 @IonicPage({
@@ -21,34 +31,47 @@ import { NotificationProvider } from '../../../providers/notification.provider'
 	selector: 'send-modal',
 	templateUrl: 'send-modal.html'
 })
-export class SendModalComponent {
+export class SendModalComponent implements OnInit {
 	sendForm: FormGroup
-	possessionData = this.navParams.data
-
-	constructor (
-		public viewCtrl: ViewController,
-		public navParams: NavParams,
-		private barcodeScanner: BarcodeScanner,
-		private notificationProvider: NotificationProvider,
-		private alertCtrl: AlertController,
-		private loadingCtrl: LoadingController,
-		private sendModalProvider: SendModalProvider,
-		@Inject(FormBuilder) private fb: FormBuilder
-	) {
-		this.sendForm = this.fb.group({
-			address: ['', [Validators.required, addressValidator]],
-			passphrase: ['', Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.possessionData.amount)]],
-			label: [''],
-		})
-	}
+	selectedBalance: IBalance
 
 	get toAddress () { return this.sendForm.get('address') }
 	get passphrase () { return this.sendForm.get('passphrase') }
 	get amount () { return this.sendForm.get('amount') }
 	get label () { return this.sendForm.get('label') }
 
-	dismiss () {
+	constructor (
+		public viewCtrl: ViewController,
+		private barcodeScanner: BarcodeScanner,
+		private notificationProvider: NotificationProvider,
+		private alertCtrl: AlertController,
+		private loadingCtrl: LoadingController,
+		private sendModalProvider: SendModalProvider,
+		private store: Store<RootState>,
+		@Inject(FormBuilder) private fb: FormBuilder
+	) {}
+
+	ngOnInit (): void {
+		this.buildForm()
+		this.loadBalance()
+	}
+
+	loadBalance() {
+		this.store
+				.select(BalancesSelectors.getSelectedBalance)
+				.subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+	}
+
+	buildForm () {
+		this.sendForm = this.fb.group({
+			address: ['', [Validators.required, addressValidator]],
+			passphrase: ['', Validators.required],
+			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount.toNumber())]],
+			label: [''],
+		})
+	}
+
+	handleClose () {
 		this.viewCtrl.dismiss()
 		this.sendForm.reset()
 	}
@@ -78,10 +101,10 @@ export class SendModalComponent {
 			    const result = await this.sendModalProvider.doSendAsset({
 				    dests: this.toAddress.value,
 				    amounts: this.amount.value,
-				    assetId: this.possessionData.hash
+				    assetId: this.selectedBalance.hash
 			    }, pr)
 			    if (result) {
-				    await this.dismiss()
+				    await this.handleClose()
 				    this.notificationProvider.emit({ message: '转账成功' })
 			    }
 		    })
@@ -101,28 +124,12 @@ export class SendModalComponent {
 	}
 
 	scan () {
-		this.barcodeScanner
-		    .scan()
-		    .then((data: BarcodeScanResult) => {
+		this.barcodeScanner.scan()
+				.then((data: BarcodeScanResult) => {
 			    this.toAddress.setValue(data.text)
 		    })
 		    .catch(err => {
 			    this.notificationProvider.emit({ message: err })
 		    })
-	}
-}
-
-function addressValidator (addressCtrl: FormControl): ValidationErrors {
-	const { value } = addressCtrl
-	return (!value || !isAddress(value))
-		? { invalidAddress: true }
-		: null
-}
-
-function amountValidator (maxValue) {
-	return (amountCtrl: FormControl): ValidationErrors | null => {
-		const value = amountCtrl.value
-		if (!value || value <= 0 || value > maxValue) return { invalidAmount: true }
-		return null
 	}
 }

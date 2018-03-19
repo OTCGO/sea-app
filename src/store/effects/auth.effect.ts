@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs/observable/of'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
-import { Account } from '../../libs/neon/src/wallet'
+import { Account } from '../../shared/typings'
 import { WalletProvider } from '../../providers'
 import { wallet } from '../../libs/neon'
 

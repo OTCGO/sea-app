@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { NavController } from 'ionic-angular'
-import { Account } from '../../libs/neon/src/wallet'
+import { Account } from '../../shared/typings'
 
 @Component({
 	selector: 'possessions-info',

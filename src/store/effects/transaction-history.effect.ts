@@ -31,9 +31,11 @@ export class TransactionHistoryEffects {
 	Load$: Observable<Action> =
 		this.actions$.pipe(
 			ofType<Load>(TransactionHistoryActionTypes.LOAD),
-			withLatestFrom(this.store$, (action, state) => ({
+			withLatestFrom(this.store$, (_, state) => ({
 				address: state.wallet.entity.defaultAccount.address,
-				balance: action.payload
+				balance: state.balances.entities.find(entities =>
+					entities.symbol === state.balances.selectedBalanceSymbol
+				)
 			})),
 			switchMap(({ balance, address }) => {
 				if (balance.hash === '' || balance.symbol === '' || address === '') {

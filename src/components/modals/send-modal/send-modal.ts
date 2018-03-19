@@ -1,6 +1,5 @@
 import {
 	Component,
-	Inject,
 	OnInit
 } from '@angular/core'
 import {
@@ -32,13 +31,13 @@ import { BalancesSelectors } from '../../../store/selectors'
 	templateUrl: 'send-modal.html'
 })
 export class SendModalComponent implements OnInit {
-	sendForm: FormGroup
+	formGroup: FormGroup
 	selectedBalance: IBalance
 
-	get toAddress () { return this.sendForm.get('address') }
-	get passphrase () { return this.sendForm.get('passphrase') }
-	get amount () { return this.sendForm.get('amount') }
-	get label () { return this.sendForm.get('label') }
+	get toAddress () { return this.formGroup.get('address') }
+	get passphrase () { return this.formGroup.get('passphrase') }
+	get amount () { return this.formGroup.get('amount') }
+	get label () { return this.formGroup.get('label') }
 
 	constructor (
 		public viewCtrl: ViewController,
@@ -48,32 +47,25 @@ export class SendModalComponent implements OnInit {
 		private loadingCtrl: LoadingController,
 		private sendModalProvider: SendModalProvider,
 		private store: Store<RootState>,
-		@Inject(FormBuilder) private fb: FormBuilder
-	) {}
+		private fb: FormBuilder
+	) {
+		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+		const amount = +this.selectedBalance.amount
 
-	ngOnInit (): void {
-		this.buildForm()
-		this.loadBalance()
-	}
-
-	loadBalance() {
-		this.store
-				.select(BalancesSelectors.getSelectedBalance)
-				.subscribe(selectedBalance => this.selectedBalance = selectedBalance)
-	}
-
-	buildForm () {
-		this.sendForm = this.fb.group({
-			address: ['', [Validators.required, addressValidator]],
+		this.formGroup = this.fb.group({
+			address: ['', [Validators.required, addressValidator.bind(this)]],
 			passphrase: ['', Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount.toNumber())]],
+			amount: ['', [Validators.required, amountValidator(1231).bind(this)]],
 			label: [''],
 		})
 	}
 
+	ngOnInit (): void {
+	}
+
 	handleClose () {
 		this.viewCtrl.dismiss()
-		this.sendForm.reset()
+		this.formGroup.reset()
 	}
 
 	/**
@@ -88,7 +80,7 @@ export class SendModalComponent implements OnInit {
 		this.passphrase.markAsTouched()
 		this.amount.markAsTouched()
 
-		if (!this.sendForm.valid || !this.toAddress.valid
+		if (!this.formGroup.valid || !this.toAddress.valid
 			|| !this.amount.valid || !this.passphrase.valid) {
 			return
 		}

@@ -34,7 +34,8 @@
       "title": "Histories",
       "transfer": "Transfer",
       "in": "In",
-      "out": "Out"
+      "out": "Out",
+      "nodata": "No History Data"
     },
     "QR_CODE": {
       "address": "Address",

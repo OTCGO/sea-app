@@ -12,5 +12,5 @@ export const getEntities = createSelector(
 export const getPrice = createSelector(
 	getEntities,
 	getSelectedBalanceSymbol,
-	(entities, symbol) => entities[symbol] || 0
+	(entities, symbol) => Number(entities[symbol]) || 0
 )

@@ -7,12 +7,12 @@ import { IBalance } from '../../../shared/models'
 @Component({
     selector: 'possession-detail-history',
     template: `
-	    <timeline endIcon="call" [showEnd]="!!transactionHistories.length" [ngClass]="{
+	    <timeline endIcon="call" [showEnd]="!!transactionHistories?.length" [ngClass]="{
 				'is-scroll-up': isScrollUp,
 				'is-scroll-down': isScrollDown
 			}">
-		    <h5 *ngIf="transactionHistories.length">{{ 'POSSESSIONS.DETAILS.title' | translate }}</h5>
-		    <h5 *ngIf="!transactionHistories.length">{{ 'POSSESSIONS.DETAILS.nodata' | translate }}</h5>
+		    <h5 *ngIf="transactionHistories?.length">{{ 'POSSESSIONS.DETAILS.title' | translate }}</h5>
+		    <h5 *ngIf="!transactionHistories?.length">{{ 'POSSESSIONS.DETAILS.nodata' | translate }}</h5>
 
 		    <timeline-item *ngFor="let history of transactionHistories" ion-row>
 			    <ion-col col-2>

@@ -34,7 +34,8 @@
 			"title": "交易记录",
 			"transfer": "转账",
 			"in": "转入",
-			"out": "转出"
+			"out": "转出",
+			"nodata": "没有交易记录"
 		},
 		"QR_CODE": {
 			"address": "钱包地址",

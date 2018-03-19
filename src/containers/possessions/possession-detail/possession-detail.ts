@@ -2,11 +2,7 @@
 import { Component, NgZone } from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
-	NavParams,
 	IonicPage,
-	NavController,
-	ModalController,
-	LoadingController,
 	ScrollEvent,
 } from 'ionic-angular'
 import { Observable } from 'rxjs/Observable'
@@ -16,7 +12,6 @@ import { LoadingProvider } from '../../../providers'
 import { RootState } from '../../../store/reducers'
 import { BalancesSelectors, TransactionHistorySelectors, PricesSelectors } from '../../../store/selectors'
 import * as TransactionHistoryAction from '../../../store/actions/transaction-history.action'
-import { PossessionDetailProvider } from './possession-detail.provider'
 
 interface TransactionHistory {
 	assetId
@@ -37,7 +32,7 @@ interface TransactionHistory {
 export class PossessionDetailPage {
 	balance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
 	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getEntities)
-	price: Observable<string> = this.store.select(PricesSelectors.getPrice)
+	price: Observable<number> = this.store.select(PricesSelectors.getPrice)
 
 	isScrollUp: boolean
 	isScrollDown: boolean
@@ -46,7 +41,6 @@ export class PossessionDetailPage {
 		private lp: LoadingProvider,
 		private zone: NgZone,
 		private store: Store<RootState>,
-		private modalCtrl: ModalController,
 	) {}
 
 	ngOnInit () {
@@ -55,15 +49,6 @@ export class PossessionDetailPage {
 
 	ionViewWillLeave () {
 		this.transactionHistories = empty()
-	}
-
-	showSendModal () {
-		const sendModal = this.modalCtrl.create(
-			'SendModal',
-			null,
-			{ cssClass: 'inset-modal' }
-		)
-		sendModal.present()
 	}
 
 	handleScroll (e: ScrollEvent) {

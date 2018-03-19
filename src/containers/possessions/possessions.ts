@@ -1,5 +1,6 @@
 import {
 	Component,
+	OnDestroy,
 	OnInit
 } from '@angular/core'
 import {
@@ -10,6 +11,7 @@ import {
 
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
+import { Subscription } from 'rxjs/Subscription'
 import { IBalance } from '../../shared/models'
 import { LoadingProvider, NotificationProvider } from '../../providers'
 import { BalancesActions } from '../../store/actions'
@@ -27,10 +29,11 @@ import 'rxjs/add/operator/distinctUntilChanged'
 	selector: 'page-possessions',
 	templateUrl: 'possessions.html'
 })
-export class PossessionsPage implements OnInit {
+export class PossessionsPage implements OnInit, OnDestroy {
+	exits: boolean
 	account = this.store.select(WalletSelectors.getAccount)
 	balances: Observable<IBalance[]> = this.store.select(BalancesSelectors.getEntities)
-	exits: boolean
+	selectedBalanceSubscriber: Subscription
 
 	constructor (
 		public navCtrl: NavController,
@@ -44,11 +47,6 @@ export class PossessionsPage implements OnInit {
 	}
 
 	ngOnInit () {
-		this.subscribe()
-		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
-	}
-
-	subscribe () {
 		this.store.dispatch(new BalancesActions.Load())
 
 		this.store
@@ -58,6 +56,15 @@ export class PossessionsPage implements OnInit {
 				.select(BalancesSelectors.getError)
 				.subscribe(error => error && this.notificationProvider.emit({ message: error }))
 
+		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
+	}
+
+	ngOnDestroy () {
+		console.log('destroy call')
+	}
+
+	ionViewWillLeave () {
+		this.selectedBalanceSubscriber.unsubscribe()
 	}
 
 	doRefresh (refresher: Refresher) {
@@ -70,10 +77,9 @@ export class PossessionsPage implements OnInit {
 
 	handleBalanceSelect (symbol) {
 		this.store.dispatch(new BalancesActions.Select(symbol))
-		this.store.select(BalancesSelectors.getSelectedBalance)
+		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance)
 			.distinctUntilChanged()
 			.subscribe(selectedBalance => {
-				console.log(selectedBalance)
 				selectedBalance && this.navCtrl.push('PossessionDetail')
 			})
 	}

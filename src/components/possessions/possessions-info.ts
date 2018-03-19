@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { NavController } from 'ionic-angular'
+import { Account } from '../../libs/neon/src/wallet'
 
 @Component({
 	selector: 'possessions-info',
@@ -8,16 +9,16 @@ import { NavController } from 'ionic-angular'
 		  <div class="card-avatar" (click)="openQRCode()">
 			  <img src="assets/imgs/icon-avatar.svg" alt="">
 		  </div>
-		  <div class="card-title">{{ address | addressCollapse }}</div>
+		  <div class="card-title">{{ account.address | addressCollapse }}</div>
 	  </ion-card>
 	`
 })
 export class PossessionsInfoComponent {
-	@Input() address
+	@Input() account: Account
 
 	constructor (private navCtrl: NavController) {}
 
 	openQRCode () {
-		this.navCtrl.push('payment-qrcode', { address: this.address })
+		this.navCtrl.push('payment-qrcode', { address: this.account.address })
 	}
 }

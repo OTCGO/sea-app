@@ -180,7 +180,7 @@ export interface Wallet {
 	encryptAll (keyphrase: string): boolean[]
 	export (): string
 
-	addAccount (acct: AccountFile | object): number
+	addAccount (acct: AccountFile | Account | object): number
 	setDefault (index: number): this
 	writeFile (filepath: string): boolean
 }

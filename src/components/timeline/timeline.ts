@@ -6,17 +6,20 @@ import { Component, Input } from '@angular/core'
 	  <ion-row class="timeline">
 		  <ion-grid>
 			  <ng-content></ng-content>
-			  <timeline-item>
-					<ion-col col-2>
-						<ion-icon></ion-icon>
-					</ion-col>
-				</timeline-item>
+			  <ng-template *ngIf="showEnd">
+				  <timeline-item>
+					  <ion-col col-2>
+						  <ion-icon></ion-icon>
+					  </ion-col>
+				  </timeline-item>
+			  </ng-template>
 		  </ion-grid>
 	  </ion-row>
 	`
 })
 export class TimelineComponent {
 	@Input('end') endIcon = 'ionic'
+	@Input() showEnd = false
 }
 
 // Timeline-item

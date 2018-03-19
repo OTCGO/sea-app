@@ -24,8 +24,20 @@ export const reducer: ActionReducer<State> = (
 	action: WalletActions | AuthActions
 ): State => {
 	switch (action.type) {
+		case WalletActionTypes.ADD_ACCOUNT: {
+			return {
+				...state,
+				entity: {
+					...state.entity,
+					accounts: [
+						...state.entity.accounts,
+						action.payload
+					]
+				}
+			}
+		}
+
 		case WalletActionTypes.LOAD:
-		case WalletActionTypes.ADD_ACCOUNT:
 		case AuthActionTypes.LOGIN_OLD_WALLET: {
 			return {
 				...state,

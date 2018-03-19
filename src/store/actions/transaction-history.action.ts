@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store'
-import { IBalance } from '../../shared/balances.model'
+import { IBalance } from '../../shared/models/balances.model'
 
 export enum TransactionHistoryActionTypes {
 	LOAD = "[Transaction History] Load",

@@ -3,4 +3,3 @@ export interface IBalance {
 	symbol: string,
 	amount: BigNumber
 }
-

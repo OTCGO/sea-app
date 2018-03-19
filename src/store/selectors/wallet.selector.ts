@@ -15,7 +15,7 @@ export const getAccounts = createSelector(
 
 export const getAccount = createSelector(
 	getState,
-	(state: State) => state.entity.accounts.find(account => account.isDefault) || null
+	(state: State) => state.entity.defaultAccount
 )
 
 export const getExits = createSelector(

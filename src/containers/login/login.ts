@@ -7,7 +7,6 @@ import {
 } from 'ionic-angular'
 
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { contains } from 'rambda'
 import { LoadingProvider, NotificationProvider } from '../../providers'
 import { nep5Wallet } from '../../shared/userWallet'
 import { RootState } from '../../store/reducers'
@@ -35,7 +34,7 @@ export class LoginPage implements OnInit {
 	importText: string = '导入'
 	isWIFKey: boolean = true
 	loginForm: FormGroup
-	isNEP5: boolean = false
+	isOldWallet: boolean = false
 
 	get wif () { return this.loginForm.get('wif') }
 	get passphrase () { return this.loginForm.get('passphrase') }
@@ -74,14 +73,8 @@ export class LoginPage implements OnInit {
 	subscribe () {
 		this.store.select(AuthSelectors.getError)
 				.subscribe(error => error && this.np.emit({ message: error }))
-
 		this.store.select(WalletSelectors.getExits)
 				.subscribe(exits => exits && this.navCtrl.setRoot('Tabs'))
-
-		this.store.select(WalletSelectors.getExits)
-				.subscribe(exits => {
-					console.log('is wallet exits:', exits)
-				})
 	}
 
 	switchImportBox (fileInput: HTMLInputElement) {
@@ -96,21 +89,22 @@ export class LoginPage implements OnInit {
 	}
 
 	fileChange (file) {
-		if (contains('.json', file.name)) {
+		if (file.name.includes('.json')) {
 			this.importText = file.name.slice()
 			const reader = new FileReader()
 			const ng = this
 
-			// In onload function `this` is reference to reader itself
+			// In the onload function `this` is reference to reader itself
 			reader.onload = function () {
 				try {
 					const JSONFile = JSON.parse(this.result)
 					if (isOldWallet(JSONFile)) {
 						ng.file = JSONFile
+						ng.isOldWallet = true
 						return
 					} else if (isWallet(JSONFile)) {
 						ng.file = JSONFile
-						ng.isNEP5 = true
+						ng.isOldWallet = false
 						return
 					}
 				} catch (e) {
@@ -130,6 +124,8 @@ export class LoginPage implements OnInit {
 		prompt.present()
 	}
 
+
+	/* TODO: Just from now, only old wallet format is required with passphrase login. */
 	login ({
 		 controls,
 		 value,
@@ -142,20 +138,21 @@ export class LoginPage implements OnInit {
 		valid: boolean
 	}) {
 		const { wif: wifControl, passphrase: passphraseControl } = controls
-		if (this.file) {
-			wifControl.setValue('')
-		}
-
 		const { wif: wifValue, passphrase: passphraseValue } = value
+
+		if (this.file && !this.isOldWallet) {
+			wifControl.setValue('')
+			passphraseControl.setValue('')
+		}
 
 		if (wifValue === 'test') {
 			this.store.dispatch(new AuthActions.Login(nep5Wallet))
 		}
 
 		// Using wif login
-		if (wifValue && this.isWIFKey && passphraseValue) {
-			if (!passphraseControl.valid) return
+		if (wifValue && this.isWIFKey && !passphraseValue) {
 			this.store.dispatch(new AuthActions.LoginWif(wifValue))
+			console.log('Login using wif')
 		}
 
 		// Using file login
@@ -163,10 +160,12 @@ export class LoginPage implements OnInit {
 			if (isOldWallet(this.file)) {
 				if (!passphraseControl.valid) return
 				this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet: this.file, passphrase: passphraseValue }))
+				console.log('Login using oldWallet')
 			}
 
 			if (isWallet(this.file)) {
 				this.store.dispatch(new AuthActions.Login(this.file))
+				console.log('Login using nepWallet')
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 import { ActionReducer } from '@ngrx/store'
-import { IBalance } from '../../shared/balances.model'
+import { IBalance } from '../../shared/models'
 import { BalancesActions, BalancesActionTypes } from '../actions/balances.action'
 
 export interface State {

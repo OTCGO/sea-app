@@ -4,9 +4,9 @@
 		<ion-refresher-content></ion-refresher-content>
 	</ion-refresher>
 
-	<possessions-info [address]="(account | async).address"></possessions-info>
+	<possessions-info [account]="account | async"></possessions-info>
 
-	<possessions-list [balances]="balances"
-	                  (select)="handleBalanceClick($event)">
+	<possessions-list [balances]="balances | async"
+	                  (select)="handleBalanceSelect($event)">
 	</possessions-list>
 </ion-content>

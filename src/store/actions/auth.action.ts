@@ -1,12 +1,6 @@
 import { Action } from '@ngrx/store'
+import { OldWalletFile } from '../../shared/models'
 import { Wallet, WalletFile } from '../../libs/neon/src/wallet'
-
-interface OldWalletFile {
-	address: string
-	publicKey: string
-	publicKeyCompressed: string
-	privateKeyEncrypted: string
-}
 
 
 // Data Definition
@@ -32,6 +26,9 @@ export enum AuthActionTypes {
 	LOGIN_NEO_DUN = '[Auth] Login NEO DUN',
 	LOGIN_NEO_DUN_FAIL = '[Auth] Login NEO DUN Fail',
 	LOGIN_NEO_DUN_SUCCESS = '[Auth] Login NEO DUN Success',
+	CREATE_WALLET = '[Auth] Create Wallet',
+	CREATE_WALLET_FAIL = '[Auth] Create Wallet Fail',
+	CREATE_WALLET_SUCCESS = '[Auth] Create Wallet Success',
 }
 
 export class Login implements Action {
@@ -82,8 +79,6 @@ export class LoginWifFail implements Action {
 
 export class LoginWifSuccess implements Action {
 	readonly type = AuthActionTypes.LOGIN_WIF_SUCCESS
-
-	constructor (public payload) { }
 }
 
 export class LoginLedger implements Action {
@@ -118,6 +113,23 @@ export class LoginNeoDunSuccess implements Action {
 	constructor (public payload) { }
 }
 
+export class CreateWallet implements Action {
+	readonly type = AuthActionTypes.CREATE_WALLET
+
+	constructor (public payload) { }
+}
+
+export class CreateWalletFail implements Action {
+	readonly type = AuthActionTypes.CREATE_WALLET_FAIL
+
+	constructor (public payload) { }
+}
+
+export class CreateWalletSuccess implements Action {
+	readonly type = AuthActionTypes.CREATE_WALLET_SUCCESS
+}
+
+
 export type AuthActions =
 	Login
 	| LoginFail
@@ -134,3 +146,6 @@ export type AuthActions =
 	| LoginNeoDun
 	| LoginNeoDunFail
 	| LoginNeoDunSuccess
+	| CreateWallet
+	| CreateWalletFail
+	| CreateWalletSuccess

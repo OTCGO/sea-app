@@ -17,7 +17,8 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 		case AuthActionTypes.LOGIN_WIF:
 		case AuthActionTypes.LOGIN_OLD_WALLET:
 		case AuthActionTypes.LOGIN_LEDGER:
-		case AuthActionTypes.LOGIN_NEO_DUN: {
+		case AuthActionTypes.LOGIN_NEO_DUN:
+		case AuthActionTypes.CREATE_WALLET: {
 			return {
 				...state,
 				loading: true
@@ -29,8 +30,9 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 		case AuthActionTypes.LOGIN_WIF_FAIL:
 		case AuthActionTypes.LOGIN_OLD_WALLET_FAIL:
 		case AuthActionTypes.LOGIN_LEDGER_FAIL:
-		case AuthActionTypes.LOGIN_NEO_DUN_FAIL: {
-			return {
+		case AuthActionTypes.LOGIN_NEO_DUN_FAIL:
+		case AuthActionTypes.CREATE_WALLET_FAIL: {
+				return {
 				...state,
 				error: action.payload,
 				loading: false
@@ -42,7 +44,8 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 		case AuthActionTypes.LOGIN_WIF_SUCCESS:
 		case AuthActionTypes.LOGIN_OLD_WALLET_SUCCESS:
 		case AuthActionTypes.LOGIN_LEDGER_SUCCESS:
-		case AuthActionTypes.LOGIN_NEO_DUN_SUCCESS: {
+		case AuthActionTypes.LOGIN_NEO_DUN_SUCCESS:
+		case AuthActionTypes.CREATE_WALLET_SUCCESS: {
 			return {
 				...state,
 				loading: false

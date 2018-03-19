@@ -12,7 +12,9 @@ import { MarketDetailPage } from './market-detail/market-detail'
 import { MarketsActions } from '../../store/actions'
 import { MarketsSelectors, PricesSelectors } from '../../store/selectors'
 
-@IonicPage()
+@IonicPage({
+	name: 'Markets'
+})
 @Component({
 	selector: 'page-markets',
 	templateUrl: 'markets.html',

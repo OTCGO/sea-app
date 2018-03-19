@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core'
 import {
 	IonicPage,
-	Loading,
-	LoadingController,
 	NavController,
 	Refresher
 } from 'ionic-angular'
 
 import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs/Observable'
+import { IBalance } from '../../shared/models'
 import { LoadingProvider, NotificationProvider } from '../../providers'
 import { BalancesActions } from '../../store/actions'
 import { WalletSelectors, BalancesSelectors } from '../../store/selectors'
@@ -23,35 +23,32 @@ import { fromBalances, fromWallet } from '../../store/reducers'
 	templateUrl: 'possessions.html'
 })
 export class PossessionsPage implements OnInit {
-	splash: boolean = false
 	account = this.store.select(WalletSelectors.getAccount)
-	loading: Loading
-	balances: Array<any>
+	balances: Observable<IBalance[]> = this.store.select(BalancesSelectors.getEntities)
 	exits: boolean
 
 	constructor (
 		public navCtrl: NavController,
-		private loadingCtrl: LoadingController,
 		private notificationProvider: NotificationProvider,
 		private lp: LoadingProvider,
 		private store: Store<fromBalances.State | fromWallet.State>
-	) {}
+	) {
+		console.log(this.account)
+		console.log('woo')
+	}
 
 	ionViewCanEnter () {
 		return this.exits
 	}
 
 	ngOnInit () {
-		this.loadBalance()
+		this.subscribe()
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
-	loadBalance () {
+	subscribe () {
 		this.store.dispatch(new BalancesActions.Load())
 
-		this.store
-				.select(BalancesSelectors.getEntities)
-				.subscribe(balances => this.balances = balances)
 		this.store
 				.select(BalancesSelectors.getLoading)
 				.subscribe(loading => this.lp.emit(loading))
@@ -69,7 +66,7 @@ export class PossessionsPage implements OnInit {
 
 	}
 
-	handleBalanceClick (symbol) {
+	handleBalanceSelect (symbol) {
 		this.store.dispatch(new BalancesActions.Select(symbol))
 	}
 }

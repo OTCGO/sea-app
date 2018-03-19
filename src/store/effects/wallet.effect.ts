@@ -29,17 +29,19 @@ export class WalletEffects {
 					catchError(e => of(new LoadFail(e)))
 				)
 
-	@Effect()
+	/*@Effect()
 	AddAccount =
 		this.actions$
 				.pipe(
 					ofType<AddAccount>(WalletActionTypes.ADD_ACCOUNT),
-					withLatestFrom(this.store$, (action, state) => {
-						state.wallet.entity.addAccount(action.payload)
+					map(action => {
+						console.log(action)
+						return action.payload
 					}),
+					catchError(e => of(new AddAccountFail(e))),
 					map(_=> new AddAccountSuccess()),
 					catchError(e => of(new AddAccountFail(e)))
-				)
+				)*/
 
 	/*Save$ =
 		this.actions$

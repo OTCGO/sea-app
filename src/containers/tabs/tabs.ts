@@ -32,10 +32,10 @@ export class TabsPage {
 
   constructor (private trs: TranslateService) {
     this.tabs = [
-      { root: this.possessionsPage, title: this.balancesTitle, icon: 'balances', enabled: true },
-      { root: this.marketsPage, title: this.marketsTitle, icon: 'markets', enabled: true },
-      { root: this.discoverPage, title: this.discoverTitle, icon: 'discover', enabled: false },
-      { root: this.profilePage, title: this.profileTitle, icon: 'profile', enabled: true }
+      { root: 'Possessions', title: this.balancesTitle, icon: 'balances', enabled: true },
+      { root: 'Markets', title: this.marketsTitle, icon: 'markets', enabled: true },
+      { root: 'Discover', title: this.discoverTitle, icon: 'discover', enabled: false },
+      { root: 'Profile', title: this.profileTitle, icon: 'profile', enabled: true }
     ]
   }
 

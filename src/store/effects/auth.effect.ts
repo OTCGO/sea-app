@@ -17,7 +17,7 @@ import {
 	LoginOldWallet,
 	LoginLedgerFail,
 	LoginOldWalletSuccess,
-	LoginOldWalletFail
+	LoginOldWalletFail, CreateWallet, CreateWalletSuccess, CreateWalletFail,
 } from '../actions/auth.action'
 
 import { WalletActions } from '../actions'
@@ -45,6 +45,7 @@ export class AuthEffects {
 			map(action => action.payload),
 			exhaustMap(({ oldWallet, passphrase }) => {
 				const account: Account = this.walletProvider.upgradeToNEP5Account(oldWallet, passphrase)
+
 				return [
 					new WalletActions.AddAccount(account),
 					new LoginOldWalletSuccess()
@@ -60,9 +61,26 @@ export class AuthEffects {
 			map(action => action.payload),
 			exhaustMap(wifValue => {
 				const account = new wallet.Account(wifValue)
-				return of(new WalletActions.AddAccount(account))
+				return [
+					new WalletActions.AddAccount(account),
+					new LoginWifSuccess()
+				]
 			}),
 			catchError(error => of(new LoginWifFail(error)))
+		)
+
+	@Effect()
+	CreateWallet =
+		this.actions$.pipe(
+			ofType<CreateWallet>(AuthActionTypes.CREATE_WALLET),
+			map(action => action.payload),
+			exhaustMap(account => {
+				return [
+					new WalletActions.AddAccount(account),
+					new CreateWalletSuccess()
+				]
+			}),
+			catchError(error => of(new CreateWalletFail(error)))
 		)
 
 	constructor (

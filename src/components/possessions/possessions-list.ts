@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { IBalance } from '../../shared/models'
 
 @Component({
 	selector: 'possessions-list',
@@ -24,6 +25,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 	`
 })
 export class PossessionsListComponent {
-	@Input() balances: Array<any>
+	@Input() balances: Array<IBalance>
 	@Output() select = new EventEmitter()
 }

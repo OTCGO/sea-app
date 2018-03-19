@@ -1,19 +1,14 @@
 import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
-import { Platform, ToastController, ToastOptions } from 'ionic-angular'
+import { Platform } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { TranslateService } from '@ngx-translate/core'
-import { RootState } from '../store/reducers'
-import { WalletProvider } from '../providers/wallet/wallet.provider'
-import { NotificationProvider } from '../providers/notification.provider'
-import * as marketsActions from '../store/actions/markets.action'
 
-export interface notificationOpts {
-	message: string | Error,
-	position?: string,
-	duration?: number
-}
+import { RootState } from '../store/reducers'
+import { MarketsActions, WalletActions } from '../store/actions'
+import { WalletSelectors } from '../store/selectors'
+
 
 @Component({
 	templateUrl: 'app.html'
@@ -25,14 +20,13 @@ export class MyApp implements OnInit {
 		private platform: Platform,
 		private statusBar: StatusBar,
 		private splashScreen: SplashScreen,
-		private walletProvider: WalletProvider,
-	  private translateService: TranslateService,
+		private translateService: TranslateService,
 		private store: Store<RootState>
 	) {}
 
 	ngOnInit () {
 		this.initApp()
-		this.store.dispatch(new marketsActions.Load())
+		// this.store.dispatch(new MarketsActions.Load())
 	}
 
 	initApp () {
@@ -50,24 +44,13 @@ export class MyApp implements OnInit {
 	}
 
 	async initWallet () {
-		this.walletProvider.checkWalletFile().then(fileExits => {
-			if (!fileExits) {
-				this.rootPage = 'Login'
-				return this.walletProvider.setWallet()
-			}
-			this.walletProvider.readWalletFile().then(
-				(walletFile) => {
-					const file = JSON.parse(walletFile)
-					this.walletProvider.setWallet(file)
-							.then(_ => {
-									this.rootPage = 'Tabs'
-								}
-							)
-				}
-			)
+		this.store.dispatch(new WalletActions.Load())
 
-		})
-
+		this.store
+				.select(WalletSelectors.getExits)
+				.subscribe(
+					exits => this.rootPage = exits ? 'Tabs' : 'Login'
+				)
 	}
 
 	initTranslate () {

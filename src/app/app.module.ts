@@ -17,7 +17,13 @@ import { MyApp } from './app.component'
 import { dev } from '../environments/environment'
 import { reducers, metaReducers } from '../store/reducers'
 import { CoreModule } from './core.module'
-import { BalancesEffects, MarketsEffects } from '../store/effects'
+import {
+  BalancesEffects,
+  MarketsEffects,
+  AuthEffects,
+  WalletEffects,
+  TransactionHistoryEffects
+} from '../store/effects'
 
 const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')
 
@@ -32,7 +38,13 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './ass
     ReactiveFormsModule,
     StoreModule.forRoot({ ...reducers }, { metaReducers: metaReducers }),
     dev ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([BalancesEffects, MarketsEffects]),
+    EffectsModule.forRoot([
+      BalancesEffects,
+      MarketsEffects,
+      WalletEffects,
+      AuthEffects,
+      TransactionHistoryEffects
+    ]),
     IonicModule.forRoot(MyApp, {
       tabbarPlacement: 'bottom',
       preloadModules: true,

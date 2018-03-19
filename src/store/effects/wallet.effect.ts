@@ -12,7 +12,7 @@ import {
 } from '../actions/wallet.action'
 
 @Injectable()
-export class WalletEffect {
+export class WalletEffects {
 	@Effect()
 	Load$ =
 		this.actions$

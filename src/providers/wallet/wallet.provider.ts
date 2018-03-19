@@ -1,72 +1,41 @@
 import { Injectable } from '@angular/core'
 import { FileStorageProvider } from '../file-storage.provider'
-
 import { wallet } from '../../libs/neon'
-
-import { decryptPrv, verifyKeyPair } from '../utils'
-import {
-	DEFAULT_EMPTY_WALLET,
-	OLD_WALLET_CHECK_LIST,
-	NEW_WALLET_CHECK_LIST,
-	OTCGO_WALLET_FILE_NAME
-} from './wallet.consts'
+import { Account } from '../../libs/neon/src/wallet'
+import { isOldWallet, decryptPrv, verifyKeyPair } from '../../shared/utils'
+import { OTCGO_WALLET_FILE_NAME } from '../../shared/constants'
 
 @Injectable()
 export class WalletProvider {
-	get wallet () { return this._wallet }
-	set wallet (file: any) {
-		if (this.isWallet(file)) {
-			this._wallet = new wallet.Wallet(file)
-		}
-	}
-	private _wallet
-
 	constructor (
-	  private fileStorageProvider: FileStorageProvider
+		private fileStorageProvider: FileStorageProvider
 	) { }
-
-	async setWallet (walletFile = DEFAULT_EMPTY_WALLET) {
-		this.wallet = walletFile
-	}
 
 	async checkWalletFile () {
 		return await this.fileStorageProvider.checkFile(OTCGO_WALLET_FILE_NAME)
 	}
 
-  readWalletFile () {
-		return this.fileStorageProvider.read(OTCGO_WALLET_FILE_NAME)
+	async readWalletFile () {
+		return await this.fileStorageProvider.read(OTCGO_WALLET_FILE_NAME)
 	}
 
-  async saveWallet () {
-    const walletTextFile = JSON.stringify(this.wallet.export())
-    return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
-  }
-
-	addAccount (account) { if (this.wallet) this.wallet.addAccount(account) }
-
-	hasAccounts (): boolean {
-	  return !!this.wallet && !!this.wallet.accounts.length
+	// !!!
+	async saveWalletFile (wallet) {
+		const walletTextFile = JSON.stringify(wallet)
+		return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
 	}
 
-	getDefaultAccount () { if (this.hasAccounts()) return this.wallet.defaultAccount }
-
-	async upgradeAndAddToAccount (oldWalletJSON: object, passphrase: string): Promise<boolean | Error> {
-		if (!this.isOldWallet(oldWalletJSON))
-			return await Promise.reject(new Error('Is not an old wallet, Please check again!'))
-
-		let account
+	upgradeToNEP5Account (oldWalletJSON: object, passphrase: string): Account {
+		if (!isOldWallet(oldWalletJSON))
+			throw new Error('Is not an old wallet, Please check again!')
 		try {
-			account = await this._upgradeWallet(oldWalletJSON, passphrase)
-			account.isDefault = true
-			this.wallet.addAccount(account)
-			await this.saveWallet()
-			return await Promise.resolve(true)
+			return this._upgradeToNEP5Account(oldWalletJSON, passphrase)
 		} catch (e) {
-			return await Promise.reject(new Error('Incorrect password!'))
+			throw new Error('Incorrect password!')
 		}
 	}
 
-	private _upgradeWallet (oldWalletJSON, passphrase) {
+	private _upgradeToNEP5Account (oldWalletJSON, passphrase): Account {
 		const { privateKeyEncrypted, publicKey } = <any>oldWalletJSON
 		let privateKey = decryptPrv(privateKeyEncrypted, passphrase)
 		const result = verifyKeyPair(privateKey, publicKey)
@@ -74,11 +43,15 @@ export class WalletProvider {
 		if (result) {
 			const account = new wallet.Account(privateKey)
 			account.encrypt(passphrase)
-			return Promise.resolve(account)
+			return account
 		}
 	}
 
-	isWallet = (items) => NEW_WALLET_CHECK_LIST.every(i => items.hasOwnProperty(i))
-
-	isOldWallet = (items): boolean => OLD_WALLET_CHECK_LIST.every(i => items.hasOwnProperty(i))
+	/*createWalletAndDecrypt (walletFile, passphrase) {
+		const nepWallet = new wallet.Wallet(walletFile)
+		const index = nepWallet.accounts.indexOf(nepWallet.defaultAccount)
+		if (nepWallet.decrypt(index, passphrase))
+			return nepWallet
+		else throw new Error('Password incorrect!')
+	}*/
 }

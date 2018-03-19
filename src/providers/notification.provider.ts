@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core'
 import { ToastController } from 'ionic-angular'
 import { Subject } from 'rxjs/Subject'
-import { notificationOpts } from '../app/app.component'
+
+
+export interface notificationOpts {
+	message: string | Error,
+	position?: string,
+	duration?: number
+}
+
 
 @Injectable()
 export class NotificationProvider {
@@ -26,9 +33,9 @@ export class NotificationProvider {
 			position: 'bottom',
 			duration: 3000
 		})
-		
+
 		const toast = this.toastCtrl.create(toastOptions)
-		
+
 		return toast.present()
 	}
 }

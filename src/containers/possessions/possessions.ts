@@ -8,14 +8,10 @@ import {
 } from 'ionic-angular'
 
 import { Store } from '@ngrx/store'
-import { LoadingProvider, WalletProvider, AccountProvider, NotificationProvider } from '../../providers'
-
-import { PossessionDetailPage } from './possession-detail/possession-detail'
-
-import * as fromBalances from '../../store/reducers/balances.reducer'
-import * as balancesAction from '../../store/actions/balances.action'
-import { State } from '../../store/reducers/balances.reducer'
-
+import { LoadingProvider, NotificationProvider } from '../../providers'
+import { BalancesActions } from '../../store/actions'
+import { WalletSelectors, BalancesSelectors } from '../../store/selectors'
+import { fromBalances, fromWallet } from '../../store/reducers'
 
 
 @IonicPage({
@@ -28,56 +24,52 @@ import { State } from '../../store/reducers/balances.reducer'
 })
 export class PossessionsPage implements OnInit {
 	splash: boolean = false
-	possessionDetailPage = PossessionDetailPage
-	account = this.accountProvider.defaultAccount
+	account = this.store.select(WalletSelectors.getAccount)
 	loading: Loading
 	balances: Array<any>
-
+	exits: boolean
 
 	constructor (
 		public navCtrl: NavController,
-		private walletProvider: WalletProvider,
 		private loadingCtrl: LoadingController,
-		private accountProvider: AccountProvider,
 		private notificationProvider: NotificationProvider,
 		private lp: LoadingProvider,
-		private store: Store<State>
+		private store: Store<fromBalances.State | fromWallet.State>
 	) {}
 
 	ionViewCanEnter () {
-		return this.walletProvider.hasAccounts()
+		return this.exits
 	}
 
 	ngOnInit () {
 		this.loadBalance()
-	}
-
-	async presentLoading () {
-		this.loading = this.loadingCtrl.create()
-		await this.loading.present()
+		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
 	loadBalance () {
-		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.store.select(fromBalances.getEntities)
-				.subscribe(balances => this.balances = balances)
-		this.store.select(fromBalances.getLoading)
-				.subscribe(loading => this.lp.emit(loading))
+		this.store.dispatch(new BalancesActions.Load())
 
-		this.store.select(fromBalances.getError).subscribe(
-			error =>
-				error && this.notificationProvider
-										 .emit({
-											 message: error
-										 })
-		)
+		this.store
+				.select(BalancesSelectors.getEntities)
+				.subscribe(balances => this.balances = balances)
+		this.store
+				.select(BalancesSelectors.getLoading)
+				.subscribe(loading => this.lp.emit(loading))
+		this.store
+				.select(BalancesSelectors.getError)
+				.subscribe(error => error && this.notificationProvider.emit({ message: error }))
 
 	}
 
 	doRefresh (refresher: Refresher) {
-		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.store.select(fromBalances.getLoading)
+		this.store.dispatch(new BalancesActions.Load())
+		this.store
+				.select(BalancesSelectors.getLoading)
 				.subscribe(loading => !loading && refresher.complete())
 
+	}
+
+	handleBalanceClick (symbol) {
+		this.store.dispatch(new BalancesActions.Select(symbol))
 	}
 }

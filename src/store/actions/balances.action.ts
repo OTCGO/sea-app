@@ -1,27 +1,32 @@
 import { Action } from '@ngrx/store'
 
 export enum BalancesActionTypes {
-	LOAD = '[balances] Load',
-	LOAD_FAIL = '[balances] Load Error',
-	LOAD_SUCCESS = '[balances] Load Success'
+	LOAD = '[Balances] Load',
+	LOAD_FAIL = '[Balances] Load Error',
+	LOAD_SUCCESS = '[Balances] Load Success',
+	SELECT = '[Balances] Select'
 }
 
-export class Get implements Action {
+export class Load implements Action {
 	readonly type = BalancesActionTypes.LOAD
-
-	constructor (public payload: string) {}
 }
 
-export class GetSuccess implements Action {
+export class LoadSuccess implements Action {
 	readonly type = BalancesActionTypes.LOAD_SUCCESS
 
 	constructor (public payload) {}
 }
 
-export class GetError implements Action {
+export class LoadFail implements Action {
 	readonly type = BalancesActionTypes.LOAD_FAIL
 
 	constructor (public payload) {}
 }
 
-export type BalancesActions = Get | GetSuccess | GetError
+export class Select implements Action {
+	readonly type = BalancesActionTypes.SELECT
+
+	constructor (public payload: string) {}
+}
+
+export type BalancesActions = Load | LoadSuccess | LoadFail | Select

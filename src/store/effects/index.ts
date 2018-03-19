@@ -1,2 +1,5 @@
-export * from './balances.effect'
-export * from './markets.effect'
+export { BalancesEffects } from './balances.effect'
+export { MarketsEffects } from './markets.effect'
+export { WalletEffects } from './wallet.effect'
+export { AuthEffects } from './auth.effect'
+export { TransactionHistoryEffects } from './transaction-history.effect'

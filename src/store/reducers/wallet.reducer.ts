@@ -1,5 +1,7 @@
+
 import { ActionReducer } from '@ngrx/store'
 import { WalletActions, WalletActionTypes } from '../actions/wallet.action'
+import { AuthActions, AuthActionTypes } from '../actions/auth.action'
 import { Wallet } from '../../libs/neon/src/wallet'
 import { wallet } from '../../libs/neon'
 import { DEFAULT_EMPTY_WALLET } from '../../shared/constants'
@@ -19,11 +21,12 @@ const initialState: State = {
 
 export const reducer: ActionReducer<State> = (
 	state = initialState,
-	action: WalletActions
+	action: WalletActions | AuthActions
 ): State => {
 	switch (action.type) {
 		case WalletActionTypes.LOAD:
-		case WalletActionTypes.ADD_ACCOUNT: {
+		case WalletActionTypes.ADD_ACCOUNT:
+		case AuthActionTypes.LOGIN_OLD_WALLET: {
 			return {
 				...state,
 				loading: true
@@ -39,7 +42,8 @@ export const reducer: ActionReducer<State> = (
 			}
 		}
 
-		case WalletActionTypes.LOAD_SUCCESS: {
+		case WalletActionTypes.LOAD_SUCCESS:
+		case AuthActionTypes.LOGIN_SUCCESS: {
 			return {
 				...state,
 				loading: false,

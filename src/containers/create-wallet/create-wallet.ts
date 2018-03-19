@@ -1,16 +1,13 @@
 import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
 import {
   IonicPage, LoadingController, NavController,
-  NavParams
 } from 'ionic-angular'
-import { LoginPage } from '../login/login'
+import { TranslateService } from '@ngx-translate/core'
 
 import { wallet } from '../../libs/neon'
-import { WalletProvider } from '../../providers/wallet/wallet.provider'
-import { BackupWalletPage } from './backup-wallet/backup-wallet'
-import { debug } from '../../shared/utils'
-import { TranslateService } from '@ngx-translate/core'
 import { NotificationProvider } from '../../providers/notification.provider'
+import { fromWallet } from '../../store/reducers'
 
 @IonicPage({
   name: 'CreateWallet',
@@ -21,8 +18,6 @@ import { NotificationProvider } from '../../providers/notification.provider'
   templateUrl: 'create-wallet.html',
 })
 export class CreateWalletPage {
-  loginPage = LoginPage
-  backupWalletPage = BackupWalletPage
   private protocolAgreement: boolean = false
   private wif: string
   private name: string
@@ -35,13 +30,13 @@ export class CreateWalletPage {
   constructor (
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
-    private walletProvider: WalletProvider,
+    private store: Store<fromWallet.State>,
     private notificationProvider: NotificationProvider,
     private translateService: TranslateService
   ) {
     this.translateService.onLangChange.subscribe(value => {
-      debug('onLangChange')(value)
-
+      console.log('onLangChange')
+      console.log(value)
     })
   }
 
@@ -71,7 +66,8 @@ export class CreateWalletPage {
 
     await i.present()
 
-    try {
+    /* TODO: Add auth create wallet */
+    /*try {
       const accountTemp = new wallet.Account(
         this.wif || wallet.generatePrivateKey())
       const { WIF, address } = accountTemp
@@ -87,6 +83,7 @@ export class CreateWalletPage {
         extra: null
       } as any)
 
+      this.store.dispatch(new )
       this.walletProvider.addAccount(account)
       this.walletProvider.saveWallet()
 
@@ -95,7 +92,7 @@ export class CreateWalletPage {
     } catch (e) {
       console.log(e)
       this.notificationProvider.emit({ message: e })
-    }
+    }*/
   }
 
   validatePassphraseStrength (passphrase) {

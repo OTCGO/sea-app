@@ -1,3 +1,4 @@
+
 page-possession-detail {
   ion-header.otcgo-header {
     & * {
@@ -28,8 +29,11 @@ page-possession-detail {
 
       text-align: center;
       box-shadow: 0 2px 2px 0 rgba(42, 114, 218, 0.14),
-                  0 3px 1px -2px rgba(42, 114, 218, 0.2),
-                  0 1px 5px 0 rgba(42, 114, 218, 0.12);
+      0 3px 1px -2px rgba(42, 114, 218, 0.2),
+      0 1px 5px 0 rgba(42, 114, 218, 0.12);
+
+      transition: height 0.2s .01s linear,
+      top 0.2s .01s linear;
 
       display: flex;
       align-items: center;
@@ -41,13 +45,22 @@ page-possession-detail {
 
         font-size: 4.4rem;
         text-shadow: 0 2px 2px rgba(0, 0, 0, 0.14),
-                     0 3px 1px rgba(0, 0, 0, 0.2),
-                     0 1px 5px rgba(0, 0, 0, 0.12);;
+        0 3px 1px rgba(0, 0, 0, 0.2),
+        0 1px 5px rgba(0, 0, 0, 0.12);;
       }
       .possession-data-approximation {
         font-size: 1.2rem;
         font-weight: lighter;
         letter-spacing: 0.07rem;
+      }
+
+      &.is-scroll-up {
+        height: 55vh;
+        transition: height 0.2s .01s linear,
+        top 0.2s .01s linear;
+      }
+      &.is-scroll-down {
+        height: 20vh;
       }
     }
 
@@ -74,6 +87,18 @@ page-possession-detail {
       right: 0;
       padding: 0 20px;
       top: 50%;
+      transition: height 0.2s linear,
+      top 0.2s linear;
+
+      &.is-scroll-down {
+        top: 10vh;
+      }
+
+      &.is-scroll-up {
+        top: 50%;
+        transition: height 0.2s 0.01s linear,
+        top 0.2s 0.01s linear;
+      }
     }
 
     .possession-detail__title {

@@ -90,9 +90,6 @@
       "check-separator",
       "check-type"
     ],
-
-    "directive-selector": [true, "attribute", "aio", "camelCase"],
-    "component-selector": [true, "element", "aio", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

@@ -39,7 +39,8 @@ export interface ScryptParams {
 
 export interface WalletFile {
 	name: string
-	scrypt: WalletScryptParams
+	version: string
+	scrypt: WalletScryptParams | ScryptParams
 	accounts: WalletAccount[]
 	extra: object
 }
@@ -171,6 +172,7 @@ export interface Wallet {
 	scrypt: WalletScryptParams
 	accounts: Account[]
 	extra: object
+	defaultAccount
 
 	decrypt (index: number, keyphrase: string): boolean
 	decryptAll (keyphrase: string): boolean[]

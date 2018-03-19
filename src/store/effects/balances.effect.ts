@@ -1,39 +1,35 @@
-import { Optional, Inject, Injectable, InjectionToken } from '@angular/core'
-import { Action } from '@ngrx/store'
+import { Injectable } from '@angular/core'
+import { Action, Store } from '@ngrx/store'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { BigNumber } from 'bignumber.js'
-import { ApiProvider } from '../../providers/api/api.provider'
-
 import { Observable } from 'rxjs/Observable'
-import { Scheduler } from 'rxjs/Scheduler'
-import { async } from 'rxjs/scheduler/async'
 import { empty } from 'rxjs/observable/empty'
 import { of } from 'rxjs/observable/of'
 import {
-	debounceTime,
 	map,
 	switchMap,
 	catchError,
 	skip,
 	takeUntil,
 	publishLast,
-	refCount, timeout
+	refCount, withLatestFrom
 } from 'rxjs/operators'
+import { RootState } from '../../store/reducers'
 
-import { BalancesActionTypes, Get, GetError, GetSuccess } from '../actions/balances.action'
+import { BalancesActionTypes, Load, LoadFail, LoadSuccess } from '../actions/balances.action'
 import { ASSET_ENUM } from '../../shared/constants'
-
-const SEARCH_DEBOUNCE = new InjectionToken<number>('GetBalances Debounce')
-const SEARCH_SCHEDULER = new InjectionToken<Scheduler>('Search Scheduler')
+import { ApiProvider, API_CONSTANTS } from '../../providers/api'
 
 @Injectable()
 export class BalancesEffects {
 	@Effect()
-	GET$: Observable<Action> =
+	Load$: Observable<Action> =
 		this.actions$.pipe(
-			ofType<Get>(BalancesActionTypes.LOAD),
-			debounceTime(this.debounce || 300, this.scheduler || async),
-			map(action => action.payload),
+			ofType<Load>(BalancesActionTypes.LOAD),
+			withLatestFrom(this.store$, (_, state: RootState) => {
+				const account = state.wallet.entity.accounts.find(account => account.isDefault)
+				return account.address
+			}),
 			switchMap(query => {
 				if (query === '') {
 					return empty()
@@ -45,40 +41,38 @@ export class BalancesEffects {
 				)
 
 				return this.apiProvider
-				           .get('address/' + query)
-				           .pipe(
-					           takeUntil(nextGet$),
-					           timeout(2628),
-					           publishLast(),
-					           refCount(),
-					           map(
-						           (res: any) => res.error
-							           ? Observable.throw(res.error)
-							           : new GetSuccess(mappingBalances(res))
-					           ),
-					           catchError(error => of(new GetError(error)))
-				           )
+									 .get(`${API_CONSTANTS.BALANCES}/${query}`)
+									 .pipe(
+										 takeUntil(nextGet$),
+										 publishLast(),
+										 refCount(),
+										 catchError(error => of(new LoadFail(error))),
+										 map(
+											 (res: any) => res.error
+												 ? new LoadFail(res.error)
+												 : new LoadSuccess(mappingBalances(res))
+										 ),
+										 catchError(error => of(new LoadFail(error)))
+									 )
 			})
 		)
 
 	constructor (
 		private actions$: Actions,
-		@Optional() @Inject(SEARCH_DEBOUNCE)
-		private debounce: number,
-		@Optional() @Inject(SEARCH_SCHEDULER)
-		private scheduler: Scheduler,
-		private apiProvider: ApiProvider
+		private apiProvider: ApiProvider,
+		private store$: Store<RootState>
 	) {}
 }
 
-function mappingBalances({ balances }) {
-	return balances
-		&& Object.keys(balances)
-		         .map(key => (
-			         {
-				         hash: key,
-				         symbol: ASSET_ENUM[key] || '暂无',
-				         amount: new BigNumber(balances[key])
-			         })
-		         )
-}
+
+const mappingBalances = ({ balances }) =>
+	balances
+		? Object.keys(balances)
+						.map(key => (
+							{
+								hash: key,
+								symbol: ASSET_ENUM[key] || '暂无',
+								amount: new BigNumber(balances[key])
+							})
+						)
+		: []

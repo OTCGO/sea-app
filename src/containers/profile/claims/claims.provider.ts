@@ -6,7 +6,7 @@ import { ApiProvider, AccountProvider } from '../../../providers'
 
 import { Store, select } from '@ngrx/store'
 import { RootState } from '../../../store/reducers/index'
-import { Get } from '../../../store/actions/balances.action'
+import { Load } from '../../../store/actions/balances.action'
 import * as fromBalances from '../../../store/reducers/balances.reducer'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs/Observable'
@@ -59,8 +59,9 @@ export class ClaimsProvider {
 	}
 
 	doSendAsset () {
-		this.store.dispatch(new Get(this._account.address))
-		return this.store.pipe(
+		this.store.dispatch(new Load())
+
+		/*return this.store.pipe(
 			select(fromBalances.getEntities),
 			map((balances: any[]) => {
 				const NEO = balances.find(bal => bal.hash === NEO_HASH)
@@ -77,7 +78,7 @@ export class ClaimsProvider {
 				                    .catch(err => console.error('from claims provider doSendAsset()', err))
 				return Observable.fromPromise(promise)
 			})
-		)
+		)*/
 	}
 
 	private postTransfer (transferPostData) {

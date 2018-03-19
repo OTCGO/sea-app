@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import {
-	NavController, NavParams, AlertController, LoadingController, Loading, IonicPage, AlertOptions
+	AlertController, LoadingController, Loading, IonicPage, AlertOptions
 } from 'ionic-angular'
 
 import { WalletProvider } from '../../../providers/wallet/wallet.provider'
@@ -106,7 +106,7 @@ export class ManageWalletPage {
 		if (this.tempLabel) {
 			account.label = this.tempLabel
 			this.tempLabel = ''
-			await this.walletProvider.saveWallet()
+			// await this.walletProvider.saveWallet()
 		}
 	}
 
@@ -152,23 +152,23 @@ export class ManageWalletPage {
 	}
 
 	deleteAccount (toBeDeletedAccount) {
-		const wallet = this.walletProvider.wallet
+		/*const wallet = this.walletProvider.wallet
 		this.walletProvider.wallet = <any>{
 			...wallet,
 			accounts: wallet.accounts.filter(account => JSON.stringify(account) !== JSON.stringify(toBeDeletedAccount))
-		}
+		}*/
 		return Promise.resolve()
 	}
 
 	setDefaultAccount (toBeSettedAccount) {
-		const wallet = this.walletProvider.wallet
+		/*const wallet = this.walletProvider.wallet
 		this.walletProvider.wallet = <any>{
 			...wallet,
 			accounts: wallet.accounts.map(account => {
 				account.isDefault = JSON.stringify(account) == JSON.stringify(toBeSettedAccount)
 				return account
 			})
-		}
+		}*/
 	}
 
 	showDeleteSuccess () {

@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
 import {
 	AlertController, IonicPage,
 	NavController,
 	NavParams
 } from 'ionic-angular'
-import { CreateWalletPage } from '../create-wallet/create-wallet'
 
-import { wallet } from '../../libs/neon'
-import { WalletProvider } from '../../providers/wallet/wallet.provider'
-import { TabsPage } from '../tabs/tabs'
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { contains } from 'rambda'
+import { LoadingProvider, NotificationProvider } from '../../providers'
 import { nep5Wallet } from '../../shared/userWallet'
-import { contains } from '../../shared/utils'
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
-import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/debounceTime'
-import 'rxjs/add/operator/map'
-
+import { RootState } from '../../store/reducers'
+import { wifValidator } from './login.validator'
+import { isOldWallet, isWallet } from '../../shared/utils'
+import { AuthActions } from '../../store/actions'
+import { AuthSelectors } from '../../store/selectors'
+import { WalletSelectors } from '../../store/selectors'
 
 interface LoginFormValue {
 	wif: string,
@@ -32,7 +32,6 @@ interface LoginFormValue {
 })
 export class LoginPage implements OnInit {
 	file
-	createWalletPage = CreateWalletPage
 	importText: string = '导入'
 	isWIFKey: boolean = true
 	loginForm: FormGroup
@@ -45,18 +44,23 @@ export class LoginPage implements OnInit {
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		public alertCtrl: AlertController,
-		public walletProvider: WalletProvider,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		private np: NotificationProvider,
+		private lp: LoadingProvider,
+		private store: Store<RootState>
 	) { }
 
 	ngOnInit () {
+		this.buildForm()
+		this.subscribe()
+	}
+
+	buildForm () {
 		this.loginForm = this.fb.group({
 			wif: [
-				'', [
-					Validators.required
-				], [
-					wifValidator.bind(this)
-				]
+				'',
+				[Validators.required],
+				[wifValidator.bind(this)]
 			],
 			passphrase: [
 				'', [
@@ -65,6 +69,19 @@ export class LoginPage implements OnInit {
 				]
 			]
 		})
+	}
+
+	subscribe () {
+		this.store.select(AuthSelectors.getError)
+				.subscribe(error => error && this.np.emit({ message: error }))
+
+		this.store.select(WalletSelectors.getExits)
+				.subscribe(exits => exits && this.navCtrl.setRoot('Tabs'))
+
+		this.store.select(WalletSelectors.getExits)
+				.subscribe(exits => {
+					console.log('is wallet exits:', exits)
+				})
 	}
 
 	switchImportBox (fileInput: HTMLInputElement) {
@@ -79,7 +96,7 @@ export class LoginPage implements OnInit {
 	}
 
 	fileChange (file) {
-		if (contains(file.name, '.json')) {
+		if (contains('.json', file.name)) {
 			this.importText = file.name.slice()
 			const reader = new FileReader()
 			const ng = this
@@ -88,13 +105,13 @@ export class LoginPage implements OnInit {
 			reader.onload = function () {
 				try {
 					const JSONFile = JSON.parse(this.result)
-					if (ng.walletProvider.isOldWallet(JSONFile)) {
+					if (isOldWallet(JSONFile)) {
 						ng.file = JSONFile
-					} else if (ng.walletProvider.isWallet(JSONFile)) {
+						return
+					} else if (isWallet(JSONFile)) {
 						ng.file = JSONFile
 						ng.isNEP5 = true
-					} else {
-						throw new Error('钱包格式错误！')
+						return
 					}
 				} catch (e) {
 					console.log('file change error', e)
@@ -114,79 +131,43 @@ export class LoginPage implements OnInit {
 	}
 
 	login ({
-    controls,
-		value,
-		valid
-	}: {
+		 controls,
+		 value,
+		 valid  // TODO: Valid use at loginForm but don't have capability with nowif or file logic
+  }: {
 		controls: {
 			[key: string]: AbstractControl
 		},
 		value: LoginFormValue,
 		valid: boolean
 	}) {
-		const { wif, passphrase } = controls
+		const { wif: wifControl, passphrase: passphraseControl } = controls
 		if (this.file) {
-			wif.setValue('')
+			wifControl.setValue('')
 		}
 
 		const { wif: wifValue, passphrase: passphraseValue } = value
 
-
 		if (wifValue === 'test') {
-			this.walletProvider.wallet = nep5Wallet
-			return this.navCtrl.setRoot(TabsPage)
+			this.store.dispatch(new AuthActions.Login(nep5Wallet))
 		}
 
+		// Using wif login
 		if (wifValue && this.isWIFKey && passphraseValue) {
-			if (!passphrase.valid) return
-
-			const account = new wallet.Account(wifValue)
-			account.encrypt(passphraseValue)
-			account.isDefault = true
-			this.walletProvider.addAccount(account)
-			this.walletProvider.saveWallet()
-			return this.navCtrl.setRoot(TabsPage)
+			if (!passphraseControl.valid) return
+			this.store.dispatch(new AuthActions.LoginWif(wifValue))
 		}
 
+		// Using file login
 		if (this.file && !this.isWIFKey && !wifValue) {
-			if (this.walletProvider.isOldWallet(this.file)) {
-				if (!passphrase.valid) return
-				this.walletProvider.upgradeAndAddToAccount(this.file, passphraseValue)
-						.then(_ => {
-							this.navCtrl.setRoot(TabsPage)
-						})
-						.catch(e => {
-							this.showPrompt('Incorrect Password! Retry again.')
-						})
+			if (isOldWallet(this.file)) {
+				if (!passphraseControl.valid) return
+				this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet: this.file, passphrase: passphraseValue }))
 			}
 
-			if (this.walletProvider.isWallet(this.file)) {
-				this.walletProvider.wallet = this.file
-				this.navCtrl.setRoot(TabsPage)
+			if (isWallet(this.file)) {
+				this.store.dispatch(new AuthActions.Login(this.file))
 			}
 		}
 	}
-}
-
-function wifValidator (wifCtrl: FormControl): Observable<ValidationErrors | null> {
-	return Observable.create(obs =>
-		wifCtrl
-			.valueChanges
-			.debounceTime(400)
-			.map(value => value.trim())
-			.map(value => {
-				if (value && wallet.isWIF(value)) {
-					return null
-				}
-				throw new Error ('invalidWIF')
-			})
-			.subscribe(
-				value => obs.next(null),
-				error => {
-					obs.next({ [error.message]: true })
-					obs.complete()
-				}
-			)
-
-	)
 }

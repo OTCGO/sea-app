@@ -73,6 +73,8 @@ export class LoginPage implements OnInit {
 	subscribe () {
 		this.store.select(AuthSelectors.getError)
 				.subscribe(error => error && this.np.emit({ message: error }))
+		this.store.select(AuthSelectors.getLoading)
+				.subscribe(bool => bool && this.lp.emit(bool))
 		this.store.select(WalletSelectors.getExits)
 				.subscribe(exits => exits && this.navCtrl.setRoot('Tabs'))
 	}

@@ -21,9 +21,7 @@ export class WalletEffects {
 					map(_=> fromPromise(this.walletProvider.checkWalletFile())),
 					exhaustMap(exists =>
 						exists
-							? fromPromise(this.walletProvider.readWalletFile()).map(
-							file => new LoadSuccess(JSON.parse(file))
-							)
+							? fromPromise(this.walletProvider.readWalletFile()).map(file => new LoadSuccess(JSON.parse(file)))
 							: of(new LoadFail('Require login'))
 					),
 					catchError(e => of(new LoadFail(e)))

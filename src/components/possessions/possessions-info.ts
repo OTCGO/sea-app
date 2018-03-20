@@ -9,7 +9,7 @@ import { Account } from '../../shared/typings'
 		  <div class="card-avatar" (click)="openQRCode()">
 			  <img src="assets/imgs/icon-avatar.svg" alt="">
 		  </div>
-		  <div class="card-title">{{ account.address | addressCollapse }}</div>
+		  <div class="card-title">{{ account?.address | addressCollapse }}</div>
 	  </ion-card>
 	`
 })
@@ -18,7 +18,11 @@ export class PossessionsInfoComponent {
 
 	constructor (private navCtrl: NavController) {}
 
+	ngOnInit () {
+		console.log('possessions-card', this.account)
+	}
+
 	openQRCode () {
-		this.navCtrl.push('payment-qrcode', { address: this.account.address })
+		this.navCtrl.push('payment-qrcode', { address: this.account && this.account.address })
 	}
 }

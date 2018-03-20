@@ -45,7 +45,7 @@ export class AuthEffects {
 			map(action => action.payload),
 			exhaustMap(({ oldWallet, passphrase }) => {
 				const account: Account = this.walletProvider.upgradeToNEP5Account(oldWallet, passphrase)
-
+				account.isDefault = true
 				return [
 					new WalletActions.AddAccount(account),
 					new LoginOldWalletSuccess()

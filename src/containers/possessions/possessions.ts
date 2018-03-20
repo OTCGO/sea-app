@@ -60,7 +60,7 @@ export class PossessionsPage implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy () {
-		console.log('destroy call')
+
 	}
 
 	ionViewWillLeave () {

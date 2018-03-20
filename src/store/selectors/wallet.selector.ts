@@ -1,4 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
+import { Wallet } from '../../shared/typings'
+import { findDefaultAccount } from '../../shared/utils'
 import { State } from '../reducers/wallet.reducer'
 
 const getState = createFeatureSelector('wallet')
@@ -8,22 +10,22 @@ export const getEntity = createSelector(
 	(state: State) => state.entity
 )
 
-export const getAccounts = createSelector(
-	getState,
-	(state: State) => state.entity.accounts
-)
-
-export const getAccount = createSelector(
-	getState,
-	(state: State) => state.entity.defaultAccount
-)
-
-export const getExits = createSelector(
-	getState,
-	(state: State) => !!state.entity.accounts.length
-)
-
 export const getError = createSelector(
 	getState,
 	(state: State) => state.error
+)
+
+export const getAccounts = createSelector(
+	getEntity,
+	(wallet: Wallet) => wallet.accounts
+)
+
+export const getAccount = createSelector(
+	getEntity,
+	wallet => findDefaultAccount(wallet)
+)
+
+export const getExits = createSelector(
+	getEntity,
+	wallet => !!wallet.accounts.length
 )

@@ -14,6 +14,7 @@ import {
 	publishLast,
 	refCount, withLatestFrom
 } from 'rxjs/operators'
+import { findDefaultAccount } from '../../shared/utils'
 import { RootState } from '../../store/reducers'
 
 import { BalancesActionTypes, Load, LoadFail, LoadSuccess } from '../actions/balances.action'
@@ -26,10 +27,10 @@ export class BalancesEffects {
 	Load$: Observable<Action> =
 		this.actions$.pipe(
 			ofType<Load>(BalancesActionTypes.LOAD),
-			withLatestFrom(this.store$, (_, state: RootState) => {
-				const account = state.wallet.entity.accounts.find(account => account.isDefault)
-				return account.address
-			}),
+			withLatestFrom(
+				this.store$,
+				(_, state: RootState) => findDefaultAccount(state.wallet.entity).address
+			),
 			switchMap(query => {
 				if (query === '') {
 					return empty()

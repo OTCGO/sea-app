@@ -1,8 +1,4 @@
 import { Component, ViewChild } from '@angular/core'
-import { DiscoverPage } from '../discover/discover';
-import { PossessionsPage } from '../possessions/possessions';
-import { ProfilePage } from '../profile/profile'
-import { MarketsPage } from '../markets/markets'
 import { IonicPage, Tabs } from 'ionic-angular'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -15,11 +11,6 @@ import { TranslateService } from '@ngx-translate/core'
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-  possessionsPage = PossessionsPage;
-  marketsPage = MarketsPage
-  discoverPage = DiscoverPage;
-  profilePage = ProfilePage;
-
   selectedIndex: number = 0
   tabs: any[]
 
@@ -36,7 +27,7 @@ export class TabsPage {
       { root: 'Markets', title: this.marketsTitle, icon: 'markets', enabled: true },
       { root: 'Discover', title: this.discoverTitle, icon: 'discover', enabled: false },
       { root: 'Profile', title: this.profileTitle, icon: 'profile', enabled: true }
-    ]
+		]
   }
 
   selectTab () {

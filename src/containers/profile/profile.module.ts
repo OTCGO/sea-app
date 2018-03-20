@@ -15,7 +15,6 @@ const COMPONENTS = [
 
 @NgModule({
 	declarations: COMPONENTS,
-	exports: COMPONENTS,
 	imports: [
 		IonicPageModule.forChild(ProfilePage),
 		TranslateModule.forChild()

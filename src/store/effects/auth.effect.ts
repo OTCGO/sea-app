@@ -15,15 +15,22 @@ import {
 	LoginWifFail,
 	LoginWifSuccess,
 	LoginOldWallet,
-	LoginLedgerFail,
+	LoginOldWalletFail,
 	LoginOldWalletSuccess,
-	LoginOldWalletFail, CreateWallet, CreateWalletSuccess, CreateWalletFail,
+	LoginLedger,
+	LoginLedgerFail,
+	LoginLedgerSuccess,
+	LoginNeoDun,
+	LoginNeoDunFail,
+	LoginNeoDunSuccess,
+	CreateWallet,
+	CreateWalletSuccess,
+	CreateWalletFail,
 } from '../actions/auth.action'
 
 import { WalletActions } from '../actions'
 
 
-/* TODO: AmagiDDmxh - Should we dealing with passphrase decrypt logic here? */
 @Injectable()
 export class AuthEffects {
 	@Effect()

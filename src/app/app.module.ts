@@ -22,7 +22,8 @@ import {
   MarketsEffects,
   AuthEffects,
   WalletEffects,
-  TransactionHistoryEffects
+  TransactionHistoryEffects,
+  SettingsEffects
 } from '../store/effects'
 
 const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')
@@ -43,7 +44,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './ass
       MarketsEffects,
       WalletEffects,
       AuthEffects,
-      TransactionHistoryEffects
+      TransactionHistoryEffects,
+      SettingsEffects
     ]),
     IonicModule.forRoot(MyApp, {
       tabbarPlacement: 'bottom',

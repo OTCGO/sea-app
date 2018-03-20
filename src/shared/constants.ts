@@ -1,3 +1,7 @@
+import {
+	ICurrency,
+	ISetting
+} from './models'
 import { dev } from '../environments/environment'
 
 const ASSET_HASH = {
@@ -122,6 +126,13 @@ export const NEW_WALLET_CHECK_LIST = ['name', 'version', 'scrypt', 'accounts', '
 
 export const OTCGO_WALLET_FILE_NAME = 'OTCGO-mobile-wallet.json'
 
+export const OTCGO_SETTING_FILE_NAME = 'OTCGO-settings.json'
+
+export const DEFAULT_SETTING: ISetting = {
+	currency: 'cny',
+	language: (<any>navigator.language)
+}
+
 export const DEFAULT_SCRYPT = { n: 16384, r: 8, p: 8, size: 64 }
 
 export const DEFAULT_EMPTY_WALLET = {
@@ -130,4 +141,41 @@ export const DEFAULT_EMPTY_WALLET = {
 	accounts: [],
 	version: 'beta-0.6',
 	extra: null
+}
+
+export const Currency: ICurrency = {
+	'aud': '$',
+	'brl': 'R$',
+	'cad': '$',
+	'chf': 'Fr.',
+	'clp': '$',
+	'cny': '¥',
+	'czk': 'Kč',
+	'dkk': 'kr. ',
+	'eur': '€',
+	'gbp': '£',
+	'hkd': '$',
+	'huf': 'Ft ',
+	'idr': 'Rp ',
+	'ils': '₪',
+	'inr': '₹',
+	'jpy': '¥',
+	'krw': '₩',
+	'mxn': '$',
+	'myr': 'RM',
+	'nok': 'kr ',
+	'nzd': '$',
+	'php': '₱',
+	'pkr': '₨ ',
+	'pln': 'zł',
+	'rub': '₽',
+	'sek': 'kr ',
+	'sgd': 'S$',
+	'thb': '฿',
+	'try': '₺',
+	'twd': 'NT$',
+	'usd': '$',
+	'zar': 'R ',
+	'gas': 'gas',
+	'btc': 'btc'
 }

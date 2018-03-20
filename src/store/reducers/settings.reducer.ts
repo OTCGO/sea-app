@@ -1,56 +1,71 @@
-interface I18n {
-	'zh-cn': 'chinease'
-	'en': 'english'
+import {
+	I18n,
+	ICurrency
+} from '../../shared/models'
+
+import {
+	SettingsActions,
+	SettingsActionTypes
+} from '../actions/settings.action'
+
+export interface State {
+	language: keyof I18n
+	loading: boolean
+	error: string | Error
+	currency: keyof ICurrency
 }
 
-interface Currency {
-	aud: { symbol: '$' },
-	brl: { symbol: 'R$' },
-	cad: { symbol: '$' },
-	chf: { symbol: 'Fr.' },
-	clp: { symbol: '$' },
-	cny: { symbol: '¥' },
-	czk: { symbol: 'Kč' },
-	dkk: { symbol: 'kr. ' },
-	eur: { symbol: '€' },
-	gbp: { symbol: '£' },
-	hkd: { symbol: '$' },
-	huf: { symbol: 'Ft ' },
-	idr: { symbol: 'Rp ' },
-	ils: { symbol: '₪' },
-	inr: { symbol: '₹' },
-	jpy: { symbol: '¥' },
-	krw: { symbol: '₩' },
-	mxn: { symbol: '$' },
-	myr: { symbol: 'RM' },
-	nok: { symbol: 'kr ' },
-	nzd: { symbol: '$' },
-	php: { symbol: '₱' },
-	pkr: { symbol: '₨ ' },
-	pln: { symbol: 'zł' },
-	rub: { symbol: '₽' },
-	sek: { symbol: 'kr ' },
-	sgd: { symbol: 'S$' },
-	thb: { symbol: '฿' },
-	try: { symbol: '₺' },
-	twd: { symbol: 'NT$' },
-	usd: { symbol: '$' },
-	zar: { symbol: 'R ' },
-	gas: { symbol: 'gas' }
+const initialSettingsState: State = {
+	language: 'zh-cn',
+	loading: false,
+	error: '',
+	currency: 'gas',
 }
 
-export interface SettingsState {
-	lang: keyof I18n
-	currency: keyof Currency
-}
-
-const initialSettingsState: SettingsState = {
-	lang: 'zh-cn',
-	currency: 'gas'
-}
-
-export const reducer = (state = initialSettingsState, action) => {
+export const reducer = (state = initialSettingsState, action: SettingsActions): State => {
 	switch (action.type) {
-		default: return state
+		case SettingsActionTypes.LOAD: {
+			return {
+				...state,
+				loading: true,
+				error: ''
+			}
+		}
+
+		case SettingsActionTypes.LOAD_FAIL: {
+			return {
+				...state,
+				loading: false,
+				error: action.payload
+			}
+		}
+
+		case SettingsActionTypes.LOAD_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				currency: action.payload.currency,
+				language: action.payload.language
+			}
+		}
+
+		case SettingsActionTypes.CHANGE_CURRENCY: {
+			return {
+				...state,
+				loading: false,
+				currency: action.payload
+			}
+		}
+
+		case SettingsActionTypes.CHANGE_LANGUAGE: {
+			return {
+				...state,
+				loading: false,
+				language: action.payload
+			}
+		}
+
+		default:
+			return state
 	}
 }

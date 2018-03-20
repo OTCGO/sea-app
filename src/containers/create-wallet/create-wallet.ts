@@ -42,7 +42,7 @@ export class CreateWalletPage implements OnInit {
   ngOnInit () {
     this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
 		this.store.select(AuthSelectors.getError).subscribe(err => this.np.emit({ message: err }))
-    this.store.select(WalletSelectors.getExits).subscribe(exits => exits && this.navCtrl.push('BackupPage'))
+    this.store.select(WalletSelectors.getExits).subscribe(exits => exits && this.navCtrl.push('BackupWallet'))
   }
 
   get disabledButton () {

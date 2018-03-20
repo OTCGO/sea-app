@@ -64,7 +64,7 @@ export class PossessionsPage implements OnInit, OnDestroy {
 	}
 
 	ionViewWillLeave () {
-		this.selectedBalanceSubscriber.unsubscribe()
+		this.selectedBalanceSubscriber && this.selectedBalanceSubscriber.unsubscribe()
 	}
 
 	doRefresh (refresher: Refresher) {

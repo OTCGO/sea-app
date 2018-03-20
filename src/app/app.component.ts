@@ -6,9 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 import { TranslateService } from '@ngx-translate/core'
 
 import { RootState } from '../store/reducers'
-import { MarketsActions, WalletActions } from '../store/actions'
-import { WalletSelectors } from '../store/selectors'
-
+import { MarketsActions, WalletActions, SettingsActions } from '../store/actions'
+import { SettingsSelectors, WalletSelectors } from '../store/selectors'
 
 @Component({
 	templateUrl: 'app.html'
@@ -27,6 +26,7 @@ export class MyApp implements OnInit {
 	ngOnInit () {
 		this.initApp()
 		// this.store.dispatch(new MarketsActions.Load())
+		this.store.dispatch(new SettingsActions.Load())
 	}
 
 	initApp () {
@@ -56,12 +56,10 @@ export class MyApp implements OnInit {
 	initTranslate () {
 		this.translateService.setDefaultLang('en')
 
-		if (this.translateService.getBrowserLang() !== undefined) {
-			const locale = this.translateService.getBrowserLang()
-
-			this.translateService.use(locale)
-		} else {
-			this.translateService.use('en')
-		}
+		this.store.select(SettingsSelectors.getLanguage)
+				.subscribe(language => {
+					const locale = language.split('-')[0]
+					this.translateService.use(locale)
+				})
 	}
 }

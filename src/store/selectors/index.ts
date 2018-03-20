@@ -4,6 +4,7 @@ import * as WalletSelectors from './wallet.selector'
 import * as AuthSelectors from './auth.selector'
 import * as BalancesSelectors from './balances.selector'
 import * as TransactionHistorySelectors from './transaction-history.selector'
+import * as SettingsSelectors from './settings.selector'
 
 export {
 	PricesSelectors,
@@ -11,5 +12,6 @@ export {
 	WalletSelectors,
 	AuthSelectors,
 	BalancesSelectors,
-	TransactionHistorySelectors
+	TransactionHistorySelectors,
+	SettingsSelectors
 }

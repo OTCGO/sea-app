@@ -23,7 +23,7 @@ export class LoadingProvider implements OnDestroy {
 							this.loading = this.loadingCtrl.create()
 							return this.loading.present()
 						}
-						return this.loading.dismissAll()
+						return this.loading && this.loading.dismissAll()
 					}
 				)
 	}

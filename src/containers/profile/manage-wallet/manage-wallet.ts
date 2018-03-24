@@ -7,7 +7,6 @@ import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 import { Clipboard } from '@ionic-native/clipboard'
 
 import { wallet } from '../../../libs/neon'
-import { AccountProvider } from '../../../providers/account/account.provider'
 
 
 @IonicPage({
@@ -20,7 +19,7 @@ import { AccountProvider } from '../../../providers/account/account.provider'
 })
 export class ManageWalletPage {
 
-	accounts = this.accountProvider.accounts
+	// accounts = this.accountProvider.accounts
 	tempLabel: string = ''
 	prices
 	GASPrice
@@ -39,7 +38,6 @@ export class ManageWalletPage {
 		private walletProvider: WalletProvider,
 		private clipBoard: Clipboard,
 		private loadingCtrl: LoadingController,
-		private accountProvider: AccountProvider
 	) { }
 
 	showKey ({ title, message }) {

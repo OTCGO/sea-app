@@ -35,6 +35,7 @@ export interface Account extends WalletAccount {
 	scriptHash: string
 	address: string
 
+
 	getPublicKey (encoded: boolean): string
 	encrypt (keyphrase: string, scryptParams?: ScryptParams): Account
 	decrypt (keyphrase: string, scryptParams?: ScryptParams): Account

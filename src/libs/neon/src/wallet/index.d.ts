@@ -78,11 +78,8 @@ export class Account implements WalletAccount {
 	extra: Object
 
 	getPublicKey (encoded: boolean): string
-
 	encrypt (keyphrase: string, scryptParams?: ScryptParams): Account
-
 	decrypt (keyphrase: string, scryptParams?: ScryptParams): Account
-
 	export (): WalletAccount
 }
 

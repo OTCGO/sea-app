@@ -1,9 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
-
-
-import { WalletProvider } from "../../../../../providers/wallet/wallet.provider";
-import { ImportSuccessPage } from '../import-success/import-success'
+import { Component } from '@angular/core'
+import { IonicPage } from 'ionic-angular'
 
 @IonicPage()
 @Component({
@@ -11,19 +7,5 @@ import { ImportSuccessPage } from '../import-success/import-success'
   templateUrl: 'observation-mode.html',
 })
 export class ObservationModePage {
-    importText: string = "导入钱包文件";
-    isWIFKey: boolean = false;
-    WIFKey: string
-    passphrase: string
 
-  constructor(
-      public navCtrl: NavController, 
-      public navParams: NavParams,
-      public alertCtrl: AlertController
-    ) {
-  }
-
-  doImport() {
-      this.navCtrl.push(ImportSuccessPage);
-  }
 }

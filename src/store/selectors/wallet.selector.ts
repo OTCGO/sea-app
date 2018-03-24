@@ -22,7 +22,7 @@ export const getAccounts = createSelector(
 
 export const getAccount = createSelector(
 	getEntity,
-	wallet => findDefaultAccount(wallet)
+	wallet => findDefaultAccount(wallet) || {}
 )
 
 export const getExits = createSelector(

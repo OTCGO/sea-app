@@ -18,7 +18,6 @@ import { IonicErrorHandler } from 'ionic-angular'
 import { Logger } from '../providers/logger.provider'
 
 
-
 @NgModule({
 	providers: [
 		StatusBar,

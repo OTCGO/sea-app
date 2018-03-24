@@ -25,15 +25,70 @@ export const reducer: ActionReducer<State> = (
 ): State => {
 	switch (action.type) {
 		case WalletActionTypes.ADD_ACCOUNT: {
+			const { payload } = action
+			const accounts = state.entity.accounts.slice()
+			accounts.push(payload)
+
+			const entity = new wallet.Wallet({ ...state.entity, accounts })
+
 			return {
 				...state,
-				entity: {
-					...state.entity,
-					accounts: [
-						...state.entity.accounts,
-						action.payload
-					]
-				}
+				entity
+			}
+		}
+
+		case WalletActionTypes.CHANGE_ACCOUNT_LABEL: {
+			const { payload } = action
+			const accounts = state.entity.accounts.map(account =>
+				account.address === payload.address
+					? payload
+					: account
+			)
+
+			const entity = new wallet.Wallet({ ...state.entity, accounts })
+
+			return {
+				...state,
+				entity
+			}
+		}
+
+		case WalletActionTypes.SET_DEFAULT_ACCOUNT: {
+			const { payload } = action
+
+			const accounts = state.entity.accounts.map(account => {
+				const tempAcct = new wallet.Account(account)
+				tempAcct.isDefault = account.address === payload.address
+				return tempAcct
+			})
+			const entity = new wallet.Wallet({ ...state.entity, accounts })
+
+			return {
+				...state,
+				entity
+			}
+		}
+
+		case WalletActionTypes.REMOVE_ACCOUNT: {
+			const { payload } = action
+			const accounts = state.entity
+														.accounts
+														.filter(account => account.address !== payload.address)
+														.map(account => new wallet.Account(account))
+
+			console.log(accounts)
+
+			if (payload.isDefault) {
+				accounts[0].isDefault = true
+			}
+
+			const entity = new wallet.Wallet({ ...state.entity, accounts })
+
+			console.log(entity)
+
+			return {
+				...state,
+				entity
 			}
 		}
 

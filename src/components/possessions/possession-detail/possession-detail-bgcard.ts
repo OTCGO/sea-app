@@ -33,7 +33,7 @@ export class PossessionDetailBgcard {
 		const sendModal = this.modalCtrl.create(
 			'SendModal',
 			null,
-			{ cssClass: 'inset-modal' }
+			{ cssClass: 'inset-modal', enableBackdropDismiss: true }
 		)
 		return sendModal.present()
 	}

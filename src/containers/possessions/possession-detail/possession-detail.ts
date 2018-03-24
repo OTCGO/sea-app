@@ -1,4 +1,3 @@
-
 import { Component, NgZone } from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
@@ -32,7 +31,7 @@ interface TransactionHistory {
 export class PossessionDetailPage {
 	balance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
 	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getEntities)
-	price: Observable<number> = this.store.select(PricesSelectors.getPrice)
+	price: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
 
 	isScrollUp: boolean
 	isScrollDown: boolean
@@ -47,7 +46,7 @@ export class PossessionDetailPage {
 		this.store.dispatch(new TransactionHistoryAction.Load())
 	}
 
-	ionViewWillLeave () {
+	ionViewDidLeave () {
 		this.transactionHistories = empty()
 	}
 

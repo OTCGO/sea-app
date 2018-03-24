@@ -29,7 +29,7 @@ export class SettingsEffects {
 			exits
 				? fromPromise(this.fileStorage.read(OTCGO_SETTING_FILE_NAME))
 				    .map(file => new LoadSuccess(JSON.parse(file)))  // If file exits, read the file
-				: of(new LoadSuccess(DEFAULT_SETTING))  // if don't, that mean it did't setup yet, setup with default
+				: of(new LoadSuccess(DEFAULT_SETTING))  // if don't, setting up with default
 		),
 		catchError(error => of(new LoadFail(error)))
 	)

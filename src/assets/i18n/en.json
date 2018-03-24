@@ -7,25 +7,25 @@
   },
   "LOGIN": {
     "title": "Login Wallet",
-    "tip": "Not yet have a wallet? create one!",
+    "tip": "Create Wallet",
     "login_wallet": "Login",
     "wif_placeholder": "Using WIF Key",
-    "password": "Enter your passphrase here",
+    "password": "Enter password",
     "wif_error": "Invalid WIF format, please retry."
   },
   "CW": {
     "title": "Create Wallet",
     "name": "Wallet name",
-    "wif": "[optional] Your could choose WIF key",
-    "passphrase": "Enter your password",
-    "passphrase_confirm": "Confirm your password",
+    "wif": "[optional] Choose WIF key",
+    "passphrase": "Enter password",
+    "passphrase_confirm": "Confirm password",
     "agreement_prefix": "Agree on",
     "agreement_text": "Team of Service & Privacy Policy",
     "create_wallet": "Create",
     "tip": "Login",
     "BACKUP": {
-      "title": "Create successful!",
-      "notes": "Please take a attention! Because of the limitation of mobile phone, we can't save your wallet right here! You could choose to using manage wallet to export key and wallet instead.",
+      "title": "Create success!",
+      "notes": "Wallet file can't not be save here! To export 'EncryptedKey' or 'WIF' Go to profile manage-wallet.",
       "enter": "Enter"
     }
   },
@@ -63,7 +63,13 @@
       "export_key": "Export EncryptedKey",
       "save": "Save",
       "default": "Default",
-      "default_action": "Set to default"
+      "default_action": "Set to default",
+      "REMOVE_ACCOUNT": {
+        "tips_prefix": "Remove the account of",
+        "tips_suffix": "from wallet?",
+        "input": "Enter password",
+        "confirm": "Confirm"
+      }
     },
     "CONTACTS": {
       "title": "Contacts"

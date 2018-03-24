@@ -1,17 +1,17 @@
 import { ActionReducer } from '@ngrx/store'
-import { IBalance } from '../../shared/models'
+import { IBalanceEntities } from '../../shared/models'
 import { BalancesActions, BalancesActionTypes } from '../actions/balances.action'
 
 export interface State {
 	selectedBalanceSymbol: string
-	entities?: IBalance[]
+	entities?: IBalanceEntities
 	loading: boolean
 	error: string
 }
 
 const initialBalancesState: State = {
 	selectedBalanceSymbol: '',
-	entities: [],
+	entities: {},
 	loading: false,
 	error: ''
 }

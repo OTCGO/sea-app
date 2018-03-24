@@ -19,7 +19,7 @@ const initialSettingsState: State = {
 	language: 'zh-cn',
 	loading: false,
 	error: '',
-	currency: 'gas',
+	currency: 'cny',
 }
 
 export const reducer = (state = initialSettingsState, action: SettingsActions): State => {

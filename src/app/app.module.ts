@@ -63,7 +63,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './ass
         deps: [HttpClient]
       }
     }),
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

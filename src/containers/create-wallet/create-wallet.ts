@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
   IonicPage,
-	LoadingController,
 	NavController,
 } from 'ionic-angular'
 import { TranslateService } from '@ngx-translate/core'
@@ -12,6 +11,8 @@ import { NotificationProvider, LoadingProvider } from '../../providers'
 import { fromWallet } from '../../store/reducers'
 import { AuthActions } from '../../store/actions'
 import { AuthSelectors, WalletSelectors } from '../../store/selectors'
+import 'rxjs/add/operator/take'
+
 
 @IonicPage({
   name: 'CreateWallet',
@@ -59,13 +60,18 @@ export class CreateWalletPage implements OnInit {
 
   async createWallet () {
     if (this.passphrase1 &&
-       !this.validatePassphraseStrength(this.passphrase1))
-      this.np.emit({ message: 'Password too short' })
-
-    if (this.passphrase1 !== this.passphrase2) return
-
-    if (this.wif && !wallet.isWIF(this.wif))
+       !this.validatePassphraseStrength(this.passphrase1)) {
       return this.np.emit({ message: 'Password too short' })
+		}
+
+    if (this.passphrase1 !== this.passphrase2) {
+      return
+		}
+
+    if (this.wif && !wallet.isWIF(this.wif)) {
+			return this.np.emit({ message: 'WIF format wrong' })
+    }
+
 
     try {
       const accountTemp = new wallet.Account(this.wif || wallet.generatePrivateKey())

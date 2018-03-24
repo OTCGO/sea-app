@@ -1,24 +1,28 @@
 import { Action } from '@ngrx/store'
-import { Account, Wallet } from '../../shared/typings'
-
+import {
+	Account,
+	Wallet
+} from '../../shared/typings'
 
 export enum WalletActionTypes {
 	LOAD = '[Wallet] Load',
 	LOAD_FAIL = '[Wallet] Load Fail',
 	LOAD_SUCCESS = '[Wallet] Load Success',
-	ADD_ACCOUNTS = "[Wallet] Add Accounts",
-	ADD_ACCOUNTS_FAIL = "[Wallet] Add Accounts Fail",
-	ADD_ACCOUNTS_SUCCESS = "[Wallet] Add Accounts Success",
-	ADD_ACCOUNT = "[Wallet] Add Account",
-	ADD_ACCOUNT_FAIL = "[Wallet] Add Account Fail",
-	ADD_ACCOUNT_SUCCESS = "[Wallet] Add Account Success",
-	REMOVE_ACCOUNT = "[Wallet] Remove Account",
-	REMOVE_ACCOUNT_FAIL = "[Wallet] Remove Account Fail",
-	REMOVE_ACCOUNT_SUCCESS = "[Wallet] Remove Account Success",
+	ADD_ACCOUNT = '[Wallet] Add Account',
+	ADD_ACCOUNT_FAIL = '[Wallet] Add Account Fail',
+	ADD_ACCOUNT_SUCCESS = '[Wallet] Add Account Success',
+	ADD_ACCOUNTS = '[Wallet] Add Accounts',
+	ADD_ACCOUNTS_FAIL = '[Wallet] Add Accounts Fail',
+	ADD_ACCOUNTS_SUCCESS = '[Wallet] Add Accounts Success',
+	REMOVE_ACCOUNT = '[Wallet] Remove Account',
+	REMOVE_ACCOUNT_FAIL = '[Wallet] Remove Account Fail',
+	REMOVE_ACCOUNT_SUCCESS = '[Wallet] Remove Account Success',
+	CHANGE_ACCOUNT_LABEL = '[Wallet] Change Account Label',
+	SET_DEFAULT_ACCOUNT = '[Wallet] Set Default Account'
 }
 
 export class Load implements Action {
-	readonly type =	WalletActionTypes.LOAD
+	readonly type = WalletActionTypes.LOAD
 }
 
 export class LoadFail implements Action {
@@ -34,7 +38,7 @@ export class LoadSuccess implements Action {
 }
 
 export class AddAccounts implements Action {
-	readonly type =	WalletActionTypes.ADD_ACCOUNTS
+	readonly type = WalletActionTypes.ADD_ACCOUNTS
 
 	constructor (public payload) { }
 }
@@ -50,7 +54,7 @@ export class AddAccountsSuccess implements Action {
 }
 
 export class AddAccount implements Action {
-	readonly type =	WalletActionTypes.ADD_ACCOUNT
+	readonly type = WalletActionTypes.ADD_ACCOUNT
 
 	constructor (public payload: Account) { }
 }
@@ -66,9 +70,9 @@ export class AddAccountSuccess implements Action {
 }
 
 export class RemoveAccount implements Action {
-	readonly type =	WalletActionTypes.REMOVE_ACCOUNT
+	readonly type = WalletActionTypes.REMOVE_ACCOUNT
 
-	constructor (public payload) { }
+	constructor (public payload: Account) { }
 }
 
 export class RemoveAccountFail implements Action {
@@ -81,6 +85,17 @@ export class RemoveAccountSuccess implements Action {
 	readonly type = WalletActionTypes.REMOVE_ACCOUNT_SUCCESS
 }
 
+export class ChangeAccountLabel implements Action {
+	readonly type = WalletActionTypes.CHANGE_ACCOUNT_LABEL
+
+	constructor (public payload: Account) { }
+}
+
+export class SetDefaultAccount implements Action {
+	readonly type = WalletActionTypes.SET_DEFAULT_ACCOUNT
+
+	constructor (public payload: Account) { }
+}
 
 export type WalletActions =
 	Load
@@ -95,3 +110,5 @@ export type WalletActions =
 	| RemoveAccount
 	| RemoveAccountFail
 	| RemoveAccountSuccess
+	| ChangeAccountLabel
+  | SetDefaultAccount

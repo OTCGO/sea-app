@@ -1,0 +1,70 @@
+@import "../../../theme/otcgo/variables.scss";
+
+manage-wallet-card {
+  .mw__header, .mw__header-price {
+    font-size: 1.6rem;
+    color: rgba(0, 0, 0, 0.4);
+    text-align: left;
+    padding: 0;
+    ion-col {
+      padding: 0;
+    }
+  }
+
+  .mw__header {
+    &__left {
+      .mw__title {
+        font-size: 3.2rem;
+        color: rgba(0, 0, 0, 0.8);
+
+        span {
+          font-size: 2rem;
+          color: rgba(0, 0, 0, 0.4);
+        }
+      }
+    }
+  }
+
+  .mw__changes-feature {
+    font-size: 1.4rem;
+    margin-top: 20px;
+    .mw__changes__input {
+      border: 1px solid rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .mw__exports-feature {
+    button {
+      height: 3rem;
+      margin-bottom: .5rem;
+      font-size: 1.4rem;
+
+      &:last-of-type {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .mw__exports-action {
+    button {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      font-size: 1.4rem;
+      &.is-default {
+        color: rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+
+  .mw__label {
+    position: absolute;
+    top: -4rem;
+    width: 100%;
+    text-align: left;
+    font-size: 3.6rem;
+    color: #fff;
+  }
+
+}

@@ -18,7 +18,7 @@ import { BalancesActions } from '../../store/actions'
 import { WalletSelectors, BalancesSelectors } from '../../store/selectors'
 import { fromBalances, fromWallet } from '../../store/reducers'
 
-import 'rxjs/add/operator/distinctUntilChanged'
+import 'rxjs/add/operator/take'
 
 
 @IonicPage({
@@ -32,8 +32,18 @@ import 'rxjs/add/operator/distinctUntilChanged'
 export class PossessionsPage implements OnInit, OnDestroy {
 	exits: boolean
 	account = this.store.select(WalletSelectors.getAccount)
-	balances: Observable<IBalance[]> = this.store.select(BalancesSelectors.getEntities)
+	balances: Observable<IBalance[]> = this.store.select(BalancesSelectors.getDefaultEntities)
 	selectedBalanceSubscriber: Subscription
+
+	get displayZero () { return this._displayZero }
+	set displayZero (val) {
+		this._displayZero = val
+		this.balances = this.displayZero
+			? this.store.select(BalancesSelectors.getDefaultEntities)
+			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
+	}
+	private _displayZero = true
+
 
 	constructor (
 		public navCtrl: NavController,
@@ -63,24 +73,19 @@ export class PossessionsPage implements OnInit, OnDestroy {
 
 	}
 
-	ionViewWillLeave () {
-		this.selectedBalanceSubscriber && this.selectedBalanceSubscriber.unsubscribe()
-	}
-
 	doRefresh (refresher: Refresher) {
 		this.store.dispatch(new BalancesActions.Load())
 		this.store
 				.select(BalancesSelectors.getLoading)
 				.subscribe(loading => !loading && refresher.complete())
-
 	}
 
 	handleBalanceSelect (symbol) {
 		this.store.dispatch(new BalancesActions.Select(symbol))
 		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance)
-			.distinctUntilChanged()
-			.subscribe(selectedBalance => {
-				selectedBalance && this.navCtrl.push('PossessionDetail')
-			})
+																				 .take(1)
+																				 .subscribe(selectedBalance => {
+																					 selectedBalance && this.navCtrl.push('PossessionDetail')
+																				 })
 	}
 }

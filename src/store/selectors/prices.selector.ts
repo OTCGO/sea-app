@@ -9,7 +9,7 @@ export const getEntities = createSelector(
 	(state: State) => state.entities
 )
 
-export const getPrice = createSelector(
+export const getSelectedPrice = createSelector(
 	getEntities,
 	getSelectedBalanceSymbol,
 	(entities, symbol) => Number(entities[symbol]) || 0

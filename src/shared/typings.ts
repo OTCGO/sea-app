@@ -49,7 +49,7 @@ export interface AccountConstructor {
 
 export declare const Account: AccountConstructor
 
-export interface Wallet {
+export interface Wallet extends WalletFile {
 	name: string
 	scrypt: WalletScryptParams
 	accounts: Account[]

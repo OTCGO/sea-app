@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { IonicPageModule } from 'ionic-angular'
-import { ManageWalletCards } from '../../components/profile/manage-wallet'
+import {
+	ManageWalletCard,
+	ManageWalletCards,
+} from '../../components/profile/manage-wallet'
 import { ManageWalletPlay } from './manage-wallet.play'
 import { Storybook } from './storybook'
 
-console.dir(ManageWalletCards)
 
 @NgModule({
 	declarations: [
 		Storybook,
 		ManageWalletPlay,
-		ManageWalletCards
+		ManageWalletCards,
+		ManageWalletCard
 	],
 	imports: [
+		TranslateModule.forChild(),
 		IonicPageModule.forChild(Storybook)
-	]
+	],
 })
 export class StoryBookModule {}

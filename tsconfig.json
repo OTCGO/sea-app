@@ -20,7 +20,16 @@
     "target": "es5",
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "baseUrl": "src",
+    "paths": {
+      "@store/*": ["store/*"],
+      "@store": ["store/index.ts"],
+      "@component/*": ["component/*"],
+      "@shared/*": ["shared/*"],
+      "@provider/*": ["provider/*"],
+      "@provider": ["provider/index.ts"]
+    }
   },
   "include": [
     "src/**/*.ts"

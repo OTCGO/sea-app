@@ -18,10 +18,6 @@ export class PossessionsInfoComponent {
 
 	constructor (private navCtrl: NavController) {}
 
-	ngOnInit () {
-		console.log('possessions-card', this.account)
-	}
-
 	openQRCode () {
 		this.navCtrl.push('payment-qrcode', { address: this.account && this.account.address })
 	}

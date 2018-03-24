@@ -62,7 +62,7 @@ export interface WalletAccount {
 }
 
 export class Account implements WalletAccount {
-	constructor (str: string)
+	constructor (str: string | WalletAccount)
 
 	WIF: string
 	privateKey: string
@@ -167,7 +167,7 @@ export function isPublicKey (key: string, encoded?: boolean): boolean
 
 export function isAddress (address: string): boolean
 
-export interface Wallet {
+export interface Wallet extends WalletFile {
 	name: string
 	scrypt: WalletScryptParams
 	accounts: Account[]
@@ -186,7 +186,7 @@ export interface Wallet {
 }
 
 export interface WalletConstructor {
-	new (file: WalletFile): Wallet
+	new (file: WalletFile | Wallet): Wallet
 
 	import (jsonString: string): Wallet
 	readFile (filepath: string): Wallet

@@ -4,6 +4,8 @@ import { Actions, Effect, ofType } from '@ngrx/effects'
 import { BigNumber } from 'bignumber.js'
 import { Observable } from 'rxjs/Observable'
 import { empty } from 'rxjs/observable/empty'
+import { forkJoin } from 'rxjs/observable/forkJoin'
+import { from } from 'rxjs/observable/from'
 import { of } from 'rxjs/observable/of'
 import {
 	map,
@@ -12,14 +14,21 @@ import {
 	skip,
 	takeUntil,
 	publishLast,
-	refCount, withLatestFrom
+	refCount,
+	withLatestFrom,
+	merge
 } from 'rxjs/operators'
-import { findDefaultAccount } from '../../shared/utils'
+import {
+	getEveryAccountAddress
+} from '../../shared/utils'
 import { RootState } from '../../store/reducers'
 
 import { BalancesActionTypes, Load, LoadFail, LoadSuccess } from '../actions/balances.action'
 import { ASSET_ENUM } from '../../shared/constants'
 import { ApiProvider, API_CONSTANTS } from '../../providers/api'
+
+import 'rxjs/add/operator/concatMap'
+
 
 @Injectable()
 export class BalancesEffects {
@@ -29,34 +38,31 @@ export class BalancesEffects {
 			ofType<Load>(BalancesActionTypes.LOAD),
 			withLatestFrom(
 				this.store$,
-				(_, state: RootState) => findDefaultAccount(state.wallet.entity).address
+				(_, state: RootState) => getEveryAccountAddress(state.wallet.entity)
 			),
-			switchMap(query => {
-				if (query === '') {
-					return empty()
-				}
-
+			switchMap(addresses => {
 				const nextGet$ = this.actions$.pipe(
 					ofType(BalancesActionTypes.LOAD),
 					skip(1)
 				)
 
-				return this.apiProvider
-									 .get(`${API_CONSTANTS.BALANCES}/${query}`)
-									 .pipe(
-										 takeUntil(nextGet$),
-										 publishLast(),
-										 refCount(),
-										 catchError(error => of(new LoadFail(error))),
-										 map(
-											 (res: any) => res.error
-												 ? new LoadFail(res.error)
-												 : new LoadSuccess(mappingBalances(res))
-										 ),
-										 catchError(error => of(new LoadFail(error)))
-									 )
+				return forkJoin(addresses.map(this.getBalance.bind(this))).pipe(
+					takeUntil(nextGet$),
+					map(balances => new LoadSuccess(balances.reduce(balancesReducer, {}))),
+					catchError(error => of(new LoadFail(error)))
+				)
 			})
 		)
+
+	getBalance (addr) {
+		return this.apiProvider
+							 .get(`${API_CONSTANTS.BALANCES}/${addr}`)
+							 .pipe(
+								 publishLast(),
+								 refCount(),
+								 catchError(error => of(new LoadFail(error)))
+							 )
+	}
 
 	constructor (
 		private actions$: Actions,
@@ -65,8 +71,9 @@ export class BalancesEffects {
 	) {}
 }
 
+const balancesReducer = (acc, { _id: address, balances }) => ({...acc, [address]: mappingBalances(balances)})
 
-const mappingBalances = ({ balances }) =>
+const mappingBalances = (balances) =>
 	balances
 		? Object.keys(balances)
 						.map(key => (

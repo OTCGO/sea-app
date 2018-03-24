@@ -20,7 +20,7 @@ export function wifValidator (wifCtrl: FormControl): Observable<ValidationErrors
 			})
 		)
 		.subscribe(
-			_=> obs.next(null),
+			_ => obs.next(null),
 			error => {
 				obs.next({ [error.message]: true })
 				obs.complete()

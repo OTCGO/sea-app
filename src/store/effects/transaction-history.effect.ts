@@ -15,6 +15,8 @@ import {
 } from 'rxjs/operators'
 
 import * as moment from 'moment'
+import { getSelectedBalance } from '../selectors/balances.selector'
+import { getAccount } from '../selectors/wallet.selector'
 import { RootState } from '../../store/reducers'
 import { ApiProvider, API_CONSTANTS } from '../../providers/api'
 import {
@@ -31,12 +33,14 @@ export class TransactionHistoryEffects {
 	Load$: Observable<Action> =
 		this.actions$.pipe(
 			ofType<Load>(TransactionHistoryActionTypes.LOAD),
-			withLatestFrom(this.store$, (_, state) => ({
-				address: state.wallet.entity.defaultAccount.address,
-				balance: state.balances.entities.find(entities =>
-					entities.symbol === state.balances.selectedBalanceSymbol
-				)
-			})),
+			withLatestFrom(
+				this.store$.select(getAccount),
+				this.store$.select(getSelectedBalance),
+				(_, account, selectedBalance) => ({
+					address: account && account.address,
+					balance: selectedBalance
+				})
+			),
 			switchMap(({ balance, address }) => {
 				if (balance.hash === '' || balance.symbol === '' || address === '') {
 					return empty()

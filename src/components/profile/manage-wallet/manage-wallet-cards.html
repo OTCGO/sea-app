@@ -1,5 +1,13 @@
-<ion-slides>
-	<ion-slide>
-		haha
-	</ion-slide>
+<ion-slides (ionSlideDidChange)="handleSlideChanged()" [pager]="true" class="sea-card">
+	<manage-wallet-card
+		*ngFor="let account of accounts; index as i"
+		[showClose]="showClose"
+	    [account]="account"
+		[oCurrency]="currency"
+		[gas]="gases[i] || 1"
+		[amount]="amounts[i] || 0"
+		(onSave)="handleSaveAccount($event)"
+		(onRemove)="handleRemoveAccount($event)"
+		(onSetDefault)="handleSetDefaultAccount($event)">
+	</manage-wallet-card>
 </ion-slides>

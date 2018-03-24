@@ -2,7 +2,7 @@
 
 	<ion-navbar>
 		<ion-title>
-			<!--{{ (balance | async)?.symbol }}-->
+			{{ (balance | async)?.symbol }}
 		</ion-title>
 	</ion-navbar>
 
@@ -15,14 +15,14 @@
 		[balance]="balance | async"
 		[price]="price | async"
 		[isScrollDown]="isScrollDown"
-		[isScrollUp]="isScrollUp"
-	></possession-detail-bgcard>
+		[isScrollUp]="isScrollUp">
+	</possession-detail-bgcard>
 
 	<possession-detail-history
 		[balance]="balance | async"
 		[transactionHistories]="transactionHistories | async"
 		[isScrollDown]="isScrollDown"
-		[isScrollUp]="isScrollUp"
-	></possession-detail-history>
+		[isScrollUp]="isScrollUp">
+	</possession-detail-history>
 
 </ion-content>

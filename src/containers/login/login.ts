@@ -16,6 +16,7 @@ import { AuthActions } from '../../store/actions'
 import { AuthSelectors } from '../../store/selectors'
 import { WalletSelectors } from '../../store/selectors'
 
+
 interface LoginFormValue {
 	wif: string,
 	passphrase: string
@@ -31,10 +32,10 @@ interface LoginFormValue {
 })
 export class LoginPage implements OnInit {
 	file
-	importText: string = '导入'
-	isWIFKey: boolean = true
+	importText = '导入'
+	isWIFKey = true
+	isOldWallet = false
 	loginForm: FormGroup
-	isOldWallet: boolean = false
 
 	get wif () { return this.loginForm.get('wif') }
 	get passphrase () { return this.loginForm.get('passphrase') }
@@ -82,7 +83,9 @@ export class LoginPage implements OnInit {
 	switchImportBox (fileInput: HTMLInputElement) {
 		this.isWIFKey = false
 		this.importText = '导入钱包文件'
-		if (window.navigator && !this.wif.value) fileInput.click()
+		if (window.navigator && !this.wif.value) {
+			fileInput.click()
+		}
 	}
 
 	switchWIFKeyBox () {
@@ -120,7 +123,7 @@ export class LoginPage implements OnInit {
 	}
 
 	showPrompt (msg: string) {
-		let prompt = this.alertCtrl.create({
+		const prompt = this.alertCtrl.create({
 			title: msg
 		})
 		prompt.present()
@@ -149,19 +152,16 @@ export class LoginPage implements OnInit {
 
 		if (wifValue === 'test') {
 			this.store.dispatch(new AuthActions.Login(nep5Wallet))
-		}
-		// Using wif login
-		else if (wifValue && this.isWIFKey && !passphraseValue) {
+		} else if (wifValue && this.isWIFKey && !passphraseValue) {
 			this.store.dispatch(new AuthActions.LoginWif(wifValue))
-		}
-		// Using file login
-		else if (this.file && !this.isWIFKey && !wifValue) {
+		} else if (this.file && !this.isWIFKey && !wifValue) {
 			if (isOldWallet(this.file)) {
-				if (!passphraseControl.valid) return
+				if (!passphraseControl.valid) {
+					return
+				}
 				this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet: this.file, passphrase: passphraseValue }))
 				console.log('Login using oldWallet')
-			}
-			else if (isWallet(this.file)) {
+			} else if (isWallet(this.file)) {
 				this.store.dispatch(new AuthActions.Login(this.file))
 				console.log('Login using nepWallet')
 			}

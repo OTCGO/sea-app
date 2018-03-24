@@ -6,10 +6,16 @@ import { of } from 'rxjs/observable/of'
 import { catchError, concatMap, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators'
 import { RootState } from '../reducers'
 import { WalletProvider } from '../../providers'
+import { wallet } from '../../libs/neon'
+import { getEntity } from '../selectors/wallet.selector'
 
 import {
 	WalletActionTypes, Load, LoadSuccess, LoadFail, AddAccount, AddAccountSuccess, AddAccountFail
 } from '../actions/wallet.action'
+
+import 'rxjs/add/operator/do'
+import 'rxjs/add/operator/withLatestFrom'
+
 
 @Injectable()
 export class WalletEffects {
@@ -41,17 +47,30 @@ export class WalletEffects {
 					catchError(e => of(new AddAccountFail(e)))
 				)*/
 
-	/*Save$ =
+	@Effect({ dispatch: false })
+	SaveWalletFile$ =
 		this.actions$
-				.pipe(
-					ofType(
-						WalletActionTypes.LOAD_SUCCESS,
-						WalletActionTypes.ADD_ACCOUNT_SUCCESS,
-						WalletActionTypes.ADD_ACCOUNTS_SUCCESS,
-						WalletActionTypes.REMOVE_ACCOUNT_SUCCESS,
-					),
-					// tap()
-				)*/
+				.ofType(
+					WalletActionTypes.LOAD_SUCCESS,
+					WalletActionTypes.ADD_ACCOUNT_SUCCESS,
+					WalletActionTypes.ADD_ACCOUNTS_SUCCESS,
+					WalletActionTypes.REMOVE_ACCOUNT,
+					WalletActionTypes.CHANGE_ACCOUNT_LABEL,
+					WalletActionTypes.SET_DEFAULT_ACCOUNT
+				)
+				.withLatestFrom(this.store$.select(getEntity))
+				.do(([_, walletEntities]) => {
+					try {
+						this.walletProvider.saveWalletFile(new wallet.Wallet(walletEntities).export())
+					} catch (e) {
+						console.log('Catch Error on SaveWalletFile$ .do', e)
+					}
+				})
+				.catch((err, caught) => {
+					console.log('Catch on SaveWalletFile')
+					console.log(err, caught)
+					return caught
+				})
 
 	constructor (
 		private actions$: Actions,

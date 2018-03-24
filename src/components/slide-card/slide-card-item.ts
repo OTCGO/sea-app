@@ -1,5 +1,10 @@
 import {
-	AfterContentInit, Component, forwardRef, Inject, Input, OnDestroy
+	AfterContentInit,
+	Component,
+	forwardRef,
+	Inject,
+	Input,
+	OnDestroy
 } from '@angular/core'
 import { SlideCard } from './slide-card'
 
@@ -10,9 +15,9 @@ const CARD_SCALE = 0.83
 	templateUrl: 'slide-card-item.html',
 })
 export class SlideCardItem implements AfterContentInit, OnDestroy {
-	@Input() name: string = 'SlideCardItem'
 	@Input() label: string | number = ''
 	@Input('header') header: string
+	@Input() name = 'SlideCardItem'
 
 	get itemTranslateStyle () {
 		return {
@@ -22,9 +27,10 @@ export class SlideCardItem implements AfterContentInit, OnDestroy {
 		}
 	}
 
-	get parentWidth(): number | null {
+	get parentWidth (): number | null {
 		return this.parent.el.nativeElement.offsetWidth
 	}
+
 	hover: boolean = false
 	translate: number = 0
 	scale: number = 1

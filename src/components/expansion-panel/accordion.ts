@@ -1,4 +1,7 @@
-import { Directive, Input } from '@angular/core'
+import {
+	Directive,
+	Input
+} from '@angular/core'
 import { CdkAccordion } from '../core/cdk/accordion/accordion'
 import { coerceBooleanProperty } from '../core/cdk/coercion/boolean-property'
 
@@ -14,8 +17,10 @@ export type AccordionDisplayMode = 'default' | 'flat'
 export class Accordion extends CdkAccordion {
 	/** Whether the expansion indicator should be hidden. */
 	@Input()
-	get hideToggle(): boolean { return this._hideToggle }
-	set hideToggle(hideToggle: boolean) { this._hideToggle = coerceBooleanProperty(hideToggle) }
+	get hideToggle (): boolean { return this._hideToggle }
+
+	set hideToggle (hideToggle: boolean) { this._hideToggle = coerceBooleanProperty(hideToggle) }
+
 	private _hideToggle: boolean = false
 
 	/**

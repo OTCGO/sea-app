@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core'
 import { RootState } from '../store/reducers'
 import { MarketsActions, WalletActions, SettingsActions } from '../store/actions'
 import { SettingsSelectors, WalletSelectors } from '../store/selectors'
+import 'rxjs/add/operator/take'
+
 
 @Component({
 	templateUrl: 'app.html'
@@ -48,6 +50,7 @@ export class MyApp implements OnInit {
 
 		this.store
 				.select(WalletSelectors.getExits)
+				.take(1)
 				.subscribe(
 					exits => this.rootPage = exits ? 'Tabs' : 'Login'
 				)

@@ -40,7 +40,6 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 		}
 
 
-		case AuthActionTypes.LOGIN_SUCCESS:
 		case AuthActionTypes.LOGIN_WIF_SUCCESS:
 		case AuthActionTypes.LOGIN_OLD_WALLET_SUCCESS:
 		case AuthActionTypes.LOGIN_LEDGER_SUCCESS:

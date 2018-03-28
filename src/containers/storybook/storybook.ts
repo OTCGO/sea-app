@@ -8,7 +8,7 @@ import { IonicPage } from 'ionic-angular'
 @Component({
 	selector: 'page-storybook',
 	template: `
-		<manage-wallet-play></manage-wallet-play>
+		<h1>StoryBook</h1>
 	`
 })
 export class Storybook {

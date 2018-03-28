@@ -63,4 +63,3 @@ export class ManageWalletPlay implements OnInit {
 		removeModal.present()
 	}
 }
-

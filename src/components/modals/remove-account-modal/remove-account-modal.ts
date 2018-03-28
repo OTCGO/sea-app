@@ -18,7 +18,7 @@ import { RootState } from '@store/reducers'
 @Component({
 	selector: 'remove-account-modal',
 	template: `
-	  <ion-slides>
+	  <ion-slides [style.marginTop]="marginTop">
 		  <ion-slide>
 			  <div class="card"
 			       [style.height]="height"
@@ -79,6 +79,10 @@ export class RemoveAccountModal implements OnInit {
 
 	get account () {
 		return this.navParams.get('account')
+	}
+
+	get marginTop () {
+		return this.navParams.get('marginTop')
 	}
 
 	get label () {

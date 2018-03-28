@@ -1,12 +1,34 @@
-import { Component } from '@angular/core'
 import {
-	AlertController, LoadingController, Loading, IonicPage, AlertOptions
+	Component,
+	ElementRef,
+	ViewChild
+} from '@angular/core'
+import { Store } from '@ngrx/store'
+import {
+	AlertController,
+	LoadingController,
+	Loading,
+	IonicPage,
+	AlertOptions,
+	ModalController
 } from 'ionic-angular'
-
-import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 import { Clipboard } from '@ionic-native/clipboard'
 
+import { RootState } from '../../../store/reducers'
+import { Account } from '../../../shared/typings'
+import { nep5Wallet } from '../../../shared/userWallet'
+import {
+	SettingsSelectors,
+	WalletSelectors
+} from '../../../store/selectors'
+import {
+	AuthActions,
+	WalletActions
+} from '../../../store/actions'
+import { WalletProvider } from '../../../providers/wallet/wallet.provider'
+import { ManageWalletCards } from '../../../components/profile/manage-wallet'
 import { wallet } from '../../../libs/neon'
+import { concat, flip, divide, path, split, compose } from 'ramda'
 
 
 @IonicPage({
@@ -18,11 +40,9 @@ import { wallet } from '../../../libs/neon'
 	templateUrl: 'manage-wallet.html'
 })
 export class ManageWalletPage {
-
 	// accounts = this.accountProvider.accounts
-	tempLabel: string = ''
-	prices
-	GASPrice
+	accounts = this.store.select(WalletSelectors.getAccounts)
+	currency = this.store.select(SettingsSelectors.getCurrency)
 	alertOptions = {
 		cssClass: 'mw__exports-actions--box',
 		message: '注意，导出 私钥 或 WIF 并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替',
@@ -32,13 +52,63 @@ export class ManageWalletPage {
 		]
 	}
 
+	get marginTop () {
+		const splitByDot = split('.')
+		type querySelector = (str: string) => NodeList
+		const scrollContent = this.elementRef.nativeElement.querySelector('.scroll-content')
+		const scrollContentMarginTop = path(splitByDot('style.marginTop'), scrollContent)
+
+		const divideBy = flip(divide)
+		const stringAppend = flip(concat)
+		const toString = n => n.toString()
+		return compose(
+			stringAppend('px'),
+			toString,
+			divideBy(2),
+			parseInt,
+			path(splitByDot('style.marginTop'))
+		)(scrollContentMarginTop)
+	}
+
+	@ViewChild('cards') cards: ManageWalletCards
 
 	constructor (
 		private alertCtrl: AlertController,
 		private walletProvider: WalletProvider,
 		private clipBoard: Clipboard,
 		private loadingCtrl: LoadingController,
+		private modalCtrl: ModalController,
+		private elementRef: ElementRef,
+		private store: Store<RootState>
 	) { }
+
+	ngOnInit () {
+		this.store.dispatch(new AuthActions.Login(nep5Wallet))
+	}
+
+	handleSetDefaultAccount (account) {
+		this.store.dispatch(new WalletActions.SetDefaultAccount(account))
+	}
+
+	handleSaveAccount (account: Account) {
+		this.store.dispatch(new WalletActions.ChangeAccountLabel(account))
+	}
+
+	handleRemoveAccount (account) {
+		// this.store.dispatch(new WalletActions.RemoveAccount(account))
+		const { offsetHeight, offsetWidth } = this.cards.slides.container.querySelector('.card') as HTMLElement
+		console.log('[HandleRemoveAccount]', this.elementRef)
+
+		const data = { account, offsetHeight, offsetWidth,  }
+		this.openModal(data)
+	}
+
+	openModal (data) {
+		const removeModal = this.modalCtrl.create('RemoveAccountModal', data, {
+			cssClass: 'sea-card'
+		})
+		removeModal.present()
+	}
 
 	showKey ({ title, message }) {
 		const prompt = this.alertCtrl.create(<AlertOptions>{
@@ -99,15 +169,6 @@ export class ManageWalletPage {
 		this.showKey({ title: 'EncryptedKey', message: account.encrypted })
 	}
 
-	async saveAccount (account) {
-
-		if (this.tempLabel) {
-			account.label = this.tempLabel
-			this.tempLabel = ''
-			// await this.walletProvider.saveWallet()
-		}
-	}
-
 	async parsePassphrase (encryptedKey, passphrase, commonLoading, type) {
 		await commonLoading.present()
 		try {
@@ -125,6 +186,20 @@ export class ManageWalletPage {
 
 	openWalletLocation () {
 
+	}
+
+
+
+	async handleError (commonLoading: Loading) {
+		await commonLoading.dismiss()
+
+		const prompt = this.alertCtrl.create({
+			title: '提示',
+			message: '密码错误',
+			buttons: ['OK']
+		})
+
+		await prompt.present()
 	}
 
 	showDeleteActionBox (toBeDeletedAccount) {
@@ -178,17 +253,5 @@ export class ManageWalletPage {
 			]
 		})
 		alert.present()
-	}
-
-	async handleError (commonLoading: Loading) {
-		await commonLoading.dismiss()
-
-		const prompt = this.alertCtrl.create({
-			title: '提示',
-			message: '密码错误',
-			buttons: ['OK']
-		})
-
-		await prompt.present()
 	}
 }

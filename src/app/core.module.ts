@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 import { File } from '@ionic-native/file'
 import { BarcodeScanner } from '@ionic-native/barcode-scanner'
 
-import { ApiProvider, WalletProvider, PriceProvider } from '../providers'
+import { AccountProvider, ApiProvider, WalletProvider, PriceProvider } from '../providers'
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
@@ -28,6 +28,7 @@ import { Logger } from '../providers/logger.provider'
 		BarcodeScanner,
 		SocialSharing,
 		WalletProvider,
+		AccountProvider,
 		ApiProvider,
 		PriceProvider,
 		PossessionDetailProvider,
@@ -46,4 +47,3 @@ export class CoreModule {
 		}
 	}
 }
-

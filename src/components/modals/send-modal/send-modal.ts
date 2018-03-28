@@ -16,6 +16,7 @@ import {
 	amountValidator
 } from './send-modal.validators'
 
+import { BalancesActions } from '../../../store/actions'
 import { RootState } from '../../../store/reducers'
 import { IBalance } from '../../../shared/models'
 import { SendModalProvider } from './send-modal.provider'
@@ -50,7 +51,6 @@ export class SendModalComponent implements OnInit {
 		private fb: FormBuilder
 	) {
 		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
-		const amount = +this.selectedBalance.amount
 
 		this.formGroup = this.fb.group({
 			address: ['', [Validators.required, addressValidator.bind(this)]],
@@ -106,6 +106,7 @@ export class SendModalComponent implements OnInit {
 					this.showPrompt({ message: err, title: '错误' })
 				})
 		    .then(_=> {
+		    	this.store.dispatch(new BalancesActions.Load())
 		    	loading.dismissAll()
 		    })
 	}

@@ -41,6 +41,10 @@ export class ManageWalletPlay implements OnInit {
 		this.store.dispatch(new AuthActions.Login(nep5Wallet))
 	}
 
+	handleSetDefaultAccount (account) {
+		this.store.dispatch(new WalletActions.SetDefaultAccount(account))
+	}
+
 	handleSaveAccount (account: Account) {
 		this.store.dispatch(new WalletActions.ChangeAccountLabel(account))
 	}
@@ -48,21 +52,15 @@ export class ManageWalletPlay implements OnInit {
 	handleRemoveAccount (account) {
 		// this.store.dispatch(new WalletActions.RemoveAccount(account))
 		const { offsetHeight, offsetWidth } = this.cards.slides.container.querySelector('.card') as HTMLElement
-		const data = {
-			account,
-			offsetHeight,
-			offsetWidth,
-		}
+		const data = { account, offsetHeight, offsetWidth, }
+		this.openModal(data)
+	}
+
+	openModal (data) {
 		const removeModal = this.modalCtrl.create('RemoveAccountModal', data, {
 			cssClass: 'sea-card'
 		})
 		removeModal.present()
-		console.log('[handleRemoveAccount] on play', account)
-	}
-
-	handleSetDefaultAccount (account) {
-		this.store.dispatch(new WalletActions.SetDefaultAccount(account))
-		console.log('[handleSetDefaultAccount] on play', account)
 	}
 }
 

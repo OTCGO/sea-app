@@ -8,7 +8,7 @@ import { NavController } from 'ionic-angular'
 export class ProfileNavComponent {
 	@Input() item = {
 		icon: 'manage-wallet',
-		enabled: false,
+		enabled: true,
 		page: 'ManageWallet'
 	}
 

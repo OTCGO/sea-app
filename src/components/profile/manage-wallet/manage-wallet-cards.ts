@@ -60,11 +60,7 @@ export class ManageWalletCards implements OnInit, OnDestroy {
 			this.store.select(BalancesSelectors.getNonZeroEntities)
 		).subscribe(([prices, balancesEntities]) => {
 			const gasPrice = Number(prices['GAS']) || 1
-			this.amounts = Object.values(balancesEntities)
-													 .map(
-													 	(balances: IBalance[]) =>
-															balances.reduce((acc, {amount, symbol}) => acc + amount.times(prices[symbol] || 0).toNumber(), 0)
-													 )
+			this.amounts = Object.values(balancesEntities).map(this.mapAmounts)
 			this.gases = this.amounts.map(amount => amount / gasPrice)
 		})
 	}
@@ -88,4 +84,7 @@ export class ManageWalletCards implements OnInit, OnDestroy {
 	handleRemoveAccount (account) {
 		this.onRemoveAccount.emit(account)
 	}
+
+
+  mapAmounts = (balances: IBalance[], prices) => balances.reduce((acc, {amount, symbol}) => acc + amount.times(prices[symbol] || 0).toNumber(), 0)
 }

@@ -11,59 +11,12 @@
 
 
 <ion-content class="mw">
-    <slide-card>
-        <slide-card-item *ngFor="let account of accounts" [header]="account.label">
-            <div class="mw__header">
-                <div class="mw__header__left" float-left>
-                    <div class="mw__title">
-                        0 <span>GAS</span>
-                    </div>
-                    <div class="mw__subtitle">
-                        ≈ ￥
-                    </div>
-                </div>
-
-                <div class="mw__header__right" float-right>
-                    <div class="mw__icon" (click)="showDeleteActionBox(account)">
-                        <ion-icon name="close"></ion-icon>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mw__changes-feature">
-                <ion-input placeholder="{{ 'PROFILE.MANAGE_WALLET.change_name' }}" [(ngModel)]="tempLabel"></ion-input>
-            </div>
-
-            <div class="mw__exports-feature">
-                <h5 text-left>{{ 'PROFILE.MANAGE_WALLET.export' | translate }}</h5>
-                <!--<button ion-button class="otcgo-button&#45;&#45;edge-gray mw__exports" clear block icon-right (click)="showPrivateKeyBox(account)">
-                    导出 私钥
-                    <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
-                </button>-->
-
-                <!--<button ion-button class="otcgo-button&#45;&#45;edge-gray mw__exports" clear block icon-right (click)="openWalletLocation()">
-                    打开钱包文件所在位置
-                </button>-->
-
-                <button ion-button class="otcgo-button--edge-gray mw__exports" clear block icon-right (click)="showWIFKeyBox(account)">
-                    {{ 'PROFILE.MANAGE_WALLET.export_wif' | translate }}
-                    <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
-                </button>
-
-                <button ion-button class="otcgo-button--edge-gray mw__exports" clear block icon-right (click)="showEncryptedKeyBox(account)">
-                    {{ 'PROFILE.MANAGE_WALLET.export_key' | translate }}
-                    <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
-                </button>
-            </div>
-
-            <div class="mw__exports-action">
-                <button ion-button class="otcgo-button--colour" block round (click)="saveAccount(account)">{{ 'PROFILE.MANAGE_WALLET.save' | translate }}</button>
-                <a [class.is-default]="account.isDefault"
-                   (click)="setDefaultAccount(account)">
-                    {{ account.isDefault ? '默认钱包' : '设为默认钱包' }}
-                </a>
-            </div>
-        </slide-card-item>
-    </slide-card>
-
+    <manage-wallet-cards
+        #cards
+        [accounts]="accounts | async"
+        [currency]="currency | async"
+        (onSaveAccount)="handleSaveAccount($event)"
+        (onRemoveAccount)="handleRemoveAccount($event)"
+        (onSetDefaultAccount)="handleSetDefaultAccount($event)"
+    ></manage-wallet-cards>
 </ion-content>

@@ -30,6 +30,8 @@
     }
   },
   "POSSESSIONS": {
+    "totalBalances": "Total Balances",
+    "displayZero": "Hide 0 Assets",
     "DETAILS": {
       "title": "Histories",
       "transfer": "Transfer",

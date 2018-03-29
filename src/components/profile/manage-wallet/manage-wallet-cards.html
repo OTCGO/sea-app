@@ -4,7 +4,7 @@
 		[showClose]="showClose"
 	    [account]="account"
 		[oCurrency]="currency"
-		[gas]="gases[i] || 1"
+		[gas]="gasAmounts[i] || 1"
 		[amount]="amounts[i] || 0"
 		(onSave)="handleSaveAccount($event)"
 		(onRemove)="handleRemoveAccount($event)"

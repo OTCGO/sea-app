@@ -11,11 +11,8 @@ import {
 import { Store } from '@ngrx/store'
 import { Slides } from 'ionic-angular'
 
-import { combineLatest } from 'rxjs/observable/combineLatest'
-import { IBalance } from '../../../shared/models'
 import { Account } from '../../../shared/typings'
 import { RootState } from '../../../store/reducers'
-import { BalancesSelectors, PricesSelectors } from '../../../store/selectors'
 
 
 @Component({
@@ -23,7 +20,12 @@ import { BalancesSelectors, PricesSelectors } from '../../../store/selectors'
 	templateUrl: 'manage-wallet-cards.html'
 })
 export class ManageWalletCards implements OnInit, OnDestroy {
+	firstIn = true
+
 	@Input() currency: string
+	@Input() gasAmounts: number[] = []
+	@Input() amounts: number[] = []
+
 	@Input()
 	get accounts () {
 		return this._accounts
@@ -37,11 +39,6 @@ export class ManageWalletCards implements OnInit, OnDestroy {
 	}
 	private _accounts: Account[]
 
-	firstIn = true
-	gases: number[] = []
-	amounts: number[] = []
-
-
 	@Output() onSaveAccount = new EventEmitter<Account>()
 	@Output() onSetDefaultAccount = new EventEmitter<number>()
 	@Output() onRemoveAccount = new EventEmitter<string>()
@@ -51,18 +48,10 @@ export class ManageWalletCards implements OnInit, OnDestroy {
 		return this.accounts.length > 1
 	}
 
-
 	constructor (private store: Store<RootState>, private zone: NgZone) {}
 
-	ngOnInit (): void {
-		combineLatest(
-			this.store.select(PricesSelectors.getEntities),
-			this.store.select(BalancesSelectors.getNonZeroEntities)
-		).subscribe(([prices, balancesEntities]) => {
-			const gasPrice = Number(prices['GAS']) || 1
-			this.amounts = Object.values(balancesEntities).map(this.mapAmounts)
-			this.gases = this.amounts.map(amount => amount / gasPrice)
-		})
+	ngOnInit () {
+		console.log(this)
 	}
 
 	ngOnDestroy (): void {
@@ -84,7 +73,4 @@ export class ManageWalletCards implements OnInit, OnDestroy {
 	handleRemoveAccount (account) {
 		this.onRemoveAccount.emit(account)
 	}
-
-
-  mapAmounts = (balances: IBalance[], prices) => balances.reduce((acc, {amount, symbol}) => acc + amount.times(prices[symbol] || 0).toNumber(), 0)
 }

@@ -30,6 +30,28 @@ export const nep5Wallet = {
   'extra': null
 }
 
+const CONTACT_A = {
+  name: 'joe',
+  address: 'AHZDq78w1ERcDYVBWjU5owWcbFZKLvhg7X',
+  description: 'Work friend'
+}
+
+const CONTACT_B = {
+	name: 'jane doe',
+	address: 'AXoibWhJXYRxckemGa8ZydGpQdBP7GX7st',
+	description: 'Special friend'
+}
+
+const CONTACT_C = {
+	name: 'jane doe',
+	address: 'AXoibWhJXYRxckemGa8ZydGpQdBP7GX7st',
+	description: 'Special friend'
+}
+
+const TEST_CONTACTS = [
+
+]
+
 export const oldWallet = {
   'address': 'AHZDq78w1ERcDYVBWjU5owWcbFZKLvhg7X',
   'publicKey': '0483cdbc3f4d2213043c19d6bd041c08fbe0a3bacd43ef695500a1b33c609a9e8a180eee2ada65ddb65154863c57bac9ab1b89a61593235991d5fb6f627c0cadbd',

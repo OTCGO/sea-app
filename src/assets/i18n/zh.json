@@ -30,6 +30,8 @@
 		}
 	},
 	"POSSESSIONS": {
+		"totalBalances": "总资产",
+		"displayZero": "隐藏0元资产",
 		"DETAILS": {
 			"title": "交易记录",
 			"transfer": "转账",

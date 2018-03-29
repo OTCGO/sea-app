@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store'
+import { IBalanceEntities } from '../../shared/models/balances.model'
 
 export enum BalancesActionTypes {
 	LOAD = '[Balances] Load',
@@ -14,13 +15,13 @@ export class Load implements Action {
 export class LoadSuccess implements Action {
 	readonly type = BalancesActionTypes.LOAD_SUCCESS
 
-	constructor (public payload) {}
+	constructor (public payload: IBalanceEntities) {}
 }
 
 export class LoadFail implements Action {
 	readonly type = BalancesActionTypes.LOAD_FAIL
 
-	constructor (public payload) {}
+	constructor (public payload: Error | string) {}
 }
 
 export class Select implements Action {

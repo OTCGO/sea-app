@@ -29,9 +29,9 @@ interface TransactionHistory {
 	templateUrl: 'possession-detail.html',
 })
 export class PossessionDetailPage {
-	balance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
+	selectedPrice: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
+	selectedBalance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
 	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getEntities)
-	price: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
 
 	isScrollUp: boolean
 	isScrollDown: boolean

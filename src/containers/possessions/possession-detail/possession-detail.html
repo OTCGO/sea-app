@@ -2,7 +2,7 @@
 
 	<ion-navbar>
 		<ion-title>
-			{{ (balance | async)?.symbol }}
+			{{ (selectedBalance | async)?.symbol }}
 		</ion-title>
 	</ion-navbar>
 
@@ -12,14 +12,14 @@
 <ion-content padding class="possession-detail-content" (ionScroll)="handleScroll($event)">
 
 	<possession-detail-bgcard
-		[balance]="balance | async"
-		[price]="price | async"
+		[balance]="selectedBalance | async"
+		[price]="selectedPrice | async"
 		[isScrollDown]="isScrollDown"
 		[isScrollUp]="isScrollUp">
 	</possession-detail-bgcard>
 
 	<possession-detail-history
-		[balance]="balance | async"
+		[balance]="selectedBalance | async"
 		[transactionHistories]="transactionHistories | async"
 		[isScrollDown]="isScrollDown"
 		[isScrollUp]="isScrollUp">

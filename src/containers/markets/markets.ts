@@ -42,7 +42,6 @@ export class MarketsPage implements OnInit {
 		this.store
 				.select(MarketsSelectors.getError)
 				.subscribe(error => this.np.emit({ message: error }))
-
 		this.store
 				.select(MarketsSelectors.getLoading)
 				.subscribe(loading => this.lp.emit(loading))
@@ -57,6 +56,17 @@ export class MarketsPage implements OnInit {
 		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
 	}
 
+	doRefresh (refresher: Refresher) {
+		this.store.dispatch(new MarketsActions.Load())
+
+		this.priceProvider.getExchangeRates()
+				.then(res => this.exchangeRates = res['rates'])
+				.catch(error => this.np.emit({ message: error }))
+
+		refresher.complete()
+	}
+
+	// TODO: Unuse function
 	calculateRate (price: number) {
 		const strPrice = (price / this.GASPrice).toString()
 
@@ -70,15 +80,5 @@ export class MarketsPage implements OnInit {
 		}
 
 		return splitStr.join('')
-	}
-
-	doRefresh (refresher: Refresher) {
-		this.store.dispatch(new MarketsActions.Load())
-
-		this.priceProvider.getExchangeRates()
-				.then(res => this.exchangeRates = res['rates'])
-				.catch(error => this.np.emit({ message: error }))
-
-		refresher.complete()
 	}
 }

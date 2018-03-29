@@ -9,12 +9,13 @@
     </ion-navbar>
 </ion-header>
 
-
 <ion-content class="mw">
     <manage-wallet-cards
         #cards
         [accounts]="accounts | async"
         [currency]="currency | async"
+        [amounts]="amounts | async"
+        [gasAmounts]="gasAmounts | async"
         (onSaveAccount)="handleSaveAccount($event)"
         (onRemoveAccount)="handleRemoveAccount($event)"
         (onSetDefaultAccount)="handleSetDefaultAccount($event)"

@@ -9,6 +9,7 @@ import 'rxjs/add/operator/catch'
 
 @Injectable()
 export class LoadingProvider implements OnDestroy {
+	loading: Loading
 	subject = new Subject()
 	onDestroy = new Subject()
 	loading$ = this.subject.asObservable().takeUntil(this.onDestroy)
@@ -16,11 +17,11 @@ export class LoadingProvider implements OnDestroy {
 	constructor (private loadingCtrl: LoadingController) {
 		this.loading$
 				.distinctUntilChanged()
-				.timeout(1234)
-				.catch(_ => of(false))
+				.timeout(3456)
+				.catch(() => of(false))
 				.subscribe(
 					bool => {
-						console.log('Loading:', bool)
+						console.log('Call loading:', bool)
 						if (bool) {
 							this.loading = this.loadingCtrl.create()
 							return this.loading.present()
@@ -30,7 +31,6 @@ export class LoadingProvider implements OnDestroy {
 				)
 	}
 
-	loading: Loading
 
 	emit (bool: boolean) {
 		this.subject.next(bool)

@@ -39,19 +39,10 @@ export class MarketsPage implements OnInit {
 	}
 
 	async initData () {
-		this.store
-				.select(MarketsSelectors.getError)
-				.subscribe(error => this.np.emit({ message: error }))
-		this.store
-				.select(MarketsSelectors.getLoading)
-				.subscribe(loading => this.lp.emit(loading))
-		this.store
-				.select(MarketsSelectors.getEntities)
-				.subscribe(markets => this.coins = markets)
-
-		this.store
-				.select(PricesSelectors.getEntities)
-				.subscribe(prices => this.GASPrice = prices['GAS'])
+		this.store.select(MarketsSelectors.getError).subscribe(error => this.np.emit({ message: error }))
+		this.store.select(MarketsSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
+		this.store.select(MarketsSelectors.getEntities).subscribe(markets => this.coins = markets)
+		this.store.select(PricesSelectors.getEntities).subscribe(prices => this.GASPrice = prices['GAS'])
 
 		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
 	}

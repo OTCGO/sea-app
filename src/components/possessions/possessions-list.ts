@@ -50,4 +50,4 @@ export class PossessionsListComponent {
 	@Output() select = new EventEmitter()
 	@Output() displayZeroClick = new EventEmitter()
 }
-//console.log(new PossessionsListComponent())
+// console.log(new PossessionsListComponent())

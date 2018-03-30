@@ -19,13 +19,12 @@ import {
 	timeout,
 	withLatestFrom
 } from 'rxjs/operators'
-import { getCurrency } from '../selectors/settings.selector'
 import { RootState } from '../reducers'
 import { PriceProvider } from '../../providers'
 import { Load, LoadFail, LoadSuccess, MarketsActionTypes } from '../actions/markets.action'
 import { Load as LoadPricesSuccess } from '../actions/prices.action'
 import { api } from '../../libs/neon'
-
+import { getCurrency } from '../selectors/settings.selector'
 
 @Injectable()
 export class MarketsEffects {

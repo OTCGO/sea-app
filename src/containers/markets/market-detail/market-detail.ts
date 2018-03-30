@@ -3,7 +3,6 @@ import { IonicPage, NavParams } from 'ionic-angular'
 import { mockResponse } from './mockdata'
 import * as d3 from 'd3'
 
-console.log(mockResponse)
 
 @IonicPage({
 	name: 'MarketDetail',
@@ -13,7 +12,6 @@ console.log(mockResponse)
 	selector: 'page-market-detail',
 	templateUrl: 'market-detail.html'
 })
-
 export class MarketDetailPage {
 	coin = this.navParams.data.coin
 	perGas = this.navParams.data.perGas

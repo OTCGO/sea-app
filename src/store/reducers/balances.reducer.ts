@@ -6,7 +6,7 @@ export interface State {
 	selectedBalanceSymbol: string
 	entities?: IBalanceEntities
 	loading: boolean
-	error: string
+	error: string | Error
 }
 
 const initialBalancesState: State = {

@@ -1,7 +1,12 @@
 import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { TranslateService } from '@ngx-translate/core'
+import { RootState } from '@store/reducers'
 import { IonicPage, NavParams } from 'ionic-angular'
-import { mockResponse } from './mockdata'
-import * as d3 from 'd3'
+import { MarketsActions } from '../../../store/actions'
+import { MarketsSelectors } from '../../../store/selectors'
+
+const translationPrefix = 'MARKETS.DETAILS.'
 
 
 @IonicPage({
@@ -13,50 +18,46 @@ import * as d3 from 'd3'
 	templateUrl: 'market-detail.html'
 })
 export class MarketDetailPage {
-	coin = this.navParams.data.coin
+	selectedCoin = this.navParams.data.coin
 	perGas = this.navParams.data.perGas
-	histories = mockResponse.Data
 
-	get width () {
-		return window.innerWidth
+	histories = this.store.select(MarketsSelectors.getDetails)
+	changeData = this.store.select(MarketsSelectors.getChangeData)
+
+	durationsProp = ['hour', 'day', 'week', 'month']
+	changeTitlesProp = ['open', 'high', 'low', 'volume']
+	changeTitles
+	durations
+
+	constructor (
+		public navParams: NavParams,
+		private ts: TranslateService,
+		private store: Store<RootState>
+	) {
+		const durationsKeys = this.durationsProp.map(key => translationPrefix + key)
+		const changeTitlesKeys = this.changeTitlesProp.map(key => translationPrefix + key)
+		const translationKeys = durationsKeys.concat(changeTitlesKeys)
+
+		this.ts.get(translationKeys).subscribe(
+			titles => {
+				console.log('Translate S get:', titles)
+				this.changeTitles = this.changeTitlesProp.map(key => titles[translationPrefix + key])
+				this.durations = this.durationsProp.reduce((acc, key) => ({
+						...acc,
+						[key]: titles[translationPrefix + key]
+				}), {})
+				console.log(this.durations)
+				console.log(this.changeTitles)
+			}
+		)
 	}
 
-	constructor (public navParams: NavParams) {}
-
 	ngOnInit () {
-		const h = 100
+		this.store.dispatch(new MarketsActions.LoadDetail())
+		console.log(this)
+	}
 
-		const closeData = this.histories.map((d: any) => d.close)
-		const minClose = closeData.reduce((acc, cur) => Math.min(acc, cur))
-		const maxClose = closeData.reduce((acc, cur) => Math.max(acc, cur))
-		const sortedTimeData = this.histories
-															 .map((d: any) => new Date(d.time))
-															 .sort((pre, cur) => pre.getTime() - cur.getTime())
-															 .map(d => d.getTime())
-		const minTime = sortedTimeData[0]
-		const maxTime = sortedTimeData[sortedTimeData.length - 1]
-
-		const svg = d3.select('.market-detail__chart svg')
-									.attr('height', h)
-									.attr('width', this.width)
-									.append('g')
-
-		const xScale = d3.scaleTime()
-										 .range([0, this.width])
-										 .domain([minTime, maxTime])
-		const yScale = d3.scaleLinear().range([h, 0])
-										 .domain([minClose, maxClose])
-
-		const lineGen = d3.line()
-											.x((d: any) => xScale(d.time))
-											.y((d: any) => yScale(d.close))
-											.curve(d3.curveBasis)
-
-		svg.append('path')
-			 .data([this.histories])
-			 .attr('d', lineGen(this.histories))
-			 .attr('stroke', 'steelblue')
-			 .attr('stroke-width', 3)
-			 .attr('fill', 'none')
+	handleDurationsClick (index) {
+		this.store.dispatch(new MarketsActions.LoadDetail(this.durationsProp[index]))
 	}
 }

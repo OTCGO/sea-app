@@ -10,10 +10,12 @@ possessions-list {
     }
     ion-card {
       width: calc(100% - 5px) !important;
+      height: 6.64rem;
     }
   }
 
   ion-card.possessions__total-balances {
+    height: 6.64rem;
     padding: 1.5rem;
     color: rgba(black, 0.4);
     font-size: 1.4rem;
@@ -23,6 +25,7 @@ possessions-list {
     .possessions__volume {
       font-size: 2.6rem;
       color: $primary-color;
+      text-overflow: ellipsis;
     }
   }
 

@@ -7,7 +7,6 @@ import {
 
 import { RootState } from '../../store/reducers'
 import { PriceProvider, NotificationProvider, LoadingProvider } from '../../providers'
-import { MarketDetailPage } from './market-detail/market-detail'
 
 import { MarketsActions } from '../../store/actions'
 import { MarketsSelectors, PricesSelectors } from '../../store/selectors'
@@ -23,7 +22,6 @@ export class MarketsPage implements OnInit {
 	coins
 	GASPrice
 	exchangeRates
-	marketDetailPage = MarketDetailPage
 
 	constructor (
 		public navCtrl: NavController,
@@ -42,7 +40,7 @@ export class MarketsPage implements OnInit {
 		this.store.select(MarketsSelectors.getError).subscribe(error => this.np.emit({ message: error }))
 		this.store.select(MarketsSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
 		this.store.select(MarketsSelectors.getEntities).subscribe(markets => this.coins = markets)
-		this.store.select(PricesSelectors.getEntities).subscribe(prices => this.GASPrice = prices['GAS'])
+		this.store.select(PricesSelectors.getEntities).subscribe(prices => this.GASPrice = prices['GAS'] || 1)
 
 		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
 	}
@@ -55,6 +53,11 @@ export class MarketsPage implements OnInit {
 				.catch(error => this.np.emit({ message: error }))
 
 		refresher.complete()
+	}
+
+	handleCoinClick (coin) {
+		this.store.dispatch(new MarketsActions.Select(coin.symbol))
+		this.navCtrl.push('MarketDetail', { coin, perGas: this.GASPrice / coin.currentPrice })
 	}
 
 	// TODO: Unuse function

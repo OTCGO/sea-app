@@ -1,3 +1,5 @@
+import { prop, sort, map, compose, sum } from 'ramda'
+
 export const mockResponse = {
 	'Response': 'Success',
 	'Type': 100,

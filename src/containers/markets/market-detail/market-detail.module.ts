@@ -7,9 +7,6 @@ import {
 } from '../../../components/markets/market-detail'
 
 
-console.log(MarketDetailCard, MarketDetailChart)
-
-
 @NgModule({
 	declarations: [
 		MarketDetailPage,

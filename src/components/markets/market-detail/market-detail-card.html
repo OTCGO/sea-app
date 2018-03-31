@@ -2,25 +2,25 @@
 
 <ion-card class="market-detail__card">
 	<div class="market-detail__rating" ion-row>
-		<ion-col class="market-detail__conversion__title">
+		<ion-col class="market-detail__conversion__title" col-auto>
 			{{ perGas | number:'1.2-4' }}
 		</ion-col>
 
 		<ion-col col-4>
 			<div class="market-detail__conversion__price">
-				{{ selectedCoin.currentPrice | currency:'CNY':'symbol-narrow':'1.1-5' }}
+				{{ currentPrice | currency:'CNY':'symbol-narrow':'1.1-5' }}
 			</div>
 			<div class="market-detail__conversion__base">
 				GAS
 			</div>
 		</ion-col>
 
-		<ion-col col-4 class="market-detail__fall-of" float-right>
+		<ion-col class="market-detail__fall-of">
 			<div [ngClass]="{
-				  'market-detail__fall-of--red': percent_change_24h && selectedCoin.percent_change_24h.includes('-'),
-				  'market-detail__fall-of--green': selectedCoin.percent_change_24h && !selectedCoin.percent_change_24h.includes('-')
+				  'market-detail__fall-of--red': isFall,
+				  'market-detail__fall-of--green': !isFall
 				}">
-				{{ selectedCoin.percent_change_24h || 'None' }}{{ selectedCoin.percent_change_24h ? '%' : '' }}
+				{{ percent_change_24h || 'None' }}{{ percent_change_24h ? '%' : '' }}
 			</div>
 		</ion-col>
 	</div>
@@ -41,9 +41,9 @@
 	<div class="market-detail__change-actions"
 	     ion-row>
 		<ion-col
-			*ngFor="let title of durationsTitles; index as key">
-			<!--(click)="handleActionsClick(durations[title])"
-			[class.is-active]="key === durations">-->
+			*ngFor="let title of durationsTitles; index as i"
+			(click)="handleDurationsClick(i)"
+			[class.is-active]="i === activeIndex">
 			{{ title }}
 		</ion-col>
 	</div>

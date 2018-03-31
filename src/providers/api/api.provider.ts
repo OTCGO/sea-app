@@ -12,7 +12,7 @@ export class ApiProvider implements OnDestroy {
 	otcgoApi = 'api.otcgo.cn'
 	onDestroy = new Subject()
 
-	constructor (private http: HttpClient) {}
+	constructor (private http: HttpClient) { }
 
 	getAPIEndpoint () {
 		return dev
@@ -25,11 +25,10 @@ export class ApiProvider implements OnDestroy {
 	}
 
 	request (method, url, options?: any) {
-		return this.http
-		           .request(method, url, options)
-		           .pipe(
+		return this.http.request(method, url, options)
+							 .pipe(
 								 takeUntil(this.onDestroy),
-								 timeout(300)
+								 timeout(10000)
 							 )
 		
 	}
@@ -38,25 +37,19 @@ export class ApiProvider implements OnDestroy {
 		console.log(endpoint)
 		return this.http
 		           .get(this.getAPIEndpoint() + '/' + endpoint, options)
-		           .pipe(
-			           timeout(10000)
-		           )
+							 .pipe(takeUntil(this.onDestroy), timeout(10000))
 	}
 
 	post (endpoint: string, body: any, options?: any): Observable<any> {
 		return this.http
 		           .post(this.getAPIEndpoint() + '/' + endpoint, body, options)
-		           .pipe(
-			           timeout(10000)
-		           )
+							 .pipe(takeUntil(this.onDestroy), timeout(10000))
 	}
 
 	broadcast (body) {
 		return this.http
 		           .post(`${this.getAPIEndpoint()}/broadcast`, body)
-		           .pipe(
-			           timeout(10000)
-		           )
+							 .pipe(takeUntil(this.onDestroy), timeout(10000))
 	}
 
 }

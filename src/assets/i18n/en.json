@@ -50,7 +50,16 @@
     "name": "Name",
     "price": "Price",
     "change": "Change",
-    "DETAILS": {}
+    "DETAILS": {
+      "hour": "Hour",
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "open": "Open",
+      "high": "High",
+      "low": "Low",
+      "volume": "Volume/K"
+    }
   },
   "PROFILE": {
     "manage_wallet": "Manage wallet",

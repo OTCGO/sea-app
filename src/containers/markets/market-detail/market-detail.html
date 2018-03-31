@@ -5,7 +5,17 @@
 <ion-content class="market-detail__content">
 	<div class="market-detail__background"></div>
 
-	<market-detail-card></market-detail-card>
+	<market-detail-card
+		[changeData]="changeData | async"
+		[changeTitles]="changeTitles"
+		[durations]="durations"
+		[perGas]="perGas"
+		[selectedCoin]="selectedCoin"
+		(durationsClick)="handleDurationsClick($event)"
+	></market-detail-card>
 
-	<market-detail-chart></market-detail-chart>
+	<market-detail-chart
+		[histories]="(histories | async)"
+		[perGas]="perGas"
+	></market-detail-chart>
 </ion-content>

@@ -58,7 +58,7 @@ export class PossessionsPage implements OnInit, OnDestroy {
 
 	ngOnInit () {
 		this.updateBalances(this.displayZero)
-		this.store.dispatch(new BalancesActions.Load())
+		// this.store.dispatch(new BalancesActions.Load())
 		this.store
 				.select(BalancesSelectors.getLoading)
 				.subscribe(loading => this.lp.emit(loading))

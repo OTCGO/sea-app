@@ -17,14 +17,23 @@ import {
 	publishLast,
 	refCount,
 	timeout,
-	withLatestFrom
+	withLatestFrom,
+	map
 } from 'rxjs/operators'
 import { RootState } from '../reducers'
-import { PriceProvider } from '../../providers'
-import { Load, LoadFail, LoadSuccess, MarketsActionTypes } from '../actions/markets.action'
+import { ApiProvider, PriceProvider } from '../../providers'
+import {
+	Load,
+	LoadDetail,
+	LoadDetailSuccess,
+	LoadFail,
+	LoadSuccess,
+	MarketsActionTypes
+} from '../actions/markets.action'
 import { Load as LoadPricesSuccess } from '../actions/prices.action'
 import { api } from '../../libs/neon'
-import { getCurrency } from '../selectors/settings.selector'
+import { SettingsSelectors, MarketsSelectors } from '../selectors'
+
 
 @Injectable()
 export class MarketsEffects {
@@ -32,7 +41,7 @@ export class MarketsEffects {
 	load$: Observable<Action> =
 		this.actions$.pipe(
 			ofType<Load>(MarketsActionTypes.LOAD),
-			withLatestFrom(this.store$.select(getCurrency), (_, currency) => currency),
+			withLatestFrom(this.store$.select(SettingsSelectors.getCurrency), (_, currency) => currency),
 			switchMap(currency => {
 				const nextLoad$ = this.actions$.pipe(
 					ofType<Load>(MarketsActionTypes.LOAD),
@@ -43,7 +52,59 @@ export class MarketsEffects {
 			})
 		)
 
-	constructor (private actions$: Actions, private store$: Store<RootState>) {}
+	@Effect()
+	LoadDetail$: Observable<Action> =
+		this.actions$.pipe(
+			ofType<LoadDetail>(MarketsActionTypes.LOAD_DETAIL),
+			map(action => action.payload),
+			withLatestFrom(
+				this.store$.select(SettingsSelectors.getCurrency),
+				this.store$.select(MarketsSelectors.getSelectedSymbol),
+				(duration, currency, symbol) => ({ duration, currency, symbol })
+			),
+			switchMap(({ duration, currency, symbol }) => {
+				const nextLoadDetail$ = this.actions$.pipe(
+					ofType<Load>(MarketsActionTypes.LOAD),
+					skip(1)
+				)
+
+				const params = {
+					fsym: symbol.toUpperCase(),
+					tsym: currency.toUpperCase()
+				}
+
+				switch (duration) {
+					case 'hour':
+						return this.fetchDetails(nextLoadDetail$, 'histominute', { ...params, limit: 60 })
+					case 'day':
+						return this.fetchDetails(nextLoadDetail$, 'histohour', { ...params, limit: 24 })
+					case 'week':
+						return this.fetchDetails(nextLoadDetail$, 'histohour', { ...params, limit: 168 })
+					case 'month':
+						return this.fetchDetails(nextLoadDetail$, 'histoday', { ...params, limit: 30 })
+					default: return this.fetchDetails(nextLoadDetail$, 'histominute', { ...params, limit: 60 })
+				}
+			})
+		)
+
+	constructor (private actions$: Actions, private store$: Store<RootState>, private api: ApiProvider) {}
+
+	fetchDetails (next, call, params) {
+		console.log('call to', call)
+		return this.api.request('GET', `https://min-api.cryptocompare.com/data/${call}`, { params })
+			.pipe(
+				takeUntil(next),
+				publishLast(),
+				refCount(),
+				map(
+					(r) =>
+						r
+							? new LoadDetailSuccess(r.Data)
+							: new LoadFail('Get markets details error, Response didn\'t exits')
+				),
+				catchError(error => of(new LoadFail(error)))
+			)
+	}
 }
 
 function loadMarkets (nextLoad$, baseCurrency = 'cny') {

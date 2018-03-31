@@ -83,6 +83,7 @@
     "@types/lodash": "^4.14.106",
     "@types/node": "^8.10.0",
     "@types/ramda": "^0.25.20",
+    "@types/d3": "^5.0.0",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^4.0.1",
     "codelyzer": "^4.2.1",

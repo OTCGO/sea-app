@@ -46,6 +46,10 @@ export class CreateWalletPage implements OnInit {
     this.store.select(WalletSelectors.getExits).subscribe(exits => exits && this.navCtrl.push('BackupWallet'))
   }
 
+  ngOnDestroy () {
+    console.log('destroy call')
+  }
+
   get disabledButton () {
     if (this.wif)
       return !this.passphrase1 || !this.passphrase2 ||

@@ -1,56 +1,28 @@
-<!--
-  Generated template for the PossessionDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header class="otcgo-header">
 
 	<ion-navbar>
 		<ion-title>
-			{{ possessionData.symbol }}
+			{{ (selectedBalance | async)?.symbol }}
 		</ion-title>
 	</ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding class="possession-detail-content">
+<ion-content padding class="possession-detail-content" (ionScroll)="handleScroll($event)">
 
-	<ion-card class="possession-data-card">
-		<div class="possession-data-amount">{{ possessionData.amount.toString() }}</div>
-		<div class="possession-data-approximation">≈ ￥ {{ totalValue }}</div>
-		<button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="possessionData.amount.lte(0)">
-			{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
-		</button>
-	</ion-card>
+	<possession-detail-bgcard
+		[balance]="selectedBalance | async"
+		[price]="selectedPrice | async"
+		[isScrollDown]="isScrollDown"
+		[isScrollUp]="isScrollUp">
+	</possession-detail-bgcard>
 
-	<div class="possession-detail__title" *ngIf="!transactionHistories.length">
-		<h4>没有数据</h4>
-	</div>
-
-	<timeline endIcon="call" *ngIf="transactionHistories.length">
-		<h5>{{ 'POSSESSIONS.DETAILS.title' | translate }}</h5>
-		<timeline-item *ngFor="let item of transactionHistories" ion-row>
-			<ion-col col-2>
-				<ion-icon></ion-icon>
-			</ion-col>
-
-			<ion-col col-4>
-				<timeline-time [time]="item.time"></timeline-time>
-			</ion-col>
-
-			<ion-col col-6>
-				<div class="content">
-					<span>
-						{{ item.operation === 'in' ? '转入' : '转出' }}
-					</span> {{ item.value }}
-					<span>
-						{{ possessionData.symbol }}
-					</span>
-				</div>
-			</ion-col>
-		</timeline-item>
-	</timeline>
+	<possession-detail-history
+		[balance]="selectedBalance | async"
+		[transactionHistories]="transactionHistories | async"
+		[isScrollDown]="isScrollDown"
+		[isScrollUp]="isScrollUp">
+	</possession-detail-history>
 
 </ion-content>

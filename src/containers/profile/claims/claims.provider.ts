@@ -5,9 +5,9 @@ import { ApiProvider, AccountProvider } from '../../../providers'
 
 
 import { Store, select } from '@ngrx/store'
-import { RootState } from '../../../reducers/index'
-import { Get } from '../../../actions/balances.action'
-import * as fromBalances from '../../../reducers/balances.reducer'
+import { RootState } from '../../../store/reducers/index'
+import { Load } from '../../../store/actions/balances.action'
+import * as fromBalances from '../../../store/reducers/balances.reducer'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/fromPromise'
@@ -59,9 +59,10 @@ export class ClaimsProvider {
 	}
 
 	doSendAsset () {
-		this.store.dispatch(new Get(this._account.address))
-		return this.store.pipe(
-			select(fromBalances.selectEntities),
+		this.store.dispatch(new Load())
+
+		/*return this.store.pipe(
+			select(fromBalances.getEntities),
 			map((balances: any[]) => {
 				const NEO = balances.find(bal => bal.hash === NEO_HASH)
 				const address = this._account.address
@@ -77,7 +78,7 @@ export class ClaimsProvider {
 				                    .catch(err => console.error('from claims provider doSendAsset()', err))
 				return Observable.fromPromise(promise)
 			})
-		)
+		)*/
 	}
 
 	private postTransfer (transferPostData) {

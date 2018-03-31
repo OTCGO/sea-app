@@ -1,0 +1,65 @@
+@import "../../theme/otcgo/variables";
+
+possessions-list {
+  ion-grid.possessions__base-accumulator {
+    width: calc(100% - 40px);
+    padding: 0;
+
+    ion-col {
+      padding: 0;
+    }
+    ion-card {
+      width: calc(100% - 5px) !important;
+      height: 6.64rem;
+    }
+  }
+
+  ion-card.possessions__total-balances {
+    height: 6.64rem;
+    padding: 1.5rem;
+    color: rgba(black, 0.4);
+    font-size: 1.4rem;
+    margin-bottom: 0;
+    border-radius: 5px !important;
+
+    .possessions__volume {
+      font-size: 2.6rem;
+      color: $primary-color;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .possessions__hide-zero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+
+    ion-card {
+      margin-bottom: 0;
+      background: transparent;
+      box-shadow: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 1.4rem 0.5rem;
+      background: $background-gradient;
+      border-radius: 5px !important;
+    }
+
+    img {
+      width: 2.6rem;
+      height: 2.6rem;
+    }
+
+    h5 {
+      width: 100%;
+      margin-top: .5rem;
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+  }
+}

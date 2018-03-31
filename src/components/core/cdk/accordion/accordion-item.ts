@@ -57,8 +57,9 @@ export class CdkAccordionItem implements OnDestroy {
 		this._removeUniqueSelectionListener =
 			_expansionDispatcher.listen((id: string, accordionId: string): void => {
 				if (this.accordion && !this.accordion.multi &&
-						this.accordion.id === accordionId && this.id !== id)
+						this.accordion.id === accordionId && this.id !== id) {
 					this.expanded = false
+				}
 			})
 	}
 
@@ -68,14 +69,20 @@ export class CdkAccordionItem implements OnDestroy {
 	}
 
 	toggle (): void {
-		if (!this.disabled) this.expanded = !this.expanded
+		if (!this.disabled) {
+			this.expanded = !this.expanded
+		}
 	}
 
 	close (): void {
-		if (!this.disabled) this.expanded = false
+		if (!this.disabled) {
+			this.expanded = false
+		}
 	}
 
 	open (): void {
-		if (!this.disabled) this.expanded = true
+		if (!this.disabled) {
+			this.expanded = true
+		}
 	}
 }

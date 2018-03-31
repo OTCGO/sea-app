@@ -1,17 +1,27 @@
-import { Component, Inject } from '@angular/core'
+import {
+	Component,
+	OnInit
+} from '@angular/core'
 import {
 	AlertController,
 	IonicPage,
 	LoadingController,
-	NavParams,
 	ViewController
 } from 'ionic-angular'
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms'
-
-import { SendModalProvider } from './send-modal.provider'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
-import { isAddress } from './send-modal.provider'
-import { NotificationProvider } from '../../../providers/notification.provider'
+import { Store } from '@ngrx/store'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import {
+	addressValidator,
+	amountValidator
+} from './send-modal.validators'
+
+import { BalancesActions } from '../../../store/actions'
+import { RootState } from '../../../store/reducers'
+import { IBalance } from '../../../shared/models'
+import { SendModalProvider } from './send-modal.provider'
+import { NotificationProvider } from '../../../providers'
+import { BalancesSelectors } from '../../../store/selectors'
 
 
 @IonicPage({
@@ -21,36 +31,41 @@ import { NotificationProvider } from '../../../providers/notification.provider'
 	selector: 'send-modal',
 	templateUrl: 'send-modal.html'
 })
-export class SendModalComponent {
-	sendForm: FormGroup
-	possessionData = this.navParams.data
+export class SendModalComponent implements OnInit {
+	formGroup: FormGroup
+	selectedBalance: IBalance
+
+	get toAddress () { return this.formGroup.get('address') }
+	get passphrase () { return this.formGroup.get('passphrase') }
+	get amount () { return this.formGroup.get('amount') }
+	get label () { return this.formGroup.get('label') }
 
 	constructor (
 		public viewCtrl: ViewController,
-		public navParams: NavParams,
 		private barcodeScanner: BarcodeScanner,
 		private notificationProvider: NotificationProvider,
 		private alertCtrl: AlertController,
 		private loadingCtrl: LoadingController,
 		private sendModalProvider: SendModalProvider,
-		@Inject(FormBuilder) private fb: FormBuilder
+		private store: Store<RootState>,
+		private fb: FormBuilder
 	) {
-		this.sendForm = this.fb.group({
-			address: ['', [Validators.required, addressValidator]],
+		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+
+		this.formGroup = this.fb.group({
+			address: ['', [Validators.required, addressValidator.bind(this)]],
 			passphrase: ['', Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.possessionData.amount)]],
+			amount: ['', [Validators.required, amountValidator(1231).bind(this)]],
 			label: [''],
 		})
 	}
 
-	get toAddress () { return this.sendForm.get('address') }
-	get passphrase () { return this.sendForm.get('passphrase') }
-	get amount () { return this.sendForm.get('amount') }
-	get label () { return this.sendForm.get('label') }
+	ngOnInit (): void {
+	}
 
-	dismiss () {
+	handleClose () {
 		this.viewCtrl.dismiss()
-		this.sendForm.reset()
+		this.formGroup.reset()
 	}
 
 	/**
@@ -65,7 +80,7 @@ export class SendModalComponent {
 		this.passphrase.markAsTouched()
 		this.amount.markAsTouched()
 
-		if (!this.sendForm.valid || !this.toAddress.valid
+		if (!this.formGroup.valid || !this.toAddress.valid
 			|| !this.amount.valid || !this.passphrase.valid) {
 			return
 		}
@@ -74,21 +89,24 @@ export class SendModalComponent {
 
 		this.sendModalProvider
 		    .decrypt(this.passphrase.value)
-		    .then(async _=> {
+		    .then(async pr => {
 			    const result = await this.sendModalProvider.doSendAsset({
 				    dests: this.toAddress.value,
 				    amounts: this.amount.value,
-				    assetId: this.possessionData.hash
-			    })
+				    assetId: this.selectedBalance.hash
+			    }, pr)
 			    if (result) {
-				    await this.dismiss()
+				    await this.handleClose()
 				    this.notificationProvider.emit({ message: '转账成功' })
 			    }
 		    })
 		    .catch(err => {
-		    	this.showPrompt({ message: err, title: '错误' })
-		    })
+		    	if (err.message)
+						return this.showPrompt({ message: err.message, title: '错误' })
+					this.showPrompt({ message: err, title: '错误' })
+				})
 		    .then(_=> {
+		    	this.store.dispatch(new BalancesActions.Load())
 		    	loading.dismissAll()
 		    })
 	}
@@ -99,28 +117,12 @@ export class SendModalComponent {
 	}
 
 	scan () {
-		this.barcodeScanner
-		    .scan()
-		    .then((data: BarcodeScanResult) => {
+		this.barcodeScanner.scan()
+				.then((data: BarcodeScanResult) => {
 			    this.toAddress.setValue(data.text)
 		    })
 		    .catch(err => {
 			    this.notificationProvider.emit({ message: err })
 		    })
-	}
-}
-
-function addressValidator (addressCtrl: FormControl): ValidationErrors {
-	const { value } = addressCtrl
-	return (!value || !isAddress(value))
-		? { invalidAddress: true }
-		: null
-}
-
-function amountValidator (maxValue) {
-	return (amountCtrl: FormControl): ValidationErrors | null => {
-		const value = amountCtrl.value
-		if (!value || value <= 0 || value > maxValue) return { invalidAmount: true }
-		return null
 	}
 }

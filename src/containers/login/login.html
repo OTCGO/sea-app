@@ -13,26 +13,31 @@
 			<ion-row class="login__wif-section">
 				<ion-col>
 					<ion-item class="login__wif-input rounded" [class.item-input-has-focus]="!!WIFKey">
-						<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="wif" required></ion-input>
+						<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="wif"></ion-input>
 					</ion-item>
 
 					<button
 					  class="login__import-button"
+					  type="button"
 					  [class.is-active]="!isWIFKey"
 					  (click)="switchImportBox(fileInput)">
 						<span *ngIf="!isWIFKey">{{ importText }}</span>
 						<img src="assets/imgs/icon-login_file.svg" alt="" class="icon">
 					</button>
 
-					<input type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
+					<input accept="text/plain, application/json, .json" type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
 
-					<button class="login__wif-switcher" *ngIf="!isWIFKey" (click)="switchWIFKeyBox()">
+					<button
+						class="login__wif-switcher"
+						type="button"
+						*ngIf="!isWIFKey"
+						(click)="switchWIFKeyBox()">
 						<img src="assets/imgs/icon-login_WIF.svg" alt="" class="icon">
 					</button>
 				</ion-col>
 			</ion-row>
 
-			<ion-row class="login__password-section">
+			<ion-row class="login__password-section" *ngIf="isOldWallet">
 				<ion-col>
 					<ion-item class="login__password-input">
 						<ion-input type="password" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required></ion-input>
@@ -52,7 +57,7 @@
 		</form>
 
 		<div class="login__tip">
-			<a (click)="navCtrl.setRoot(createWalletPage)">{{ 'LOGIN.tip' | translate }}</a>
+			<a (click)="navCtrl.setRoot('CreateWallet')">{{ 'LOGIN.tip' | translate }}</a>
 		</div>
 	</div>
 

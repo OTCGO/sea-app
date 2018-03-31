@@ -1,16 +1,18 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
 import {
-  IonicPage, LoadingController, NavController,
-  NavParams
+  IonicPage,
+	NavController,
 } from 'ionic-angular'
-import { LoginPage } from '../login/login'
+import { TranslateService } from '@ngx-translate/core'
 
 import { wallet } from '../../libs/neon'
-import { WalletProvider } from '../../providers/wallet/wallet.provider'
-import { BackupWalletPage } from './backup-wallet/backup-wallet'
-import { debug } from '../../shared/utils'
-import { TranslateService } from '@ngx-translate/core'
-import { NotificationProvider } from '../../providers/notification.provider'
+import { NotificationProvider, LoadingProvider } from '../../providers'
+import { fromWallet } from '../../store/reducers'
+import { AuthActions } from '../../store/actions'
+import { AuthSelectors, WalletSelectors } from '../../store/selectors'
+import 'rxjs/add/operator/take'
+
 
 @IonicPage({
   name: 'CreateWallet',
@@ -20,10 +22,8 @@ import { NotificationProvider } from '../../providers/notification.provider'
   selector: 'page-create-wallet',
   templateUrl: 'create-wallet.html',
 })
-export class CreateWalletPage {
-  loginPage = LoginPage
-  backupWalletPage = BackupWalletPage
-  private protocolAgreement: boolean = false
+export class CreateWalletPage implements OnInit {
+  private protocolAgreement = false
   private wif: string
   private name: string
   private passphrase1: string
@@ -34,15 +34,20 @@ export class CreateWalletPage {
 
   constructor (
     private navCtrl: NavController,
-    private loadingCtrl: LoadingController,
-    private walletProvider: WalletProvider,
-    private notificationProvider: NotificationProvider,
+    private store: Store<fromWallet.State>,
+    private np: NotificationProvider,
+    private lp: LoadingProvider,
     private translateService: TranslateService
-  ) {
-    this.translateService.onLangChange.subscribe(value => {
-      debug('onLangChange')(value)
+  ) { }
 
-    })
+  ngOnInit () {
+    this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
+		this.store.select(AuthSelectors.getError).subscribe(err => this.np.emit({ message: err }))
+    this.store.select(WalletSelectors.getExits).subscribe(exits => exits && this.navCtrl.push('BackupWallet'))
+  }
+
+  ngOnDestroy () {
+    console.log('destroy call')
   }
 
   get disabledButton () {
@@ -59,21 +64,21 @@ export class CreateWalletPage {
 
   async createWallet () {
     if (this.passphrase1 &&
-       !this.validatePassphraseStrength(this.passphrase1))
-      this.notificationProvider.emit({ message: 'Password too short' })
+       !this.validatePassphraseStrength(this.passphrase1)) {
+      return this.np.emit({ message: 'Password too short' })
+		}
 
-    if (this.passphrase1 !== this.passphrase2) return
+    if (this.passphrase1 !== this.passphrase2) {
+      return
+		}
 
-    if (this.wif && !wallet.isWIF(this.wif))
-      return this.notificationProvider.emit({ message: 'Password too short' })
+    if (this.wif && !wallet.isWIF(this.wif)) {
+			return this.np.emit({ message: 'WIF format wrong' })
+    }
 
-    let i = await this.createLoading('Creating wallet!')
-
-    await i.present()
 
     try {
-      const accountTemp = new wallet.Account(
-        this.wif || wallet.generatePrivateKey())
+      const accountTemp = new wallet.Account(this.wif || wallet.generatePrivateKey())
       const { WIF, address } = accountTemp
       const encryptedWIF = wallet.encrypt(WIF, this.passphrase1)
 
@@ -87,28 +92,14 @@ export class CreateWalletPage {
         extra: null
       } as any)
 
-      this.walletProvider.addAccount(account)
-      this.walletProvider.saveWallet()
-
-      await i.dismiss()
-      await this.navCtrl.push(this.backupWalletPage)
+      this.store.dispatch(new AuthActions.CreateWallet(account))
     } catch (e) {
       console.log(e)
-      this.notificationProvider.emit({ message: e })
+      this.np.emit({ message: e })
     }
-
   }
 
   validatePassphraseStrength (passphrase) {
     return passphrase.length >= 4
-  }
-
-  createLoading (content) {
-    const loading = this.loadingCtrl.create({
-      content,
-      spinner: 'crescent'
-    })
-
-    return Promise.resolve(loading)
   }
 }

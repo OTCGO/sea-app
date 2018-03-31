@@ -2,14 +2,16 @@
 	"TABS": {
 		"possessions": "资产",
 		"markets": "行情",
+		"discover": "发现",
 		"profile": "个人"
 	},
 	"LOGIN": {
 		"title": "登录钱包",
-		"tip": "还没有钱包？创建一个！",
+		"tip": "创建钱包",
 		"login_wallet": "确认",
 		"wif_placeholder": "WIF码登录",
-		"password": "请输入密码"
+		"password": "请输入密码",
+		"wif_error": "无法识别的 WIF，请重试！"
 	},
 	"CW": {
 		"title": "创建钱包",
@@ -23,16 +25,19 @@
 		"tip": "登陆钱包",
 		"BACKUP": {
 			"title": "创建钱包成功!",
-			"notes": "请注意，您的钱包已经生成，请妥善保管！由于手机钱包的限制，若想导出钱包已便别处使用，请进入钱包管理进行导出操作。",
+			"notes": "钱包已经生成，请妥善保管！如想导出钱包已便别处使用，请进入钱包管理进行导出操作。",
 			"enter": "进入钱包"
 		}
 	},
 	"POSSESSIONS": {
+		"totalBalances": "总资产",
+		"displayZero": "隐藏0元资产",
 		"DETAILS": {
 			"title": "交易记录",
 			"transfer": "转账",
 			"in": "转入",
-			"out": "转出"
+			"out": "转出",
+			"nodata": "没有交易记录"
 		},
 		"QR_CODE": {
 			"address": "钱包地址",
@@ -45,13 +50,22 @@
 		"name": "资产名称",
 		"price": "最新价",
 		"change": "跌涨幅",
-		"DETAILS": {}
+		"DETAILS": {
+			"hour": "时",
+			"day": "日",
+			"week": "周",
+			"month": "月",
+			"open": "开盘价",
+			"high": "最高价",
+			"low": "最低价",
+			"volume": "成交量/K"
+		}
 	},
 	"PROFILE": {
 		"manage_wallet": "管理钱包",
 		"contacts": "联系人",
 		"histories": "交易记录",
-		"claims": "提取分红",
+		"claims": "提取 GAS",
 		"MANAGE_WALLET": {
 			"title": "管理钱包",
 			"change_name": "更改钱包名字",
@@ -60,7 +74,13 @@
 			"export_key": "导出 EncryptedKey",
 			"save": "保存",
 			"default": "默认钱包",
-			"default_action": "设为默认钱包"
+			"default_action": "设为默认钱包",
+			"REMOVE_ACCOUNT": {
+				"tips_prefix": "确定要删除",
+				"tips_suffix": "这个钱包吗?",
+				"input": "输入密码",
+				"confirm": "确认删除"
+			}
 		},
 		"CONTACTS": {
 			"title": "联系人"

@@ -18,7 +18,6 @@ const COMPONENTS = [
 		TranslateModule.forChild(),
 		PipesModule
 	],
-	declarations: COMPONENTS,
-	exports: COMPONENTS
+	declarations: COMPONENTS
 })
 export class PossessionsPageModule {}

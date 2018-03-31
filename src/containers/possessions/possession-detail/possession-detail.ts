@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, NgZone } from '@angular/core'
+import { Store } from '@ngrx/store'
 import {
-	NavParams,
 	IonicPage,
-	NavController,
-	ModalController,
-	LoadingController,
+	ScrollEvent,
 } from 'ionic-angular'
-
-import { PossessionDetailProvider } from './possession-detail.provider'
+import { Observable } from 'rxjs/Observable'
+import { empty } from 'rxjs/observable/empty'
+import { IBalance } from '../../../shared/models'
+import { LoadingProvider } from '../../../providers'
+import { RootState } from '../../../store/reducers'
+import { BalancesSelectors, TransactionHistorySelectors, PricesSelectors } from '../../../store/selectors'
+import * as TransactionHistoryAction from '../../../store/actions/transaction-history.action'
 
 interface TransactionHistory {
 	assetId
@@ -25,56 +28,40 @@ interface TransactionHistory {
 	selector: 'page-possession-detail',
 	templateUrl: 'possession-detail.html',
 })
-export class PossessionDetailPage implements OnInit {
-	possessionData
-	transactionHistories: TransactionHistory[] = []
-	loading = this.loadingCtrl.create()
-	totalValue
+export class PossessionDetailPage {
+	selectedPrice: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
+	selectedBalance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
+	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getEntities)
+
+	isScrollUp: boolean
+	isScrollDown: boolean
 
 	constructor (
-		public navCtrl: NavController,
-		public navParams: NavParams,
-		private modalCtrl: ModalController,
-		private loadingCtrl: LoadingController,
-	  private possessionDetailProvider: PossessionDetailProvider
+		private lp: LoadingProvider,
+		private zone: NgZone,
+		private store: Store<RootState>,
 	) {}
 
-	ngOnInit() {
-		this.loading.present()
-		this.possessionData = this.navParams.data
-
-		this.possessionDetailProvider
-		    .getPrices()
-		    .then(prices => {
-		    	const price = prices[this.possessionData.symbol]
-			    this.totalValue = this.possessionData.amount.times(price)
-		    })
-		    .catch(error => {
-			    console.error('Possession detail', error)
-			    this.totalValue = NaN
-		    })
-		    .then(_=> {
-			    this.possessionDetailProvider
-			        .getHistories(this.possessionData.symbol)
-			        .then(histories => {
-				        this.transactionHistories = histories
-			        })
-		    })
-		    .then(_=> this.loading.dismissAll())
+	ngOnInit () {
+		this.store.dispatch(new TransactionHistoryAction.Load())
 	}
 
-	showSendModal () {
-		const possessionData = {
-			hash: this.possessionData.hash,
-			symbol: this.possessionData.symbol,
-			amount: this.possessionData.amount.toNumber()
-		}
+	ionViewDidLeave () {
+		this.transactionHistories = empty()
+	}
 
-		const sendModal = this.modalCtrl.create(
-			'SendModal',
-			possessionData,
-			{ cssClass: 'inset-modal' }
-		)
-		sendModal.present()
+	handleScroll (e: ScrollEvent) {
+		if (e.directionY === 'down') {
+			this.zone.run(() => {
+				this.isScrollDown = true
+				this.isScrollUp = false
+			})
+		}
+		if (e.directionY === 'up' && e.scrollTop === 0) {
+			this.zone.run(() => {
+				this.isScrollDown = false
+				this.isScrollUp = true
+			})
+		}
 	}
 }

@@ -1,58 +1,66 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
 import {
-	IonicPage, Loading, LoadingController, NavController, NavParams, Refresher
+	IonicPage, NavController, NavParams, Refresher
 } from 'ionic-angular'
-import { PriceProvider } from '../../providers/api/price.provider'
-import { MarketDetailPage } from './market-detail/market-detail'
-import { api } from '../../libs/neon'
-import { NotificationProvider } from '../../providers/notification.provider'
 
-@IonicPage()
+
+import { RootState } from '../../store/reducers'
+import { PriceProvider, NotificationProvider, LoadingProvider } from '../../providers'
+
+import { MarketsActions } from '../../store/actions'
+import { MarketsSelectors, PricesSelectors } from '../../store/selectors'
+
+@IonicPage({
+	name: 'Markets'
+})
 @Component({
 	selector: 'page-markets',
 	templateUrl: 'markets.html',
 })
-export class MarketsPage {
+export class MarketsPage implements OnInit {
 	coins
-	loading: Loading
 	GASPrice
 	exchangeRates
-	marketDetailPage = MarketDetailPage
 
 	constructor (
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		private priceProvider: PriceProvider,
-		private notificationProvider: NotificationProvider,
-		private loadingCtrl: LoadingController
+		private np: NotificationProvider,
+		private lp: LoadingProvider,
+		private store: Store<RootState>
 	) {}
 
-	ionViewDidEnter () {
+	ngOnInit () {
 		this.initData()
 	}
 
 	async initData () {
-		this.loading = this.loadingCtrl.create()
-		this.loading.present()
-
-		api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS,  'cny')
-		    .then(
-			    coins => {
-				    console.log('expect cny price', coins)
-				    this.coins = coins
-				    this.GASPrice = this.coins.find(coin => coin['symbol'] === 'GAS').currentPrice
-				    this.loading.dismiss()
-			    }
-		    )
-		    .catch(err => {
-			    this.loading.dismiss().then(_ => {
-				    this.notificationProvider.emit({ message: '对不起，找不到数据！' + err})
-			    })
-		    })
+		this.store.select(MarketsSelectors.getError).subscribe(error => this.np.emit({ message: error }))
+		this.store.select(MarketsSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
+		this.store.select(MarketsSelectors.getEntities).subscribe(markets => this.coins = markets)
+		this.store.select(PricesSelectors.getEntities).subscribe(prices => this.GASPrice = prices['GAS'] || 1)
 
 		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
 	}
 
+	doRefresh (refresher: Refresher) {
+		this.store.dispatch(new MarketsActions.Load())
+
+		this.priceProvider.getExchangeRates()
+				.then(res => this.exchangeRates = res['rates'])
+				.catch(error => this.np.emit({ message: error }))
+
+		refresher.complete()
+	}
+
+	handleCoinClick (coin) {
+		this.store.dispatch(new MarketsActions.Select(coin.symbol))
+		this.navCtrl.push('MarketDetail', { coin, perGas: this.GASPrice / coin.currentPrice })
+	}
+
+	// TODO: Unuse function
 	calculateRate (price: number) {
 		const strPrice = (price / this.GASPrice).toString()
 
@@ -66,28 +74,5 @@ export class MarketsPage {
 		}
 
 		return splitStr.join('')
-	}
-
-	doRefresh (refresher: Refresher) {
-		api.cmc.getMarkets('cny')
-		   .then(
-			   coins => {
-				   this.coins = coins
-				   this.GASPrice = this.coins.find(coin => coin['symbol'] === 'GAS').currentPrice
-				   refresher.complete()
-				   this.notificationProvider.emit({
-					   message: '行情数据已更新！',
-					   duration: 3000
-				   })
-			   }
-		   )
-		   .catch(err => {
-			   this.loading.dismiss().then(_ => {
-				   this.notificationProvider.emit({ message: '对不起，找不到数据！' + err})
-				   console.log(err)
-			   })
-		   })
-
-		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
 	}
 }

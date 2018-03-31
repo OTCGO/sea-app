@@ -11,9 +11,13 @@ import {
 	Input,
 	EventEmitter,
 	Output,
-} from '@angular/core';
-import {Portal, TemplatePortal, ComponentPortal, BasePortalOutlet} from './portal';
-
+} from '@angular/core'
+import {
+	Portal,
+	TemplatePortal,
+	ComponentPortal,
+	BasePortalOutlet
+} from './portal'
 
 /**
  * Directive version of a `TemplatePortal`. Because the directive *is* a TemplatePortal,
@@ -24,8 +28,8 @@ import {Portal, TemplatePortal, ComponentPortal, BasePortalOutlet} from './porta
 	exportAs: 'cdkPortal',
 })
 export class CdkPortal extends TemplatePortal {
-	constructor(templateRef: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
-		super(templateRef, viewContainerRef);
+	constructor (templateRef: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
+		super(templateRef, viewContainerRef)
 	}
 }
 
@@ -33,7 +37,6 @@ export class CdkPortal extends TemplatePortal {
  * Possible attached references to the CdkPortalOutlet.
  */
 export type CdkPortalOutletAttachedRef = ComponentRef<any> | EmbeddedViewRef<any> | null;
-
 
 /**
  * Directive version of a PortalOutlet. Because the directive *is* a PortalOutlet, portals can be
@@ -49,15 +52,16 @@ export type CdkPortalOutletAttachedRef = ComponentRef<any> | EmbeddedViewRef<any
 })
 export class CdkPortalOutlet extends BasePortalOutlet implements OnInit, OnDestroy {
 	/** Whether the portal component is initialized. */
-	private _isInitialized = false;
+	private _isInitialized = false
 
 	/** Reference to the currently-attached component/view ref. */
-	private _attachedRef: CdkPortalOutletAttachedRef;
+	private _attachedRef: CdkPortalOutletAttachedRef
 
-	constructor(
+	constructor (
 		private _componentFactoryResolver: ComponentFactoryResolver,
-		private _viewContainerRef: ViewContainerRef) {
-		super();
+		private _viewContainerRef: ViewContainerRef
+	) {
+		super()
 	}
 
 	/**
@@ -65,58 +69,60 @@ export class CdkPortalOutlet extends BasePortalOutlet implements OnInit, OnDestr
 	 * @deletion-target 6.0.0
 	 */
 	@Input('portalHost')
-	get _deprecatedPortal() { return this.portal; }
-	set _deprecatedPortal(v) { this.portal = v; }
+	get _deprecatedPortal () { return this.portal }
+
+	set _deprecatedPortal (v) { this.portal = v }
 
 	/**
 	 * @deprecated
 	 * @deletion-target 6.0.0
 	 */
 	@Input('cdkPortalHost')
-	get _deprecatedPortalHost() { return this.portal; }
-	set _deprecatedPortalHost(v) { this.portal = v; }
+	get _deprecatedPortalHost () { return this.portal }
+
+	set _deprecatedPortalHost (v) { this.portal = v }
 
 	/** Portal associated with the Portal outlet. */
-	get portal(): Portal<any> | null {
-		return this._attachedPortal;
+	get portal (): Portal<any> | null {
+		return this._attachedPortal
 	}
 
-	set portal(portal: Portal<any> | null) {
+	set portal (portal: Portal<any> | null) {
 		// Ignore the cases where the `portal` is set to a falsy value before the lifecycle hooks have
 		// run. This handles the cases where the user might do something like `<div cdkPortalOutlet>`
 		// and attach a portal programmatically in the parent component. When Angular does the first CD
 		// round, it will fire the setter with empty string, causing the user's content to be cleared.
 		if (this.hasAttached() && !portal && !this._isInitialized) {
-			return;
+			return
 		}
 
 		if (this.hasAttached()) {
-			super.detach();
+			super.detach()
 		}
 
 		if (portal) {
-			super.attach(portal);
+			super.attach(portal)
 		}
 
-		this._attachedPortal = portal;
+		this._attachedPortal = portal
 	}
 
 	@Output('attached') attached: EventEmitter<CdkPortalOutletAttachedRef> =
-		new EventEmitter<CdkPortalOutletAttachedRef>();
+		new EventEmitter<CdkPortalOutletAttachedRef>()
 
 	/** Component or view reference that is attached to the portal. */
-	get attachedRef(): CdkPortalOutletAttachedRef {
-		return this._attachedRef;
+	get attachedRef (): CdkPortalOutletAttachedRef {
+		return this._attachedRef
 	}
 
-	ngOnInit() {
-		this._isInitialized = true;
+	ngOnInit () {
+		this._isInitialized = true
 	}
 
-	ngOnDestroy() {
-		super.dispose();
-		this._attachedPortal = null;
-		this._attachedRef = null;
+	ngOnDestroy () {
+		super.dispose()
+		this._attachedPortal = null
+		this._attachedRef = null
 	}
 
 	/**
@@ -125,27 +131,26 @@ export class CdkPortalOutlet extends BasePortalOutlet implements OnInit, OnDestr
 	 * @param portal Portal to be attached to the portal outlet.
 	 * @returns Reference to the created component.
 	 */
-	attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
-		portal.setAttachedHost(this);
+	attachComponentPortal<T> (portal: ComponentPortal<T>): ComponentRef<T> {
+		portal.setAttachedHost(this)
 
 		// If the portal specifies an origin, use that as the logical location of the component
 		// in the application tree. Otherwise use the location of this PortalOutlet.
-		const viewContainerRef = portal.viewContainerRef != null ?
-			portal.viewContainerRef :
-			this._viewContainerRef;
+		const viewContainerRef = portal.viewContainerRef != null ? portal.viewContainerRef : this._viewContainerRef
 
 		const componentFactory =
-			this._componentFactoryResolver.resolveComponentFactory(portal.component);
+			this._componentFactoryResolver.resolveComponentFactory(portal.component)
 		const ref = viewContainerRef.createComponent(
 			componentFactory, viewContainerRef.length,
-			portal.injector || viewContainerRef.parentInjector);
+			portal.injector || viewContainerRef.parentInjector
+		)
 
-		super.setDisposeFn(() => ref.destroy());
-		this._attachedPortal = portal;
-		this._attachedRef = ref;
-		this.attached.emit(ref);
+		super.setDisposeFn(() => ref.destroy())
+		this._attachedPortal = portal
+		this._attachedRef = ref
+		this.attached.emit(ref)
 
-		return ref;
+		return ref
 	}
 
 	/**
@@ -153,19 +158,18 @@ export class CdkPortalOutlet extends BasePortalOutlet implements OnInit, OnDestr
 	 * @param portal Portal to be attached.
 	 * @returns Reference to the created embedded view.
 	 */
-	attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
-		portal.setAttachedHost(this);
-		const viewRef = this._viewContainerRef.createEmbeddedView(portal.templateRef, portal.context);
-		super.setDisposeFn(() => this._viewContainerRef.clear());
+	attachTemplatePortal<C> (portal: TemplatePortal<C>): EmbeddedViewRef<C> {
+		portal.setAttachedHost(this)
+		const viewRef = this._viewContainerRef.createEmbeddedView(portal.templateRef, portal.context)
+		super.setDisposeFn(() => this._viewContainerRef.clear())
 
-		this._attachedPortal = portal;
-		this._attachedRef = viewRef;
-		this.attached.emit(viewRef);
+		this._attachedPortal = portal
+		this._attachedRef = viewRef
+		this.attached.emit(viewRef)
 
-		return viewRef;
+		return viewRef
 	}
 }
-
 
 @NgModule({
 	exports: [CdkPortal, CdkPortalOutlet],

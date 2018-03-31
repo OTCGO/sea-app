@@ -9,6 +9,10 @@ import { NavMock } from '../../../config/mocks'
 import { FileStorageProvider } from '../../providers/file-storage.provider'
 import { File as IonFile } from '@ionic-native/file'
 import { FileMock } from '@ionic-native-mocks/file'
+import { nep5Wallet, oldWallet } from '../../shared/userWallet'
+import { ReactiveFormsModule } from '@angular/forms'
+import { By } from '@angular/platform-browser'
+
 
 class NavParamsMock {
 	data = {}
@@ -18,9 +22,9 @@ class NavParamsMock {
 	}
 }
 
-const mockFile: File = {
-
-}
+const walletFile: File = new File([new Blob([JSON.stringify(nep5Wallet)])], 'OTCGO-mobile-wallet.json')
+const wrongWalletFile: File = new File([new Blob([`{  aosidnasodin: 'asdoiasndoias' }`])], 'OTCGO-mobile-wallet.json')
+const oldWalletFile: File = new File([new Blob([JSON.stringify(oldWallet)])], 'tt.json')
 
 const wrongWIF = 'APSXOIJA_)(*'
 const WIF = 'Kzz3djNvv2dwUfM4mw7DnKoqe121zkirE6LNStGdNv2rf6pNVGdx'
@@ -28,9 +32,12 @@ const pwd = '12345678'
 const wrongPwd = 'PASO IXNP!@)(*'
 
 describe('Login page', () => {
-	let de: DebugElement
 	let comp: LoginPage
 	let fixture: ComponentFixture<LoginPage>
+
+	let walletProvider: WalletProvider
+	let alertCtrl: AlertController
+
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule(<TestModuleMetadata>{
@@ -42,6 +49,7 @@ describe('Login page', () => {
 			providers: [
 				WalletProvider,
 				FileStorageProvider,
+				ReactiveFormsModule,
 				{ provide: IonFile, useClass: FileMock },
 				{ provide: NavController, useClass: NavMock },
 				{ provide: NavParams, useClass: NavParamsMock },
@@ -53,34 +61,42 @@ describe('Login page', () => {
 	beforeEach(() => {
 		fixture = TestBed.createComponent(LoginPage)
 		comp = fixture.componentInstance
-		de = fixture.debugElement
+		let de: DebugElement = fixture.debugElement
+
+		walletProvider = de.injector.get(WalletProvider)
+		alertCtrl = de.injector.get(AlertController)
 	})
 
-	describe('With WIF key', () => {
-		describe('With correct WIF', () => {
-			it('With correct passphrase', () => {
+	describe('Login with WIF key', () => {
+		it('Should create new NEP5 encrypted wallet with given passphrase', () => {
+			fixture.detectChanges()
+			let inputs = fixture.debugElement.queryAll(By.css('input'))
+			let wifInput = inputs[0]
+			wifInput.nativeElement.value = WIF
+			wifInput.nativeElement.dispatchEvent(new Event('input'))
 
-			})
+			expect(comp.loginForm.value['wif']).toBe(WIF)
 
-			it('With wrong passphrase', () => {
-				comp.WIFKey = WIF
-				comp.passphrase = wrongPwd
-				comp.login()
-				fixture.detectChanges()
+			let passphraseInput = inputs[2]
+			passphraseInput.nativeElement.value = pwd
+			passphraseInput.nativeElement.dispatchEvent(new Event('input'))
 
-			})
+			expect(comp.loginForm.value['passphrase']).toBe(pwd)
+
+			spyOn(comp, 'fileChange')
+			console.log(comp)
+			expect((<any>comp).file).toBeUndefined()
+			comp.fileChange(walletFile)
+			expect(comp.fileChange).toHaveBeenCalled()
+			expect((<any>comp).file).toBeDefined()
+			console.log(comp)
+			console.log((<any>comp)._file)
+			console.log(comp.loginForm)
+			// comp.login(comp.loginForm)
+			console.log(walletProvider.wallet)
 		})
 
-		describe('With wrong WIF key', () => {
-			it('With correct passphrase', () => {
-
-			})
-
-			it('With wrong passphrase', () => {
-				comp.WIFKey = wrongWIF
-				comp.passphrase = wrongPwd
-				comp.login()
-			})
+		it('Should should error message with wrong WIF key', () => {
 
 		})
 	})

@@ -20,7 +20,6 @@ import { addResizeListener } from '../core/utils/resize-event'
   templateUrl: 'slide-card.html',
 })
 export class SlideCard extends SlideCardProps {
-
   @ContentChildren(forwardRef(() => SlideCardItem)) children: QueryList<SlideCardItem>
   timer: any
 
@@ -42,7 +41,9 @@ export class SlideCard extends SlideCardProps {
     return this._items
   }
   set items(val) {
-    if (val.length > 0) this.setActiveItem(this.initialIndex)
+    if (val.length > 0) {
+      this.setActiveItem(this.initialIndex)
+		}
     this._items = val
   }
 
@@ -113,29 +114,40 @@ export class SlideCard extends SlideCardProps {
   }
 
   startTimer () {
-    if (this.interval <= 0 || !this.autoplay) return
+    if (this.interval <= 0 || !this.autoplay) {
+      return
+		}
     this.timer = window.setInterval(this.playSlides.bind(this), this.interval)
   }
 
   setActiveItem (index) {
     if (typeof index === 'string') {
       const filteredItems = this.items.filter(item => item.name === index)
-      if (filteredItems.length > 0) index = this.items.indexOf(filteredItems[0])
+      if (filteredItems.length > 0) {
+        index = this.items.indexOf(filteredItems[0])
+			}
     }
     index = Number(index)
-    if (isNaN(index) || index !== Math.floor(index)) return
+    if (isNaN(index) || index !== Math.floor(index)) {
+      return
+		}
 
     const length = this.items.length
     const oldIndex = this.activeIndex
 
-    if (index < 0)
+    if (index < 0) {
       this.activeIndex = length - 1
-    else if (index >= length)
+		}
+    else if (index >= length) {
       this.activeIndex = 0
-    else
+		}
+    else {
       this.activeIndex = index
+		}
 
-    if (oldIndex === this.activeIndex) this.resetItemPosition(oldIndex)
+    if (oldIndex === this.activeIndex) {
+      this.resetItemPosition(oldIndex)
+		}
   }
 
   handleIndicatorClick (index) {
@@ -143,8 +155,9 @@ export class SlideCard extends SlideCardProps {
   }
 
   handleIndicatorHover (index) {
-    if (this.trigger === 'hover' && index !== this.activeIndex)
+    if (this.trigger === 'hover' && index !== this.activeIndex) {
       this.activeIndex = index
+		}
   }
 
   handleMouse (bool: boolean) {
@@ -157,8 +170,9 @@ export class SlideCard extends SlideCardProps {
 
   ngOnChanges () {
     addResizeListener(this.el.nativeElement.querySelector('.m-carousel'), this.resetItemPosition.bind(this))
-    if (this.initialIndex < this.items.length && this.initialIndex >= 0)
+    if (this.initialIndex < this.items.length && this.initialIndex >= 0) {
       this.activeIndex = this.initialIndex
+		}
     this.startTimer()
   }
 

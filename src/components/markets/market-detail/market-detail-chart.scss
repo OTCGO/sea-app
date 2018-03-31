@@ -1,0 +1,48 @@
+@import "../../../theme/otcgo/variables";
+
+market-detail-chart {
+  .axis {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #D4D8DA;
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+  }
+
+  .line {
+    fill: none;
+    stroke: #2893d7;
+    stroke-width: 5px;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .focus circle {
+    fill: $primary-color;
+    stroke: #fff;
+    stroke-width: 7.5px;
+  }
+
+  text.gas-price {
+    fill: $primary-color;
+    font-size: 2.2rem;
+  }
+
+  text.current-price {
+    fill: $--color-grey-light-8;
+    font-size: 1.4rem;
+  }
+
+  .hover-line {
+    stroke: $primary-color;
+    stroke-width: 2px;
+    stroke-dasharray: 3,3;
+  }
+}

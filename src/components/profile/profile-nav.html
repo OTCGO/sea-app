@@ -1,5 +1,5 @@
 <ion-card class="card-nav">
-	<div class="nav-item" (click)="item?.enabled && navCtrl.push(item.page)">
+	<div class="nav-item" (click)="navPush(item)">
 		<img class="card-img"
 		     [src]="'assets/imgs/icon-profile_' + item?.icon + '.svg'">
 

@@ -8,9 +8,13 @@ import { NavController } from 'ionic-angular'
 export class ProfileNavComponent {
 	@Input() item = {
 		icon: 'manage-wallet',
-		enabled: false,
+		enabled: true,
 		page: 'ManageWallet'
 	}
 
 	constructor (private navCtrl: NavController) {}
+
+	navPush (item) {
+    item.enabled && this.navCtrl.push(item.page)
+  }
 }

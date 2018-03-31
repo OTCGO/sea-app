@@ -15,5 +15,4 @@ const COMPONENTS = [
 	declarations: COMPONENTS,
 	exports: COMPONENTS
 })
-export class SlideCardModule {
-}
+export class SlideCardModule {}

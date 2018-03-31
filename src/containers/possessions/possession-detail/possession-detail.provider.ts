@@ -10,7 +10,6 @@ import { AccountProvider } from '../../../providers/account/account.provider'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
 
-
 @Injectable()
 export class PossessionDetailProvider {
 	account = this.accountProvider.defaultAccount
@@ -26,14 +25,14 @@ export class PossessionDetailProvider {
 	}
 
 	getHistories (name) {
-		let assetId = '0x' + ASSET_ENUM[name.toUpperCase()]
+		const assetId = '0x' + ASSET_ENUM[name.toUpperCase()]
 
 		return this.apiProvider
-		           .get(API_CONSTANTS.HISTORY + '/' + this.account.address)
-		           .map(res => res['result'])
-		           .map(result => result.filter(item => item.asset === assetId))
-			         .map(result => result.map(item => parseTx(item)))
-			         .toPromise()
+							 .get(API_CONSTANTS.HISTORY + '/' + this.account.address)
+							 .map(res => res['result'])
+							 .map(result => result.filter(item => item.asset === assetId))
+							 .map(result => result.map(item => parseTx(item)))
+							 .toPromise()
 	}
 }
 

@@ -14,7 +14,7 @@ module.exports = {
 		rules: [{
 			test: /\.ts$/,
 			loaders: [{
-				loader: 'awesome-ts-loader'
+				loader: 'ts-loader'
 			}, 'angular2-template-loader']
 		},
 			{

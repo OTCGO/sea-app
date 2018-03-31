@@ -1,0 +1,35 @@
+.sea-card {
+  .card {
+    background: white;
+    //height: 400px;
+    position: relative;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 2rem;
+    padding: 2rem 3rem;
+    box-shadow: 5px 5px 10px rgba($primary-color, 0.5);
+
+    .close {
+      position: absolute;
+      right: 2rem;
+      top: 2rem;
+
+      .icon {
+        font-size: 1.6rem;
+        color: rgba(black, 0.2);
+        border-radius: 50%;
+        height: 2rem;
+        width: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: -1px 2px 5px rgba(black, 0.2);
+
+        &:focus, &:active {
+          box-shadow: -1px 2px 5px 1px rgba(turquoise, 0.4);
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}

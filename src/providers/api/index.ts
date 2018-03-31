@@ -1,3 +1,8 @@
-export * from './price.provider'
-export * from './api.provider'
-export * from './api.consts'
+import * as API_CONSTANTS from './api.consts'
+
+export { PriceProvider } from './price.provider'
+export { ApiProvider } from './api.provider'
+
+export {
+	API_CONSTANTS
+}

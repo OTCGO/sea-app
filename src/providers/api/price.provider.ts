@@ -18,6 +18,7 @@ export class PriceProvider {
 	fixerApi = '//api.fixer.io'
 	ccmApi = 'https://api.coinmarketcap.com/v1'
 	ticker = 'ticker'
+	prices = []
 
 	static CURRENCIES: string[] = ['aud', 'brl', 'cad', 'chf', 'clp', 'cny', 'czk', 'dkk', 'eur', 'gbp', 'hkd', 'huf', 'idr',
 	                        'ils', 'inr', 'jpy', 'krw', 'mxn', 'myr', 'nok', 'nzd', 'php', 'pkr', 'pln', 'rub', 'sek',

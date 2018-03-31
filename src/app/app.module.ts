@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core'
+import { NgModule } from '@angular/core'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
-import { IonicApp, IonicModule, IonicErrorHandler, } from 'ionic-angular'
+import { IonicApp, IonicModule } from 'ionic-angular'
 
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
@@ -15,10 +15,18 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
 import { MyApp } from './app.component'
 import { dev } from '../environments/environment'
-import { reducers } from '../reducers'
+import { reducers, metaReducers } from '../store/reducers'
 import { CoreModule } from './core.module'
-import { BalancesEffects } from '../effects/balances.effect'
+import {
+  BalancesEffects,
+  MarketsEffects,
+  AuthEffects,
+  WalletEffects,
+  TransactionHistoryEffects,
+  SettingsEffects
+} from '../store/effects'
 
+const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')
 
 @NgModule({
   declarations: [
@@ -29,9 +37,16 @@ import { BalancesEffects } from '../effects/balances.effect'
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(reducers, { }),
+    StoreModule.forRoot({ ...reducers }, { metaReducers: metaReducers }),
     dev ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([BalancesEffects]),
+    EffectsModule.forRoot([
+      BalancesEffects,
+      MarketsEffects,
+      WalletEffects,
+      AuthEffects,
+      TransactionHistoryEffects,
+      SettingsEffects
+    ]),
     IonicModule.forRoot(MyApp, {
       tabbarPlacement: 'bottom',
       preloadModules: true,
@@ -44,16 +59,13 @@ import { BalancesEffects } from '../effects/balances.effect'
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
+        useFactory: LoaderFactory,
         deps: [HttpClient]
       }
     }),
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp],
-  providers: [
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-  ]
+  entryComponents: [MyApp]
 })
 export class AppModule { }

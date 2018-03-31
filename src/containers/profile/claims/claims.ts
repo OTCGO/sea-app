@@ -14,7 +14,7 @@ import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 	templateUrl: 'claims.html'
 })
 export class ClaimsPage {
-	account = this.walletProvider.getDefaultAccount()
+	// account = this.walletProvider.getDefaultAccount()
 	availableGas
 
 	constructor (
@@ -52,7 +52,7 @@ export class ClaimsPage {
 						handler: ({ passphrase }) => {
 							if (passphrase === '') return false
 							loading.present().then(() => {
-								try {
+								/*try {
 									this.account.decrypt(passphrase)
 									loading.dismiss().then(() => {
 										prompt.dismiss().then(() => {
@@ -65,7 +65,7 @@ export class ClaimsPage {
 											this.claimsProvider.doClaims()
 										})
 									})
-								}
+								}*/
 							})
 						}
 					}

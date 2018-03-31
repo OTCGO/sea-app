@@ -4,7 +4,14 @@
 		<ion-refresher-content></ion-refresher-content>
 	</ion-refresher>
 
-	<possessions-info [address]="account.address"></possessions-info>
+	<possessions-info [account]="account | async"></possessions-info>
 
-	<possessions-list [balances]="balances$ | async"></possessions-list>
+	<possessions-list [balances]="balances | async"
+	                  [amount]="amount | async"
+	                  [baseCurrency]="baseCurrency | async"
+	                  [displayZero]="displayZero"
+	                  (select)="handleBalanceSelect($event)"
+	                  (displayZeroClick)="handleDisplayZeroClick($event)">
+	</possessions-list>
+
 </ion-content>

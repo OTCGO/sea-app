@@ -10,7 +10,7 @@ timeline {
       position: absolute;
       border: 1.5px dashed rgb(193, 193, 193);
       top: 40px;
-      bottom: 0;
+      bottom: 40px;
       left: 25px;
       margin-left: -10px;
     }
@@ -57,6 +57,12 @@ timeline {
         text-align: center;
         margin: 0 0 0 -8px;
         line-height: 30px;
+      }
+
+      &:last-of-type {
+        ion-icon {
+          background: #2960da;
+        }
       }
     }
   }

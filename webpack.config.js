@@ -1,7 +1,6 @@
-const { join } = require('path');
+const { resolve } = require('path');
 const webpackMerge = require('webpack-merge');
 const { dev, prod } = require('@ionic/app-scripts/config/webpack.config');
-console.log('from webpack')
 
 const config = {
 	module: [
@@ -21,9 +20,12 @@ const config = {
 		}
 	],
 	resolve: {
-		alias: {
-			'@app': join(__dirname, './src'),
-		}
+    extensions: [".d.ts", ".ts", ".js"],
+    // TODO: resolve alias didn't work
+    /*alias: {
+			'@app': root('src'),
+			'neon': root('src', 'libs/neon/lib')
+		}*/
 	},
 	devServer: {
 		'**/ticker': {
@@ -34,8 +36,8 @@ const config = {
 	}
 };
 
-module.exports = {
-	dev: webpackMerge(dev, config),
-	prod: webpackMerge(prod, config),
+module.exports = webpackMerge(dev, config)
+
+function root (...args) {
+	return resolve.apply(null, [__dirname, ...args])
 }
-console.log('webpack config')

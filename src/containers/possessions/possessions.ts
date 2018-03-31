@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core'
+import {
+	Component,
+	OnDestroy,
+	OnInit
+} from '@angular/core'
 import {
 	IonicPage,
-	Loading,
-	LoadingController,
 	NavController,
 	Refresher
 } from 'ionic-angular'
+import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs/Observable'
+import { Subscription } from 'rxjs/Subscription'
+import 'rxjs/add/operator/take'
 
-import { select, Store } from '@ngrx/store'
+import { IBalance } from '../../shared/models'
+import { Account } from '../../shared/typings'
+import { LoadingProvider, NotificationProvider } from '../../providers'
+import { BalancesActions } from '../../store/actions'
+import { WalletSelectors, BalancesSelectors, PricesSelectors, SettingsSelectors } from '../../store/selectors'
+import { fromBalances, fromWallet } from '../../store/reducers'
 
-import { PossessionDetailPage } from './possession-detail/possession-detail'
-import { WalletProvider } from '../../providers/wallet/wallet.provider'
-
-import * as fromBalances from '../../reducers/balances.reducer'
-import * as balancesAction from '../../actions/balances.action'
-import { BalancesState } from '../../reducers/balances.reducer'
-import { AccountProvider } from '../../providers/account/account.provider'
-import { NotificationProvider } from '../../providers/notification.provider'
 
 @IonicPage({
 	name: 'Possessions',
@@ -26,43 +29,72 @@ import { NotificationProvider } from '../../providers/notification.provider'
 	selector: 'page-possessions',
 	templateUrl: 'possessions.html'
 })
-export class PossessionsPage implements OnInit {
-	splash: boolean = false
-	possessionDetailPage = PossessionDetailPage
-	account = this.accountProvider.defaultAccount
-	loading: Loading = this.loadingCtrl.create()
-	balances$ = this.store.pipe(select(fromBalances.selectEntities));
+export class PossessionsPage implements OnInit, OnDestroy {
+	exits: boolean
+	balances: Observable<IBalance[]>
+	account: Observable<Account> = this.store.select(WalletSelectors.getAccount)
+	amount: Observable<number> = this.store.select(PricesSelectors.getDefaultAccountAmount)
+	baseCurrency: Observable<string> = this.store.select(SettingsSelectors.getCurrency)
+	selectedBalanceSubscriber: Subscription
+
+	get displayZero () { return this._displayZero }
+	set displayZero (val) {
+		this.updateBalances(val)
+		this._displayZero = val
+	}
+	private _displayZero = false
 
 
 	constructor (
 		public navCtrl: NavController,
-		private walletProvider: WalletProvider,
-		private loadingCtrl: LoadingController,
-		private accountProvider: AccountProvider,
 		private notificationProvider: NotificationProvider,
-		private store: Store<BalancesState>
+		private lp: LoadingProvider,
+		private store: Store<fromBalances.State | fromWallet.State>
 	) {}
 
 	ionViewCanEnter () {
-		return this.walletProvider.hasAccounts()
+		return this.exits
 	}
 
-	async ngOnInit () {
-		await this.loading.present()
-		this.loadBalance()
-		await this.loading.dismiss()
+	ngOnInit () {
+		this.updateBalances(this.displayZero)
+		// this.store.dispatch(new BalancesActions.Load())
+		this.store
+				.select(BalancesSelectors.getLoading)
+				.subscribe(loading => this.lp.emit(loading))
+		this.store
+				.select(BalancesSelectors.getError)
+				.subscribe(error => error && this.notificationProvider.emit({ message: error }))
+		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
-	loadBalance () {
-		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.store.select(fromBalances.selectError).subscribe(
-			error => error && this.notificationProvider.emit({ message: error })
-		)
+	ngOnDestroy () {
+
 	}
 
-	doRefresh (e: Refresher) {
-		this.store.dispatch(new balancesAction.Get(this.account.address))
-		this.notificationProvider.emit({ message:'刷新成功！' })
-		e.complete()
+	updateBalances (displayZero) {
+		this.balances = displayZero
+			? this.store.select(BalancesSelectors.getDefaultEntities)
+			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
+	}
+
+	doRefresh (refresher: Refresher) {
+		this.store.dispatch(new BalancesActions.Load())
+		this.store
+				.select(BalancesSelectors.getLoading)
+				.subscribe(loading => !loading && refresher.complete())
+	}
+
+	handleBalanceSelect (symbol) {
+		this.store.dispatch(new BalancesActions.Select(symbol))
+		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance)
+																				 .take(1)
+																				 .subscribe(selectedBalance => {
+																					 selectedBalance && this.navCtrl.push('PossessionDetail')
+																				 })
+	}
+
+	handleDisplayZeroClick (bool) {
+		this.displayZero = bool
 	}
 }

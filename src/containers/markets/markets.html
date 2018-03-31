@@ -23,12 +23,11 @@
 	</ion-list-header>
 
 	<ion-refresher (ionRefresh)="doRefresh($event)">
-		<ion-refresher-content>
-		</ion-refresher-content>
+		<ion-refresher-content>H1ll</ion-refresher-content>
 	</ion-refresher>
 
 
-	<ion-card class="markets__card" *ngFor="let coin of coins" (click)="navCtrl.push(marketDetailPage, { coin: coin, perGas: coin.currentPrice / GASPrice })">
+	<ion-card class="markets__card" *ngFor="let coin of coins" (click)="handleCoinClick(coin)">
 		<ion-list>
 			<button ion-row ion-item detail-none>
 				<ion-col col-3 item-start>
@@ -37,7 +36,7 @@
 
 				<ion-label text-right>
 					<p class="markets__current-price">{{ coin.currentPrice | currency:'CNY':'symbol-narrow':'1.1-5' }}</p>
-					{{ (coin.currentPrice / GASPrice) | number:'1.1-4' }}<span class="markets__conversion-rate">/GAS</span>
+					{{ (GASPrice / coin.currentPrice) | number:'1.1-4' }}<span class="markets__conversion-rate">/GAS</span>
 				</ion-label>
 
 				<ion-col col-4 item-end text-right>
@@ -48,8 +47,6 @@
 						{{ coin.percent_change_24h || 'None' }}{{ coin.percent_change_24h ? '%' : '' }}
 					</p>
 				</ion-col>
-
-
 			</button>
 		</ion-list>
 

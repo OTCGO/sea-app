@@ -5,11 +5,9 @@ import {
 } from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
+	IonicPage,
 	AlertController,
 	LoadingController,
-	Loading,
-	IonicPage,
-	AlertOptions,
 	ModalController
 } from 'ionic-angular'
 import { Clipboard } from '@ionic-native/clipboard'
@@ -19,7 +17,8 @@ import { Account } from '../../../shared/typings'
 import { nep5Wallet } from '../../../shared/userWallet'
 import {
 	SettingsSelectors,
-	WalletSelectors
+	WalletSelectors,
+	PricesSelectors
 } from '../../../store/selectors'
 import {
 	AuthActions,
@@ -27,8 +26,6 @@ import {
 } from '../../../store/actions'
 import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 import { ManageWalletCards } from '../../../components/profile/manage-wallet'
-import { wallet } from '../../../libs/neon'
-import { concat, flip, divide, path, split, compose } from 'ramda'
 
 
 @IonicPage({
@@ -43,23 +40,11 @@ export class ManageWalletPage {
 	// accounts = this.accountProvider.accounts
 	accounts = this.store.select(WalletSelectors.getAccounts)
 	currency = this.store.select(SettingsSelectors.getCurrency)
+	amounts = this.store.select(PricesSelectors.getAmounts)
+	gasAmounts = this.store.select(PricesSelectors.getGASAmounts)
 
 	get marginTop () {
-		const splitByDot = split('.')
-		type querySelector = (str: string) => NodeList
-		const scrollContent = this.elementRef.nativeElement.querySelector('.scroll-content')
-		const scrollContentMarginTop = path(splitByDot('style.marginTop'), scrollContent)
-
-		const divideBy = flip(divide)
-		const stringAppend = flip(concat)
-		const toString = n => n.toString()
-		return compose(
-			stringAppend('px'),
-			toString,
-			divideBy(2),
-			parseInt,
-			path(splitByDot('style.marginTop'))
-		)(scrollContentMarginTop)
+		return parseInt(this.elementRef.nativeElement.querySelector('.scroll-content').style.marginTop) / 2 + 'px'
 	}
 
 	@ViewChild('cards') cards: ManageWalletCards
@@ -76,6 +61,7 @@ export class ManageWalletPage {
 
 	ngOnInit () {
 		this.store.dispatch(new AuthActions.Login(nep5Wallet))
+		console.log(this)
 	}
 
 	handleSetDefaultAccount (account) {

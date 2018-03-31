@@ -1,3 +1,5 @@
+@import "../../../theme/otcgo/variables";
+
 page-market-detail {
   ion-header.otcgo-header {
     .icon {
@@ -10,7 +12,9 @@ page-market-detail {
   }
 
   .market-detail__content {
-
+    .scroll-content {
+      overflow: hidden;
+    }
 
     .market-detail__background {
       position: absolute;
@@ -27,19 +31,18 @@ page-market-detail {
       font-size: 3.2rem;
       color: white;
       padding-left: 20px;
-      padding-top: 30px;
+      padding-top: 3.64rem;
     }
 
     .market-detail__card {
-      padding: 32px 20px;
-      position: absolute;
-      top: 30%;
+      padding: 20px 20px;
       border-radius: 10px;
 
 
       .market-detail__rating {
         align-items: center;
         font-size: 1.4rem;
+        padding: 0 0 1rem;
 
         .col {
           padding: 0;
@@ -47,20 +50,22 @@ page-market-detail {
 
         .market-detail__conversion__title {
           color: rgb(50, 118, 217);
-          font-size: 3.8rem;
+          font-size: 3.4rem;
         }
 
         .market-detail__conversion__price {
-          color: rgb(193, 193, 193);
+          color: $--color-grey-light-8;
+          // color: rgb(193, 193, 193);
         }
 
         .market-detail__conversion__base {
-          color: rgb(112, 112, 112);
+          color: $--color-grey-light-2;
+          // color: rgb(112, 112, 112);
           padding-left: 5px;
         }
 
         .market-detail__fall-of {
-          font-size: 2rem;
+          font-size: 2.2rem;
           text-align: right;
 
           &--red {
@@ -70,6 +75,59 @@ page-market-detail {
           &--green {
             color: hsl(100, 75%, 55%);
           }
+        }
+
+      }
+
+      .market-detail__change-data-title .col,
+      .market-detail__change-data .col,
+      .market-detail__change-actions .col {
+        text-align: center;
+      }
+
+      .market-detail__change-container {
+        padding: 1rem 0;
+        border-top: 1px solid #efefef;
+        border-bottom: 1px solid #efefef;
+
+        .market-detail__change-data-title {
+          color: $--color-grey-light-8;
+          // color: rgba(0, 0, 0, 0.6);
+        }
+
+        .market-detail__change-data {
+          font-size: 1.6rem;
+          color: $--color-grey-light-2;
+          // color: rgba(0, 0, 0, 0.6);
+        }
+      }
+
+      .market-detail__change-actions {
+        padding-top: 1rem;
+        color: $--color-grey-light-8;
+        font-size: 1.6rem;
+        // color: rgba(0, 0, 0, 0.6);
+
+        .col.is-active {
+          color: #2a72da;
+        }
+      }
+    }
+
+    .market-detail__chart {
+      padding: 0;
+      color: white;
+
+      .axis {
+        path {
+          fill: none;
+          stroke: #777;
+          stroke-width: 5px;
+          shape-rendering: crispEdges;
+        }
+        text {
+          font-family: Lato;
+          font-size: 13px;
         }
       }
     }

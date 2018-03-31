@@ -30,6 +30,8 @@
 		}
 	},
 	"POSSESSIONS": {
+		"totalBalances": "总资产",
+		"displayZero": "隐藏0元资产",
 		"DETAILS": {
 			"title": "交易记录",
 			"transfer": "转账",
@@ -48,7 +50,16 @@
 		"name": "资产名称",
 		"price": "最新价",
 		"change": "跌涨幅",
-		"DETAILS": {}
+		"DETAILS": {
+			"hour": "时",
+			"day": "日",
+			"week": "周",
+			"month": "月",
+			"open": "开盘价",
+			"high": "最高价",
+			"low": "最低价",
+			"volume": "成交量/K"
+		}
 	},
 	"PROFILE": {
 		"manage_wallet": "管理钱包",

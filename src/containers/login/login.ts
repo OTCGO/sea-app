@@ -153,6 +153,9 @@ export class LoginPage implements OnInit {
 		if (wifValue === 'test') {
 			this.store.dispatch(new AuthActions.Login(nep5Wallet))
 		} else if (wifValue && this.isWIFKey && !passphraseValue) {
+			if (wifControl.invalid) {
+				return
+			}
 			this.store.dispatch(new AuthActions.LoginWif(wifValue))
 		} else if (this.file && !this.isWIFKey && !wifValue) {
 			if (isOldWallet(this.file)) {

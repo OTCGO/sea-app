@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 import { MarketDetailPage } from './market-detail'
+import {
+	MarketDetailCard,
+	MarketDetailChart
+} from '../../../components/markets/market-detail'
 
-const COMPONENT = [
-	MarketDetailPage
-]
 
 @NgModule({
-	declarations: COMPONENT,
+	declarations: [
+		MarketDetailPage,
+		MarketDetailCard,
+		MarketDetailChart
+	],
 	imports: [
 		IonicPageModule.forChild(MarketDetailPage)
-	],
-	exports: COMPONENT
+	]
 })
 export class MarketDetailModule {}

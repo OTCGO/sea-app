@@ -8,17 +8,17 @@ import {
 	NavController,
 	Refresher
 } from 'ionic-angular'
-
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
+import 'rxjs/add/operator/take'
+
 import { IBalance } from '../../shared/models'
+import { Account } from '../../shared/typings'
 import { LoadingProvider, NotificationProvider } from '../../providers'
 import { BalancesActions } from '../../store/actions'
-import { WalletSelectors, BalancesSelectors } from '../../store/selectors'
+import { WalletSelectors, BalancesSelectors, PricesSelectors, SettingsSelectors } from '../../store/selectors'
 import { fromBalances, fromWallet } from '../../store/reducers'
-
-import 'rxjs/add/operator/take'
 
 
 @IonicPage({
@@ -31,18 +31,18 @@ import 'rxjs/add/operator/take'
 })
 export class PossessionsPage implements OnInit, OnDestroy {
 	exits: boolean
-	account = this.store.select(WalletSelectors.getAccount)
-	balances: Observable<IBalance[]> = this.store.select(BalancesSelectors.getDefaultEntities)
+	balances: Observable<IBalance[]>
+	account: Observable<Account> = this.store.select(WalletSelectors.getAccount)
+	amount: Observable<number> = this.store.select(PricesSelectors.getDefaultAccountAmount)
+	baseCurrency: Observable<string> = this.store.select(SettingsSelectors.getCurrency)
 	selectedBalanceSubscriber: Subscription
 
 	get displayZero () { return this._displayZero }
 	set displayZero (val) {
+		this.updateBalances(val)
 		this._displayZero = val
-		this.balances = this.displayZero
-			? this.store.select(BalancesSelectors.getDefaultEntities)
-			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
 	}
-	private _displayZero = true
+	private _displayZero = false
 
 
 	constructor (
@@ -57,20 +57,25 @@ export class PossessionsPage implements OnInit, OnDestroy {
 	}
 
 	ngOnInit () {
-		this.store.dispatch(new BalancesActions.Load())
-
+		this.updateBalances(this.displayZero)
+		// this.store.dispatch(new BalancesActions.Load())
 		this.store
 				.select(BalancesSelectors.getLoading)
 				.subscribe(loading => this.lp.emit(loading))
 		this.store
 				.select(BalancesSelectors.getError)
 				.subscribe(error => error && this.notificationProvider.emit({ message: error }))
-
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
 	ngOnDestroy () {
 
+	}
+
+	updateBalances (displayZero) {
+		this.balances = displayZero
+			? this.store.select(BalancesSelectors.getDefaultEntities)
+			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
 	}
 
 	doRefresh (refresher: Refresher) {
@@ -87,5 +92,9 @@ export class PossessionsPage implements OnInit, OnDestroy {
 																				 .subscribe(selectedBalance => {
 																					 selectedBalance && this.navCtrl.push('PossessionDetail')
 																				 })
+	}
+
+	handleDisplayZeroClick (bool) {
+		this.displayZero = bool
 	}
 }

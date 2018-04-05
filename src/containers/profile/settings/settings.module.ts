@@ -3,8 +3,16 @@ import { SettingsPage } from './settings'
 import { IonicPageModule } from 'ionic-angular'
 import { ExpansionModule } from '../../../components/expansion-panel/expansion-module'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+	SettingsCurrencies,
+	SettingsLanguage
+} from '../../../components/profile/settings'
 
-const COMPONENT = [SettingsPage]
+const COMPONENT = [
+	SettingsPage,
+	SettingsLanguage,
+	SettingsCurrencies
+]
 
 @NgModule({
 	declarations: COMPONENT,

@@ -4,12 +4,14 @@ import {
 	Effect,
 	ofType
 } from '@ngrx/effects'
+import { TranslateService } from '@ngx-translate/core'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import {
 	catchError,
 	map,
-	switchMap
+	switchMap,
+	tap
 } from 'rxjs/operators'
 import { FileStorageProvider } from '../../providers'
 
@@ -24,7 +26,7 @@ export class SettingsEffects {
 	@Effect()
 	Load$ = this.actions$.pipe(
 		ofType<Load>(SettingsActionTypes.LOAD),
-		map(_ => fromPromise(this.fileStorage.checkFile(OTCGO_SETTING_FILE_NAME))),
+		map(() => fromPromise(this.fileStorage.checkFile(OTCGO_SETTING_FILE_NAME))),
 		switchMap(exits =>
 			exits
 				? fromPromise(this.fileStorage.read(OTCGO_SETTING_FILE_NAME))
@@ -34,8 +36,15 @@ export class SettingsEffects {
 		catchError(error => of(new LoadFail(error)))
 	)
 
+	@Effect({ dispatch: false })
+	ChangeLanguage$ = this.actions$.pipe(
+		ofType<ChangeLanguage>(SettingsActionTypes.CHANGE_LANGUAGE),
+		map(action => action.payload),
+		tap(locale => this.ts.use(locale))
+	)
+
 	/*@Effect()
 	Save$ = this.actions$.piep()*/
 
-	constructor (private actions$: Actions, private fileStorage: FileStorageProvider) {}
+	constructor (private actions$: Actions, private fileStorage: FileStorageProvider, private ts: TranslateService) {}
 }

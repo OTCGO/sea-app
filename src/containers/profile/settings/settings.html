@@ -7,25 +7,7 @@
 <ion-content padding>
 
 	<ion-list>
-		<accordion>
-			<expansion-panel class="expansion-demo-width" #myPanel>
-				<expansion-panel-header>
-					<panel-title>{{ 'PROFILE.SETTINGS.LANGUAGES.title' | translate }}</panel-title>
-					<p>{{ 'PROFILE.SETTINGS.LANGUAGES.subtitle' | translate }}</p>
-				</expansion-panel-header>
-
-				<button ion-button clear full text-capitalize (click)="setLocale('zh')">
-					<span>Chinese</span>
-					<span class="subtitle">中文</span>
-				</button>
-
-				<button ion-button clear full text-capitalize disabled>
-					<span>English</span>
-					<span class="subtitle">英文</span>
-				</button>
-
-			</expansion-panel>
-		</accordion>
+		<settings-language [languages]="locales" (localeClick)="handleLocaleClick($event)"></settings-language>
 	</ion-list>
 
 </ion-content>

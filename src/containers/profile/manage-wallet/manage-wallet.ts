@@ -3,30 +3,29 @@ import {
 	ElementRef,
 	ViewChild
 } from '@angular/core'
+import { Clipboard } from '@ionic-native/clipboard'
 import { Store } from '@ngrx/store'
 import {
-	IonicPage,
 	AlertController,
+	IonicPage,
 	LoadingController,
 	ModalController
 } from 'ionic-angular'
-import { Clipboard } from '@ionic-native/clipboard'
-
-import { RootState } from '../../../store/reducers'
+import { ManageWalletCards } from '../../../components/profile/manage-wallet'
+import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 import { Account } from '../../../shared/typings'
 import { nep5Wallet } from '../../../shared/userWallet'
-import {
-	SettingsSelectors,
-	WalletSelectors,
-	PricesSelectors
-} from '../../../store/selectors'
 import {
 	AuthActions,
 	WalletActions
 } from '../../../store/actions'
-import { WalletProvider } from '../../../providers/wallet/wallet.provider'
-import { ManageWalletCards } from '../../../components/profile/manage-wallet'
 
+import { RootState } from '../../../store/reducers'
+import {
+	PricesSelectors,
+	SettingsSelectors,
+	WalletSelectors
+} from '../../../store/selectors'
 
 @IonicPage({
 	name: 'ManageWallet',
@@ -42,11 +41,6 @@ export class ManageWalletPage {
 	currency = this.store.select(SettingsSelectors.getCurrency)
 	amounts = this.store.select(PricesSelectors.getAmounts)
 	gasAmounts = this.store.select(PricesSelectors.getGASAmounts)
-
-	get marginTop () {
-		return parseInt(this.elementRef.nativeElement.querySelector('.scroll-content').style.marginTop) / 2 + 'px'
-	}
-
 	@ViewChild('cards') cards: ManageWalletCards
 
 	constructor (
@@ -59,9 +53,12 @@ export class ManageWalletPage {
 		private store: Store<RootState>
 	) { }
 
+	get marginTop () {
+		return parseInt(this.elementRef.nativeElement.querySelector('.scroll-content').style.marginTop) / 2 + 'px'
+	}
+
 	ngOnInit () {
 		this.store.dispatch(new AuthActions.Login(nep5Wallet))
-		console.log(this)
 	}
 
 	handleSetDefaultAccount (account) {

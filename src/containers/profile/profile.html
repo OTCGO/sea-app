@@ -1,14 +1,14 @@
 <ion-content class="card-background-page">
     <ion-card class="card-info">
         <div class="card-avatar">
-	        <img [src]="avatar">
+	        <img *ngIf="avatar" [src]="avatar" (error)="handleImageError($event)">
         </div>
         <div class="card-title">{{ account.label }}</div>
     </ion-card>
 
 	<profile-round-menu [menus]="menus"></profile-round-menu>
 
-	<profile-nav></profile-nav>
+	<profile-nav [navs]="navs"></profile-nav>
 
     <profile-feature-list></profile-feature-list>
 </ion-content>

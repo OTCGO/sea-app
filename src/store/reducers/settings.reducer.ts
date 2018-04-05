@@ -1,4 +1,8 @@
 import {
+	DEFAULT_CURRENCY,
+	DEFAULT_LANGUAGE
+} from '../../shared/constants'
+import {
 	I18n,
 	ICurrency
 } from '../../shared/models'
@@ -16,10 +20,10 @@ export interface State {
 }
 
 const initialSettingsState: State = {
-	language: 'zh-cn',
+	language: DEFAULT_LANGUAGE,
 	loading: false,
 	error: '',
-	currency: 'cny',
+	currency: DEFAULT_CURRENCY,
 }
 
 export const reducer = (state = initialSettingsState, action: SettingsActions): State => {

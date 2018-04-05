@@ -1,22 +1,30 @@
 import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
 import { IonicPage } from 'ionic-angular'
 import { TranslateService } from '@ngx-translate/core'
+import { RootState } from '../../../store/reducers'
+import { SettingsActions } from '../../../store/actions'
 
 
 @IonicPage({
-	name: 'settings'
+	name: 'Settings'
 })
 @Component({
 	selector: 'page-settings',
 	templateUrl: 'settings.html'
 })
 export class SettingsPage {
-	constructor (public translateService: TranslateService) {}
+	locales = [
+		{ title: 'Chinese', locale: 'zh', enabled: true },
+		{ title: 'English', locale: 'en', enabled: true }
+	]
 
-	setLocale (locale) {
-		/*this.translateService.getTranslation(locale).subscribe(debug('getTranslation'))
-		this.translateService.use(locale).subscribe(debug('use'))
-		this.translateService.reloadLang(locale).subscribe(debug('reloadLang'))
-		console.log(locale)*/
+	constructor (
+		public translateService: TranslateService,
+		private store: Store<RootState>
+	) {}
+
+	handleLocaleClick (locale) {
+		this.store.dispatch(new SettingsActions.ChangeLanguage(locale))
 	}
 }

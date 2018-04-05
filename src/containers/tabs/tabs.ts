@@ -25,7 +25,7 @@ export class TabsPage {
     this.tabs = [
       { root: 'Possessions', title: this.balancesTitle, icon: 'balances', enabled: true },
       { root: 'Markets', title: this.marketsTitle, icon: 'markets', enabled: true },
-      { root: 'Discover', title: this.discoverTitle, icon: 'discover', enabled: false },
+      { root: 'Discover', title: this.discoverTitle, icon: 'discover', enabled: true },
       { root: 'Profile', title: this.profileTitle, icon: 'profile', enabled: true }
 		]
   }

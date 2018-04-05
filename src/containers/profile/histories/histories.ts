@@ -4,11 +4,13 @@ import {
 } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from '@store/reducers'
-import { IonicPage } from 'ionic-angular'
+import {
+	IonicPage,
+	NavController
+} from 'ionic-angular'
 import { LoadingProvider } from '../../../providers'
 import { TransactionHistorySelectors } from '../../../store/selectors'
 import { TransactionHistoryActions } from '../../../store/actions'
-
 
 
 @IonicPage({
@@ -23,13 +25,18 @@ export class Histories implements OnInit {
 
 	constructor (
 		private store: Store<RootState>,
-		private lp: LoadingProvider
+		private lp: LoadingProvider,
+		private navCtrl: NavController
 	) { }
 
 	ngOnInit () {
-		this.store.dispatch(new TransactionHistoryActions.Load())
+		// this.store.dispatch(new TransactionHistoryActions.Load())
 		this.store.select(TransactionHistorySelectors.getLoading)
 			.subscribe(bool => this.lp.emit(bool))
-		// this.store.dispatch(new AssetsActions.Load())
+	}
+
+	handleHistorySelect (txid) {
+		this.store.dispatch(new TransactionHistoryActions.Select(txid))
+		this.navCtrl.push('HistoryDetail')
 	}
 }

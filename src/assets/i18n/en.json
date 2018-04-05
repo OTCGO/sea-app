@@ -82,6 +82,7 @@
       "export_wif": "Export WIF",
       "export_key": "Export EncryptedKey",
       "save": "Save",
+      "save_success": "Save Wallet Success",
       "default": "Default",
       "default_action": "Set to default",
       "REMOVE_ACCOUNT": {

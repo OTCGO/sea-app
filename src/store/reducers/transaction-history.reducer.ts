@@ -1,21 +1,25 @@
 import { ActionReducer } from '@ngrx/store'
+import { TransactionHistory } from '../../shared/models'
 import {
 	TransactionHistoryActions,
 	TransactionHistoryActionTypes
 } from '../actions/transaction-history.action'
+import { MockTransactionHistories } from './mockData'
 
 export interface State {
-	entities: any[]
+	entities: TransactionHistory[]
 	details: any[]
 	loading: boolean
 	error?: string | Error
+	selectedTxid: string
 }
 
 const initialState: State = {
-	entities: [],
+	entities: MockTransactionHistories,
 	details: [],
 	loading: false,
 	error: null,
+	selectedTxid: ''
 }
 
 export const reducer: ActionReducer<State> = (
@@ -53,6 +57,13 @@ export const reducer: ActionReducer<State> = (
 				...state,
 				details: action.payload,
 				loading: false
+			}
+		}
+
+		case TransactionHistoryActionTypes.SELECT: {
+			return {
+				...state,
+				selectedTxid: action.payload
 			}
 		}
 

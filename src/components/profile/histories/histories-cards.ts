@@ -1,6 +1,8 @@
 import {
 	Component,
-	Input
+	EventEmitter,
+	Input,
+	Output
 } from '@angular/core'
 import {
 	compose,
@@ -8,6 +10,7 @@ import {
 	split,
 	last
 } from 'ramda'
+import { TransactionHistory } from '../../../shared/models'
 
 
 @Component({
@@ -15,7 +18,8 @@ import {
 	templateUrl: 'histories-cards.html'
 })
 export class HistoriesCards {
-	@Input() histories
+	@Input() histories: TransactionHistory[]
+	@Output() select = new EventEmitter()
 
 	constructor () { }
 

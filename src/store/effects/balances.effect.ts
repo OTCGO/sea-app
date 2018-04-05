@@ -3,9 +3,7 @@ import { Action, Store } from '@ngrx/store'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { BigNumber } from 'bignumber.js'
 import { Observable } from 'rxjs/Observable'
-import { empty } from 'rxjs/observable/empty'
 import { forkJoin } from 'rxjs/observable/forkJoin'
-import { from } from 'rxjs/observable/from'
 import { of } from 'rxjs/observable/of'
 import {
 	map,
@@ -16,7 +14,6 @@ import {
 	publishLast,
 	refCount,
 	withLatestFrom,
-	merge
 } from 'rxjs/operators'
 import {
 	getEveryAccountAddress

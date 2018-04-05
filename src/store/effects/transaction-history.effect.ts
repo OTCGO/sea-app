@@ -26,8 +26,10 @@ import {
 } from 'ramda'
 import { getAccount } from '../selectors/wallet.selector'
 import { getSelectedBalance } from '../selectors/balances.selector'
+import { getSelectedTxid } from '../selectors/transaction-history.selector'
 import { RootState } from '../../store/reducers'
 import { ApiProvider, API_CONSTANTS } from '../../providers/api'
+import { TransactionHistory } from '../../shared/models'
 import {
 	TransactionHistoryActionTypes,
 	Load,
@@ -93,20 +95,23 @@ export class TransactionHistoryEffects {
 			})
 		)
 
+	@Effect()
 	LoadDetail$ =
 		this.actions$.pipe(
 			ofType<LoadDetail>(TransactionHistoryActionTypes.LOAD_DETAIL),
-			map(action => action.type),
+			withLatestFrom(this.store$.select(getSelectedTxid), (_, txid) => txid),
 			concatMap(txid => {
+				console.log('transaction history effect', txid)
+
 				const next$ = this.actions$.pipe(
 					ofType(TransactionHistoryActionTypes.LOAD_DETAIL),
 					skip(1)
 				)
 
-				return this.apiProvider.get('/transaction/' + txid)
+				return this.apiProvider.get(`${API_CONSTANTS.HISTORY_DETAIL}/${txid}`)
 									 .pipe(
 										 takeUntil(next$),
-										 map(transaction => transaction && new LoadDetailSuccess(transaction)),
+										 map(transaction => transaction !== 404 && new LoadDetailSuccess(transaction)),
 										 catchError(error => of(new LoadDetailFail(error)))
 									 )
 			})
@@ -119,16 +124,8 @@ export class TransactionHistoryEffects {
 	) {}
 }
 
-interface HistoryResponse {
-	asset: string
-	operation: string
-	txid: string
-	value: string
-	time: string
-}
-
 // TODO: Move parse Tx to selector section
-const mapTransactionHistory = (histories: HistoryResponse[], asset: (NEP5 | Global)[]) => {
+const mapTransactionHistory = (histories: TransactionHistory[], asset: (NEP5 | Global)[]) => {
 	return histories.filter(history => Number(history.value)).map(history => {
 		const coin = asset.find(c => c.id === history.asset || `0x${c.id}` === history.asset)
 		const name = coin.name || 'none'

@@ -1,4 +1,4 @@
-<ion-card *ngFor="let history of histories">
+<ion-card *ngFor="let history of histories" (click)="select.emit(history.txid)">
 	<ion-list>
 		<button ion-item icon-right ion-row detail-none>
 			<ion-col item-start col-3>{{ history.symbol }}</ion-col>

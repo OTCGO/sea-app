@@ -46,12 +46,12 @@
 			"share": "分享"
 		},
 		"SEND_MODAL": {
-			"title": "Transfer",
-			"address": "Address",
-			"password": "Password",
-			"amount": "Amount",
-			"label": "Label",
-			"transfer": "Transfer"
+			"title": "转账",
+			"address": "地址",
+			"password": "密码",
+			"amount": "数量",
+			"label": "备注",
+			"transfer": "点击转账"
 		}
 	},
 	"MARKETS": {
@@ -82,6 +82,7 @@
 			"export_wif": "导出 WIF",
 			"export_key": "导出 EncryptedKey",
 			"save": "保存",
+			"save_success": "保存钱包成功",
 			"default": "默认钱包",
 			"default_action": "设为默认钱包",
 			"REMOVE_ACCOUNT": {

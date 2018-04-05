@@ -102,13 +102,13 @@ export class MarketDetailChart {
 					const d0 = ng.histories[i - 1]
 					const d1 = ng.histories[i]
 					const d: DetailData = (<any>x0 - d0.time) > (d1.time - <any>x0) ? d1 : d0
-					const gasPrice = svg.select("text.gas-price").text(() => Number(ng.gasPrice) / d.close)
-					const currency = svg.select('g + g > text')
+					const gasPrice = svg.select("text.base-price").text(() => Number(ng.gasPrice) / d.close)
+					const currency = svg.select('g + g > text').text('￥')
 					const time = new Date(d.time * 1000)
 					const hourAndMinutes = formatTime(time, ng.currentDuration)
 					focus.attr("transform", `translate(${x(d.time)}, ${y(d.close)})`)
 					focus.select("text").text(() => hourAndMinutes)
-					svg.select('text.gas-price + text').attr('dx', (<any>gasPrice)._groups[0][0].clientWidth)
+					svg.select('text.base').text('/GAS').attr('dx', (<any>gasPrice)._groups[0][0].clientWidth + 2)
 					svg.select("text.current-price").attr('dx', (<any>currency)._groups[0][0].clientWidth).text(() => d.close)
 				} catch (e) {
 					return

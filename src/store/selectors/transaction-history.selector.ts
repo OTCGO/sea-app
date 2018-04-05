@@ -1,7 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { compose, prop, filter, equals } from 'ramda'
+import { find, compose, prop, filter, equals } from 'ramda'
 import { getSelectedBalanceSymbol } from '../selectors/balances.selector'
 import { State } from '../reducers/transaction-history.reducer'
+import { TransactionHistory } from '../../shared/models'
 
 
 export const getState = createFeatureSelector('transaction_history')
@@ -21,8 +22,24 @@ export const getLoading = createSelector(
 	(state: State) => state.loading
 )
 
-export const getSelectedEntities = createSelector(
+export const getEntitiesBySelectedSymbol = createSelector(
 	getEntities,
 	getSelectedBalanceSymbol,
 	(histories, symbol) => filter(compose(equals(symbol), prop('symbol')), histories)
+)
+
+export const getSelectedTxid = createSelector(
+	getState,
+	(state: State) => state.selectedTxid
+)
+
+export const getSelectedEntities = createSelector(
+	getEntities,
+	getSelectedTxid,
+	(entities, txid) => find<TransactionHistory>(compose(equals(txid), prop('txid')))(entities)
+)
+
+export const getDetail = createSelector(
+	getState,
+	(state: State) => state.details
 )

@@ -13,5 +13,8 @@
 		</ion-row>
 	</ion-list-header>
 
-	<histories-cards [histories]="histories | async"></histories-cards>
+	<histories-cards
+		[histories]="histories | async"
+		(select)="handleHistorySelect($event)"
+	></histories-cards>
 </ion-content>

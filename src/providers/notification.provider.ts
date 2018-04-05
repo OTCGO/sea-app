@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import { ToastController } from 'ionic-angular'
+import {
+	debounceTime,
+	take
+} from 'rxjs/operators'
 import { Subject } from 'rxjs/Subject'
 
 
@@ -14,14 +19,24 @@ export interface notificationOpts {
 export class NotificationProvider {
 	subject = new Subject()
 	notification$ = this.subject.asObservable()
+	debounce = 3000
 
-	constructor (private toastCtrl: ToastController) {
+	constructor (private toastCtrl: ToastController, private translateService: TranslateService) {
 		this.subscribeNotification()
 	}
 
 	emit (options: notificationOpts | string) {
 		const nomi = typeof options === 'object' ? options : { message: options }
 		this.subject.next(nomi)
+	}
+
+	translatedNotify (key: string, interpolateParams?: object) {
+		this.translateService.get(key, interpolateParams)
+				.pipe(
+					take(1),
+					debounceTime(this.debounce),
+				)
+			.subscribe(translation => this.emit(translation))
 	}
 
 	subscribeNotification () {
@@ -32,7 +47,7 @@ export class NotificationProvider {
 		const toastOptions = Object.assign(opts, {
 			message: opts.message['message'] || opts.message,
 			position: 'bottom',
-			duration: 3000
+			duration: this.debounce
 		})
 
 		const toast = this.toastCtrl.create(toastOptions)

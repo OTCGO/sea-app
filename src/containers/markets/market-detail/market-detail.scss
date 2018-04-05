@@ -8,8 +8,9 @@ page-market-detail {
   }
 
   .market-detail__content {
+    /* !important to make it override style */
     .scroll-content {
-      margin-top: 0;
+      margin-top: 0 !important;
       overflow: hidden;
     }
 

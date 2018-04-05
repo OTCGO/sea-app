@@ -1,4 +1,4 @@
-<ion-slides (ionSlideDidChange)="handleSlideChanged()" [pager]="true" class="sea-card">
+<ion-slides [pager]="true" class="sea-card">
 	<manage-wallet-card
 		*ngFor="let account of accounts; index as i"
 		[showClose]="showClose"

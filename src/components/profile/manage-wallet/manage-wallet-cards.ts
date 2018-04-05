@@ -2,34 +2,36 @@ import {
 	Component,
 	EventEmitter,
 	Input,
-	NgZone,
 	OnDestroy,
-	OnInit,
 	Output,
 	ViewChild
 } from '@angular/core'
-import { Store } from '@ngrx/store'
 import { Slides } from 'ionic-angular'
 
 import { Account } from '../../../shared/typings'
-import { RootState } from '../../../store/reducers'
-
 
 @Component({
 	selector: 'manage-wallet-cards',
 	templateUrl: 'manage-wallet-cards.html'
 })
-export class ManageWalletCards implements OnInit, OnDestroy {
+export class ManageWalletCards implements OnDestroy {
 	firstIn = true
 
 	@Input() currency: string
 	@Input() gasAmounts: number[] = []
 	@Input() amounts: number[] = []
+	@Output() onSaveAccount = new EventEmitter<Account>()
+	@Output() onSetDefaultAccount = new EventEmitter<number>()
+	@Output() onRemoveAccount = new EventEmitter<string>()
+	@ViewChild(Slides) slides: Slides
+
+	private _accounts: Account[]
 
 	@Input()
 	get accounts () {
 		return this._accounts
 	}
+
 	set accounts (val) {
 		this._accounts = val
 		if (!this.firstIn) {
@@ -37,40 +39,16 @@ export class ManageWalletCards implements OnInit, OnDestroy {
 		}
 		this.firstIn = false
 	}
-	private _accounts: Account[]
-
-	@Output() onSaveAccount = new EventEmitter<Account>()
-	@Output() onSetDefaultAccount = new EventEmitter<number>()
-	@Output() onRemoveAccount = new EventEmitter<string>()
-	@ViewChild(Slides) slides: Slides
 
 	get showClose () {
 		return this.accounts.length > 1
 	}
 
-	constructor (private store: Store<RootState>, private zone: NgZone) {}
+	ngOnDestroy (): void { this.firstIn = true }
 
-	ngOnInit () {
-		console.log(this)
-	}
+	handleSaveAccount (account) { this.onSaveAccount.emit(account) }
 
-	ngOnDestroy (): void {
-		this.firstIn = true
-	}
+	handleSetDefaultAccount (account) { this.onSetDefaultAccount.emit(account) }
 
-	handleSlideChanged () {
-		// console.log('Slide Changed', this.slides)
-	}
-
-	handleSaveAccount (account) {
-		this.onSaveAccount.emit(account)
-	}
-
-	handleSetDefaultAccount (account) {
-		this.onSetDefaultAccount.emit(account)
-	}
-
-	handleRemoveAccount (account) {
-		this.onRemoveAccount.emit(account)
-	}
+	handleRemoveAccount (account) { this.onRemoveAccount.emit(account) }
 }

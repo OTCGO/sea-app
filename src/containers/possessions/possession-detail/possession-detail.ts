@@ -31,7 +31,7 @@ interface TransactionHistory {
 export class PossessionDetailPage {
 	selectedPrice: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
 	selectedBalance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
-	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getEntities)
+	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getSelectedEntities)
 
 	isScrollUp: boolean
 	isScrollDown: boolean

@@ -43,7 +43,6 @@ export class CreateWalletPage implements OnInit {
   ngOnInit () {
     this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
 		this.store.select(AuthSelectors.getError).subscribe(err => this.np.emit({ message: err }))
-    this.store.select(WalletSelectors.getExits).subscribe(exits => exits && this.navCtrl.push('BackupWallet'))
   }
 
   ngOnDestroy () {
@@ -93,6 +92,7 @@ export class CreateWalletPage implements OnInit {
       } as any)
 
       this.store.dispatch(new AuthActions.CreateWallet(account))
+			this.store.select(WalletSelectors.getExits).subscribe(exits => exits && this.navCtrl.push('BackupWallet'))
     } catch (e) {
       console.log(e)
       this.np.emit({ message: e })

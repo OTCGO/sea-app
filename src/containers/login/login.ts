@@ -1,21 +1,37 @@
-import { Component, OnInit } from '@angular/core'
+import {
+	Component,
+	OnInit
+} from '@angular/core'
+
+import {
+	AbstractControl,
+	FormBuilder,
+	FormGroup,
+	Validators
+} from '@angular/forms'
 import { Store } from '@ngrx/store'
 import {
-	AlertController, IonicPage,
+	AlertController,
+	IonicPage,
 	NavController,
 	NavParams
 } from 'ionic-angular'
-
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { LoadingProvider, NotificationProvider } from '../../providers'
+import {
+	LoadingProvider,
+	NotificationProvider
+} from '../../providers'
 import { nep5Wallet } from '../../shared/userWallet'
-import { RootState } from '../../store/reducers'
-import { wifValidator } from './login.validator'
-import { isOldWallet, isWallet } from '../../shared/utils'
+import {
+	isOldWallet,
+	isWallet
+} from '../../shared/utils'
 import { AuthActions } from '../../store/actions'
-import { AuthSelectors } from '../../store/selectors'
-import { WalletSelectors } from '../../store/selectors'
-
+import { RootState } from '../../store/reducers'
+import {
+	AuthSelectors,
+	WalletSelectors
+} from '../../store/selectors'
+import { wifValidator } from './login.validator'
 
 interface LoginFormValue {
 	wif: string,
@@ -37,9 +53,6 @@ export class LoginPage implements OnInit {
 	isOldWallet = false
 	loginForm: FormGroup
 
-	get wif () { return this.loginForm.get('wif') }
-	get passphrase () { return this.loginForm.get('passphrase') }
-
 	constructor (
 		public navCtrl: NavController,
 		public navParams: NavParams,
@@ -49,6 +62,10 @@ export class LoginPage implements OnInit {
 		private lp: LoadingProvider,
 		private store: Store<RootState>
 	) { }
+
+	get wif () { return this.loginForm.get('wif') }
+
+	get passphrase () { return this.loginForm.get('passphrase') }
 
 	ngOnInit () {
 		this.buildForm()
@@ -60,7 +77,7 @@ export class LoginPage implements OnInit {
 			wif: [
 				'',
 				[Validators.required],
-				[wifValidator.bind(this)]
+				[wifValidator]
 			],
 			passphrase: [
 				'', [
@@ -129,13 +146,12 @@ export class LoginPage implements OnInit {
 		prompt.present()
 	}
 
-
 	/* TODO: Just from now, only old wallet format is required with passphrase login. */
 	login ({
-		 controls,
-		 value,
-		 valid  // TODO: Valid use at loginForm but don't have capability with nowif or file logic
-  }: {
+					 controls,
+					 value,
+					 valid  // TODO: Valid use at loginForm but don't have capability with nowif or file logic
+				 }: {
 		controls: {
 			[key: string]: AbstractControl
 		},
@@ -153,9 +169,8 @@ export class LoginPage implements OnInit {
 		if (wifValue === 'test') {
 			this.store.dispatch(new AuthActions.Login(nep5Wallet))
 		} else if (wifValue && this.isWIFKey && !passphraseValue) {
-			if (wifControl.invalid) {
-				return
-			}
+			if (wifControl.invalid) return
+
 			this.store.dispatch(new AuthActions.LoginWif(wifValue))
 		} else if (this.file && !this.isWIFKey && !wifValue) {
 			if (isOldWallet(this.file)) {

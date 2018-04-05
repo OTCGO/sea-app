@@ -61,8 +61,7 @@ page-login {
                 min-height: 3.8rem;
                 max-height: 3.8rem;
 
-                &.item-input-has-focus.input-has-focus + button.login__import-button,
-                &.ng-dirty + button.login__import-button {
+                &.input-has-value + button.login__import-button {
                     opacity: 0;
                 }
 
@@ -72,8 +71,6 @@ page-login {
 
                 &.rounded {
                     width: 100%;
-                    -moz-border-radius: 50px;
-                    -webkit-border-radius: 50px;
                     border-radius: 50px;
                     border: 1px solid rgb(222, 222, 222);
                 }

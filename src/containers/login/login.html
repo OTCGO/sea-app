@@ -2,7 +2,7 @@
 
 	<div class="login__container">
 		<ion-label class="login__title">
-			<h4>{{ 'LOGIN.title' | translate }}</h4>
+			<h2>{{ 'LOGIN.title' | translate }}</h2>
 		</ion-label>
 
 		<form [formGroup]="loginForm" (submit)="login(loginForm)">
@@ -12,7 +12,7 @@
 
 			<ion-row class="login__wif-section">
 				<ion-col>
-					<ion-item class="login__wif-input rounded" [class.item-input-has-focus]="!!WIFKey">
+					<ion-item class="login__wif-input rounded">
 						<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="wif"></ion-input>
 					</ion-item>
 

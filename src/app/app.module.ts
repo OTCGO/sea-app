@@ -20,13 +20,14 @@ import { CoreModule } from './core.module'
 import {
   BalancesEffects,
   MarketsEffects,
+  ContactsEffects,
   AuthEffects,
   WalletEffects,
   TransactionHistoryEffects,
   SettingsEffects
 } from '../store/effects'
 
-const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')
+const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'assets/i18n/', '.json')
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './ass
       BalancesEffects,
       MarketsEffects,
       WalletEffects,
+      ContactsEffects,
       AuthEffects,
       TransactionHistoryEffects,
       SettingsEffects
@@ -54,7 +56,6 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, './ass
       backButtonIcon: 'ios-arrow-back',
       tabsHideOnSubPages: true,
       scrollPadding: false,
-      scrollAssist: false
     }),
     TranslateModule.forRoot({
       loader: {

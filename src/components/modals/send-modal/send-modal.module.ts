@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core'
 import { SendModalComponent } from './send-modal'
 import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
@@ -10,7 +11,8 @@ const COMPONENTS = [
 @NgModule({
   declarations: COMPONENTS,
   imports: [
-    IonicPageModule.forChild(SendModalComponent)
+		TranslateModule.forChild(),
+    IonicPageModule.forChild(SendModalComponent),
   ],
   exports: COMPONENTS
 })

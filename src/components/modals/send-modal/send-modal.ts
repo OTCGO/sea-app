@@ -6,6 +6,7 @@ import {
 	AlertController,
 	IonicPage,
 	LoadingController,
+	NavController,
 	ViewController
 } from 'ionic-angular'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
@@ -16,12 +17,13 @@ import {
 	amountValidator
 } from './send-modal.validators'
 
-import { BalancesActions } from '../../../store/actions'
 import { RootState } from '../../../store/reducers'
 import { IBalance } from '../../../shared/models'
+import { isAddress } from '../../../shared/utils'
 import { SendModalProvider } from './send-modal.provider'
 import { NotificationProvider } from '../../../providers'
-import { BalancesSelectors } from '../../../store/selectors'
+import { TransactionsActions, BalancesActions } from '../../../store/actions'
+import { TransactionsSelectors, BalancesSelectors } from '../../../store/selectors'
 
 
 @IonicPage({
@@ -34,6 +36,7 @@ import { BalancesSelectors } from '../../../store/selectors'
 export class SendModalComponent implements OnInit {
 	formGroup: FormGroup
 	selectedBalance: IBalance
+	translationPrefix = 'POSSESSIONS.SEND_MODAL.'
 
 	get toAddress () { return this.formGroup.get('address') }
 	get passphrase () { return this.formGroup.get('passphrase') }
@@ -42,6 +45,7 @@ export class SendModalComponent implements OnInit {
 
 	constructor (
 		public viewCtrl: ViewController,
+		private navCtrl: NavController,
 		private barcodeScanner: BarcodeScanner,
 		private notificationProvider: NotificationProvider,
 		private alertCtrl: AlertController,
@@ -61,6 +65,16 @@ export class SendModalComponent implements OnInit {
 	}
 
 	ngOnInit (): void {
+	}
+
+	ionViewWillEnter () {
+		console.log('will enter', this)
+		this.store.select(TransactionsSelectors.getSelectedAddress)
+			.subscribe(address => this.toAddress.setValue(address))
+	}
+
+	ionViewDidLeave () {
+		this.store.dispatch(new TransactionsActions.CleanSelectedContact())
 	}
 
 	handleClose () {
@@ -107,7 +121,8 @@ export class SendModalComponent implements OnInit {
 				})
 		    .then(_=> {
 		    	this.store.dispatch(new BalancesActions.Load())
-		    	loading.dismissAll()
+					this.store.dispatch(new TransactionsActions.CleanSelectedContact())
+					loading.dismissAll()
 		    })
 	}
 
@@ -116,13 +131,13 @@ export class SendModalComponent implements OnInit {
 		prompt.present()
 	}
 
-	scan () {
+	handleScanClick () {
 		this.barcodeScanner.scan()
-				.then((data: BarcodeScanResult) => {
-			    this.toAddress.setValue(data.text)
-		    })
-		    .catch(err => {
-			    this.notificationProvider.emit({ message: err })
-		    })
+				.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
+		    .catch(err => this.notificationProvider.emit({ message: err }))
+	}
+
+	handleContactClick () {
+		this.navCtrl.push('Contacts', { fromProfile: false })
 	}
 }

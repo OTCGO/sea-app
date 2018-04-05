@@ -12,8 +12,9 @@ import { isEmpty } from '../../../shared/utils'
 	selector: 'market-detail-chart',
 	templateUrl: 'market-detail-chart.html'
 })
-export class MarketDetailChart implements OnInit {
-	@Input() perGas: number
+export class MarketDetailChart {
+	@Input() gasPrice: number
+	@Input() currentDuration: string
 
 	@Input()
 	get histories () { return this._histories }
@@ -24,10 +25,6 @@ export class MarketDetailChart implements OnInit {
 	private _histories
 
 	get width () { return window.innerWidth }
-
-	ngOnInit () {
-		console.log(this)
-	}
 
 	renderChart () {
 		const height = 100
@@ -80,6 +77,11 @@ export class MarketDetailChart implements OnInit {
 				 .attr("r", 7.5)
 				 .style('filter', 'drop-shadow(-1px 0 7.5px rgba(0,0,0,0.3))')
 
+		focus.append('text')
+				 .attr('class', 'time')
+				 .attr('x', -20)
+				 .attr('dy', -20)
+
 		svg.append("rect")
 			 .attr("transform", `translate(0, ${marginTop})`)
 			 .attr("class", "overlay")
@@ -100,16 +102,49 @@ export class MarketDetailChart implements OnInit {
 					const d0 = ng.histories[i - 1]
 					const d1 = ng.histories[i]
 					const d: DetailData = (<any>x0 - d0.time) > (d1.time - <any>x0) ? d1 : d0
-					focus.attr("transform", `translate(${x(d.time)}, ${y(d.close)})`)
-					const gasPrice = svg.select("text.gas-price").text(() => d.close / ng.perGas)
-					svg.select('text.gas-price + text').attr('dx', (<any>gasPrice)._groups[0][0].clientWidth)
+					const gasPrice = svg.select("text.gas-price").text(() => Number(ng.gasPrice) / d.close)
 					const currency = svg.select('g + g > text')
+					const time = new Date(d.time * 1000)
+					const hourAndMinutes = formatTime(time, ng.currentDuration)
+					focus.attr("transform", `translate(${x(d.time)}, ${y(d.close)})`)
+					focus.select("text").text(() => hourAndMinutes)
+					svg.select('text.gas-price + text').attr('dx', (<any>gasPrice)._groups[0][0].clientWidth)
 					svg.select("text.current-price").attr('dx', (<any>currency)._groups[0][0].clientWidth).text(() => d.close)
-					console.log('gasPrice', gasPrice)
 				} catch (e) {
 					return
 				}
 			}
 		}
+	}
+}
+
+function formatTime (time: Date, duration) {
+	const day = time.getDate()
+	const hour = time.getHours()
+	const minutes = time.getMinutes()
+
+	switch (duration) {
+		case 'hour':
+			return `${hour}:${minutes}`
+		case 'day':
+			return `${hour}:00`
+		case 'month':
+		case 'week':
+			return `${ordinal(day)} ${hour}:00`
+		default:
+			return `${hour}:${minutes}`
+	}
+}
+
+const ordinal = (i) => {
+	switch (i) {
+		case 1:
+			return '1st';
+		case 2:
+			return '2nd';
+		case 3:
+			return '3rd';
+		default:
+			return `${i}th`; // NOTE won't get any much bigger ...
 	}
 }

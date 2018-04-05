@@ -1,3 +1,5 @@
+import { I18n } from '@shared/models'
+import { getBrowserLanguage } from '../shared/utils'
 import {
 	ICurrency,
 	ISetting
@@ -128,9 +130,13 @@ export const OTCGO_WALLET_FILE_NAME = 'OTCGO-mobile-wallet.json'
 
 export const OTCGO_SETTING_FILE_NAME = 'OTCGO-settings.json'
 
+export const DEFAULT_LANGUAGE = getBrowserLanguage()
+
+export const DEFAULT_CURRENCY = DEFAULT_LANGUAGE === 'en' ? 'usd' : 'cny'
+
 export const DEFAULT_SETTING: ISetting = {
-	currency: 'cny',
-	language: (<any>navigator.language)
+	currency: DEFAULT_CURRENCY,
+	language: DEFAULT_LANGUAGE
 }
 
 export const DEFAULT_SCRYPT = { n: 16384, r: 8, p: 8, size: 64 }
@@ -178,4 +184,9 @@ export const Currency: ICurrency = {
 	'zar': 'R ',
 	'gas': 'gas',
 	'btc': 'btc'
+}
+
+export const Languages: I18n = {
+	'zh-cn': 'Chinese',
+	'en': 'English'
 }

@@ -3,7 +3,8 @@
     "possessions": "Balances",
     "markets": "Markets",
     "discover": "Discover",
-    "profile": "Profile"
+    "profile": "Profile",
+    "exit_action": "Press again to exit"
   },
   "LOGIN": {
     "title": "Login Wallet",
@@ -35,14 +36,22 @@
     "DETAILS": {
       "title": "Histories",
       "transfer": "Transfer",
-      "in": "In",
-      "out": "Out",
+      "in": "Transfer In",
+      "out": "Transfer Out",
       "nodata": "No History Data"
     },
     "QR_CODE": {
       "address": "Address",
       "copy": "Copy",
       "share": "Share"
+    },
+    "SEND_MODAL": {
+      "title": "Transfer",
+      "address": "Address",
+      "password": "Password",
+      "amount": "Amount",
+      "label": "Label",
+      "transfer": "Transfer"
     }
   },
   "MARKETS": {
@@ -83,14 +92,35 @@
       }
     },
     "CONTACTS": {
-      "title": "Contacts"
+      "title": "Contacts",
+      "remove_title": "Remove contact?",
+      "remove_agree": "Yes",
+      "remove_disagree": "No",
+      "EDIT": {
+        "name": "Name",
+        "address": "Address",
+        "description": "Description",
+        "save": "Save",
+        "address_error": "Invalid Address",
+        "name_error": "Name con't not be empty",
+        "name_length_error": "Name con't exceed 8 character",
+        "update_success": "Save Contact Success",
+        "update_confirm": "The address already exit!! Click one more time to change the contact."
+      }
     },
-    "HISTORIES": {},
+    "HISTORIES": {
+      "title": "Transaction History",
+      "name": "name",
+      "time_operation": "Time/Operation",
+      "amount": "amount"
+    },
     "SETTINGS": {
       "title": "Setting",
       "LANGUAGES": {
-        "title": "Languages",
-        "subtitle": "English"
+        "title": "Languages"
+      },
+      "CURRENCIES": {
+        "title": "Currency"
       }
     },
     "CLAIMS": {

@@ -1,6 +1,6 @@
 export interface I18n {
-	'zh-cn': 'chinease'
-	'en': 'english'
+	'zh-cn': string
+	'en': string
 }
 
 export interface ICurrency {

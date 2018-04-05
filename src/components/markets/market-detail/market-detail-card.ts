@@ -32,7 +32,7 @@ export class MarketDetailCard implements OnInit {
 	constructor () { }
 
 	ngOnInit () {
-		console.log(this)
+
 	}
 
 	handleDurationsClick (index) {

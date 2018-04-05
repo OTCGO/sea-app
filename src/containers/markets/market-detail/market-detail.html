@@ -15,7 +15,8 @@
 	></market-detail-card>
 
 	<market-detail-chart
-		[histories]="(histories | async)"
-		[perGas]="perGas"
+		[histories]="histories | async"
+		[gasPrice]="gasPrice | async"
+		[currentDuration]="currentDuration"
 	></market-detail-chart>
 </ion-content>

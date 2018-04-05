@@ -19,8 +19,9 @@ export class NotificationProvider {
 		this.subscribeNotification()
 	}
 
-	emit (opts: notificationOpts) {
-		this.subject.next(opts)
+	emit (options: notificationOpts | string) {
+		const nomi = typeof options === 'object' ? options : { message: options }
+		this.subject.next(nomi)
 	}
 
 	subscribeNotification () {

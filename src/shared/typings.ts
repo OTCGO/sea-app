@@ -15,7 +15,7 @@ export interface WalletFile {
 	version: string
 	scrypt: WalletScryptParams | ScryptParams
 	accounts: WalletAccount[]
-	extra: object
+	extra: any
 }
 
 export interface WalletAccount {
@@ -25,7 +25,7 @@ export interface WalletAccount {
 	lock: boolean
 	key: string
 	contract: object | null
-	extra: object
+	extra: any
 }
 
 export interface Account extends WalletAccount {
@@ -54,7 +54,7 @@ export interface Wallet extends WalletFile {
 	name: string
 	scrypt: WalletScryptParams
 	accounts: Account[]
-	extra: object
+	extra: any
 	defaultAccount
 
 	decrypt (index: number, keyphrase: string): boolean

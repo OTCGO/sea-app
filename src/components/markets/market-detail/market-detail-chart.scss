@@ -3,6 +3,16 @@
 market-detail-chart {
   .axis {
     font: 10px sans-serif;
+    path {
+      fill: none;
+      stroke: #777;
+      stroke-width: 5px;
+      shape-rendering: crispEdges;
+    }
+    text {
+      font-family: Lato;
+      font-size: 13px;
+    }
   }
 
   .axis path,
@@ -40,9 +50,19 @@ market-detail-chart {
     font-size: 1.4rem;
   }
 
+  text.time {
+    fill: $primary-color;
+    font-size: 1.8rem;
+  }
+
   .hover-line {
     stroke: $primary-color;
     stroke-width: 2px;
     stroke-dasharray: 3,3;
+  }
+
+  .market-detail__chart {
+    padding: 0;
+    color: white;
   }
 }

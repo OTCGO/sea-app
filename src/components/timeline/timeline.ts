@@ -34,8 +34,18 @@ export class TimelineItemComponent {
 // Timeline-time
 @Component({
 	selector: 'timeline-time',
-	template: '<span>{{time?.subtitle}}</span> <span>{{time?.title}}</span>'
+	template: '<span>{{subtitle}}</span> <span>{{title}}</span>'
 })
 export class TimelineTimeComponent {
-	@Input('time') time: { title?: string, subtitle?: string } = {}
+	@Input() time: string
+
+	get subtitle () {
+		return this.time.split(' ')[0]
+	}
+
+	get title () {
+		return this.time.split(' ')[1]
+	}
+
+	constructor () { }
 }

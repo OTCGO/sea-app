@@ -3,7 +3,8 @@
 		"possessions": "资产",
 		"markets": "行情",
 		"discover": "发现",
-		"profile": "个人"
+		"profile": "个人",
+		"exit_action": "再按一次退出应用"
 	},
 	"LOGIN": {
 		"title": "登录钱包",
@@ -43,6 +44,14 @@
 			"address": "钱包地址",
 			"copy": "复制",
 			"share": "分享"
+		},
+		"SEND_MODAL": {
+			"title": "Transfer",
+			"address": "Address",
+			"password": "Password",
+			"amount": "Amount",
+			"label": "Label",
+			"transfer": "Transfer"
 		}
 	},
 	"MARKETS": {
@@ -83,14 +92,32 @@
 			}
 		},
 		"CONTACTS": {
-			"title": "联系人"
+			"title": "联系人",
+			"remove_title": "删除联系人？",
+			"remove_agree": "确认",
+			"remove_disagree": "取消",
+			"EDIT": {
+				"name": "名称",
+				"address": "地址",
+				"description": "描述",
+				"save": "保存更改",
+				"address_error": "地址错误",
+				"name_error": "名称不能为空",
+				"name_length_error": "名称不能超过8位字符",
+				"update_success": "保存联系人成功",
+				"update_confirm": "地址已存在联系人中！再点击一次保存修改"
+			}
 		},
-		"HISTORIES": {},
+		"HISTORIES": {
+			"title": "交易记录",
+			"name": "名称",
+			"time_operation": "时间/操作",
+			"amount": "数量"
+		},
 		"SETTINGS": {
 			"title": "设置",
 			"LANGUAGES": {
-				"title": "语言",
-				"subtitle": "中文"
+				"title": "语言"
 			}
 		},
 		"CLAIMS": {

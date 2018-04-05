@@ -1,3 +1,35 @@
+import { Contact } from '../shared/models'
+
+const CONTACT_A: Contact = {
+	name: 'John',
+	address: 'AHZDq78w1ERcDYVBWjU5owWcbFZKLvhg7X',
+	description: 'Work friend'
+}
+
+const CONTACT_B: Contact = {
+	name: 'Joe',
+	address: 'AXoibWhJXYRxckemGa8ZydGpQdBP7GX7st',
+	description: 'Special friend'
+}
+
+const CONTACT_C: Contact = {
+	name: 'Tom',
+	address: 'AJnNUn6HynVcco1p8LER72s4zXtNFYDnys'
+}
+
+const CONTACT_D: Contact = {
+  name: '张三',
+  address: 'ANsvyS9q1n6SBDVSdB6uFwVeqT512YSAoW',
+	description: '我的中国朋友'
+}
+
+export const TEST_CONTACTS: Contact[] = [
+  CONTACT_A,
+  CONTACT_B,
+  CONTACT_C,
+  CONTACT_D
+]
+
 export const nep5Wallet = {
   'name': 'userWallet',
   'version': '1.0',
@@ -27,30 +59,10 @@ export const nep5Wallet = {
       'extra': null
     }
   ],
-  'extra': null
+  'extra': {
+    contacts: TEST_CONTACTS
+  }
 }
-
-const CONTACT_A = {
-  name: 'joe',
-  address: 'AHZDq78w1ERcDYVBWjU5owWcbFZKLvhg7X',
-  description: 'Work friend'
-}
-
-const CONTACT_B = {
-	name: 'jane doe',
-	address: 'AXoibWhJXYRxckemGa8ZydGpQdBP7GX7st',
-	description: 'Special friend'
-}
-
-const CONTACT_C = {
-	name: 'jane doe',
-	address: 'AXoibWhJXYRxckemGa8ZydGpQdBP7GX7st',
-	description: 'Special friend'
-}
-
-const TEST_CONTACTS = [
-
-]
 
 export const oldWallet = {
   'address': 'AHZDq78w1ERcDYVBWjU5owWcbFZKLvhg7X',

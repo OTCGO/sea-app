@@ -1,0 +1,40 @@
+<ion-header class="otcgo-header">
+	<ion-navbar></ion-navbar>
+</ion-header>
+
+<ion-content class="edit-contact__content">
+	<div class="edit-contact__background">
+		<div class="edit-contact__title">
+			<div class="edit-contact__avatar">
+				<img *ngIf="avatar" src="{{ avatar }}">
+			</div>
+
+			<div class="edit-contact__name" *ngIf="name && !editMode" (click)="editMode = !editMode">{{ name }}</div>
+			<ion-input
+				*ngIf="!name || editMode"
+				[(ngModel)]="name"
+				(ionBlur)="name && (editMode = !editMode)"
+				(ionChange)="nameHasChanged = true; editMode = true"
+				autofocus class="edit-contact__change-name"
+				placeholder="{{ translationPrefix + 'name' | translate }}"></ion-input>
+		</div>
+	</div>
+
+	<div class="main-content">
+		<ion-input
+			[(ngModel)]="address"
+			(ionChange)="addressHasChanged = true"
+			class="edit-contact__input"
+			placeholder="{{ translationPrefix + 'address' | translate }}"></ion-input>
+
+		<ion-input
+			[(ngModel)]="description"
+			(ionChange)="descriptionHasChanged = true"
+			class="edit-contact__input"
+			placeholder="{{ translationPrefix + 'description' | translate }}"></ion-input>
+
+		<button
+			ion-button round full class="otcgo-button--colour"
+			(click)="handleUpdateContact()">{{ translationPrefix + 'save' | translate }}</button>
+	</div>
+</ion-content>

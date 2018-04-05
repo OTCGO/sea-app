@@ -8,7 +8,7 @@ import { IBalance } from '../../shared/models'
 		  <ion-row class="card-base">
 			  <ion-col col-9>
 				  <ion-card class="possessions__total-balances">
-					  <ion-row>{{ 'POSSESSIONS.totalBalances' | translate }} {{ baseCurrency }}</ion-row>
+					  <ion-row>{{ 'POSSESSIONS.totalBalances' | translate }} {{ baseCurrency.toUpperCase() }}</ion-row>
 					  <ion-row class="possessions__volume">{{ amount }}</ion-row>
 				  </ion-card>
 			  </ion-col>
@@ -50,4 +50,3 @@ export class PossessionsListComponent {
 	@Output() select = new EventEmitter()
 	@Output() displayZeroClick = new EventEmitter()
 }
-// console.log(new PossessionsListComponent())

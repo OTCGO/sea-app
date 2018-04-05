@@ -1,14 +1,16 @@
 <ion-card class="card-nav">
-	<div class="nav-item" (click)="navPush(item)">
+	<div
+		class="nav-item"
+		*ngFor="let nav of navs"
+		(click)="handleNavClick(nav)">
 		<img class="card-img"
-		     [src]="'assets/imgs/icon-profile_' + item?.icon + '.svg'">
-
+		     [src]="'assets/imgs/icon-profile_' + nav?.icon + '.svg'">
 		<span class="card-title">
-			{{ 'PROFILE.manage_wallet' | translate }}
+			{{ 'PROFILE.' + nav.translation | translate }}
 		</span>
 	</div>
 
-	<div class="nav-item" (click)="navCtrl.push('ContactsPage')">
+	<!--<div class="nav-item" (click)="navCtrl.push('Contacts')">
 		<img class="card-img" src="assets/imgs/icon-profile_contacts.svg" alt="">
 		<span class="card-title">{{ 'PROFILE.contacts' | translate }}</span>
 	</div>
@@ -16,5 +18,5 @@
 	<div class="nav-item">
 		<img class="card-img" src="assets/imgs/icon-profile_tx-history.svg" alt="">
 		<span class="card-title">{{ 'PROFILE.histories' | translate }}</span>
-	</div>
+	</div>-->
 </ion-card>

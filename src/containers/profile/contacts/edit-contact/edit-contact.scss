@@ -1,0 +1,75 @@
+edit-contact {
+  .otcgo-header {
+    .toolbar-background {
+      background-color: transparent;
+    }
+
+    .toolbar {
+      button.back-button {
+        color: #fff;
+      }
+    }
+  }
+
+  input.text-input {
+    width: 100%;
+  }
+
+  .edit-contact__content {
+    .scroll-content {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .main-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      .edit-contact__input {
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        margin-bottom: 1rem;
+        padding: 0 5px;
+      }
+
+      button {
+        //margin-top: 40vh;
+      }
+    }
+  }
+
+  .edit-contact {
+    &__background {
+      height: 30vh;
+      background: linear-gradient(0deg, rgb(47, 177, 213), #2a72da);
+      padding-top: 18vh;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    &__title {
+      display: flex;
+      align-items: center;
+      color: #fff;
+    }
+
+    &__avatar {
+      border-radius: 50%;
+      background-color: #fff;
+      width: 3rem;
+      height: 3rem;
+      margin: 10px;
+    }
+
+    &__change-name {
+      background-color: rgba(black, 0.2);
+      width: 15%;
+      padding: 0 5px;
+
+      input.text-input {
+        margin: 0;
+      }
+    }
+  }
+}

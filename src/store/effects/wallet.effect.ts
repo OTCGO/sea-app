@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { Store } from '@ngrx/store'
+import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { catchError, concatMap, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators'
@@ -8,12 +9,16 @@ import { RootState } from '../reducers'
 import { WalletProvider } from '../../providers'
 import { wallet } from '../../libs/neon'
 import { getEntity } from '../selectors/wallet.selector'
-
+import { Wallet } from '../../shared/typings'
 import {
 	WalletActionTypes, Load, LoadSuccess, LoadFail, AddAccount, AddAccountSuccess, AddAccountFail
 } from '../actions/wallet.action'
+import { ContactsActionTypes } from '../actions/contacts.action'
+import { ContactsActions } from '../actions'
 
 import 'rxjs/add/operator/do'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/withLatestFrom'
 
 
@@ -25,9 +30,13 @@ export class WalletEffects {
 				.pipe(
 					ofType<Load>(WalletActionTypes.LOAD),
 					map(_=> fromPromise(this.walletProvider.checkWalletFile())),
-					exhaustMap(exists =>
-						exists
-							? fromPromise(this.walletProvider.readWalletFile()).map(file => new LoadSuccess(JSON.parse(file)))
+					concatMap(exists => exists ? fromPromise(this.walletProvider.readWalletFile()).map(fileStr => JSON.parse(fileStr) as Wallet) : []),
+					exhaustMap((file?: Wallet) =>
+						file
+							? from([
+									new LoadSuccess(file),
+									new ContactsActions.Load(file.extra.contacts)
+								])
 							: of(new LoadFail('Require login'))
 					),
 					catchError(e => of(new LoadFail(e)))
@@ -56,11 +65,15 @@ export class WalletEffects {
 					WalletActionTypes.ADD_ACCOUNTS_SUCCESS,
 					WalletActionTypes.REMOVE_ACCOUNT,
 					WalletActionTypes.CHANGE_ACCOUNT_LABEL,
-					WalletActionTypes.SET_DEFAULT_ACCOUNT
+					WalletActionTypes.SET_DEFAULT_ACCOUNT,
+					WalletActionTypes.SAVE_WALLET,
+					ContactsActionTypes.UPDATE,
+					ContactsActionTypes.REMOVE_SUCCESS,
 				)
 				.withLatestFrom(this.store$.select(getEntity))
 				.do(([_, walletEntities]) => {
 					try {
+						console.log('Save Wallet file')
 						this.walletProvider.saveWalletFile(new wallet.Wallet(walletEntities).export())
 					} catch (e) {
 						console.log('Catch Error on SaveWalletFile$ .do', e)

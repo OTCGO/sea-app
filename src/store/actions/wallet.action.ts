@@ -18,7 +18,8 @@ export enum WalletActionTypes {
 	REMOVE_ACCOUNT_FAIL = '[Wallet] Remove Account Fail',
 	REMOVE_ACCOUNT_SUCCESS = '[Wallet] Remove Account Success',
 	CHANGE_ACCOUNT_LABEL = '[Wallet] Change Account Label',
-	SET_DEFAULT_ACCOUNT = '[Wallet] Set Default Account'
+	SET_DEFAULT_ACCOUNT = '[Wallet] Set Default Account',
+	SAVE_WALLET = '[Wallet] Save Wallet'
 }
 
 export class Load implements Action {

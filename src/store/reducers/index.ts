@@ -9,6 +9,8 @@ import * as fromWallet from './wallet.reducer'
 import * as fromAuth from './auth.reducer'
 import * as fromTransactionHistory from './transaction-history.reducer'
 import * as fromSettings from './settings.reducer'
+import * as fromContacts from './contacts.reducer'
+import * as fromTransactions from './transactions.reducer'
 
 export interface RootState {
 	balances: fromBalances.State
@@ -17,7 +19,9 @@ export interface RootState {
 	wallet: fromWallet.State,
 	auth: fromAuth.State,
 	transaction_history: fromTransactionHistory.State,
-	settings: fromSettings.State
+	settings: fromSettings.State,
+	contacts: fromContacts.State,
+	transactions: fromTransactions.State
 }
 
 export const reducers: ActionReducerMap<RootState> = {
@@ -27,7 +31,9 @@ export const reducers: ActionReducerMap<RootState> = {
 	wallet: fromWallet.reducer,
 	auth: fromAuth.reducer,
 	transaction_history: fromTransactionHistory.reducer,
-	settings: fromSettings.reducer
+	settings: fromSettings.reducer,
+	contacts: fromContacts.reducer,
+	transactions: fromTransactions.reducer
 }
 
 
@@ -53,5 +59,6 @@ export {
 	fromWallet,
 	fromAuth,
 	fromTransactionHistory,
-	fromSettings
+	fromSettings,
+	fromTransactions
 }

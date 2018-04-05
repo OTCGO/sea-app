@@ -5,6 +5,8 @@ import * as AuthSelectors from './auth.selector'
 import * as BalancesSelectors from './balances.selector'
 import * as TransactionHistorySelectors from './transaction-history.selector'
 import * as SettingsSelectors from './settings.selector'
+import * as ContactsSelectors from './contacts.selector'
+import * as TransactionsSelectors from './transactions.selector'
 
 export {
 	PricesSelectors,
@@ -13,5 +15,7 @@ export {
 	AuthSelectors,
 	BalancesSelectors,
 	TransactionHistorySelectors,
-	SettingsSelectors
+	SettingsSelectors,
+	ContactsSelectors,
+	TransactionsSelectors
 }

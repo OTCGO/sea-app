@@ -7,7 +7,7 @@ import { Account } from '../../shared/typings'
 	template: `
 	  <ion-card class="card-info">
 		  <div class="card-avatar" (click)="openQRCode()">
-			  <img src="assets/imgs/icon-avatar.svg" alt="">
+			  <img src="assets/imgs/icon-qrcode-avatar.svg" alt="">
 		  </div>
 		  <div class="card-title">{{ account?.address | addressCollapse }}</div>
 	  </ion-card>

@@ -1,0 +1,18 @@
+<ion-card *ngFor="let contact of contacts" (click)="isFromProfile || select.emit(contact.address)">
+	<ion-list>
+		<ion-item-sliding>
+			<ion-item>
+				<span class="description">{{ contact.name }} {{ contact.description && '• ' + contact.description}}</span>
+				<p class="address">{{ contact.address }}</p>
+			</ion-item>
+			<ion-item-options side="right">
+				<button ion-button (click)="edit.emit(contact.address)">
+					<img src="assets/imgs/icon-contacts_edit.svg">
+				</button>
+				<button ion-button (click)="remove.emit(contact)">
+					<img src="assets/imgs/icon-contacts_remove.svg">
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
+	</ion-list>
+</ion-card>

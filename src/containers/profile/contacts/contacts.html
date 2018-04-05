@@ -1,22 +1,19 @@
 <ion-header class="otcgo-header">
 	<ion-navbar>
-		<ion-title>
-			{{ 'PROFILE.CONTACTS.title' | translate }}
-		</ion-title>
+		<ion-title>{{ 'PROFILE.CONTACTS.title' | translate }}</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only clear navPush="EditContact">
+				<ion-icon name="add"></ion-icon>
+			</button>
+		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
 <ion-content>
-	<ion-card>
-		<!--<ion-list>
-			<button ion-item icon-right>
-				<ion-avatar item-start>
-					<img src="img/marty-avatar.png">
-				</ion-avatar>
-				<span>新技术</span>
-				<p>asoidnasxion pasoixnp asionxpoasinxoi</p>
-				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
-			</button>
-		</ion-list>-->
-	</ion-card>
+	<contacts-cards
+		[contacts]="contacts | async"
+		[isFromProfile]="isFromProfile"
+		(select)="handleContactSelect($event)"
+		(remove)="handleContactRemove($event)"
+		(edit)="handleContactEdit($event)"></contacts-cards>
 </ion-content>

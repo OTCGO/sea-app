@@ -26,7 +26,7 @@ import { IBalance } from '../../../shared/models'
 			    <ion-col col-6>
 				    <div class="content">
 					<span>
-						{{ history.operation === 'in' ? '转入' : '转出' }}
+						{{ (translationPrefix + history.operation) | translate }}
 					</span> {{ history.value }}
 					    <span>
 						{{ balance.symbol }}
@@ -42,4 +42,6 @@ export class PossessionDetailHistory {
 	@Input() isScrollDown
 	@Input() balance: IBalance
 	@Input() transactionHistories
+
+	translationPrefix = 'POSSESSIONS.DETAILS.'
 }

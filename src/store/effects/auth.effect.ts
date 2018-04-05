@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs/observable/of'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
-import { Account } from '../../shared/typings'
+import {
+	Account,
+	Wallet
+} from '../../shared/typings'
 import { WalletProvider } from '../../providers'
 import { wallet } from '../../libs/neon'
 
@@ -28,7 +31,7 @@ import {
 	CreateWalletFail,
 } from '../actions/auth.action'
 
-import { WalletActions } from '../actions'
+import { WalletActions, ContactsActions } from '../actions'
 
 
 @Injectable()
@@ -39,8 +42,8 @@ export class AuthEffects {
 			ofType<Login>(AuthActionTypes.LOGIN),
 			map(action => action.payload),
 			exhaustMap((walletFile) => {
-				const nepWallet = new wallet.Wallet(walletFile)
-				return of(new LoginSuccess(nepWallet))
+				const nepWallet: Wallet = new wallet.Wallet(walletFile)
+				return [new LoginSuccess(nepWallet), new ContactsActions.Load(nepWallet.extra.contacts)]
 			}),
 			catchError(error => of(new LoginFail(error)))
 		)

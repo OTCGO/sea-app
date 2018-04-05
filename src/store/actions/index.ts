@@ -5,6 +5,8 @@ import * as SettingsActions from './settings.action'
 import * as WalletActions from './wallet.action'
 import * as AuthActions from './auth.action'
 import * as TransactionHistoryActions from './transaction-history.action'
+import * as ContactsActions from './contacts.action'
+import * as TransactionsActions from './transactions.action'
 
 export {
 	BalancesActions,
@@ -13,5 +15,7 @@ export {
 	SettingsActions,
 	WalletActions,
 	AuthActions,
-	TransactionHistoryActions
+	TransactionHistoryActions,
+	ContactsActions,
+	TransactionsActions
 }

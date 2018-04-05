@@ -1,5 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
+import { compose, prop, filter, equals } from 'ramda'
+import { getSelectedBalanceSymbol } from '../selectors/balances.selector'
 import { State } from '../reducers/transaction-history.reducer'
+
 
 export const getState = createFeatureSelector('transaction_history')
 
@@ -16,4 +19,10 @@ export const getError = createSelector(
 export const getLoading = createSelector(
 	getState,
 	(state: State) => state.loading
+)
+
+export const getSelectedEntities = createSelector(
+	getEntities,
+	getSelectedBalanceSymbol,
+	(histories, symbol) => filter(compose(equals(symbol), prop('symbol')), histories)
 )

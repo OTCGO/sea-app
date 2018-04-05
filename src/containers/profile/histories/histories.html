@@ -1,0 +1,17 @@
+<ion-content parallax-header>
+	<ion-header class="otcgo-header">
+		<ion-navbar>
+			<ion-title>{{ 'PROFILE.HISTORIES.title' | translate }}</ion-title>
+		</ion-navbar>
+	</ion-header>
+
+	<ion-list-header class="histories__header">
+		<ion-row>
+			<ion-col col-3 text-left>{{ 'PROFILE.HISTORIES.name' | translate }}</ion-col>
+			<ion-col text-right>{{ 'PROFILE.HISTORIES.time_operation' | translate }}</ion-col>
+			<ion-col col-4 text-right>{{ 'PROFILE.HISTORIES.amount'| translate }}</ion-col>
+		</ion-row>
+	</ion-list-header>
+
+	<histories-cards [histories]="histories | async"></histories-cards>
+</ion-content>

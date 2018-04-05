@@ -1,0 +1,16 @@
+histories-cards {
+  .time-operation {
+    span {
+      color: hsl(0, 0, 80);
+      font-size: 1.2rem;
+    }
+    p {
+      color: hsl(0, 0, 60);
+    }
+  }
+
+  button .item-inner {
+    background-image: none;
+    padding-right: 0;
+  }
+}

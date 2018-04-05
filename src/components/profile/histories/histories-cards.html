@@ -1,0 +1,14 @@
+<ion-card *ngFor="let history of histories">
+	<ion-list>
+		<button ion-item icon-right ion-row detail-none>
+			<ion-col item-start col-3>{{ history.symbol }}</ion-col>
+			<div text-right class="time-operation" ion-col>
+				<span>{{ getDate(history.time) }}</span>
+				<p>{{ getTime(history.time) }} {{ (translationPrefix + history.operation) | translate }}</p>
+			</div>
+			<ion-col item-end col-4 text-right>
+				{{ history.value }}
+			</ion-col>
+		</button>
+	</ion-list>
+</ion-card>

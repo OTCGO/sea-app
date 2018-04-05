@@ -20,9 +20,13 @@ export const getEntities = createSelector(
 export const getSelectedPrice = createSelector(
 	getEntities,
 	getSelectedBalanceSymbol,
-	(entities, symbol) => Number(entities[symbol]) || 0
+	(entities, symbol) => Number(entities[symbol.toUpperCase()]) || 0
 )
 
+export const getPriceBySymbol = symbol => createSelector(
+	getEntities,
+	entities => entities && entities[symbol.toUpperCase()]
+)
 
 // TODO: Move those selectors to balances.selector, shall we?
 export const getAmounts = createSelector(

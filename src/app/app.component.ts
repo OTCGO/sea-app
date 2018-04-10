@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar'
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
 import {
+	App,
 	MenuController,
 	NavController,
 	Platform
@@ -15,7 +16,8 @@ import 'rxjs/add/operator/take'
 import { NotificationProvider } from '../providers'
 import {
 	SettingsActions,
-	WalletActions
+	WalletActions,
+	MarketsActions
 } from '../store/actions'
 
 import { RootState } from '../store/reducers'
@@ -35,6 +37,7 @@ export class MyApp implements OnInit {
 	constructor (
 		private platform: Platform,
 		private statusBar: StatusBar,
+		private app: App,
 		private splashScreen: SplashScreen,
 		private translateService: TranslateService,
 		private np: NotificationProvider,
@@ -43,34 +46,34 @@ export class MyApp implements OnInit {
 
 	ngOnInit () {
 		this.initApp()
-		// this.store.dispatch(new MarketsActions.Load())
+		this.store.dispatch(new MarketsActions.Load())
 		this.store.dispatch(new SettingsActions.Load())
 	}
 
 	initApp () {
 		this.platform.ready().then(() => {
-
-			this.platform.registerBackButtonAction(this.registerBackButtonAction, 0)
 			this.statusBar.styleDefault()
 			this.splashScreen.hide()
-
-			this.initWallet().then(
-				_ => {
-					this.initTranslate()
+			this.platform.registerBackButtonAction(async () => {
+				const nav = this.app.getActiveNav()
+				if (nav.canGoBack()) return nav.pop()
+				if (this.counter === 0) {
+					this.counter++
+					this.translateService.get('TABS.exit_action').take(1).subscribe(message => this.np.emit(message))
+					return setTimeout(() => this.counter = 0, 500)
 				}
-			)
+				await this.platform.ready()
+				return await this.platform.exitApp()
+			})
+
+			this.initWallet()
+			this.initTranslate()
 		})
 	}
 
 	async initWallet () {
 		this.store.dispatch(new WalletActions.Load())
-
-		this.store
-				.select(WalletSelectors.getExits)
-				.take(1)
-				.subscribe(
-					exits => this.rootPage = exits ? 'Tabs' : 'Login'
-				)
+		this.store.select(WalletSelectors.getExits).take(1).subscribe(exits => this.rootPage = exits ? 'Tabs' : 'Login')
 	}
 
 	initTranslate () {
@@ -81,15 +84,5 @@ export class MyApp implements OnInit {
 					const locale = language.split('-')[0]
 					this.translateService.use(locale)
 				})
-	}
-
-	registerBackButtonAction () {
-		if (this.counter === 0) {
-			this.counter++
-			this.translateService.get('TABS.exit_action').take(1).subscribe(message => this.np.emit(message))
-			setTimeout(() => this.counter = 0, 3000)
-		} else {
-			this.platform.exitApp()
-		}
 	}
 }

@@ -24,7 +24,7 @@ export class HistoriesCards {
 	constructor () { }
 
 	ngOnInit () {
-		console.log(this)
+
 	}
 
 	translationPrefix = 'POSSESSIONS.DETAILS.'

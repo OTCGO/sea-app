@@ -7,8 +7,7 @@ import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/throw'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/distinctUntilChanged'
-
-import { includes } from 'lodash'
+import { contains } from 'ramda'
 
 /**
  * TODO: Temporary using Neon.api.cmc instead
@@ -40,7 +39,7 @@ export class PriceProvider {
 	private query (url, currency) {
 		currency = currency.toLowerCase()
 
-		if (includes(PriceProvider.CURRENCIES, currency)) {
+		if (contains<string>(currency, PriceProvider.CURRENCIES)) {
 			return this.http
 			           .get(url, { params: { limit: 0, convert: currency } } as any)
 			           .map((res: any) => {
@@ -55,7 +54,7 @@ export class PriceProvider {
 	}
 
 	private mapPrices (tickers, currency) {
-		return tickers.filter(data => includes(PriceProvider.NEO_CHAIN_COINS, data['symbol']))
+		return tickers.filter(data => contains<string>(data['symbol'], PriceProvider.NEO_CHAIN_COINS))
 		              .map(
 			              ticker => ({
 				              symbol: ticker.symbol,

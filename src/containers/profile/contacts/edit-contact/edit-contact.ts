@@ -5,9 +5,11 @@ import {
 } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
-import { IonicPage } from 'ionic-angular'
+import {
+	IonicPage,
+	NavParams
+} from 'ionic-angular'
 import { NotificationProvider } from '../../../../providers'
-import { Contact } from '../../../../shared/models'
 import { isAddress } from '../../../../shared/utils'
 import { RootState } from '../../../../store/reducers'
 import { ContactsActions } from '../../../../store/actions'
@@ -31,6 +33,8 @@ export class EditContact implements OnInit, OnDestroy {
 	descriptionHasChanged: boolean
 	addressHasChanged: boolean
 
+	get isAddition () { return this.navParams.get('addition') }
+
 	get avatar () { return this.contact && this.contact.avatar }
 
 	get address () {
@@ -53,6 +57,7 @@ export class EditContact implements OnInit, OnDestroy {
 
 	constructor (
 		private store: Store<RootState>,
+		private navParams: NavParams,
 		private np: NotificationProvider,
 		private ts: TranslateService,
 	) {}
@@ -72,11 +77,11 @@ export class EditContact implements OnInit, OnDestroy {
 		if (!name) return this.notifyMsg('name_error')
 		if (name.trim().length > 8) return this.notifyMsg('name_length_error')
 		const changes = { address, name: name.trim(), description, avatar }
-		const isChanged = address in this.contactsEntities
+		const isChanged = this.isAddition && address in this.contactsEntities
 		if (isChanged && this.counter === 0) {
 			this.counter++
 			this.notifyMsg('update_confirm')
-			setTimeout(() => this.counter = 0, 3000)
+			setTimeout(() => this.counter = 0, 500)
 		} else {
 			this.store.dispatch(new ContactsActions.Update({ id: address, changes }))
 			this.notifyMsg('update_success')

@@ -17,26 +17,11 @@ import {
 import { DetailData } from '../../shared/models/markets.model'
 
 export const getMarketsState = createFeatureSelector('markets')
-
-export const getEntities = createSelector(
-	getMarketsState,
-	(state: State) => state.entities
-)
-
-export const getLoading = createSelector(
-	getMarketsState,
-	(state: State) => state.loading
-)
-
-export const getError = createSelector(
-	getMarketsState,
-	(state: State) => state.error
-)
-
-export const getDetails = createSelector(
-	getMarketsState,
-	(state: State) => state.detail
-)
+export const getEntities = createSelector(getMarketsState, (state: State) => state.entities)
+export const getLoading = createSelector(getMarketsState, (state: State) => state.loading)
+export const getError = createSelector(getMarketsState, (state: State) => state.error)
+export const getDetails = createSelector(getMarketsState, (state: State) => state.detail)
+export const getSelectedSymbol = createSelector(getMarketsState, (state: State) => state.selectedSymbol)
 
 export const getHigh = createSelector(
 	getDetails,
@@ -76,11 +61,6 @@ export const getChangeData = createSelector(
 	getLow,
 	getVolume,
 	(open, high, low, volume) => [open, high, low, volume / 1000]
-)
-
-export const getSelectedSymbol = createSelector(
-	getMarketsState,
-	(state: State) => state.selectedSymbol
 )
 
 export const getSelectedCoin = createSelector(

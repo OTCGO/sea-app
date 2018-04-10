@@ -39,7 +39,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     HttpClientModule,
     ReactiveFormsModule,
     StoreModule.forRoot({ ...reducers }, { metaReducers: metaReducers }),
-    dev ? StoreDevtoolsModule.instrument() : [],
+    // dev ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([
       BalancesEffects,
       MarketsEffects,

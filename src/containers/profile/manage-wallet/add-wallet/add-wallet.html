@@ -1,12 +1,18 @@
 <ion-header class="otcgo-header">
-
     <ion-navbar>
-        <ion-title>添加钱包</ion-title>
+        <ion-title>{{ translationPrefix + 'title' | translate }}</ion-title>
     </ion-navbar>
-
 </ion-header>
 
-
 <ion-content class="aw">
+    <ion-card>
+        <ion-item detail-push icon-right (click)="navCtrl.push('ImportWallet')">
+            {{ translationPrefix + 'import_wallet' | translate }}
+            <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+        </ion-item>
+    </ion-card>
 
+    <button ion-button round full clear class="otcgo-button">
+        {{ translationPrefix + 'create_wallet' | translate }}
+    </button>
 </ion-content>

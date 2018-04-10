@@ -10,6 +10,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { Store } from '@ngrx/store'
+import { TranslateService } from '@ngx-translate/core'
 import {
 	AlertController,
 	IonicPage,
@@ -48,10 +49,13 @@ interface LoginFormValue {
 })
 export class LoginPage implements OnInit {
 	file
-	importText = '导入'
+	importText
+	importTextShort: 'Import' | '导入'
+	importTextLong: 'Import Wallet File' | '导入钱包文件'
 	isWIFKey = true
 	isOldWallet = false
 	loginForm: FormGroup
+	translationPrefix = 'LOGIN.'
 
 	constructor (
 		public navCtrl: NavController,
@@ -60,6 +64,7 @@ export class LoginPage implements OnInit {
 		private fb: FormBuilder,
 		private np: NotificationProvider,
 		private lp: LoadingProvider,
+		private ts: TranslateService,
 		private store: Store<RootState>
 	) { }
 
@@ -70,6 +75,17 @@ export class LoginPage implements OnInit {
 	ngOnInit () {
 		this.buildForm()
 		this.subscribe()
+		this.getTranslations()
+	}
+
+	getTranslations () {
+		const texts = ['import_long', 'import_short']
+		const translations = texts.map(s => this.translationPrefix + s)
+		this.ts.get(translations).subscribe(trs => {
+			this.importTextLong = trs[translations[0]]
+			this.importTextShort = trs[translations[1]]
+		})
+		this.importText = this.importTextShort
 	}
 
 	buildForm () {
@@ -99,7 +115,7 @@ export class LoginPage implements OnInit {
 
 	switchImportBox (fileInput: HTMLInputElement) {
 		this.isWIFKey = false
-		this.importText = '导入钱包文件'
+		this.importText = this.importTextLong
 		if (window.navigator && !this.wif.value) {
 			fileInput.click()
 		}
@@ -107,11 +123,11 @@ export class LoginPage implements OnInit {
 
 	switchWIFKeyBox () {
 		this.isWIFKey = true
-		this.importText = '导入'
+		this.importText = this.importTextShort
 	}
 
 	fileChange (file) {
-		if (file.name.includes('.json')) {
+		if (/.json$/.test(file.name)) {
 			this.importText = file.name.slice()
 			const reader = new FileReader()
 			const ng = this

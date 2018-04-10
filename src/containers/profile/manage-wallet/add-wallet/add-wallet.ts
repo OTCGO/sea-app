@@ -4,11 +4,6 @@ import {
 	NavController,
 	NavParams
 } from 'ionic-angular'
-import { CreateWalletPage } from '../../../create-wallet/create-wallet'
-
-import { ImportFilePage } from './import-file/import-file'
-import { ImportPrivateKeyPage } from './import-private-key/import-private-key'
-import { ObservationModePage } from './observation-mode/observation-mode'
 
 
 @IonicPage({
@@ -19,5 +14,7 @@ import { ObservationModePage } from './observation-mode/observation-mode'
 	templateUrl: 'add-wallet.html',
 })
 export class AddWalletPage {
+	translationPrefix = 'PROFILE.MANAGE_WALLET.ADD_WALLET.'
 
+	constructor (private navCtrl: NavController) {}
 }

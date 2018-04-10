@@ -26,8 +26,8 @@ export class MarketDetailCard implements OnInit {
 	get percent_change_7d () { return this.selectedCoin.percent_change_7d }
 	get percent_change_24h () { return this.selectedCoin.percent_change_24h }
 	get currentPrice () { return this.selectedCoin.currentPrice }
-	get isFall () { return this.percent_change_24h && this.percent_change_24h.includes('-') }
-	get durationsTitles () { return Object.values(this.durations) }
+	get isFall () { return this.percent_change_24h && /-/.test(this.percent_change_24h) }
+	get durationsTitles () { return Object.keys(this.durations).map(k => this.durations[k]) }
 
 	constructor () { }
 

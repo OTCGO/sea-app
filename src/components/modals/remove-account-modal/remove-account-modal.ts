@@ -31,8 +31,8 @@ import { RootState } from '@store/reducers'
 					</div>
 
 				  <div class="rm-header">
-					  删除钱包
-				  </div>
+						{{ 'PROFILE.MANAGE_WALLET.REMOVE_ACCOUNT.title' | translate }}
+					</div>
 
 				  <div class="rm-content">
 					  {{ 'PROFILE.MANAGE_WALLET.REMOVE_ACCOUNT.tips_prefix' | translate }}

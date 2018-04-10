@@ -1,0 +1,50 @@
+page-history-detail {
+  .bar {
+    height: 2px;
+    width: 100%;
+    background-color: #eee;
+  }
+
+  .extract-text {
+    font-size: 12px;
+  }
+
+  .scroll-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .history-detail__avatar {
+    border: 1px solid #efefef;
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+    padding: 1rem;
+    margin: 5px;
+    img {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+
+  .history-detail__symbol {
+    margin-bottom: 1rem;
+  }
+
+  .history-detail__date-op {
+
+  }
+
+  .history-detail__open-in-browser {
+    width: 96%;
+  }
+
+  ion-col {
+    color: #959493;
+  }
+
+  .highlight {
+    color: #4f4b4a;
+  }
+}

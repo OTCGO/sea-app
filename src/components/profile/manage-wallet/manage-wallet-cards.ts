@@ -2,19 +2,18 @@ import {
 	Component,
 	EventEmitter,
 	Input,
-	OnDestroy,
 	Output,
 	ViewChild
 } from '@angular/core'
 import { Slides } from 'ionic-angular'
-
 import { Account } from '../../../shared/typings'
+
 
 @Component({
 	selector: 'manage-wallet-cards',
 	templateUrl: 'manage-wallet-cards.html'
 })
-export class ManageWalletCards implements OnDestroy {
+export class ManageWalletCards {
 	firstIn = true
 
 	@Input() currency: string
@@ -25,30 +24,17 @@ export class ManageWalletCards implements OnDestroy {
 	@Output() onRemoveAccount = new EventEmitter<string>()
 	@ViewChild(Slides) slides: Slides
 
-	private _accounts: Account[]
+	get showRemoveIcon () { return this.accounts.length > 1 }
 
 	@Input()
-	get accounts () {
-		return this._accounts
-	}
-
+	get accounts () { return this._accounts }
 	set accounts (val) {
+		if (!this.firstIn && this.isDeletionOrAddition(val))
+			this.slides.slideTo(val && val.length - 1 || 0, 250)
 		this._accounts = val
-		if (!this.firstIn) {
-			this.slides.slideTo(val && val.length - 2 || 0, 250, false)
-		}
 		this.firstIn = false
 	}
+	private _accounts: Account[]
 
-	get showClose () {
-		return this.accounts.length > 1
-	}
-
-	ngOnDestroy (): void { this.firstIn = true }
-
-	handleSaveAccount (account) { this.onSaveAccount.emit(account) }
-
-	handleSetDefaultAccount (account) { this.onSetDefaultAccount.emit(account) }
-
-	handleRemoveAccount (account) { this.onRemoveAccount.emit(account) }
+	isDeletionOrAddition (accounts) { return accounts.length !== this._accounts.length }
 }

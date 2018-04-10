@@ -1,5 +1,5 @@
 import { ActionReducer } from '@ngrx/store'
-import { TransactionHistory } from '../../shared/models'
+import { TransactionHistoryDetail, TransactionHistory } from '../../shared/models'
 import {
 	TransactionHistoryActions,
 	TransactionHistoryActionTypes
@@ -8,7 +8,7 @@ import { MockTransactionHistories } from './mockData'
 
 export interface State {
 	entities: TransactionHistory[]
-	details: any[]
+	details: TransactionHistoryDetail
 	loading: boolean
 	error?: string | Error
 	selectedTxid: string
@@ -16,7 +16,7 @@ export interface State {
 
 const initialState: State = {
 	entities: MockTransactionHistories,
-	details: [],
+	details: null,
 	loading: false,
 	error: null,
 	selectedTxid: ''

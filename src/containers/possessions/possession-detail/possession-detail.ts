@@ -6,24 +6,14 @@ import {
 } from 'ionic-angular'
 import { Observable } from 'rxjs/Observable'
 import { empty } from 'rxjs/observable/empty'
-import { IBalance } from '../../../shared/models'
+import { TransactionHistory, IBalance } from '../../../shared/models'
 import { LoadingProvider } from '../../../providers'
 import { RootState } from '../../../store/reducers'
 import { BalancesSelectors, TransactionHistorySelectors, PricesSelectors } from '../../../store/selectors'
 import * as TransactionHistoryAction from '../../../store/actions/transaction-history.action'
 
-interface TransactionHistory {
-	assetId
-	amount
-	dest
-	confirm
-	txid
-	name
-}
 
-@IonicPage({
-	name: 'PossessionDetail'
-})
+@IonicPage({ name: 'PossessionDetail' })
 @Component({
 	selector: 'page-possession-detail',
 	templateUrl: 'possession-detail.html',
@@ -42,13 +32,9 @@ export class PossessionDetailPage {
 		private store: Store<RootState>,
 	) {}
 
-	ngOnInit () {
-		this.store.dispatch(new TransactionHistoryAction.Load())
-	}
+	ngOnInit () { this.store.dispatch(new TransactionHistoryAction.Load()) }
 
-	ionViewDidLeave () {
-		this.transactionHistories = empty()
-	}
+	ionViewDidLeave () { this.transactionHistories = empty() }
 
 	handleScroll (e: ScrollEvent) {
 		if (e.directionY === 'down') {
@@ -57,7 +43,7 @@ export class PossessionDetailPage {
 				this.isScrollUp = false
 			})
 		}
-		if (e.directionY === 'up' && e.scrollTop === 0) {
+		if (e.directionY === 'up' && e.scrollTop <= 30) {
 			this.zone.run(() => {
 				this.isScrollDown = false
 				this.isScrollUp = true

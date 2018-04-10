@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core'
 import { Action, Store } from '@ngrx/store'
 import { Actions, Effect, ofType } from '@ngrx/effects'
-import { BigNumber } from 'bignumber.js'
+import {
+	flatten,
+	values,
+	prop,
+	propOr,
+	either
+} from 'ramda'
 import { Observable } from 'rxjs/Observable'
 import { forkJoin } from 'rxjs/observable/forkJoin'
 import { of } from 'rxjs/observable/of'
@@ -14,6 +20,7 @@ import {
 	publishLast,
 	refCount,
 	withLatestFrom,
+	mergeMap,
 } from 'rxjs/operators'
 import {
 	getEveryAccountAddress
@@ -21,7 +28,6 @@ import {
 import { RootState } from '../../store/reducers'
 
 import { BalancesActionTypes, Load, LoadFail, LoadSuccess } from '../actions/balances.action'
-import { ASSET_ENUM } from '../../shared/constants'
 import { ApiProvider, API_CONSTANTS } from '../../providers/api'
 
 import 'rxjs/add/operator/concatMap'
@@ -43,11 +49,18 @@ export class BalancesEffects {
 					skip(1)
 				)
 
-				return forkJoin(addresses.map(this.getBalance.bind(this))).pipe(
-					takeUntil(nextGet$),
-					map(balances => new LoadSuccess(balances.reduce(balancesReducer, {}))),
-					catchError(error => of(new LoadFail(error)))
-				)
+				return this.apiProvider
+									 .get(`${API_CONSTANTS.ASSET}`)
+									 .pipe(
+										 mergeMap((asset: { NEP5, Global }) =>
+											 forkJoin(addresses.map(this.getBalance.bind(this))).pipe(
+												 takeUntil(nextGet$),
+												 map(balances => new LoadSuccess(balances.reduce(balancesReducer(flatten(values(asset))), {}))),
+												 catchError(error => of(new LoadFail(error)))
+											 )
+										 ),
+										 catchError(error => of(new LoadFail(error)))
+									 )
 			})
 		)
 
@@ -68,16 +81,25 @@ export class BalancesEffects {
 	) {}
 }
 
-const balancesReducer = (acc, { _id: address, balances }) => ({...acc, [address]: mappingBalances(balances)})
+function balancesReducer (asset) {
+	return (acc, { _id: address, balances }) => ({...acc, [address]: mappingBalances(balances, asset)})
+}
 
-const mappingBalances = (balances) =>
-	balances
+function mappingBalances (balances, asset) {
+	return balances
 		? Object.keys(balances)
-						.map(key => (
-							{
-								hash: key,
-								symbol: ASSET_ENUM[key] || '暂无',
-								amount: new BigNumber(balances[key])
-							})
-						)
+						.map(hash => {
+							const coin = asset.find(c => c.id === hash)
+							const name = either(prop('symbol'), propOr('unknown', 'name'))(coin)
+							const sym = Array.isArray(name) ? name[0].name : name
+							const symbol = sym === '小蚁股' ? 'NEO'
+								: sym === '小蚁币' ? 'GAS'
+									: sym
+							return {
+								hash,
+								symbol,
+								amount: Number(balances[hash])
+							}
+						})
 		: []
+}

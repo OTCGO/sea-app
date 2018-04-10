@@ -56,25 +56,17 @@ export class TransactionHistoryEffects {
 				})
 			),
 			switchMap(({ address, asset }) => {
-				if (address === '') {
-					return empty()
-				}
+				if (address === '') return empty()
 
 				const nextLoad$ = this.actions$.pipe(
 					ofType(TransactionHistoryActionTypes.LOAD),
 					skip(1)
 				)
 
-				let options
-
-				if (asset) {
-					const params = { asset }
-					options = { params }
-				}
-
+				const params = { asset }
 
 				return this.apiProvider
-									 .get(`${API_CONSTANTS.HISTORY}/${address}`, options)
+									 .get(`${API_CONSTANTS.HISTORY}/${address}`, { params })
 									 .pipe(
 										 takeUntil(nextLoad$),
 										 publishLast(),
@@ -101,8 +93,6 @@ export class TransactionHistoryEffects {
 			ofType<LoadDetail>(TransactionHistoryActionTypes.LOAD_DETAIL),
 			withLatestFrom(this.store$.select(getSelectedTxid), (_, txid) => txid),
 			concatMap(txid => {
-				console.log('transaction history effect', txid)
-
 				const next$ = this.actions$.pipe(
 					ofType(TransactionHistoryActionTypes.LOAD_DETAIL),
 					skip(1)
@@ -133,10 +123,7 @@ const mapTransactionHistory = (histories: TransactionHistory[], asset: (NEP5 | G
 		const symbol = sym === '小蚁股' ? 'NEO'
 			: sym === '小蚁币' ? 'GAS'
 				: sym
-		return {
-			...history,
-			symbol
-		}
+		return { ...history, symbol }
 	})
 }
 //const parseTxx = compose(rMap())

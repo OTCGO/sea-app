@@ -10,9 +10,8 @@
     box-shadow: 5px 5px 10px rgba($primary-color, 0.5);
 
     .close {
-      position: absolute;
-      right: 2rem;
-      top: 2rem;
+      position: relative;
+      float: right;
 
       .icon {
         font-size: 1.6rem;

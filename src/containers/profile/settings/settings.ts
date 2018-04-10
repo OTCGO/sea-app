@@ -15,7 +15,7 @@ import { SettingsActions } from '../../../store/actions'
 })
 export class SettingsPage {
 	locales = [
-		{ title: 'Chinese', locale: 'zh', enabled: true },
+		{ title: '中文', locale: 'zh', enabled: true },
 		{ title: 'English', locale: 'en', enabled: true }
 	]
 

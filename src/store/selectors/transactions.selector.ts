@@ -5,8 +5,4 @@ import {
 import { State } from '../reducers/transactions.reducer'
 
 const getState = createFeatureSelector('transactions')
-
-export const getSelectedAddress = createSelector(
-	getState,
-	(state: State) => state.selectedAddress
-)
+export const getSelectedAddress = createSelector(getState, (state: State) => state.selectedAddress)

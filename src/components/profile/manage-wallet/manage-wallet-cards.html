@@ -1,13 +1,13 @@
 <ion-slides [pager]="true" class="sea-card">
 	<manage-wallet-card
 		*ngFor="let account of accounts; index as i"
-		[showClose]="showClose"
+		[showClose]="showRemoveIcon"
 	    [account]="account"
 		[oCurrency]="currency"
 		[gas]="gasAmounts[i] || 1"
 		[amount]="amounts[i] || 0"
-		(onSave)="handleSaveAccount($event)"
-		(onRemove)="handleRemoveAccount($event)"
-		(onSetDefault)="handleSetDefaultAccount($event)">
+		(onSave)="onSaveAccount.emit($event)"
+		(onRemove)="onRemoveAccount.emit($event)"
+		(onSetDefault)="onSetDefaultAccount.emit($event)">
 	</manage-wallet-card>
 </ion-slides>

@@ -1,8 +1,3 @@
-import 'reflect-metadata'
-import { enableProdMode } from '@angular/core'
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
-import { AppModule } from './app.module'
-
 if (!Array.prototype.includes) {
 	Object.defineProperty(Array.prototype, 'includes', {
 		value: function (searchElement, fromIndex) {
@@ -50,6 +45,3 @@ if (!Array.prototype.includes) {
 		}
 	})
 }
-
-enableProdMode()
-platformBrowserDynamic().bootstrapModule(AppModule)

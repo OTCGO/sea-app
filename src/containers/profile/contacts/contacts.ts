@@ -49,7 +49,7 @@ export class ContactsPage implements OnInit {
 	}
 
 	ngOnInit () {
-		console.log('ContactsPage', this)
+
 	}
 
 	handleContactRemove (contact) {

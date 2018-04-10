@@ -15,28 +15,29 @@ export class FileStorageProvider {
 	  this.init()
 	}
 
-	init () {
-	  this.platform.ready().then(_ => {
-      this.storageDirectory = this.platform.is('android')
-        ? this.androidDataDirectory
-        : this.platform.is('ios')
-          ? this.iosApplicationDirectory
-          : ''
-    })
+	async init () {
+	  await this.platform.ready()
+		this.storageDirectory = this.platform.is('android')
+			? this.androidDataDirectory
+			: this.platform.is('ios')
+				? this.iosApplicationDirectory
+				: ''
+		console.log()
+		console.log('platform ready:', this.storageDirectory)
+		console.log()
   }
 
-	read (fileName) {
-		return this.file.readAsText(
-			this.storageDirectory, fileName
-		)
+	async read (fileName) {
+		await this.platform.ready()
+		return await this.file.readAsText(this.storageDirectory, fileName)
 	}
 
 	async save (fileName, text) {
 		try {
-			const fileExits = await this.file.checkFile(this.storageDirectory, fileName)
-			if (fileExits) {
+			const fileExits = await this.checkFile(fileName)
+			await this.platform.ready()
+			if (fileExits)
 				return await this.file.writeExistingFile(this.storageDirectory, fileName, text)
-			}
 			return await this.file.writeFile(this.storageDirectory, fileName, text)
 		} catch (e) {
 			console.log('Error on File Storage save()', e)
@@ -45,7 +46,7 @@ export class FileStorageProvider {
 
 	async checkFile (fileName) {
 		try {
-			console.log('No error on check file')
+			await this.platform.ready()
 			return await this.file.checkFile(this.storageDirectory, fileName)
 		} catch (e) {
 			console.log('Error on check file', e.message)

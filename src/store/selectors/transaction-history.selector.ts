@@ -6,40 +6,20 @@ import { TransactionHistory } from '../../shared/models'
 
 
 export const getState = createFeatureSelector('transaction_history')
-
-export const getEntities = createSelector(
-	getState,
-	(state: State) => state.entities
-)
-
-export const getError = createSelector(
-	getState,
-	(state: State) => state.error
-)
-
-export const getLoading = createSelector(
-	getState,
-	(state: State) => state.loading
-)
+export const getEntities = createSelector(getState, (state: State) => state.entities)
+export const getError = createSelector(getState, (state: State) => state.error)
+export const getLoading = createSelector(getState, (state: State) => state.loading)
+export const getSelectedTxid = createSelector(getState, (state: State) => state.selectedTxid)
+export const getDetail = createSelector(getState, (state: State) => state.details)
 
 export const getEntitiesBySelectedSymbol = createSelector(
 	getEntities,
 	getSelectedBalanceSymbol,
-	(histories, symbol) => filter(compose(equals(symbol), prop('symbol')), histories)
-)
-
-export const getSelectedTxid = createSelector(
-	getState,
-	(state: State) => state.selectedTxid
+	(histories, symbol) => filter<TransactionHistory>(compose(equals(symbol), prop('symbol')), histories)
 )
 
 export const getSelectedEntities = createSelector(
 	getEntities,
 	getSelectedTxid,
 	(entities, txid) => find<TransactionHistory>(compose(equals(txid), prop('txid')))(entities)
-)
-
-export const getDetail = createSelector(
-	getState,
-	(state: State) => state.details
 )

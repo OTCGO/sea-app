@@ -1,7 +1,46 @@
-<ion-header>
+<ion-header class="otcgo-header">
 	<ion-navbar></ion-navbar>
 </ion-header>
 
 <ion-content>
-	detail
+	<div class="history-detail__avatar">
+		<img src="{{ 'assets/icon/' + symbol +'.png' }}"
+		     onerror="this.src='assets/icon/申一币.png'" />
+	</div>
+	<div class="history-detail__symbol">
+		{{ symbol }}
+	</div>
+	<div class="history-detail__date-op">
+		{{ time }} {{ translationPrefix + 'status_' + status | translate }}
+	</div>
+	<ion-grid>
+		<ion-row>
+			<ion-col>{{ translationPrefix + 'operation' | translate }}</ion-col>
+			<ion-col text-right class="highlight">{{ translationPrefix + 'operation_' + operation | translate }}</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>{{ translationPrefix + 'amount' | translate }}</ion-col>
+			<ion-col text-right><span class="highlight">{{ amount }}</span>{{ ' ' + symbol }}</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>{{ translationPrefix + 'address' | translate }}</ion-col>
+			<ion-col text-right class="extract-text">{{ address }}</ion-col>
+		</ion-row>
+		<div class="bar"></div>
+		<ion-row>
+			<ion-col col-2>{{ translationPrefix + 'txid' | translate }}</ion-col>
+			<ion-col text-right class="extract-text" col-10>{{ txid }}</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>{{ translationPrefix + 'block_height' | translate }}</ion-col>
+			<ion-col text-right class="highlight">{{ blockHeight }}</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<button
+		ion-button round full class="otcgo-button--colour history-detail__open-in-browser"
+		(click)="handleOpenBrowserClick()">{{ translationPrefix + 'open_in_browser' | translate }}</button>
 </ion-content>

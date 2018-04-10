@@ -12,7 +12,9 @@
     "login_wallet": "Login",
     "wif_placeholder": "Using WIF Key",
     "password": "Enter password",
-    "wif_error": "Invalid WIF format, please retry."
+    "wif_error": "Invalid WIF format, please retry.",
+    "import_long": "Import Wallet File",
+    "import_short": "Import"
   },
   "CW": {
     "title": "Create Wallet",
@@ -86,10 +88,16 @@
       "default": "Default",
       "default_action": "Set to default",
       "REMOVE_ACCOUNT": {
+        "title": "Remove Account",
         "tips_prefix": "Remove the account of",
         "tips_suffix": "from wallet?",
         "input": "Enter password",
         "confirm": "Confirm"
+      },
+      "ADD_WALLET": {
+        "title": "Add Wallet",
+        "import_wallet": "Import Wallet",
+        "create_wallet": "Create Wallet"
       }
     },
     "CONTACTS": {
@@ -113,7 +121,20 @@
       "title": "Transaction History",
       "name": "name",
       "time_operation": "Time/Operation",
-      "amount": "amount"
+      "amount": "amount",
+      "DETAIL": {
+        "operation": "Operation",
+        "operation_in": "Transfer In",
+        "operation_out": "Transfer Out",
+        "amount": "Amount",
+        "address": "Address",
+        "txid": "Txid",
+        "block_height": "Block Height",
+        "status_fail": "Fail",
+        "status_success": "Success",
+        "status_pending": "Pending",
+        "open_in_browser": "Open in browser"
+      }
     },
     "SETTINGS": {
       "title": "Setting",

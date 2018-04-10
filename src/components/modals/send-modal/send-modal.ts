@@ -57,9 +57,9 @@ export class SendModalComponent implements OnInit {
 		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
 
 		this.formGroup = this.fb.group({
-			address: ['', [Validators.required, addressValidator.bind(this)]],
+			address: ['', [Validators.required, addressValidator]],
 			passphrase: ['', Validators.required],
-			amount: ['', [Validators.required, amountValidator(1231).bind(this)]],
+			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
 			label: [''],
 		})
 	}
@@ -68,9 +68,7 @@ export class SendModalComponent implements OnInit {
 	}
 
 	ionViewWillEnter () {
-		console.log('will enter', this)
-		this.store.select(TransactionsSelectors.getSelectedAddress)
-			.subscribe(address => this.toAddress.setValue(address))
+		this.store.select(TransactionsSelectors.getSelectedAddress).take(1).subscribe(address => this.toAddress.setValue(address))
 	}
 
 	ionViewDidLeave () {

@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { IonicPageModule } from 'ionic-angular'
-import { AddWalletPage } from './add-wallet'
+import { ImportWallet } from './import-wallet'
 
 @NgModule({
-	declarations: [AddWalletPage],
+	declarations: [ImportWallet],
 	imports: [
-		IonicPageModule.forChild(AddWalletPage),
+		IonicPageModule.forChild(ImportWallet),
 		TranslateModule.forChild()
-	],
-	exports: [AddWalletPage]
+	]
 })
-export class AddWalletPageModule {}
+export class ImportWalletModule {}

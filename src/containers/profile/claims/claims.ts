@@ -1,8 +1,17 @@
 import { Component } from '@angular/core'
 import { AlertController, IonicPage, LoadingController } from 'ionic-angular'
-
+import { AccountProvider } from '../../../providers'
 import { ClaimsProvider } from './claims.provider'
-import { WalletProvider } from '../../../providers/wallet/wallet.provider'
+import { wallet } from '../../../libs/neon'
+const { decrypt } = wallet
+
+interface ClaimsRes {
+	available: string
+	unavailable: string
+	claims: ClaimsResC[]
+}
+// TODO: I don't know what it is, think's like a claims history object
+type ClaimsResC = [string, string]
 
 
 @IonicPage({
@@ -14,12 +23,12 @@ import { WalletProvider } from '../../../providers/wallet/wallet.provider'
 	templateUrl: 'claims.html'
 })
 export class ClaimsPage {
-	// account = this.walletProvider.getDefaultAccount()
+	account = this.accountProvider.defaultAccount
 	availableGas
 
 	constructor (
 		private claimsProvider: ClaimsProvider,
-		private walletProvider: WalletProvider,
+		private accountProvider: AccountProvider,
 	  private alertCtrl: AlertController,
 	  private loadingCtrl: LoadingController
 	) {}
@@ -30,17 +39,13 @@ export class ClaimsPage {
 
 	getData () {
 		this.claimsProvider.getClaims()
-		    .then(res => {
-			    this.availableGas = res['available']
+		    .then((res: ClaimsRes) => {
+			    this.availableGas = (Number(res.available) + Number(res.unavailable)).toFixed(8)
 		    })
 	}
 
 	doClaim () {
-		if (this.claimsProvider.hasDecrypt()) {
-			this.claimsProvider.doClaims()
-		} else {
 			let loading = this.loadingCtrl.create()
-
 			let prompt = this.alertCtrl.create({
 				title: '输入密码',
 				message: '输入您的密码！',
@@ -51,34 +56,28 @@ export class ClaimsPage {
 						text: '确认',
 						handler: ({ passphrase }) => {
 							if (passphrase === '') return false
-							loading.present().then(() => {
-								/*try {
-									this.account.decrypt(passphrase)
-									loading.dismiss().then(() => {
-										prompt.dismiss().then(() => {
-											this.claimsProvider.doClaims()
-										})
-									})
+							loading.present().then(async () => {
+								try {
+									const pr = decrypt(this.account.encrypted, passphrase)
+									await loading.dismiss()
+									await prompt.dismiss()
+									await this.claimsProvider.doClaims(pr)
 								} catch (e) {
-									loading.dismiss().then(() => {
-										prompt.dismiss().then(() => {
-											this.claimsProvider.doClaims()
-										})
-									})
-								}*/
+									await loading.dismiss()
+									await prompt.dismiss()
+									this.showPrompt(e.message || e)
+									console.log(e)
+								}
 							})
 						}
 					}
 				]
 			})
 			prompt.present()
-		}
 	}
 
 	showPrompt (message) {
 		const prompt = this.alertCtrl.create({ message })
 		prompt.present()
-
 	}
-
 }

@@ -4,23 +4,17 @@
 			{{ label }}
 		</div>
 
-		<div class="close" (click)="handleRemoveClick(account)" *ngIf="showClose">
-			<div class="icon">
-				<ion-icon name="close"></ion-icon>
-			</div>
+		<div class="close" (click)="onRemove.emit(account)" *ngIf="showClose">
+			<div class="icon"><ion-icon name="close"></ion-icon></div>
 		</div>
 
-		<div class="mw__header"
-		     ion-row>
+		<div class="mw__header" ion-row>
 			<ion-col class="mw__header__left">
-				<div class="mw__title">
-					{{ gas | number:'1.1-2' }} <span>GAS</span>
-				</div>
+				<div class="mw__title">{{ gas | number:'1.1-2' }} <span>GAS</span></div>
 			</ion-col>
 		</div>
 
-		<div class="mw__header-price"
-		     ion-row>
+		<div class="mw__header-price" ion-row>
 			<ion-col class="mw__subtitle">
 				≈ {{ amount | currency:oCurrency.toUpperCase():'symbol-narrow':'1.1-4' }}
 			</ion-col>
@@ -46,9 +40,7 @@
 			        icon-right
 			        (click)="handleWIFClick(account)">
 				{{ 'PROFILE.MANAGE_WALLET.export_wif' | translate }}
-				<ion-icon md="ios-arrow-forward-outline"
-				          ios="none"
-				          item-end></ion-icon>
+				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
 			</button>
 
 			<button ion-button
@@ -58,9 +50,7 @@
 			        icon-right
 			        (click)="handleEncryptedClick(account)">
 				{{ 'PROFILE.MANAGE_WALLET.export_key' | translate }}
-				<ion-icon md="ios-arrow-forward-outline"
-				          ios="none"
-				          item-end></ion-icon>
+				<ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
 			</button>
 
 			<!--<button ion-button
@@ -74,16 +64,11 @@
 		</div>
 
 		<div class="mw__exports-action">
-			<button ion-button
-			        class="otcgo-button--colour"
-			        block
-			        round
-			        (click)="handleSaveClick(account)">{{ 'PROFILE.MANAGE_WALLET.save' | translate }}
-			</button>
+			<button ion-button class="otcgo-button--colour" block round
+			        (click)="handleSaveClick(account)">{{ 'PROFILE.MANAGE_WALLET.save' | translate }}</button>
 			<a [class.is-default]="isDefault"
-			   (click)="!isDefault && handleSetDefaultClick(account)">
-				{{ isDefault ? '默认钱包' : '设为默认钱包' }}
-			</a>
+			   (click)="!isDefault && onSetDefault.emit(account)">
+				{{ translationPrefix + (isDefault ? 'default' : 'default_action') | translate }}</a>
 		</div>
 	</div>
 </ion-slide>

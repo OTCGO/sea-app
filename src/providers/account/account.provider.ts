@@ -24,7 +24,7 @@ export class AccountProvider {
 	}
 
 	decrypt (passphrase) {
-		this.defaultAccount.decrypt(passphrase)
+
 	}
 
 	getPrivateKey () {

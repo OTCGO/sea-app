@@ -9,13 +9,10 @@ import {
 	getAccount,
 	getAccounts
 } from './wallet.selector'
+import { compose, map, reduce, values } from 'ramda'
 
 export const getPricesState = createFeatureSelector('prices')
-
-export const getEntities = createSelector(
-	getPricesState,
-	(state: State) => state.entities
-)
+export const getEntities = createSelector(getPricesState, (state: State) => state.entities)
 
 export const getSelectedPrice = createSelector(
 	getEntities,
@@ -32,12 +29,10 @@ export const getPriceBySymbol = symbol => createSelector(
 export const getAmounts = createSelector(
 	getEntities,
 	getNonZeroEntities,
-	(prices, balances) => Object.values<IBalance[]>(balances).map(
-			(balances: IBalance[]) => balances.reduce(
-				(acc, { amount, symbol }) => acc + amount.times(prices[symbol] || 0).toNumber(),
-				0
-			)
-		)
+	(prices, balances) => compose(
+		map(reduce((acc, { amount, symbol }) => acc + amount * (Number(prices[symbol]) || 0), 0)),
+		values
+	)(balances)
 )
 
 export const getGASAmounts = createSelector(

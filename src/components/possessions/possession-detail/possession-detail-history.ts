@@ -2,7 +2,7 @@ import {
 	Component,
 	Input,
 } from '@angular/core'
-import { IBalance } from '../../../shared/models'
+
 
 @Component({
     selector: 'possession-detail-history',
@@ -29,7 +29,7 @@ import { IBalance } from '../../../shared/models'
 						{{ (translationPrefix + history.operation) | translate }}
 					</span> {{ history.value }}
 					    <span>
-						{{ balance.symbol }}
+						{{ symbol }}
 					</span>
 				    </div>
 			    </ion-col>
@@ -40,7 +40,7 @@ import { IBalance } from '../../../shared/models'
 export class PossessionDetailHistory {
 	@Input() isScrollUp
 	@Input() isScrollDown
-	@Input() balance: IBalance
+	@Input() symbol
 	@Input() transactionHistories
 
 	translationPrefix = 'POSSESSIONS.DETAILS.'

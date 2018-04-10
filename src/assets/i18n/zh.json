@@ -12,7 +12,9 @@
 		"login_wallet": "确认",
 		"wif_placeholder": "WIF码登录",
 		"password": "请输入密码",
-		"wif_error": "无法识别的 WIF，请重试！"
+		"wif_error": "无法识别的 WIF，请重试！",
+		"import_long": "导入钱包文件",
+		"import_short": "导入"
 	},
 	"CW": {
 		"title": "创建钱包",
@@ -86,10 +88,16 @@
 			"default": "默认钱包",
 			"default_action": "设为默认钱包",
 			"REMOVE_ACCOUNT": {
+				"title": "删除钱包",
 				"tips_prefix": "确定要删除",
 				"tips_suffix": "这个钱包吗?",
 				"input": "输入密码",
 				"confirm": "确认删除"
+			},
+			"ADD_WALLET": {
+				"title": "添加钱包",
+				"import_wallet": "导入钱包",
+				"create_wallet": "创建钱包"
 			}
 		},
 		"CONTACTS": {
@@ -106,14 +114,27 @@
 				"name_error": "名称不能为空",
 				"name_length_error": "名称不能超过8位字符",
 				"update_success": "保存联系人成功",
-				"update_confirm": "地址已存在联系人中！再点击一次保存修改"
+				"update_confirm": "地址已存在！再点击一次保存修改"
 			}
 		},
 		"HISTORIES": {
 			"title": "交易记录",
 			"name": "名称",
 			"time_operation": "时间/操作",
-			"amount": "数量"
+			"amount": "数量",
+			"DETAIL": {
+				"operation": "操作",
+				"operation_in": "转入",
+				"operation_out": "转出",
+				"amount": "数量",
+				"address": "地址",
+				"txid": "交易号",
+				"block_height": "区块高度",
+				"status_fail": "失败",
+				"status_success": "成功",
+				"status_pending": "执行中",
+				"open_in_browser": "在浏览器中打开"
+			}
 		},
 		"SETTINGS": {
 			"title": "设置",

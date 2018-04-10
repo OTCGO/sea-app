@@ -30,7 +30,7 @@ export class NotificationProvider {
 		this.subject.next(nomi)
 	}
 
-	translatedNotify (key: string, interpolateParams?: object) {
+	notifyTranslation (key: string, interpolateParams?: object) {
 		this.translateService.get(key, interpolateParams)
 				.pipe(
 					take(1),

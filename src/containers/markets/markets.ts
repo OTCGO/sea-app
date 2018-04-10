@@ -9,7 +9,7 @@ import { RootState } from '../../store/reducers'
 import { PriceProvider, NotificationProvider, LoadingProvider } from '../../providers'
 
 import { MarketsActions } from '../../store/actions'
-import { MarketsSelectors, PricesSelectors } from '../../store/selectors'
+import { SettingsSelectors, MarketsSelectors, PricesSelectors } from '../../store/selectors'
 
 @IonicPage({
 	name: 'Markets'
@@ -22,6 +22,7 @@ export class MarketsPage implements OnInit {
 	coins
 	GASPrice
 	exchangeRates
+	oCurrency
 
 	constructor (
 		public navCtrl: NavController,
@@ -40,6 +41,7 @@ export class MarketsPage implements OnInit {
 		this.store.select(MarketsSelectors.getError).subscribe(error => this.np.emit({ message: error }))
 		this.store.select(MarketsSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
 		this.store.select(MarketsSelectors.getEntities).subscribe(markets => this.coins = markets)
+		this.store.select(SettingsSelectors.getCurrency).subscribe(currency => this.oCurrency = currency)
 		this.store.select(PricesSelectors.getEntities).subscribe(prices => this.GASPrice = prices['GAS'] || 1)
 
 		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
@@ -61,10 +63,10 @@ export class MarketsPage implements OnInit {
 	}
 
 	// TODO: Unuse function
-	calculateRate (price: number) {
+	/*calculateRate (price: number) {
 		const strPrice = (price / this.GASPrice).toString()
 
-		const splitStr: any = strPrice.includes('.')
+		const splitStr: Array<string> | string = /./.test(strPrice)
 			? strPrice.split('.')
 			: strPrice
 
@@ -74,5 +76,5 @@ export class MarketsPage implements OnInit {
 		}
 
 		return splitStr.join('')
-	}
+	}*/
 }

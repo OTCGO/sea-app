@@ -14,16 +14,23 @@ ion-tabs {
 $tabImageName: 'balances' 'markets' 'discover' 'profile';
 @for $i from 1 to 5 {
   //for ios
-  .ion-ios-tab-#{nth($tabImageName, $i)} {
+  .ion-ios-#{nth($tabImageName, $i)} {
     @extend .ion-tab-icon-base;
+    transform-origin: 50% 50%;
+    transform: translate3d(0, -2px, 0) scale(1.6);
+
     &:before {
-      content: url("assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_on.svg");
+      content: url("../assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_on.svg");
     }
   }
-  .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
+  .ion-ios-#{nth($tabImageName, $i)}-outline {
     @extend .ion-tab-icon-base;
+    transform-origin: 50% 50%;
+    transform: translate3d(0, -8px, 0) scale(1.6);
+    height: 25px;
+
     &:before {
-      content: url("assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_off.svg");
+      content: url("../assets/imgs/icon-tabs_#{nth($tabImageName, $i)}_off.svg");
     }
   }
 

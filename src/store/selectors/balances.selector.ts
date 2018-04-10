@@ -1,26 +1,22 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { IBalance } from '../../shared/models'
+import { IBalance, } from '../../shared/models'
 import { getAccount } from './wallet.selector'
 import { State } from '../reducers/balances.reducer'
-import { isEmpty } from '../../shared/utils'
+import { not, toPairs, isEmpty } from 'ramda'
 
 const getState = createFeatureSelector('balances')
-
-export const getEntities = createSelector(
-	getState,
-	(state: State) => state.entities
-)
+export const getEntities = createSelector(getState, (state: State) => state.entities)
+export const getError = createSelector(getState, (state: State) => state.error)
+export const getLoading = createSelector(getState, (state: State) => state.loading)
+export const getSelectedBalanceSymbol = createSelector(getState, (state: State) => state.selectedBalanceSymbol)
 
 export const getNonZeroEntities = createSelector(
 	getEntities,
-	entities => entities && !isEmpty(Object.keys(entities)) && Object.entries(entities)
-																							.reduce((acc, [address, balances]) =>
-																									({
-																										...acc,
-																										[address]: balances.filter(b => b.amount.toNumber() > 0)
-																									}),
-																								{}
-																							)
+	entities => not(isEmpty(entities)) &&
+		toPairs(entities).reduce(
+			(acc, [address, balances]) => ({ ...acc, [address]: balances.filter(b => b.amount > 0) }),
+			{}
+		)
 )
 
 export const getEntitiesByAddress = address => createSelector(
@@ -36,22 +32,7 @@ export const getDefaultEntities = createSelector(
 
 export const getDefaultNonZeroEntities = createSelector(
 	getDefaultEntities,
-	entities => entities && !isEmpty(entities) && entities.filter(balance => balance.amount.toNumber() > 0)
-)
-
-export const getError = createSelector(
-	getState,
-	(state: State) => state.error
-)
-
-export const getLoading = createSelector(
-	getState,
-	(state: State) => state.loading
-)
-
-export const getSelectedBalanceSymbol = createSelector(
-	getState,
-	(state: State) => state.selectedBalanceSymbol
+	entities => entities && !isEmpty(entities) && entities.filter(balance => balance.amount > 0)
 )
 
 export const getSelectedBalance = createSelector(

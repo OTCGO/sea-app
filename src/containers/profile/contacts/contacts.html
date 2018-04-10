@@ -2,7 +2,7 @@
 	<ion-navbar>
 		<ion-title>{{ 'PROFILE.CONTACTS.title' | translate }}</ion-title>
 		<ion-buttons end>
-			<button ion-button icon-only clear navPush="EditContact">
+			<button ion-button icon-only clear navPush="EditContact" [navParams]="{ addition: true }">
 				<ion-icon name="add"></ion-icon>
 			</button>
 		</ion-buttons>

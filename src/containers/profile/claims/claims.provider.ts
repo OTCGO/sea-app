@@ -1,33 +1,33 @@
 import { Injectable } from '@angular/core'
+import { Store } from '@ngrx/store'
 import { LoadingController } from 'ionic-angular'
-import { NEO_HASH } from '../../../shared/constants'
-import { ApiProvider, AccountProvider } from '../../../providers'
-
-
-import { Store, select } from '@ngrx/store'
-import { RootState } from '../../../store/reducers/index'
-import { Load } from '../../../store/actions/balances.action'
-import * as fromBalances from '../../../store/reducers/balances.reducer'
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/fromPromise'
 import 'rxjs/add/operator/toPromise'
 
-
 import { wallet } from '../../../libs/neon'
-const { generateSignature } = wallet
+import {
+	AccountProvider,
+	ApiProvider
+} from '../../../providers'
+import { NEO_HASH } from '../../../shared/constants'
+import { Load } from '../../../store/actions/balances.action'
+import { RootState } from '../../../store/reducers/index'
+import { BalancesSelectors } from '../../../store/selectors'
+
+const { getPublicKeyFromPrivateKey, generateSignature } = wallet
 
 @Injectable()
 export class ClaimsProvider {
 	_account = this.accountProvider.defaultAccount
+	balances
 
 	constructor (
 		private apiProvider: ApiProvider,
 		private loadingCtrl: LoadingController,
 		private accountProvider: AccountProvider,
-	  private store: Store<RootState>
+		private store: Store<RootState>
 	) {
-
+		this.store.select(BalancesSelectors.getDefaultNonZeroEntities).subscribe(balances => this.balances = balances)
 	}
 
 	getClaims () {
@@ -43,52 +43,47 @@ export class ClaimsProvider {
 		}
 	}
 
-	doClaims () {
-		let loading = this.loadingCtrl.create()
-		loading.present().then(_=> {
-			this.doSendAsset()
-			this.postGAS()
-			    .then(this.generateSignature.bind(this))
-			    .then(this.apiProvider.broadcast)
-			    .then(_=> loading.dismissAll())
-		})
-	}
-
-	postGAS () {
-		return this.apiProvider.post('gas', { publicKey: this.accountProvider.getPublicKey(true) }).toPromise()
-	}
-
-	doSendAsset () {
+	async doClaims (pr: string) {
 		this.store.dispatch(new Load())
 
-		/*return this.store.pipe(
-			select(fromBalances.getEntities),
-			map((balances: any[]) => {
-				const NEO = balances.find(bal => bal.hash === NEO_HASH)
-				const address = this._account.address
-				const data = {
-					dests: address,
-					amounts: NEO.amount,
-					assetId: NEO_HASH,
-					source: address
-				}
-				const promise = this.postTransfer(data)
-				                    .then(res => this.generateSignature(res['transaction']))
-				                    .then(async res => await this.apiProvider.broadcast(res).toPromise())
-				                    .catch(err => console.error('from claims provider doSendAsset()', err))
-				return Observable.fromPromise(promise)
-			})
-		)*/
+		await this.doSendAsset(pr)
+
+		const { transaction } = await this.postGAS(pr)
+		console.log('transaction', transaction)
+
+		const signature = await this.generateSignature(transaction, pr)
+		console.log(signature)
+
+		await this.apiProvider.broadcast(signature)
 	}
 
-	private postTransfer (transferPostData) {
-		return this.apiProvider.post('transfer', transferPostData).toPromise()
+	postGAS (pr) {
+		return this.apiProvider.post('gas', { publicKey: getPublicKeyFromPrivateKey(pr) }).toPromise()
+							 .then(res => {
+								 if (res.error)
+									 throw res.error
+								 return res
+							 })
 	}
 
-	private generateSignature (transaction) {
+	doSendAsset (pr: string) {
+		const NEO = this.balances.find(bal => bal.hash === NEO_HASH)
+		const address = this._account.address
+		const data = {
+			dests: address,
+			amounts: NEO.amount,
+			assetId: NEO_HASH,
+			source: address
+		}
+		return this.apiProvider.post('transfer', data).toPromise()
+							 .then(res => this.generateSignature(res['transaction'], pr))
+							 .then(async res => await this.apiProvider.broadcast(res).toPromise())
+							 .catch(err => console.error('from claims provider doSendAsset()', err))
+	}
 
-		const publicKey = this.accountProvider.getPublicKey(true)
-		const signature = generateSignature(transaction, this._account.privateKey)
+	private generateSignature (transaction, pr) {
+		const publicKey = getPublicKeyFromPrivateKey(pr)
+		const signature = generateSignature(transaction, pr)
 
 		return {
 			publicKey,

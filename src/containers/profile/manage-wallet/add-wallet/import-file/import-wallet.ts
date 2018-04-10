@@ -6,11 +6,11 @@ import {
 	AlertController
 } from 'ionic-angular'
 
-@IonicPage()
+@IonicPage({ name: 'ImportWallet' })
 @Component({
-	selector: 'page-import-file',
-	templateUrl: 'import-file.html'
+	selector: 'page-import-wallet',
+	templateUrl: 'import-wallet.html'
 })
-export class ImportFilePage {
+export class ImportWallet {
 
 }

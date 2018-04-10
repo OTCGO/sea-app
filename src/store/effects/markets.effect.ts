@@ -87,11 +87,10 @@ export class MarketsEffects {
 			})
 		)
 
-	constructor (private actions$: Actions, private store$: Store<RootState>, private api: ApiProvider) {}
+	constructor (private actions$: Actions, private store$: Store<RootState>, private apiProvider: ApiProvider) {}
 
 	fetchDetails (next, call, params) {
-		console.log('call to', call)
-		return this.api.request('GET', `https://min-api.cryptocompare.com/data/${call}`, { params })
+		return this.apiProvider.request('GET', `https://min-api.cryptocompare.com/data/${call}`, { params })
 			.pipe(
 				takeUntil(next),
 				publishLast(),
@@ -108,7 +107,7 @@ export class MarketsEffects {
 }
 
 function loadMarkets (nextLoad$, baseCurrency = 'cny') {
-	return fromPromise(api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS,  baseCurrency))
+	return fromPromise(api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS, baseCurrency))
 	.pipe(
 		catchError(error => of(new LoadFail(error))),
 		timeout(12368),

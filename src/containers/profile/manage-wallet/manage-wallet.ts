@@ -17,11 +17,7 @@ import {
 	WalletProvider
 } from '../../../providers'
 import { Account } from '../../../shared/typings'
-import { nep5Wallet } from '../../../shared/userWallet'
-import {
-	AuthActions,
-	WalletActions
-} from '../../../store/actions'
+import { WalletActions } from '../../../store/actions'
 import { RootState } from '../../../store/reducers'
 import {
 	PricesSelectors,
@@ -62,33 +58,23 @@ export class ManageWalletPage {
 		return parseInt(this.elementRef.nativeElement.querySelector('.scroll-content').style.marginTop) / 2 + 'px'
 	}
 
-	ngOnInit () {
-		this.store.dispatch(new AuthActions.Login(nep5Wallet))
-	}
-
 	handleSetDefaultAccount (account) {
 		this.store.dispatch(new WalletActions.SetDefaultAccount(account))
 	}
 
 	handleSaveAccount (account: Account) {
 		this.store.dispatch(new WalletActions.ChangeAccountLabel(account))
-		this.np.translatedNotify(this.translationPrefix + 'save_success')
+		this.np.notifyTranslation(this.translationPrefix + 'save_success')
 	}
 
 	handleRemoveAccount (account) {
 		// this.store.dispatch(new WalletActions.RemoveAccount(account))
 		const { offsetHeight, offsetWidth } = this.cards.slides.container.querySelector('.card') as HTMLElement
 		const { marginTop } = this
-		const data = { account, offsetHeight, offsetWidth, marginTop }
-		this.openModal(data)
+		this.openModal({ account, offsetHeight, offsetWidth, marginTop })
 	}
 
 	openModal (data) {
-		const removeModal = this.modalCtrl.create(
-			'RemoveAccountModal',
-			data,
-			{ cssClass: 'sea-card' }
-		)
-		removeModal.present()
+		this.modalCtrl.create('RemoveAccountModal', data, { cssClass: 'sea-card' }).present()
 	}
 }

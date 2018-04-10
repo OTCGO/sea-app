@@ -19,7 +19,7 @@
 	</possession-detail-bgcard>
 
 	<possession-detail-history
-		[balance]="selectedBalance | async"
+		[symbol]="(selectedBalance | async).symbol"
 		[transactionHistories]="transactionHistories | async"
 		[isScrollDown]="isScrollDown"
 		[isScrollUp]="isScrollUp">

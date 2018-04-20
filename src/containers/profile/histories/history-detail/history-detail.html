@@ -40,7 +40,8 @@
 		</ion-row>
 	</ion-grid>
 
-	<button
+	<a
 		ion-button round full class="otcgo-button--colour history-detail__open-in-browser"
-		(click)="handleOpenBrowserClick()">{{ translationPrefix + 'open_in_browser' | translate }}</button>
+		target="_blank"
+		[href]="browserLink + txid">{{ translationPrefix + 'open_in_browser' | translate }}</a>
 </ion-content>

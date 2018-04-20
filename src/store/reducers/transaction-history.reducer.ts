@@ -4,7 +4,7 @@ import {
 	TransactionHistoryActions,
 	TransactionHistoryActionTypes
 } from '../actions/transaction-history.action'
-import { MockTransactionHistories } from './mockData'
+
 
 export interface State {
 	entities: TransactionHistory[]
@@ -15,7 +15,7 @@ export interface State {
 }
 
 const initialState: State = {
-	entities: MockTransactionHistories,
+	entities: [],
 	details: null,
 	loading: false,
 	error: null,

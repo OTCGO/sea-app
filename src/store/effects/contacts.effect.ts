@@ -15,12 +15,21 @@ import {
 	LoadFail,
 	LoadSuccess
 } from '../actions/contacts.action'
+import {
+
+} from '../actions/wallet.action'
 
 
 @Injectable()
 export class ContactsEffects {
 	@Effect() load$ = this.actions$.pipe(
 		ofType<Load>(ContactsActionTypes.LOAD),
+		map(action => new LoadSuccess(action.payload)),
+		catchError(error => of(new LoadFail(error)))
+	)
+
+	@Effect() update$ = this.actions$.pipe(
+		ofType<Load>(ContactsActionTypes.UPDATE),
 		map(action => new LoadSuccess(action.payload)),
 		catchError(error => of(new LoadFail(error)))
 	)

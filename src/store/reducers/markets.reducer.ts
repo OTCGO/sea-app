@@ -9,7 +9,7 @@ export interface State {
 	entities: any[]
 	selectedSymbol: string
 }
-// TODO: Remove MockData
+
 const initialState: State = {
 	loading: false,
 	error: '',

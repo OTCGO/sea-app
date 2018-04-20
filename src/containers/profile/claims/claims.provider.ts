@@ -43,46 +43,51 @@ export class ClaimsProvider {
 		}
 	}
 
-	async doClaims (pr: string) {
+	/**
+	 * Claims process
+	 * 1. POST GAS, { publicKey } -> { result: boolean, error?: string, transaction?: string }
+	 * 2. POST Broadcase {  publicKey, signature: generateSignature(transaction, privateKey), transaction }
+	 * */
+	async doClaims (pr: string): Promise<boolean> {
 		this.store.dispatch(new Load())
+		const publicKey = getPublicKeyFromPrivateKey(pr)
 
-		await this.doSendAsset(pr)
+		await this.doSendAsset(pr, publicKey)
 
 		const { transaction } = await this.postGAS(pr)
 		console.log('transaction', transaction)
 
-		const signature = await this.generateSignature(transaction, pr)
+		const signature = await this.generateSignatureAndData(transaction, pr, publicKey)
 		console.log(signature)
 
-		await this.apiProvider.broadcast(signature)
+		const res = await this.apiProvider.broadcast(signature).toPromise()
+		return Promise.resolve(res['result'])
 	}
 
 	postGAS (pr) {
 		return this.apiProvider.post('gas', { publicKey: getPublicKeyFromPrivateKey(pr) }).toPromise()
 							 .then(res => {
-								 if (res.error)
-									 throw res.error
+								 if (res.error) throw res.error
 								 return res
 							 })
 	}
 
-	doSendAsset (pr: string) {
+	doSendAsset (pr: string, publicKey) {
 		const NEO = this.balances.find(bal => bal.hash === NEO_HASH)
 		const address = this._account.address
 		const data = {
 			dests: address,
-			amounts: NEO.amount,
+			amounts: NEO.amount.toString(),
 			assetId: NEO_HASH,
 			source: address
 		}
 		return this.apiProvider.post('transfer', data).toPromise()
-							 .then(res => this.generateSignature(res['transaction'], pr))
-							 .then(async res => await this.apiProvider.broadcast(res).toPromise())
+							 .then(res => this.generateSignatureAndData(res['transaction'], pr, publicKey))
+							 .then(async signature => await this.apiProvider.broadcast(signature).toPromise())
 							 .catch(err => console.error('from claims provider doSendAsset()', err))
 	}
 
-	private generateSignature (transaction, pr) {
-		const publicKey = getPublicKeyFromPrivateKey(pr)
+	private generateSignatureAndData (transaction, pr, publicKey) {
 		const signature = generateSignature(transaction, pr)
 
 		return {

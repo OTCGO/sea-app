@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs/observable/of'
-import { catchError, exhaustMap, map } from 'rxjs/operators'
+import {
+	catchError,
+	exhaustMap,
+	map,
+	tap
+} from 'rxjs/operators'
 import {
 	Account,
 	Wallet
 } from '../../shared/typings'
-import { WalletProvider } from '../../providers'
+import { RouterProvider, WalletProvider } from '../../providers'
 import { wallet } from '../../libs/neon'
 
 import {
@@ -57,6 +62,7 @@ export class AuthEffects {
 				const account: Account = this.walletProvider.upgradeToNEP5Account(oldWallet, passphrase)
 				account.isDefault = true
 				return [
+					// TODO: Which supposes to when AddAccountSuccess then LoginSuccess
 					new WalletActions.AddAccount(account),
 					new LoginOldWalletSuccess()
 				]
@@ -70,9 +76,8 @@ export class AuthEffects {
 			ofType<LoginWif>(AuthActionTypes.LOGIN_WIF),
 			map(action => action.payload),
 			exhaustMap(wifValue => {
-				const account = new wallet.Account(wifValue)
 				return [
-					new WalletActions.AddAccount(account),
+					new WalletActions.AddAccount(wifValue as any),
 					new LoginWifSuccess()
 				]
 			}),
@@ -84,7 +89,21 @@ export class AuthEffects {
 		this.actions$.pipe(
 			ofType<CreateWallet>(AuthActionTypes.CREATE_WALLET),
 			map(action => action.payload),
-			exhaustMap(account => {
+			exhaustMap(({ passphrase, wif, label }) => {
+				const accountTemp = new wallet.Account(wif || wallet.generatePrivateKey())
+				const { WIF, address } = accountTemp
+				const encrypted = wallet.encrypt(WIF, passphrase)
+
+				const account = new wallet.Account({
+					address,
+					label,
+					isDefault: true,
+					lock: false,
+					key: encrypted,
+					contract: null,
+					extra: null
+				} as any)
+
 				return [
 					new WalletActions.AddAccount(account),
 					new CreateWalletSuccess()
@@ -93,8 +112,29 @@ export class AuthEffects {
 			catchError(error => of(new CreateWalletFail(error)))
 		)
 
+	@Effect({ dispatch: false })
+	CreateWalletSuccess$ =
+		this.actions$.pipe(
+			ofType(
+				AuthActionTypes.CREATE_WALLET_SUCCESS
+			),
+			tap(() => this.router.setRoot('BackupWallet'))
+		)
+
+	@Effect({ dispatch: false })
+	LoginSuccess$ =
+		this.actions$.pipe(
+			ofType(
+				AuthActionTypes.LOGIN_SUCCESS,
+				AuthActionTypes.LOGIN_WIF_SUCCESS,
+				AuthActionTypes.LOGIN_OLD_WALLET_SUCCESS,
+			),
+			tap(() => this.router.setRoot('Tabs'))
+		)
+
 	constructor (
 		private actions$: Actions,
-		private walletProvider: WalletProvider
-	) {}
+		private walletProvider: WalletProvider,
+		private router: RouterProvider
+	) { }
 }

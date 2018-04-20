@@ -1,5 +1,6 @@
 import {
 	Component,
+	OnDestroy,
 	OnInit
 } from '@angular/core'
 
@@ -17,6 +18,7 @@ import {
 	NavController,
 	NavParams
 } from 'ionic-angular'
+import { Subject } from 'rxjs/Subject'
 import {
 	LoadingProvider,
 	NotificationProvider
@@ -30,7 +32,6 @@ import { AuthActions } from '../../store/actions'
 import { RootState } from '../../store/reducers'
 import {
 	AuthSelectors,
-	WalletSelectors
 } from '../../store/selectors'
 import { wifValidator } from './login.validator'
 
@@ -47,7 +48,7 @@ interface LoginFormValue {
 	selector: 'page-login',
 	templateUrl: 'login.html',
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
 	file
 	importText
 	importTextShort: 'Import' | '导入'
@@ -56,6 +57,7 @@ export class LoginPage implements OnInit {
 	isOldWallet = false
 	loginForm: FormGroup
 	translationPrefix = 'LOGIN.'
+	onDestroy = new Subject()
 
 	constructor (
 		public navCtrl: NavController,
@@ -76,6 +78,10 @@ export class LoginPage implements OnInit {
 		this.buildForm()
 		this.subscribe()
 		this.getTranslations()
+	}
+
+	ngOnDestroy () {
+		this.onDestroy.next()
 	}
 
 	getTranslations () {
@@ -105,12 +111,8 @@ export class LoginPage implements OnInit {
 	}
 
 	subscribe () {
-		this.store.select(AuthSelectors.getError)
-				.subscribe(error => error && this.np.emit({ message: error }))
-		this.store.select(AuthSelectors.getLoading)
-				.subscribe(bool => bool && this.lp.emit(bool))
-		this.store.select(WalletSelectors.getExits)
-				.subscribe(exits => exits && this.navCtrl.setRoot('Tabs'))
+		this.store.select(AuthSelectors.getError).subscribe(error => error && this.np.emit({ message: error }))
+		this.store.select(AuthSelectors.getLoading).subscribe(bool => bool && this.lp.emit(bool))
 	}
 
 	switchImportBox (fileInput: HTMLInputElement) {
@@ -186,18 +188,13 @@ export class LoginPage implements OnInit {
 			this.store.dispatch(new AuthActions.Login(nep5Wallet))
 		} else if (wifValue && this.isWIFKey && !passphraseValue) {
 			if (wifControl.invalid) return
-
-			this.store.dispatch(new AuthActions.LoginWif(wifValue))
+			return this.store.dispatch(new AuthActions.LoginWif(wifValue))
 		} else if (this.file && !this.isWIFKey && !wifValue) {
 			if (isOldWallet(this.file)) {
-				if (!passphraseControl.valid) {
-					return
-				}
-				this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet: this.file, passphrase: passphraseValue }))
-				console.log('Login using oldWallet')
+				if (!passphraseControl.valid) return
+				return this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet: this.file, passphrase: passphraseValue }))
 			} else if (isWallet(this.file)) {
-				this.store.dispatch(new AuthActions.Login(this.file))
-				console.log('Login using nepWallet')
+				return this.store.dispatch(new AuthActions.Login(this.file))
 			}
 		}
 	}

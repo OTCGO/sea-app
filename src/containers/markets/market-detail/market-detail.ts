@@ -6,6 +6,7 @@ import {
 	IonicPage,
 	NavParams
 } from 'ionic-angular'
+import { LoadingProvider } from '../../../providers'
 import { MarketsActions } from '../../../store/actions'
 import {
 	MarketsSelectors,
@@ -39,6 +40,7 @@ export class MarketDetailPage {
 	constructor (
 		public navParams: NavParams,
 		private ts: TranslateService,
+		private lp: LoadingProvider,
 		private store: Store<RootState>
 	) {
 		const durationsKeys = this.durationsProp.map(key => translationPrefix + key)
@@ -58,6 +60,7 @@ export class MarketDetailPage {
 
 	ngOnInit () {
 		this.store.dispatch(new MarketsActions.LoadDetail())
+		this.store.select(MarketsSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
 	}
 
 	handleDurationsClick (index) {

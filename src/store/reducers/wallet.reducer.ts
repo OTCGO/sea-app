@@ -24,16 +24,17 @@ export const reducer: ActionReducer<State> = (
 	action: WalletActions | AuthActions
 ): State => {
 	switch (action.type) {
-		case WalletActionTypes.ADD_ACCOUNT: {
+		case WalletActionTypes.ADD_ACCOUNT_SUCCESS: {
 			const { payload } = action
-			const accounts = state.entity.accounts.slice()
+			const accounts = state.entity.accounts.slice().map(account => new wallet.Account(account))
 			accounts.push(payload)
 
 			const entity = new wallet.Wallet({ ...state.entity, accounts })
 
 			return {
 				...state,
-				entity
+				entity,
+				loading: false
 			}
 		}
 
@@ -115,13 +116,6 @@ export const reducer: ActionReducer<State> = (
 				...state,
 				loading: false,
 				entity: action.payload
-			}
-		}
-
-		case WalletActionTypes.ADD_ACCOUNT_SUCCESS: {
-			return {
-				...state,
-				loading: false
 			}
 		}
 

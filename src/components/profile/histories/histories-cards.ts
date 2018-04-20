@@ -8,7 +8,9 @@ import {
 	compose,
 	head,
 	split,
-	last
+	last,
+	prop,
+	nth
 } from 'ramda'
 import { TransactionHistory } from '../../../shared/models'
 
@@ -21,26 +23,15 @@ export class HistoriesCards {
 	@Input() histories: TransactionHistory[]
 	@Output() select = new EventEmitter()
 
-	constructor () { }
-
-	ngOnInit () {
-
-	}
-
 	translationPrefix = 'POSSESSIONS.DETAILS.'
 	splitBySpace = split(' ')
 
-	getDate (time: string) {
-		return compose<string, string[], string>(
-			head,
-			this.splitBySpace
-		)(time)
-	}
+	getDate = compose<string, string[], string>(head, this.splitBySpace)
+	getTime = compose<string, string[], string>(last, this.splitBySpace)
 
-	getTime (time: string) {
-		return compose<string, string[], string>(
-			last,
-			this.splitBySpace
-		)(time)
+	computeNumber (value: string) {
+		return prop('length')(nth(1)(split('.', value))) > 4
+			? Number(value).toFixed(4)
+			: value
 	}
 }

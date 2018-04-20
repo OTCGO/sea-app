@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core'
+import {
+	Component,
+	OnDestroy,
+	OnInit
+} from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
   IonicPage,
@@ -22,7 +26,7 @@ import 'rxjs/add/operator/take'
   selector: 'page-create-wallet',
   templateUrl: 'create-wallet.html',
 })
-export class CreateWalletPage implements OnInit {
+export class CreateWalletPage implements OnInit, OnDestroy {
   private protocolAgreement = false
   private wif: string
   private name: string
@@ -41,7 +45,10 @@ export class CreateWalletPage implements OnInit {
   ) { }
 
   ngOnInit () {
-    this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
+    this.store.select(AuthSelectors.getLoading).subscribe(bool => {
+      console.log('Auth loading state:', bool)
+      this.lp.emit(bool)
+		})
 		this.store.select(AuthSelectors.getError).subscribe(err => this.np.emit({ message: err }))
   }
 
@@ -61,42 +68,21 @@ export class CreateWalletPage implements OnInit {
       !this.protocolAgreement
   }
 
-  async createWallet () {
-    if (this.passphrase1 &&
-       !this.validatePassphraseStrength(this.passphrase1)) {
+  createWallet () {
+    if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1))
       return this.np.emit({ message: 'Password too short' })
-		}
 
-    if (this.passphrase1 !== this.passphrase2) {
-      return
-		}
+    if (this.passphrase1 !== this.passphrase2) return
 
-    if (this.wif && !wallet.isWIF(this.wif)) {
+    if (this.wif && !wallet.isWIF(this.wif))
 			return this.np.emit({ message: 'WIF format wrong' })
-    }
 
-
-    try {
-      const accountTemp = new wallet.Account(this.wif || wallet.generatePrivateKey())
-      const { WIF, address } = accountTemp
-      const encryptedWIF = wallet.encrypt(WIF, this.passphrase1)
-
-      const account = new wallet.Account({
-        address,
-        label: this.name,
-        isDefault: true,
-        lock: false,
-        key: encryptedWIF,
-        contract: null,
-        extra: null
-      } as any)
-
-      this.store.dispatch(new AuthActions.CreateWallet(account))
-			this.store.select(WalletSelectors.getExits).subscribe(exits => exits && this.navCtrl.push('BackupWallet'))
-    } catch (e) {
-      console.log(e)
-      this.np.emit({ message: e })
-    }
+		const dispatchOption = {
+			wif: this.wif,
+			label: this.name,
+			passphrase: this.passphrase1
+		}
+		this.store.dispatch(new AuthActions.CreateWallet(dispatchOption))
   }
 
   validatePassphraseStrength (passphrase) {

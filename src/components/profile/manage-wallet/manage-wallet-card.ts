@@ -10,6 +10,7 @@ import {
 	AlertOptions,
 	LoadingController
 } from 'ionic-angular'
+import { NotificationProvider } from '../../../providers'
 import { wallet } from '../../../libs/neon'
 import { Account } from '../../../shared/typings'
 
@@ -43,11 +44,18 @@ export class ManageWalletCard {
 	constructor (
 		private alertCtrl: AlertController,
 		private clipBoard: Clipboard,
-		private loadingCtrl: LoadingController
+		private loadingCtrl: LoadingController,
+		private np: NotificationProvider
 	) { }
 
 	handleWIFClick (account) { this.showWIFKeyBox(account) }
-	handleEncryptedClick (account) { this.showKeyBox({ title: 'EncryptedKey', message: account.encrypted }) }
+	handleEncryptedClick (account) {
+		try {
+			this.showKeyBox({ title: 'EncryptedKey', message: account.encrypted })
+		} catch (e) {
+			this.np.emit(e)
+		}
+	}
 
 	handleSaveClick (account) {
 		if (this.tempLabel) {
@@ -59,16 +67,24 @@ export class ManageWalletCard {
 	}
 
 	showWIFKeyBox (account) {
-		const commonLoading = this.loadingCtrl.create()
-		const handler = ({ passphrase }) => {
-			if (!passphrase || passphrase.length < 4) return false
-			this.parsePassphrase(account.encrypted, passphrase, commonLoading, 'wif')
+		try {
+			if (account.WIF) return this.showKeyBox({ title: 'WIF', message: account.WIF })
+		} catch (e) {
+			const commonLoading = this.loadingCtrl.create()
+			const alertOptions = Object.assign({}, this.baseAlertOptions, {
+				title: '导出WIF',
+				buttons: [
+					...this.baseAlertOptions.buttons, {
+						text: '确认',
+						handler: ({ passphrase }) =>
+							passphrase &&
+							passphrase.length >= 4 &&
+							this.parsePassphrase(account.encrypted, passphrase, commonLoading, 'wif')
+					}
+				]
+			})
+			this.alertCtrl.create(alertOptions).present()
 		}
-		const alertOptions = Object.assign({}, this.baseAlertOptions, {
-			title: '导出WIF',
-			buttons: [...this.baseAlertOptions.buttons, { text: '确认', handler }]
-		})
-		this.alertCtrl.create(alertOptions).present()
 	}
 
 	showKeyBox ({ title, message }) {
@@ -103,11 +119,13 @@ export class ManageWalletCard {
 
 	/* Leave this three for later feature */
 	handleOpenLocationClick () {}
-	handlePrivateKeyClick (account) {}
+	handlePrivateKeyClick (account) {
+		this.showPrivateKeyBox(account)
+	}
 	showPrivateKeyBox (account) {
 		const commonLoading = this.loadingCtrl.create()
 		const handler = ({ passphrase }) => {
-			if (!passphrase || passphrase.length <= 4) return false
+			if (!passphrase || passphrase.length < 4) return false
 			this.parsePassphrase(account.encrypted, passphrase, commonLoading, 'privateKey')
 		}
 		const alertOptions = Object.assign({}, this.baseAlertOptions, {

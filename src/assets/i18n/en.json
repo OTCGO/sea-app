@@ -19,7 +19,7 @@
   "CW": {
     "title": "Create Wallet",
     "name": "Wallet name",
-    "wif": "[optional] Choose WIF key",
+    "wif": "[optional] Using WIF key",
     "passphrase": "Enter password",
     "passphrase_confirm": "Confirm password",
     "agreement_prefix": "Agree on",
@@ -38,8 +38,8 @@
     "DETAILS": {
       "title": "Histories",
       "transfer": "Transfer",
-      "in": "Transfer In",
-      "out": "Transfer Out",
+      "in": "In",
+      "out": "Out",
       "nodata": "No History Data"
     },
     "QR_CODE": {

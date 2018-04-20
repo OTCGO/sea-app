@@ -19,7 +19,7 @@
 	"CW": {
 		"title": "创建钱包",
 		"name": "请设置钱包名称",
-		"wif": "[WIF] 如无可不填",
+		"wif": "[可选] 使用 WIF，可不填",
 		"passphrase": "请设置密码",
 		"passphrase_confirm": "请再次输入密码确认",
 		"agreement_prefix": "已阅读同意",

@@ -3,7 +3,7 @@ import { ApiProvider, AccountProvider } from '../../../providers'
 
 import { wallet } from '../../../libs/neon'
 
-const { generateSignature, isAddress } = wallet
+const { generateSignature } = wallet
 
 interface ISendOpts {
 	dests: string
@@ -13,7 +13,7 @@ interface ISendOpts {
 
 @Injectable()
 export class SendModalProvider {
-	private _account = this.accountProvider.defaultAccount
+	account = this.accountProvider.defaultAccount
 
 	constructor (
 		private apiProvider: ApiProvider,
@@ -22,16 +22,18 @@ export class SendModalProvider {
 
 	decrypt (passphrase) {
 		try {
-			const wif = wallet.decrypt(this._account.encrypted, passphrase)
+			if (this.account.WIF) return this.account.WIF
+			const wif = wallet.decrypt(this.account.encrypted, passphrase)
 			const pr = wallet.getPrivateKeyFromWIF(wif)
 			return Promise.resolve(pr)
 		} catch (e) {
+			console.log('what the heck', e)
 			return Promise.reject('密码错误')
 		}
 	}
 
 	doSendAsset ({ dests, amounts, assetId }: ISendOpts, pr) {
-		return this.postTransfer({ dests, amounts, assetId, source: this._account.address })
+		return this.postTransfer({ dests, amounts, assetId, source: this.account.address })
 		           .then(res => this.generateSignature(res['transaction'], pr))
 		           .then(res => this.apiProvider.broadcast(res).toPromise())
 	}
@@ -51,5 +53,3 @@ export class SendModalProvider {
 		}
 	}
 }
-
-export { isAddress }

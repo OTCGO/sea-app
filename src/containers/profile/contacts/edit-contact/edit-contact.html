@@ -15,7 +15,7 @@
 				[(ngModel)]="name"
 				(ionBlur)="name && (editMode = !editMode)"
 				(ionChange)="nameHasChanged = true; editMode = true"
-				autofocus class="edit-contact__change-name"
+				class="edit-contact__change-name"
 				placeholder="{{ translationPrefix + 'name' | translate }}"></ion-input>
 		</div>
 	</div>

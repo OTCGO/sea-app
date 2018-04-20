@@ -32,6 +32,7 @@ export class HistoryDetail implements OnInit {
 	readonly translationPrefix = 'PROFILE.HISTORIES.DETAIL.'
 	selectedHistory: TransactionHistory
 	historyDetail: TransactionHistoryDetail
+	browserLink = 'http://state.otcgo.cn/traninfo.html?id='
 
 	get details (): Details {
 		const partialDetail: {

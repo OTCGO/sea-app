@@ -1,5 +1,4 @@
 import { Component } from '@angular/core'
-import { TabsPage } from '../../tabs/tabs'
 import { IonicPage, NavController } from 'ionic-angular'
 
 @IonicPage({
@@ -11,11 +10,9 @@ import { IonicPage, NavController } from 'ionic-angular'
   templateUrl: 'backup-wallet.html',
 })
 export class BackupWalletPage {
-  tabsPage = TabsPage
-
   constructor (private navCtrl: NavController) {}
 
   openHome () {
-    this.navCtrl.setRoot(this.tabsPage)
+    this.navCtrl.setRoot('Tabs')
   }
 }

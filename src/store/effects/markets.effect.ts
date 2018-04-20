@@ -96,7 +96,7 @@ export class MarketsEffects {
 				publishLast(),
 				refCount(),
 				map(
-					(r) =>
+					r =>
 						r
 							? new LoadDetailSuccess(r.Data)
 							: new LoadFail('Get markets details error, Response didn\'t exits')

@@ -7,6 +7,7 @@ import * as TransactionHistorySelectors from './transaction-history.selector'
 import * as SettingsSelectors from './settings.selector'
 import * as ContactsSelectors from './contacts.selector'
 import * as TransactionsSelectors from './transactions.selector'
+import * as ClaimsSelectors from './claims.selector'
 
 export {
 	PricesSelectors,
@@ -17,5 +18,6 @@ export {
 	TransactionHistorySelectors,
 	SettingsSelectors,
 	ContactsSelectors,
-	TransactionsSelectors
+	TransactionsSelectors,
+	ClaimsSelectors
 }

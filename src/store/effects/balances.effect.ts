@@ -90,9 +90,9 @@ function mappingBalances (balances, asset) {
 		? Object.keys(balances)
 						.map(hash => {
 							const coin = asset.find(c => c.id === hash)
-							const name = either(prop('symbol'), propOr('unknown', 'name'))(coin)
+							const name = either(prop('symbol'), propOr('-', 'name'))(coin)
 							const sym = Array.isArray(name) ? name[0].name : name
-							const symbol = sym === '小蚁股' ? 'NEO'
+							const symbol = sym === '小蚁股'? 'NEO'
 								: sym === '小蚁币' ? 'GAS'
 									: sym
 							return {

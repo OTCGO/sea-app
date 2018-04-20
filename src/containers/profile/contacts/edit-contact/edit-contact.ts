@@ -81,11 +81,10 @@ export class EditContact implements OnInit, OnDestroy {
 		if (isChanged && this.counter === 0) {
 			this.counter++
 			this.notifyMsg('update_confirm')
-			setTimeout(() => this.counter = 0, 500)
-		} else {
-			this.store.dispatch(new ContactsActions.Update({ id: address, changes }))
-			this.notifyMsg('update_success')
+			return setTimeout(() => this.counter = 0, 500)
 		}
+		this.store.dispatch(new ContactsActions.Update({ id: address, changes }))
+		this.notifyMsg('update_success')
 	}
 
 	notifyMsg (suffix) {

@@ -6,9 +6,12 @@ import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { catchError, concatMap, exhaustMap, map, tap, withLatestFrom } from 'rxjs/operators'
 import { RootState } from '../reducers'
-import { WalletProvider } from '../../providers'
+import { RouterProvider, WalletProvider } from '../../providers'
 import { wallet } from '../../libs/neon'
-import { getEntity } from '../selectors/wallet.selector'
+import {
+	getAccounts,
+	getEntity
+} from '../selectors/wallet.selector'
 import { Wallet } from '../../shared/typings'
 import {
 	WalletActionTypes, Load, LoadSuccess, LoadFail, AddAccount, AddAccountSuccess, AddAccountFail
@@ -42,19 +45,38 @@ export class WalletEffects {
 					catchError(e => of(new LoadFail(e)))
 				)
 
-	/*@Effect()
-	AddAccount =
+	@Effect({ dispatch: false })
+	LoadSuccess$ =
+		this.actions$.pipe(
+			ofType(
+				WalletActionTypes.LOAD_SUCCESS,
+			),
+			tap(() => {
+				console.log(this.router)
+				this.router.setRoot('Tabs')
+			})
+		)
+
+	@Effect()
+	AddAccount$ =
 		this.actions$
 				.pipe(
 					ofType<AddAccount>(WalletActionTypes.ADD_ACCOUNT),
-					map(action => {
-						console.log(action)
-						return action.payload
+					map(action => action.payload),
+					withLatestFrom(this.store$.select(getAccounts), (accountFile, accounts) => ({accountFile, accounts})),
+					map(({ accountFile, accounts }) => {
+						if (accountFile instanceof wallet.Account) {
+							const { _WIF, address, encrypted: key, label, } = accountFile as any
+							let account = new wallet.Account(_WIF || { address, key, label })
+							if (!accounts.some(account => account.isDefault)) account.isDefault = true
+							return new AddAccountSuccess(account)
+						}
+						const account = new wallet.Account(accountFile)
+						if (!accounts.some(account => account.isDefault)) account.isDefault = true
+						return new AddAccountSuccess(account)
 					}),
-					catchError(e => of(new AddAccountFail(e))),
-					map(_=> new AddAccountSuccess()),
 					catchError(e => of(new AddAccountFail(e)))
-				)*/
+				)
 
 	@Effect({ dispatch: false })
 	SaveWalletFile$ =
@@ -88,6 +110,7 @@ export class WalletEffects {
 	constructor (
 		private actions$: Actions,
 		private store$: Store<RootState>,
-		private walletProvider: WalletProvider
+		private walletProvider: WalletProvider,
+		private router: RouterProvider
 	) {}
 }

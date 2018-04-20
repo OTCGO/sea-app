@@ -7,7 +7,7 @@
 				<p>{{ getTime(history.time) }} {{ (translationPrefix + history.operation) | translate }}</p>
 			</div>
 			<ion-col item-end col-4 text-right>
-				{{ history.value }}
+				{{ computeNumber(history.value) }}
 			</ion-col>
 		</button>
 	</ion-list>

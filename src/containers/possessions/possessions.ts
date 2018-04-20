@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnDestroy,
 	OnInit
 } from '@angular/core'
 import {
@@ -16,7 +15,7 @@ import 'rxjs/add/operator/take'
 import { IBalance } from '../../shared/models'
 import { Account } from '../../shared/typings'
 import { LoadingProvider, NotificationProvider } from '../../providers'
-import { BalancesActions } from '../../store/actions'
+import { MarketsActions, BalancesActions } from '../../store/actions'
 import { WalletSelectors, BalancesSelectors, PricesSelectors, SettingsSelectors } from '../../store/selectors'
 import { fromBalances, fromWallet } from '../../store/reducers'
 
@@ -29,7 +28,7 @@ import { fromBalances, fromWallet } from '../../store/reducers'
 	selector: 'page-possessions',
 	templateUrl: 'possessions.html'
 })
-export class PossessionsPage implements OnInit, OnDestroy {
+export class PossessionsPage implements OnInit {
 	exits: boolean
 	balances: Observable<IBalance[]>
 	account: Observable<Account> = this.store.select(WalletSelectors.getAccount)
@@ -57,23 +56,16 @@ export class PossessionsPage implements OnInit, OnDestroy {
 	}
 
 	ngOnInit () {
-		this.updateBalances(this.displayZero)
+		this.updateBalances()
+		this.store.dispatch(new MarketsActions.Load())
 		this.store.dispatch(new BalancesActions.Load())
-		this.store
-				.select(BalancesSelectors.getLoading)
-				.subscribe(loading => this.lp.emit(loading))
-		this.store
-				.select(BalancesSelectors.getError)
-				.subscribe(error => error && this.notificationProvider.emit({ message: error }))
+		this.store.select(BalancesSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
+		this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
-	ngOnDestroy () {
-
-	}
-
-	updateBalances (displayZero) {
-		this.balances = displayZero
+	updateBalances (displayZero?: boolean) {
+		this.balances = displayZero || this.displayZero
 			? this.store.select(BalancesSelectors.getDefaultEntities)
 			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
 	}

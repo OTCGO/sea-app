@@ -42,6 +42,13 @@ export class SendModalComponent implements OnInit {
 	get passphrase () { return this.formGroup.get('passphrase') }
 	get amount () { return this.formGroup.get('amount') }
 	get label () { return this.formGroup.get('label') }
+	get w () {
+		try {
+			return this.sendModalProvider.account && this.sendModalProvider.account.WIF
+		} catch (e) {
+			return ''
+		}
+	}
 
 	constructor (
 		public viewCtrl: ViewController,
@@ -50,15 +57,14 @@ export class SendModalComponent implements OnInit {
 		private notificationProvider: NotificationProvider,
 		private alertCtrl: AlertController,
 		private loadingCtrl: LoadingController,
-		private sendModalProvider: SendModalProvider,
+		public sendModalProvider: SendModalProvider,
 		private store: Store<RootState>,
 		private fb: FormBuilder
 	) {
 		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
-
 		this.formGroup = this.fb.group({
 			address: ['', [Validators.required, addressValidator]],
-			passphrase: ['', Validators.required],
+			passphrase: ['', this.w ? [] : Validators.required],
 			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
 			label: [''],
 		})

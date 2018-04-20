@@ -47,6 +47,7 @@ export class ApiProvider implements OnDestroy {
 	}
 
 	broadcast (body) {
+		console.log('broadcast', body)
 		return this.http
 		           .post(`${this.getAPIEndpoint()}/broadcast`, body)
 							 .pipe(takeUntil(this.onDestroy), timeout(10000))

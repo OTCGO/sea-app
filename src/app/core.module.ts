@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 import { File } from '@ionic-native/file'
 import { BarcodeScanner } from '@ionic-native/barcode-scanner'
 
-import { AccountProvider, ApiProvider, WalletProvider, PriceProvider } from '../providers'
+import { RouterProvider, AccountProvider, ApiProvider, WalletProvider, PriceProvider } from '../providers'
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
@@ -37,6 +37,7 @@ import { Logger } from '../providers/logger.provider'
 	  FileStorageProvider,
 	  NotificationProvider,
 		LoadingProvider,
+		RouterProvider,
 		{ provide: ErrorHandler, useClass: IonicErrorHandler },
 	]
 })

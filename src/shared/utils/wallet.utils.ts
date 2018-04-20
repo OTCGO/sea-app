@@ -1,4 +1,7 @@
-import { Wallet } from '../typings'
+import {
+	Account,
+	Wallet
+} from '../typings'
 import { wallet } from '../../libs/neon'
 import * as CryptoJS from 'crypto-js'
 import * as KJ from 'jsrsasign'
@@ -48,7 +51,7 @@ export const verifyKeyPair = (prvkey, pubkey) => {
 	return doVerify(pubkey, msg, sigval)
 }
 
-export const findDefaultAccount = (wallet: Wallet) => {
+export const findDefaultAccount = (wallet: Wallet): Account => {
 	try {
 		return wallet.defaultAccount
 			|| wallet.accounts.find(account => account.isDefault || !!(<any>account)._privateKey || !!(<any>account)._WIF)

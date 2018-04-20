@@ -54,7 +54,8 @@ export class MarketsPage implements OnInit {
 				.then(res => this.exchangeRates = res['rates'])
 				.catch(error => this.np.emit({ message: error }))
 
-		refresher.complete()
+		this.store.select(MarketsSelectors.getLoading)
+				.subscribe(loading => !loading && refresher.complete())
 	}
 
 	handleCoinClick (coin) {

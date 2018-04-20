@@ -24,7 +24,8 @@ import {
   AuthEffects,
   WalletEffects,
   TransactionHistoryEffects,
-  SettingsEffects
+  SettingsEffects,
+  ClaimsEffects
 } from '../store/effects'
 
 const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'assets/i18n/', '.json')
@@ -38,8 +39,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ ...reducers }, { metaReducers: metaReducers }),
-    // dev ? StoreDevtoolsModule.instrument() : [],
+    StoreModule.forRoot(reducers, { metaReducers }),
+    dev ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([
       BalancesEffects,
       MarketsEffects,
@@ -47,7 +48,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
       ContactsEffects,
       AuthEffects,
       TransactionHistoryEffects,
-      SettingsEffects
+      SettingsEffects,
+      ClaimsEffects
     ]),
     IonicModule.forRoot(MyApp, {
       tabbarPlacement: 'bottom',

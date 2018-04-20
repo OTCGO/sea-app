@@ -66,10 +66,12 @@ page-possessions {
         display: flex;
         justify-content: center;
         align-items: center;
+        border: 1px solid #dddddc;
+        border-radius: 50%;
 
         img {
-          width: 30px;
-          height: 30px;
+          width: 50%;
+          height: 50%;
         }
       }
 

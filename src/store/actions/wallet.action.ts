@@ -19,7 +19,8 @@ export enum WalletActionTypes {
 	REMOVE_ACCOUNT_SUCCESS = '[Wallet] Remove Account Success',
 	CHANGE_ACCOUNT_LABEL = '[Wallet] Change Account Label',
 	SET_DEFAULT_ACCOUNT = '[Wallet] Set Default Account',
-	SAVE_WALLET = '[Wallet] Save Wallet'
+	SAVE_WALLET = '[Wallet] Save Wallet',
+	UPDATE_WALLET = '[Wallet] Update'
 }
 
 export class Load implements Action {
@@ -68,6 +69,8 @@ export class AddAccountFail implements Action {
 
 export class AddAccountSuccess implements Action {
 	readonly type = WalletActionTypes.ADD_ACCOUNT_SUCCESS
+
+	constructor (public payload: Account) { }
 }
 
 export class RemoveAccount implements Action {
@@ -96,6 +99,12 @@ export class SetDefaultAccount implements Action {
 	readonly type = WalletActionTypes.SET_DEFAULT_ACCOUNT
 
 	constructor (public payload: Account) { }
+}
+
+export class Update implements Action {
+	readonly type = WalletActionTypes.UPDATE_WALLET
+
+	constructor (public payload) { }
 }
 
 export type WalletActions =

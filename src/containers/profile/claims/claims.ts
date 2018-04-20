@@ -1,17 +1,15 @@
 import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { Claims } from '@shared/models'
+
 import { AlertController, IonicPage, LoadingController } from 'ionic-angular'
 import { AccountProvider } from '../../../providers'
 import { ClaimsProvider } from './claims.provider'
+import { RootState } from '../../../store/reducers'
+import { ClaimsActions } from '../../../store/actions'
+import { ClaimsSelectors } from '../../../store/selectors'
 import { wallet } from '../../../libs/neon'
-const { decrypt } = wallet
-
-interface ClaimsRes {
-	available: string
-	unavailable: string
-	claims: ClaimsResC[]
-}
-// TODO: I don't know what it is, think's like a claims history object
-type ClaimsResC = [string, string]
+const { decrypt, getPrivateKeyFromWIF } = wallet
 
 
 @IonicPage({
@@ -30,18 +28,18 @@ export class ClaimsPage {
 		private claimsProvider: ClaimsProvider,
 		private accountProvider: AccountProvider,
 	  private alertCtrl: AlertController,
+	  private store: Store<RootState>,
 	  private loadingCtrl: LoadingController
 	) {}
 
 	ionViewDidLoad () {
-		this.getData()
-	}
-
-	getData () {
-		this.claimsProvider.getClaims()
-		    .then((res: ClaimsRes) => {
-			    this.availableGas = (Number(res.available) + Number(res.unavailable)).toFixed(8)
-		    })
+		this.store.dispatch(new ClaimsActions.Load())
+		this.store.select(ClaimsSelectors.getEntities).subscribe(
+			(claims: Claims) => {
+				if (claims)
+					this.availableGas = (Number(claims.available) + Number(claims.unavailable)).toFixed(8)
+			}
+		)
 	}
 
 	doClaim () {
@@ -55,13 +53,14 @@ export class ClaimsPage {
 					{
 						text: '确认',
 						handler: ({ passphrase }) => {
-							if (passphrase === '') return false
+							if (passphrase === '' || passphrase.length < 4) return false
 							loading.present().then(async () => {
 								try {
-									const pr = decrypt(this.account.encrypted, passphrase)
+									const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									await loading.dismiss()
 									await prompt.dismiss()
-									await this.claimsProvider.doClaims(pr)
+									const result = await this.claimsProvider.doClaims(pr)
+									result && this.showPrompt('提取成功！')
 								} catch (e) {
 									await loading.dismiss()
 									await prompt.dismiss()
@@ -76,8 +75,8 @@ export class ClaimsPage {
 			prompt.present()
 	}
 
-	showPrompt (message) {
-		const prompt = this.alertCtrl.create({ message })
-		prompt.present()
+	showPrompt (msg) {
+		const message = msg.message || msg
+		this.alertCtrl.create({ message }).present()
 	}
 }

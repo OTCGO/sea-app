@@ -166,10 +166,10 @@ export class LoginPage implements OnInit, OnDestroy {
 
 	/* TODO: Just from now, only old wallet format is required with passphrase login. */
 	login ({
-					 controls,
-					 value,
-					 valid  // TODO: Valid use at loginForm but don't have capability with nowif or file logic
-				 }: {
+			controls,
+			value,
+		  valid  // TODO: Valid use at loginForm but don't have capability with nowif or file logic
+		}: {
 		controls: {
 			[key: string]: AbstractControl
 		},

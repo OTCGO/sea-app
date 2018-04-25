@@ -1,7 +1,8 @@
 import { Component } from '@angular/core'
 import {
 	IonicPage,
-	NavParams
+	NavParams,
+	Platform
 } from 'ionic-angular'
 import { Clipboard } from '@ionic-native/clipboard'
 import { SocialSharing } from '@ionic-native/social-sharing'
@@ -47,12 +48,22 @@ export class PaymentQRCodePage {
 		navParams: NavParams,
 		private clipboard: Clipboard,
 		private socialSharing: SocialSharing,
-		private ns: NotificationProvider
+		private ns: NotificationProvider,
+		private platform: Platform
 	) {
 		this.address = navParams.get('address')
 	}
 
 	copy () {
+		if (this.platform.is('mobileweb')) {
+			try {
+				const successful = document.execCommand('copy')
+				const msg = successful ? 'successful' : 'fail'
+				return this.ns.emit({ message: `copy ${msg}` })
+			} catch (err) {
+				console.log('unable to copy', err)
+			}
+		}
 		this.clipboard.copy(this.address)
 		console.log('copy action')
 		this.ns.emit({ message: 'copy success' })

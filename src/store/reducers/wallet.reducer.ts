@@ -119,6 +119,18 @@ export const reducer: ActionReducer<State> = (
 			}
 		}
 
+		case WalletActionTypes.UPDATE_WALLET: {
+			const entity = Object.assign({}, state.entity)
+			const { key, value } = action.payload
+			entity[key] = value
+
+			return {
+				...state,
+				entity,
+				loading: false
+			}
+		}
+
 		default: return state
 	}
 }

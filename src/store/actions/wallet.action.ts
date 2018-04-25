@@ -104,7 +104,7 @@ export class SetDefaultAccount implements Action {
 export class Update implements Action {
 	readonly type = WalletActionTypes.UPDATE_WALLET
 
-	constructor (public payload) { }
+	constructor (public payload: { key: string, value: any }) { }
 }
 
 export type WalletActions =
@@ -122,3 +122,4 @@ export type WalletActions =
 	| RemoveAccountSuccess
 	| ChangeAccountLabel
   | SetDefaultAccount
+  | Update

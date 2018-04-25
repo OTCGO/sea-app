@@ -23,7 +23,7 @@ export class PriceProvider {
 	                        'ils', 'inr', 'jpy', 'krw', 'mxn', 'myr', 'nok', 'nzd', 'php', 'pkr', 'pln', 'rub', 'sek',
 	                        'sgd', 'thb', 'try', 'twd', 'usd', 'zar']
 
-	static NEO_CHAIN_COINS: string[] = ['NEO', 'GAS', 'TNC', 'QLC', 'TKY', 'RHT', 'CPX', 'ACAT', 'ZPT', 'APH', 'DBC', 'RPX', 'BCS', 'ONT']
+	static NEO_CHAIN_COINS: string[] = ['NEO', 'GAS', 'TNC', 'QLC', 'TKY', 'RHT', 'CPX', 'ACAT', 'ZPT', 'APH', 'DBC', 'RPX', 'BCS', 'ONT', 'LRN']
 
 
 	constructor (private http: HttpClient) {}

@@ -7,4 +7,6 @@ import { NavController } from 'ionic-angular'
 })
 export class ProfileFeatureListComponent {
  constructor (private navCtrl: NavController) { }
+
+
 }

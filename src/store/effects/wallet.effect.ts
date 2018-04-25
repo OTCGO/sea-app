@@ -48,11 +48,8 @@ export class WalletEffects {
 	@Effect({ dispatch: false })
 	LoadSuccess$ =
 		this.actions$.pipe(
-			ofType(
-				WalletActionTypes.LOAD_SUCCESS,
-			),
+			ofType(WalletActionTypes.LOAD_SUCCESS,),
 			tap(() => {
-				console.log(this.router)
 				this.router.setRoot('Tabs')
 			})
 		)

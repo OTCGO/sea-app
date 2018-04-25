@@ -1,9 +1,13 @@
 {
-  "name": "otcgoWallet",
-  "short_name": "OTCGO",
+  "name": "OTCGO Lite",
+  "short_name": "OTCGO Lite",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
+    "src": "assets/imgs/logo-144x144.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }, {
     "src": "assets/imgs/logo.png",
     "sizes": "512x512",
     "type": "image/png"

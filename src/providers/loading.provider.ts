@@ -22,9 +22,8 @@ export class LoadingProvider {
 				.timeout(3456)
 				.catch(() => of(false))
 				.subscribe(
-					bool => {
-						console.log('Call loading:', bool)
-						if (bool) {
+					(boolOrOptions) => {
+						if (boolOrOptions) {
 							this.loading = this.loadingCtrl.create()
 							return this.loading.present()
 						}

@@ -7,6 +7,10 @@
 'use strict';
 importScripts('./build/sw-toolbox.js');
 
+// TODO: set true
+self.toolbox.debug = true
+
+
 self.toolbox.options.cache = {
   name: 'ionic-cache'
 };
@@ -18,6 +22,40 @@ self.toolbox.precache(
     './build/vendor.js',
     './build/main.css',
     './build/polyfills.js',
+    "./assets/imgs/bg-discover.jpg",
+    "./assets/imgs/bg-manage-wallet.png",
+    "./assets/imgs/bg-possession.png",
+    "./assets/imgs/bg-profile.jpg",
+    "./assets/imgs/claims_loader.svg",
+    "./assets/imgs/icon-backup-wallet_success.svg",
+    "./assets/imgs/icon-contacts_edit.svg",
+    "./assets/imgs/icon-contacts_remove.svg",
+    "./assets/imgs/icon-login_file.svg",
+    "./assets/imgs/icon-login_WIF.svg",
+    "./assets/imgs/icon-possessions_hide-zero-on.svg",
+    "./assets/imgs/icon-possessions_hide-zero.svg",
+    "./assets/imgs/icon-profile_contacts.svg",
+    "./assets/imgs/icon-profile_helpcentre.svg",
+    "./assets/imgs/icon-profile_manage-wallet.svg",
+    "./assets/imgs/icon-profile_notification.svg",
+    "./assets/imgs/icon-profile_setting.svg",
+    "./assets/imgs/icon-profile_tx-history.svg",
+    "./assets/imgs/icon-qrcode-avatar.svg",
+    "./assets/imgs/icon-send-modal_contact.svg",
+    "./assets/imgs/icon-send-modal_scan.svg",
+    "./assets/imgs/icon-tabs_balances_off.svg",
+    "./assets/imgs/icon-tabs_balances_on.svg",
+    "./assets/imgs/icon-tabs_discover_off.svg",
+    "./assets/imgs/icon-tabs_discover_on.svg",
+    "./assets/imgs/icon-tabs_markets_off.svg",
+    "./assets/imgs/icon-tabs_markets_on.svg",
+    "./assets/imgs/icon-tabs_profile_off.svg",
+    "./assets/imgs/icon-tabs_profile_on.svg",
+    "./assets/imgs/logo--white.png",
+    "./assets/imgs/logo.png",
+    "./assets/imgs/whitebg.svg",
+    "./assets/i18n/en.json",
+    "./assets/i18n/zh.json",
     'index.html',
     'manifest.json'
   ]

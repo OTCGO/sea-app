@@ -12,5 +12,6 @@ import {
 	templateUrl: 'import-wallet.html'
 })
 export class ImportWallet {
+	prefix = 'PROFILE.MANAGE_WALLET.IMPORT_WALLET.'
 
 }

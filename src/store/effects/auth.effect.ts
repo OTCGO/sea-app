@@ -11,7 +11,11 @@ import {
 	Account,
 	Wallet
 } from '../../shared/typings'
-import { RouterProvider, WalletProvider } from '../../providers'
+import {
+	LoadingProvider,
+	RouterProvider,
+	WalletProvider
+} from '../../providers'
 import { wallet } from '../../libs/neon'
 
 import {
@@ -90,6 +94,7 @@ export class AuthEffects {
 			ofType<CreateWallet>(AuthActionTypes.CREATE_WALLET),
 			map(action => action.payload),
 			exhaustMap(({ passphrase, wif, label }) => {
+				this.lp.emit(true)
 				const accountTemp = new wallet.Account(wif || wallet.generatePrivateKey())
 				const { WIF, address } = accountTemp
 				const encrypted = wallet.encrypt(WIF, passphrase)
@@ -103,7 +108,7 @@ export class AuthEffects {
 					contract: null,
 					extra: null
 				} as any)
-
+				this.lp.emit(false)
 				return [
 					new WalletActions.AddAccount(account),
 					new CreateWalletSuccess()
@@ -135,6 +140,7 @@ export class AuthEffects {
 	constructor (
 		private actions$: Actions,
 		private walletProvider: WalletProvider,
-		private router: RouterProvider
+		private router: RouterProvider,
+		private lp: LoadingProvider
 	) { }
 }

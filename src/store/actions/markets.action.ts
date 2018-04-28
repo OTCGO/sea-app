@@ -7,7 +7,9 @@ export enum MarketsActionTypes {
 	LOAD_DETAIL = '[Markets] Load markets detail',
 	LOAD_DETAIL_SUCCESS = '[Markets] Load markets detail success',
 	LOAD_DETAIL_FAIL = '[Markets] Load markets detail fail',
-	SELECT = '[Markets] Select'
+	SELECT = '[Markets] Select',
+	UPDATE_MARKETS_LOAD_TIME = '[Markets] Update Markets Load Time',
+	UPDATE_DETAILS_LOAD_TIME = '[Markets] Update Details Load Time'
 }
 
 export class Load implements Action {
@@ -50,6 +52,14 @@ export class Select implements Action {
 	constructor (public payload: string) {}
 }
 
+export class UpdateMarketsLoadTime implements Action {
+	readonly type = MarketsActionTypes.UPDATE_MARKETS_LOAD_TIME
+}
+
+export class UpdateDetailsLoadTime implements Action {
+	readonly type = MarketsActionTypes.UPDATE_DETAILS_LOAD_TIME
+}
+
 export type MarketsActions =
 	Load
 	| LoadFail
@@ -58,3 +68,5 @@ export type MarketsActions =
 	| LoadDetailFail
 	| LoadDetailSuccess
 	| Select
+	| UpdateMarketsLoadTime
+	| UpdateDetailsLoadTime

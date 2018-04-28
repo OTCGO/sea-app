@@ -7,13 +7,13 @@ import {
 import { Clipboard } from '@ionic-native/clipboard'
 import {
 	AlertController,
-	AlertOptions,
-	LoadingController
+	LoadingController,
+	Platform
 } from 'ionic-angular'
 import { NotificationProvider } from '../../../providers'
 import { wallet } from '../../../libs/neon'
 import { Account } from '../../../shared/typings'
-
+import * as copy from 'copy-to-clipboard'
 
 @Component({
 	selector: 'manage-wallet-card',
@@ -45,7 +45,8 @@ export class ManageWalletCard {
 		private alertCtrl: AlertController,
 		private clipBoard: Clipboard,
 		private loadingCtrl: LoadingController,
-		private np: NotificationProvider
+		private np: NotificationProvider,
+		private platform: Platform
 	) { }
 
 	handleWIFClick (account) { this.showWIFKeyBox(account) }
@@ -88,8 +89,15 @@ export class ManageWalletCard {
 	}
 
 	showKeyBox ({ title, message }) {
-		const handler = () => this.clipBoard.copy(message)
-		this.alertCtrl.create(<AlertOptions>{
+		const handler = () => {
+			if (this.platform.is('mobileweb')) {
+				const state = copy(message) ? 'success' : 'fail'
+				return this.np.emit(`copy ${state}!`)
+			}
+			this.clipBoard.copy(message).then(() => this.np.emit('copy success'))
+		}
+
+		this.alertCtrl.create({
 			title, message, cssClass: 'mw__exports-actions--key',
 			buttons: [{ text: '取消' }, { text: '复制', handler }]
 		}).present()

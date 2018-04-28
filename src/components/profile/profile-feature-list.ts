@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 import { NavController } from 'ionic-angular'
 
 @Component({
-  selector: 'profile-feature-list',
-  templateUrl: 'profile-feature-list.html'
+	selector: 'profile-feature-list',
+	templateUrl: 'profile-feature-list.html'
 })
 export class ProfileFeatureListComponent {
- constructor (private navCtrl: NavController) { }
+	constructor (private navCtrl: NavController) { }
 
+	logout () {
 
+		this.navCtrl.setRoot('Login')
+	}
 }

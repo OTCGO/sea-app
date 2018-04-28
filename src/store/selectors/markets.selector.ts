@@ -22,6 +22,9 @@ export const getLoading = createSelector(getMarketsState, (state: State) => stat
 export const getError = createSelector(getMarketsState, (state: State) => state.error)
 export const getDetails = createSelector(getMarketsState, (state: State) => state.detail)
 export const getSelectedSymbol = createSelector(getMarketsState, (state: State) => state.selectedSymbol)
+export const getPreMarketsLoadTime = createSelector(getMarketsState, (state: State) => state.preMarketsLoadTime)
+export const getPreDetailsLoadTime = createSelector(getMarketsState, (state: State) => state.preDetailsLoadTime)
+
 
 export const getHigh = createSelector(
 	getDetails,

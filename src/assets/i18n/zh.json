@@ -84,6 +84,7 @@
 			"export": "导出",
 			"export_wif": "导出 WIF",
 			"export_key": "导出 EncryptedKey",
+			"export_file": "导出文件",
 			"save": "保存",
 			"save_success": "保存钱包成功",
 			"default": "默认钱包",
@@ -98,10 +99,14 @@
 			"ADD_WALLET": {
 				"title": "添加钱包",
 				"import_wallet": "导入钱包",
-				"create_wallet": "创建钱包"
+				"create_wallet": "创建钱包",
+				"watch_only": "观察模式"
 			},
 			"IMPORT_WALLET": {
-				"title": "Import Wallet"
+				"title": "导入钱包"
+			},
+			"WATCH_ONLY": {
+				"title": "观察模式"
 			}
 		},
 		"CONTACTS": {

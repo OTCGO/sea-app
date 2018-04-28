@@ -12,6 +12,13 @@
         </ion-item>
     </ion-card>
 
+    <ion-card>
+        <ion-item detail-push icon-right (click)="navCtrl.push('ImportWallet')">
+            {{ translationPrefix + 'watch_only' | translate }}
+            <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon>
+        </ion-item>
+    </ion-card>
+
     <button ion-button round full clear class="otcgo-button">
         {{ translationPrefix + 'create_wallet' | translate }}
     </button>

@@ -4,16 +4,13 @@ import {
 	IonicPage, NavController, NavParams, Refresher
 } from 'ionic-angular'
 
-
 import { RootState } from '../../store/reducers'
 import { PriceProvider, NotificationProvider, LoadingProvider } from '../../providers'
 
 import { MarketsActions } from '../../store/actions'
 import { SettingsSelectors, MarketsSelectors, PricesSelectors } from '../../store/selectors'
 
-@IonicPage({
-	name: 'Markets'
-})
+@IonicPage({ name: 'Markets' })
 @Component({
 	selector: 'page-markets',
 	templateUrl: 'markets.html',
@@ -44,7 +41,7 @@ export class MarketsPage implements OnInit {
 		this.store.select(SettingsSelectors.getCurrency).subscribe(currency => this.oCurrency = currency)
 		this.store.select(PricesSelectors.getEntities).subscribe(prices => this.GASPrice = prices['GAS'] || 1)
 
-		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates'])
+		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates']).catch(console.log)
 	}
 
 	doRefresh (refresher: Refresher) {

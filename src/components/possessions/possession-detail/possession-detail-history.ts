@@ -7,10 +7,7 @@ import {
 @Component({
     selector: 'possession-detail-history',
     template: `
-	    <timeline endIcon="call" [showEnd]="!!transactionHistories?.length" [ngClass]="{
-				'is-scroll-up': isScrollUp,
-				'is-scroll-down': isScrollDown
-			}">
+	    <timeline endIcon="call" [showEnd]="!!transactionHistories?.length" [style.height]="height" class="scroll-animation">
 		    <h5 *ngIf="transactionHistories?.length">{{ 'POSSESSIONS.DETAILS.title' | translate }}</h5>
 		    <h5 *ngIf="!transactionHistories?.length">{{ 'POSSESSIONS.DETAILS.nodata' | translate }}</h5>
 
@@ -42,6 +39,22 @@ export class PossessionDetailHistory {
 	@Input() isScrollDown
 	@Input() symbol
 	@Input() transactionHistories
+	@Input() scrollTop: number = 0
+	@Input() differentScrollTop: number = 0
 
 	translationPrefix = 'POSSESSIONS.DETAILS.'
+	upBoundary = window.outerHeight * 0.1
+	cardBoundary = window.outerHeight * 0.2
+	downBoundary = window.outerHeight * 0.5
+
+	get height () {
+		const { downBoundary, upBoundary, cardBoundary, isScrollUp, scrollTop, differentScrollTop } = this
+
+		const differential = scrollTop - differentScrollTop
+		const computedResult = isScrollUp
+			? Math.min(downBoundary + scrollTop * 2, upBoundary)
+			: Math.max(upBoundary + differential * 2, downBoundary)
+		if (scrollTop < cardBoundary && isScrollUp) return `${upBoundary}px`
+		return `${computedResult}px`
+	}
 }

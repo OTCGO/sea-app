@@ -57,15 +57,15 @@ export class PossessionsPage implements OnInit {
 
 	ngOnInit () {
 		this.updateBalances()
-		this.store.dispatch(new MarketsActions.Load())
+		// this.store.dispatch(new MarketsActions.Load())
 		this.store.dispatch(new BalancesActions.Load())
 		this.store.select(BalancesSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
 		this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
-	updateBalances (displayZero?: boolean) {
-		this.balances = displayZero || this.displayZero
+	updateBalances (displayZero: boolean = false) {
+		this.balances = displayZero
 			? this.store.select(BalancesSelectors.getDefaultEntities)
 			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
 	}

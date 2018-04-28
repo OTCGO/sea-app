@@ -8,7 +8,9 @@ page-manage-wallet {
   ion-content {
     background-image: url('../assets/imgs/bg-manage-wallet.png');
     background-position: center top;
-    background-size: cover;
+    background-size: 101%;
+    background-color: #0d5cdb !important;
+    width: 101%;
 
     .scroll-content {
       overflow-y: hidden;

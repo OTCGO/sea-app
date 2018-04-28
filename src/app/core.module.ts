@@ -1,6 +1,7 @@
 import { ErrorHandler, NgModule } from '@angular/core'
 
 import { Clipboard } from '@ionic-native/clipboard'
+import { NativeStorage } from '@ionic-native/native-storage'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
@@ -25,6 +26,7 @@ import { Logger } from '../providers/logger.provider'
 		File,
 		Clipboard,
 		Logger,
+		NativeStorage,
 		BarcodeScanner,
 		SocialSharing,
 		WalletProvider,

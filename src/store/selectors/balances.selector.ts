@@ -1,8 +1,12 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store'
+import {
+	createFeatureSelector,
+	createSelector,
+	MemoizedSelector
+} from '@ngrx/store'
 import { IBalance, } from '../../shared/models'
 import { getAccount } from './wallet.selector'
 import { State } from '../reducers/balances.reducer'
-import { not, toPairs, isEmpty } from 'ramda'
+import { sort, compose, prop, lt, filter, not, toPairs, isEmpty } from 'ramda'
 
 const getState = createFeatureSelector('balances')
 export const getEntities = createSelector(getState, (state: State) => state.entities)
@@ -27,12 +31,20 @@ export const getEntitiesByAddress = address => createSelector(
 export const getDefaultEntities = createSelector(
 	getAccount,
 	getEntities,
-	(account, entities) => account && entities && !isEmpty(entities[account.address]) && entities[account.address]
+	(account, entities) => {
+		console.log('dont try', entities)
+
+		const result = account && entities && entities[account.address] && !isEmpty(entities[account.address]) &&
+		sort<IBalance>((a, b) => b.amount - a.amount, entities[account.address])
+
+		return result
+	}
 )
 
 export const getDefaultNonZeroEntities = createSelector(
 	getDefaultEntities,
-	entities => entities && !isEmpty(entities) && entities.filter(balance => balance.amount > 0)
+	entities =>
+		entities && !isEmpty(entities) && filter<IBalance>(compose(lt(0), prop('amount')))(entities)
 )
 
 export const getSelectedBalance = createSelector(

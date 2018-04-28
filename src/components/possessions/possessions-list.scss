@@ -1,6 +1,9 @@
 @import "../../theme/otcgo/variables";
 
 possessions-list {
+  background-color: #fff;
+  display: block;
+
   ion-grid.possessions__base-accumulator {
     width: calc(100% - 40px);
     padding: 0;

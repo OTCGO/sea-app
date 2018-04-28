@@ -7,6 +7,8 @@ export interface State {
 	error: string | Error
 	detail: any[]
 	entities: any[]
+	preMarketsLoadTime: number,
+	preDetailsLoadTime: number,
 	selectedSymbol: string
 }
 
@@ -15,6 +17,8 @@ const initialState: State = {
 	error: '',
 	detail: [],
 	entities: [],
+	preMarketsLoadTime: 0,
+	preDetailsLoadTime: 0,
 	selectedSymbol: ''
 }
 
@@ -26,7 +30,7 @@ export const reducer: ActionReducer<State> = (state = initialState, action: Mark
 				...state,
 				loading: true
 			}
-		}			
+		}
 
 		case MarketsActionTypes.LOAD_SUCCESS: {
 			return {
@@ -57,6 +61,20 @@ export const reducer: ActionReducer<State> = (state = initialState, action: Mark
 			return {
 				...state,
 				selectedSymbol: action.payload
+			}
+		}
+
+		case MarketsActionTypes.UPDATE_MARKETS_LOAD_TIME: {
+			return {
+				...state,
+				preMarketsLoadTime: Date.now()
+			}
+		}
+
+		case MarketsActionTypes.UPDATE_DETAILS_LOAD_TIME: {
+			return {
+				...state,
+				preDetailsLoadTime: Date.now()
 			}
 		}
 

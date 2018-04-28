@@ -11,11 +11,13 @@ import { IonicApp, IonicModule } from 'ionic-angular'
 
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
+import { DBModule } from '@ngrx/db'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
 import { MyApp } from './app.component'
 import { dev } from '../environments/environment'
 import { reducers, metaReducers } from '../store/reducers'
+import { schema } from './db-schema'
 import { CoreModule } from './core.module'
 import {
   BalancesEffects,
@@ -41,6 +43,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     dev ? StoreDevtoolsModule.instrument() : [],
+    DBModule.provideDB(schema),
     EffectsModule.forRoot([
       BalancesEffects,
       MarketsEffects,

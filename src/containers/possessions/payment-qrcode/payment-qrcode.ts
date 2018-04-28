@@ -48,7 +48,7 @@ export class PaymentQRCodePage {
 		navParams: NavParams,
 		private clipboard: Clipboard,
 		private socialSharing: SocialSharing,
-		private ns: NotificationProvider,
+		private np: NotificationProvider,
 		private platform: Platform
 	) {
 		this.address = navParams.get('address')
@@ -59,14 +59,12 @@ export class PaymentQRCodePage {
 			try {
 				const successful = document.execCommand('copy')
 				const msg = successful ? 'successful' : 'fail'
-				return this.ns.emit({ message: `copy ${msg}` })
+				return this.np.emit({ message: `copy ${msg}` })
 			} catch (err) {
 				console.log('unable to copy', err)
 			}
 		}
-		this.clipboard.copy(this.address)
-		console.log('copy action')
-		this.ns.emit({ message: 'copy success' })
+		this.clipboard.copy(this.address).then(() => this.np.emit({ message: 'copy success' }))
 	}
 
 	share () {

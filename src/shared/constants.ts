@@ -190,3 +190,5 @@ export const Languages: I18n = {
 	'zh-cn': 'Chinese',
 	'en': 'English'
 }
+
+export const FIVE_MINUTES_MS = 300000

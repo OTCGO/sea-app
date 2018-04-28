@@ -25,6 +25,9 @@ export class PossessionDetailPage {
 
 	isScrollUp: boolean
 	isScrollDown: boolean
+	scrollTop: number
+	differentScrollTop: number
+	lastStack = []
 
 	constructor (
 		private lp: LoadingProvider,
@@ -37,13 +40,19 @@ export class PossessionDetailPage {
 	ionViewDidLeave () { this.transactionHistories = empty() }
 
 	handleScroll (e: ScrollEvent) {
+		const { scrollTop } = e
+		this.scrollTop = scrollTop
+		if (!this.differentScrollTop) this.differentScrollTop = scrollTop
+		this.lastStack.push(() => this.differentScrollTop = scrollTop)
+		if (this.lastStack.length >= 2) this.lastStack.shift().bind(this)()
+
 		if (e.directionY === 'down') {
 			this.zone.run(() => {
 				this.isScrollDown = true
 				this.isScrollUp = false
 			})
 		}
-		if (e.directionY === 'up' && e.scrollTop <= 30) {
+		if (e.directionY === 'up') {
 			this.zone.run(() => {
 				this.isScrollDown = false
 				this.isScrollUp = true

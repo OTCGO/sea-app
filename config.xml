@@ -120,4 +120,5 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
+    <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
 </widget>

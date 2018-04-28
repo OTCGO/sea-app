@@ -1,8 +1,7 @@
 import { Component } from '@angular/core'
 import {
 	IonicPage,
-	NavController,
-	NavParams
+	NavController
 } from 'ionic-angular'
 
 

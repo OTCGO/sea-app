@@ -9,10 +9,7 @@ import { IBalance } from '../../../shared/models'
 @Component({
 	selector: 'possession-detail-bgcard',
 	template: `
-	  <ion-card class="possession-data-card" [ngClass]="{
-	    'is-scroll-up': isScrollUp,
-      'is-scroll-down': isScrollDown
-	  }">
+	  <ion-card class="possession-data-card scroll-animation" [style.height]="height">
 		  <div class="possession-data-amount">{{ balance.amount?.toString() }}</div>
 		  <div class="possession-data-approximation">≈ ￥ {{ balance.amount * price }}</div>
 		  <button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="balance.amount <= 0">
@@ -24,8 +21,24 @@ import { IBalance } from '../../../shared/models'
 export class PossessionDetailBgcard {
 	@Input() isScrollUp: boolean
 	@Input() isScrollDown: boolean
+	@Input() scrollTop: number = 0
+	@Input() differentScrollTop: number = 0
 	@Input() balance: IBalance
 	@Input() price: number
+
+	downBoundary = window.outerHeight * 0.2
+	upBoundary = window.outerHeight * 0.55
+
+	get height () {
+		const { upBoundary, downBoundary, isScrollUp, scrollTop, differentScrollTop } = this
+
+		const differential = scrollTop - differentScrollTop
+		const computedResult = isScrollUp
+			? Math.max(upBoundary - differential * 1.5, upBoundary)
+			: Math.max(upBoundary - scrollTop, downBoundary)
+		if (scrollTop < downBoundary && isScrollUp) return `${upBoundary}px`
+		return `${computedResult}px`
+	}
 
 	constructor(private modalCtrl: ModalController) {}
 

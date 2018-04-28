@@ -10,14 +10,16 @@ import { Account } from '../../shared/typings'
 			  <img src="assets/imgs/icon-qrcode-avatar.svg" alt="">
 		  </div>
 		  <div class="card-title">{{ account?.address | addressCollapse }}</div>
+			<div class="bg"></div>
 	  </ion-card>
+		<div class="card-round"></div>
 	`
 })
 export class PossessionsInfoComponent {
 	@Input() account: Account
 
 	constructor (private navCtrl: NavController) {}
-
+	
 	openQRCode () {
 		this.navCtrl.push('payment-qrcode', { address: this.account && this.account.address })
 	}

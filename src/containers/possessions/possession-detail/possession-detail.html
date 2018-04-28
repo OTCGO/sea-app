@@ -15,14 +15,18 @@
 		[balance]="selectedBalance | async"
 		[price]="selectedPrice | async"
 		[isScrollDown]="isScrollDown"
-		[isScrollUp]="isScrollUp">
+		[isScrollUp]="isScrollUp"
+		[scrollTop]="scrollTop"
+		[differentScrollTop]="differentScrollTop">
 	</possession-detail-bgcard>
 
 	<possession-detail-history
 		[symbol]="(selectedBalance | async).symbol"
 		[transactionHistories]="transactionHistories | async"
 		[isScrollDown]="isScrollDown"
-		[isScrollUp]="isScrollUp">
+		[isScrollUp]="isScrollUp"
+		[scrollTop]="scrollTop"
+		[differentScrollTop]="differentScrollTop">
 	</possession-detail-history>
 
 </ion-content>

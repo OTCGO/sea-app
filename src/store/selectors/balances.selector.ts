@@ -31,14 +31,10 @@ export const getEntitiesByAddress = address => createSelector(
 export const getDefaultEntities = createSelector(
 	getAccount,
 	getEntities,
-	(account, entities) => {
-		console.log('dont try', entities)
-
-		const result = account && entities && entities[account.address] && !isEmpty(entities[account.address]) &&
+	(account, entities) =>
+		account && entities && entities[account.address] &&
+		!isEmpty(entities[account.address]) &&
 		sort<IBalance>((a, b) => b.amount - a.amount, entities[account.address])
-
-		return result
-	}
 )
 
 export const getDefaultNonZeroEntities = createSelector(

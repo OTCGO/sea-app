@@ -60,11 +60,7 @@ export class MarketsEffects {
 				(_, currency, preTime) => ({ currency, preTime })),
 			switchMap(({ currency, preTime }) => {
 				const isPreLoadTimeLessThanFiveMinutes = preTime + FIVE_MINUTES_MS > Date.now()
-				console.log('it seems fucking broken', isPreLoadTimeLessThanFiveMinutes)
-				if (isPreLoadTimeLessThanFiveMinutes) {
-					console.log('load from database call')
-					return this.loadFromDatabase()
-				}
+				if (isPreLoadTimeLessThanFiveMinutes) return this.loadFromDatabase()
 
 				const nextLoad$ = this.actions$.pipe(
 					ofType<Load>(MarketsActionTypes.LOAD),
@@ -165,26 +161,21 @@ function loadMarkets (nextLoad$, baseCurrency = 'cny') {
 				markets => {
 					if (markets) {
 						const mappedPrices = mappingPrices(markets)
-						console.log('asoidnaosindoiasndio hasoidh aosih oidhsai')
-						console.log(this.nativeStorage)
-						console.log(this.db)
-						console.log(this.platform)
 						if (this.platform.is('mobileweb') || this.platform.is('core')) {
 							const pairsPrices = toPairs(mappedPrices)
-							this.db.insert('markets', markets).pipe(
-								toArray(),
-							).subscribe(
-								m => console.log('Insert Successful', m),
-								e => console.log('Insert markets fail', e),
-								c => console.log('Insert Complete', c)
-							)
-							this.db.insert('prices', pairsPrices).pipe(
-								toArray(),
-							).subscribe(
-								m => console.log('Insert Successful', m),
-								e => console.log('Insert markets fail', e),
-								c => console.log('Insert Complete', c)
-							)
+							console.log('db', this.db)
+							this.db.insert('markets', markets).pipe(toArray())
+									.subscribe(
+										m => console.log('Insert markets successful', m),
+										e => console.log('Insert markets fail', e),
+										c => console.log('Insert markets complete', c)
+									)
+							this.db.insert('prices', pairsPrices).pipe(toArray())
+									.subscribe(
+										m => console.log('Insert markets successful', m),
+										e => console.log('Insert markets fail', e),
+										c => console.log('Insert markets complete', c)
+									)
 							console.log('Fallback using DB')
 							console.log('Insert markets', markets)
 							console.log('Insert prices', pairsPrices)

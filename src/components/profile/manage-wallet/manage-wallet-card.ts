@@ -1,5 +1,6 @@
 import {
 	Component,
+	ElementRef,
 	EventEmitter,
 	Input,
 	Output,
@@ -40,13 +41,18 @@ export class ManageWalletCard {
 
 	get label () { return this.account.label }
 	get isDefault () { return this.account.isDefault }
+	get labelTop () {
+		const height = this.el.nativeElement.querySelector('.mw__label').clientHeight
+		return `-${height}px`
+	}
 
 	constructor (
 		private alertCtrl: AlertController,
 		private clipBoard: Clipboard,
 		private loadingCtrl: LoadingController,
 		private np: NotificationProvider,
-		private platform: Platform
+		private platform: Platform,
+		private el: ElementRef
 	) { }
 
 	handleWIFClick (account) { this.showWIFKeyBox(account) }
@@ -90,7 +96,7 @@ export class ManageWalletCard {
 
 	showKeyBox ({ title, message }) {
 		const handler = () => {
-			if (this.platform.is('mobileweb')) {
+			if (this.platform.is('mobileweb') || this.platform.is('core')) {
 				const state = copy(message) ? 'success' : 'fail'
 				return this.np.emit(`copy ${state}!`)
 			}

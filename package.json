@@ -18,6 +18,9 @@
     "e2e-test": "protractor ./config/protractor.conf.js",
     "e2e-update": "webdriver-manager update --standalone false --gecko false"
   },
+  "peerDependencies": {
+    "hoek": "^5.0.3"
+  },
   "dependencies": {
     "@angular/animations": "^5.2.9",
     "@angular/common": "^5.2.9",

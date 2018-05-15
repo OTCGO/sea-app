@@ -19,9 +19,9 @@
 			<div [ngClass]="{
 				  'market-detail__fall-of--red': isFall,
 				  'market-detail__fall-of--green': !isFall,
-				  'market-detail__fall-of--gray': !percent_change_24h
+				  'market-detail__fall-of--gray': change === '-'
 				}">
-				{{ percent_change_24h || '-' }}{{ percent_change_24h ? '%' : '' }}
+				{{ change }}
 			</div>
 		</ion-col>
 	</div>

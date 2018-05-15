@@ -5,7 +5,8 @@ export enum BalancesActionTypes {
 	LOAD = '[Balances] Load',
 	LOAD_FAIL = '[Balances] Load Error',
 	LOAD_SUCCESS = '[Balances] Load Success',
-	SELECT = '[Balances] Select'
+	SELECT = '[Balances] Select',
+	CLEAN_SELECTED_COIN = '[Balances] Clean Selected Coin'
 }
 
 export class Load implements Action {
@@ -30,4 +31,13 @@ export class Select implements Action {
 	constructor (public payload: string) {}
 }
 
-export type BalancesActions = Load | LoadSuccess | LoadFail | Select
+export class CleanSelectedCoin implements Action {
+	readonly type = BalancesActionTypes.CLEAN_SELECTED_COIN
+}
+
+export type BalancesActions =
+	Load
+	| LoadSuccess
+	| LoadFail
+	| Select
+	| CleanSelectedCoin

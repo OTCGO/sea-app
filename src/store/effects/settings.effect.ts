@@ -44,7 +44,7 @@ export class SettingsEffects {
 	)
 
 	/*@Effect()
-	Save$ = this.actions$.piep()*/
+	Save$ = this.actions$.pipe()*/
 
 	constructor (private actions$: Actions, private fileStorage: FileStorageProvider, private ts: TranslateService) {}
 }

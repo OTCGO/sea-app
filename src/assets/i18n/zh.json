@@ -10,6 +10,7 @@
 		"title": "登录钱包",
 		"tip": "创建钱包",
 		"login_wallet": "确认",
+		"import_wallet": "导入",
 		"wif_placeholder": "WIF码登录",
 		"password": "请输入密码",
 		"wif_error": "无法识别的 WIF，请重试！",

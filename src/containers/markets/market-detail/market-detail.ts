@@ -29,13 +29,15 @@ export class MarketDetailPage {
 
 	histories = this.store.select(MarketsSelectors.getDetails)
 	changeData = this.store.select(MarketsSelectors.getChangeData)
+	changePercentage = this.store.select(MarketsSelectors.getChangePercentage)
 	gasPrice = this.store.select(PricesSelectors.getPriceBySymbol('gas'))
+
 
 	currentDuration = 'hour'
 	durationsProp = ['hour', 'day', 'week', 'month']
 	changeTitlesProp = ['open', 'high', 'low', 'volume']
-	changeTitles
-	durations
+	changeTitles: string[]
+	durations: { [key: string]: string }
 
 	constructor (
 		public navParams: NavParams,

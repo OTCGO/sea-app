@@ -18,7 +18,8 @@ import {
 	catchError,
 	concatMap,
 	map,
-	withLatestFrom
+	withLatestFrom,
+	pluck
 } from 'rxjs/operators'
 import { RootState } from '../reducers'
 import { getAccount } from '../selectors/wallet.selector'
@@ -47,7 +48,7 @@ export class ClaimsEffects {
 		this.actions$
 				.ofType<DoClaim>(ClaimsActionTypes.DO_CLAIM)
 				.pipe(
-					map(action => action.payload),
+					pluck('payload'),
 					withLatestFrom(this.store$.select(getAccount), (passphrase, account) => ({ passphrase, account })),
 					concatMap(
 						({ passphrase, account }) => {

@@ -1,133 +1,56 @@
-page-import-file {
-    ion-content .scroll-content {
-        margin-bottom: 67px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        flex-direction: column;
-        padding-bottom: 0 !important;
-        overflow-y: hidden;
-    }
-    ion-list.login-list {
-        position: relative;
-        top: 80px;
-        width: 80%;
-        ion-item.login__wif-input {
-            width: 95%;
-            transition: all 0.2s ease-in-out;
-            margin-bottom: 10px;
-            &.item-input-has-focus.input-has-focus+button.login__import-button {
-                opacity: 0;
-            }
-            &.ng-dirty.ng-valid+button.login__import-button {
-                opacity: 0;
-            }
-            .item-inner {
-                border: none;
-            }
-            &.rounded {
-                width: 100%;
-                -moz-border-radius: 50px;
-                -webkit-border-radius: 50px;
-                border-radius: 50px;
-                border: 1px solid rgb(222, 222, 222);
-            }
+page-import-wallet {
+    .login {
+        .scroll-content {
+            margin-top: 0!important;
         }
-        ion-item.login__password-input {
-            width: 95%;
-        }
-    }
-    button.login__import-button {
-        position: absolute;
-        top: 1px;
-        right: 1px;
-        font-size: 1.4rem;
-        z-index: 20;
-        padding: 0 6px;
-        height: 50px;
-        width: 50px;
-        color: #fff;
-        background: linear-gradient(270deg, rgb(47, 177, 213), rgb(47, 177, 213) 6%, rgb(50, 118, 217));
-        box-shadow: rgba(0, 147, 211, 0.5) -3px 0 4px 0px;
-        border-radius: 50px;
-        transition: all 0.2s ease-in-out;
-        & .icon {
-            width: 1.4rem;
-            height: 1.4rem;
-        }
-        &:active,
-        &:focus,
-        &.is-active {
-            & .icon {
-                display: none;
-            }
+        &__container {
+            position: absolute;
             top: 0;
-            right: 0;
-            height: 55px;
+            bottom: 0;
+            padding: 5vw;
+            text-align: center;
             width: 100%;
-            border-radius: 50px;
-            box-shadow: none;
-            background: linear-gradient(270deg, rgb(47, 177, 213), rgb(50, 118, 217));
+            margin: 0 auto;
+            z-index: 2;
         }
-    }
-    button.login__wif-switcher {
-        position: absolute;
-        top: 2px;
-        right: 3px;
-        z-index: 30;
-        background-color: #fff;
-        box-shadow: rgba(27, 119, 179, 0.95) -3px 0 4px 0px;
-        font-weight: bolder;
-        height: 50px;
-        width: 50px;
-        border-radius: 50px;
-        transition: all 0.2s ease-in;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        & .icon {
-            height: 2.2rem;
-            width: 2.2rem;
+
+        &__title {
+            padding-top: 5vh;
+            margin-bottom: 5vh;
         }
-        &:active,
-        &:focus,
-        &.is-active {
-            background-color: #488aff !important;
+
+        &__error {
+            color: rgb(232, 61, 0);
+            height: 10vh;
         }
-    }
-    .login__button {
-        // width: 80%;
-        // margin-top: 30px;
-        // button {
-        //     border: 1px solid #448aff;
-        //     &:hover:not(.disable-hover) {
-        //         background: none;
-        //     }
-        // }
-        width: 92%;
-        position: absolute;
-        bottom: 100px;
-        button {
-            background: linear-gradient(270deg, rgb(47, 177, 213), rgb(50, 118, 217));
-            color: aliceblue;
+
+        &__tip {
+            padding-top: 10vh;
+            a {
+                cursor: pointer;
+                color: rgb(193, 193, 193);
+                text-decoration: none;
+            }
         }
-    }
-    .login-tip {
-        position: absolute;
-        bottom: 20px;
-        cursor: pointer;
-        a {
-            color: gray;
+
+        &__button {
+            margin-top: 30px;
+
+            button {
+                border: 1px solid #008cd9;
+                &:hover:not(.disable-hover) {
+                    background: none;
+                }
+            }
         }
-    }
-    .user-agreement {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        margin-top: 100px;
-        ion-checkbox {
-            padding: 0;
-            margin: 0;
+
+        &__password-section {
+            padding-left: 2vh;
+            padding-right: 2vh;
+        }
+
+        .item {
+            padding-left: 0;
         }
     }
 }

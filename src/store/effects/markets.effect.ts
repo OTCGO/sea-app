@@ -130,16 +130,30 @@ export class MarketsEffects {
 
 	loadFromDatabase () {
 		console.log('loadFromDatabase', this.db)
+
+		if (this.platform.is('mobileweb')) {
+			return combineLatest(
+				this.db.query('markets').pipe(toArray()),
+				this.db.query('prices').pipe(toArray()),
+			).pipe(
+				mergeMap(([markets, prices]) => {
+					const enti = fromPairs(prices)
+					console.log('markets', markets)
+					console.log('reversed pairs', enti)
+					return [new LoadSuccess(markets), new LoadPricesSuccess(enti)]
+				}),
+				catchError(e => {
+					console.log('error from loadFromDatabase', e)
+					return of(new LoadFail(e))
+				})
+			)
+		}
+
 		return combineLatest(
-			this.db.query('markets').pipe(toArray()),
-			this.db.query('prices').pipe(toArray()),
+			this.nativeStorage.getItem('prices'),
+			this.nativeStorage.getItem('markets')
 		).pipe(
-			mergeMap(([markets, prices]) => {
-				const enti = fromPairs(prices)
-				console.log('markets', markets)
-				console.log('reversed pairs', enti)
-				return [new LoadSuccess(markets), new LoadPricesSuccess(enti)]
-			}),
+			mergeMap(([markets, prices]) => [new LoadSuccess(markets), new LoadPricesSuccess(prices)]),
 			catchError(e => {
 				console.log('error from loadFromDatabase', e)
 				return of(new LoadFail(e))
@@ -181,7 +195,7 @@ function loadMarkets (nextLoad$, baseCurrency = 'cny') {
 							console.log('Insert prices', pairsPrices)
 						} else {
 							try {
-								this.nativeStorage.setItem('markets-prices', mappedPrices)
+								this.nativeStorage.setItem('prices', mappedPrices)
 								this.nativeStorage.setItem('markets', markets)
 							} catch (e) {
 								console.log('Error on load markets effect nativeStorage execution', e)

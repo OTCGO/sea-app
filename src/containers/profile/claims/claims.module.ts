@@ -8,7 +8,6 @@ import { TranslateModule } from '@ngx-translate/core'
 	imports: [
 		TranslateModule.forChild(),
 		IonicPageModule.forChild(ClaimsPage),
-	],
-	exports: [ClaimsPage]
+	]
 })
 export class ClaimsPageModule {}

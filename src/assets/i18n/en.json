@@ -10,6 +10,7 @@
     "title": "Login Wallet",
     "tip": "Create Wallet",
     "login_wallet": "Login",
+    "import_wallet": "Import",
     "wif_placeholder": "Using WIF Key",
     "password": "Enter password",
     "wif_error": "Invalid WIF format, please retry.",

@@ -33,7 +33,6 @@ export class Histories implements OnInit {
 		this.store.dispatch(new TransactionHistoryActions.Load())
 		this.store.select(TransactionHistorySelectors.getLoading)
 			.subscribe(bool => this.lp.emit(bool))
-		console.log(this.navCtrl)
 	}
 
 	handleHistorySelect (txid) {

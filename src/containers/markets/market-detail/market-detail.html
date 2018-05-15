@@ -6,6 +6,7 @@
 	<div class="market-detail__background"></div>
 
 	<market-detail-card
+		[changePercentage]="changePercentage | async"
 		[changeData]="changeData | async"
 		[changeTitles]="changeTitles"
 		[durations]="durations"

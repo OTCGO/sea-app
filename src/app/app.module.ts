@@ -32,10 +32,9 @@ import {
 
 const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'assets/i18n/', '.json')
 
+
 @NgModule({
-  declarations: [
-    MyApp,
-  ],
+  declarations: [MyApp],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -56,7 +55,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     ]),
     IonicModule.forRoot(MyApp, {
       tabbarPlacement: 'bottom',
-      preloadModules: true,
+      preloadModules: false,
       backButtonText: '',
       backButtonIcon: 'ios-arrow-back',
       tabsHideOnSubPages: true,

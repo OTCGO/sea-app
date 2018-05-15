@@ -26,7 +26,7 @@ import 'rxjs/add/operator/take'
   selector: 'page-create-wallet',
   templateUrl: 'create-wallet.html',
 })
-export class CreateWalletPage implements OnInit, OnDestroy {
+export class CreateWalletPage implements OnInit {
   private protocolAgreement = false
   private wif: string
   private name: string
@@ -41,19 +41,11 @@ export class CreateWalletPage implements OnInit, OnDestroy {
     private store: Store<fromWallet.State>,
     private np: NotificationProvider,
     private lp: LoadingProvider,
-    private translateService: TranslateService
   ) { }
 
   ngOnInit () {
-    this.store.select(AuthSelectors.getLoading).subscribe(bool => {
-      console.log('Auth loading state:', bool)
-      this.lp.emit(bool)
-		})
+    this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
 		this.store.select(AuthSelectors.getError).subscribe(err => this.np.emit({ message: err }))
-  }
-
-  ngOnDestroy () {
-    console.log('destroy call')
   }
 
   get disabledButton () {

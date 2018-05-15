@@ -41,18 +41,18 @@ export class MarketsPage implements OnInit {
 		this.store.select(SettingsSelectors.getCurrency).subscribe(currency => this.oCurrency = currency)
 		this.store.select(PricesSelectors.getEntities).subscribe(prices => this.GASPrice = prices['GAS'] || 1)
 
-		this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates']).catch(console.log)
+		/* TODO: "This API endpoint is deprecated and will stop working on June 1st, 2018. For more information please visit: https://github.com/fixerAPI/fixer#readme" */
+		// this.priceProvider.getExchangeRates().then(res => this.exchangeRates = res['rates']).catch(console.log)
 	}
 
 	doRefresh (refresher: Refresher) {
 		this.store.dispatch(new MarketsActions.Load())
 
-		this.priceProvider.getExchangeRates()
+		/*this.priceProvider.getExchangeRates()
 				.then(res => this.exchangeRates = res['rates'])
-				.catch(error => this.np.emit({ message: error }))
+				.catch(error => this.np.emit({ message: error }))*/
 
-		this.store.select(MarketsSelectors.getLoading)
-				.subscribe(loading => !loading && refresher.complete())
+		this.store.select(MarketsSelectors.getLoading).subscribe(loading => !loading && refresher.complete())
 	}
 
 	handleCoinClick (coin) {

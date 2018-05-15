@@ -52,7 +52,10 @@ export class AuthEffects {
 			map(action => action.payload),
 			exhaustMap((walletFile) => {
 				const nepWallet: Wallet = new wallet.Wallet(walletFile)
-				return [new LoginSuccess(nepWallet), new ContactsActions.Load(nepWallet.extra.contacts)]
+				const contacts = nepWallet.extra && nepWallet.extra.contacts
+				return contacts
+					? [new LoginSuccess(nepWallet), new ContactsActions.Load(contacts)]
+					: [new LoginSuccess(nepWallet)]
 			}),
 			catchError(error => of(new LoginFail(error)))
 		)
@@ -66,7 +69,7 @@ export class AuthEffects {
 				const account: Account = this.walletProvider.upgradeToNEP5Account(oldWallet, passphrase)
 				account.isDefault = true
 				return [
-					// TODO: Which supposes to when AddAccountSuccess then LoginSuccess
+					// TODO: Which supposes to when AddAccountSuccess then LoginSuccess, But there been just succeeded, is weird, fix
 					new WalletActions.AddAccount(account),
 					new LoginOldWalletSuccess()
 				]

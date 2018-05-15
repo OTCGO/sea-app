@@ -46,5 +46,5 @@ export const getDefaultNonZeroEntities = createSelector(
 export const getSelectedBalance = createSelector(
 	getDefaultEntities,
 	getSelectedBalanceSymbol,
-	(balances: IBalance[], symbol) => balances && !isEmpty(balances) && balances.find(balance => balance.symbol === symbol)
+	(balances: IBalance[], symbol) => symbol && balances && !isEmpty(balances) && balances.find(balance => balance.symbol === symbol)
 )

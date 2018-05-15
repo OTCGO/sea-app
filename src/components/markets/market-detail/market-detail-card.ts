@@ -2,7 +2,6 @@ import {
 	Component,
 	EventEmitter,
 	Input,
-	OnInit,
 	Output
 } from '@angular/core'
 import { Coin } from '../../../shared/models/markets.model'
@@ -12,28 +11,30 @@ import { Coin } from '../../../shared/models/markets.model'
 	selector: 'market-detail-card',
 	templateUrl: 'market-detail-card.html'
 })
-export class MarketDetailCard implements OnInit {
+export class MarketDetailCard {
 	activeIndex = 0
-	@Input() changeTitles
-	@Input() changeData
-	@Input() durations
+	@Input() changePercentage: number
+	@Input() changeTitles: string[]
+	@Input() changeData: [number, number, number, number]
+	@Input() durations: { [key: string]: string }
 	@Input() perGas: number
 	@Input() selectedCoin: Coin
 	@Output() durationsClick = new EventEmitter()
 
 	get symbol () { return this.selectedCoin.symbol }
-	get percent_change_1h () { return this.selectedCoin.percent_change_1h }
-	get percent_change_7d () { return this.selectedCoin.percent_change_7d }
-	get percent_change_24h () { return this.selectedCoin.percent_change_24h }
 	get currentPrice () { return this.selectedCoin.currentPrice }
-	get isFall () { return this.percent_change_24h && /-/.test(this.percent_change_24h) }
-	get durationsTitles () { return Object.keys(this.durations).map(k => this.durations[k]) }
+	get change () {
+		const { changePercentage } = this
+		if (changePercentage) {
+			const changeNumber = changePercentage.toFixed(2)
 
-	constructor () { }
-
-	ngOnInit () {
-
+			if (changePercentage > 0) return `+${changeNumber}%`
+			return `${changeNumber}%`
+		}
+		return '-'
 	}
+	get isFall () { return this.changePercentage < 0 }
+	get durationsTitles () { return Object.keys(this.durations).map(k => this.durations[k]) }
 
 	handleDurationsClick (index) {
 		this.activeIndex = index

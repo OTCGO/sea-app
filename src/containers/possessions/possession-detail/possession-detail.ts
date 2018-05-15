@@ -1,4 +1,9 @@
-import { Component, NgZone } from '@angular/core'
+import {
+	Component,
+	NgZone,
+	OnDestroy,
+	OnInit
+} from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
 	IonicPage,
@@ -10,7 +15,7 @@ import { TransactionHistory, IBalance } from '../../../shared/models'
 import { LoadingProvider } from '../../../providers'
 import { RootState } from '../../../store/reducers'
 import { BalancesSelectors, TransactionHistorySelectors, PricesSelectors } from '../../../store/selectors'
-import * as TransactionHistoryAction from '../../../store/actions/transaction-history.action'
+import { TransactionHistoryActions, BalancesActions } from '../../../store/actions'
 
 
 @IonicPage({ name: 'PossessionDetail' })
@@ -18,7 +23,7 @@ import * as TransactionHistoryAction from '../../../store/actions/transaction-hi
 	selector: 'page-possession-detail',
 	templateUrl: 'possession-detail.html',
 })
-export class PossessionDetailPage {
+export class PossessionDetailPage implements OnInit, OnDestroy {
 	selectedPrice: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
 	selectedBalance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
 	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getEntitiesBySelectedSymbol)
@@ -35,7 +40,8 @@ export class PossessionDetailPage {
 		private store: Store<RootState>,
 	) {}
 
-	ngOnInit () { this.store.dispatch(new TransactionHistoryAction.Load()) }
+	ngOnInit () { this.store.dispatch(new TransactionHistoryActions.Load()) }
+	ngOnDestroy () { this.store.dispatch(new BalancesActions.CleanSelectedCoin() )}
 
 	ionViewDidLeave () { this.transactionHistories = empty() }
 

@@ -30,13 +30,13 @@ export class PossessionDetailBgcard {
 	upBoundary = window.outerHeight * 0.55
 
 	get height () {
-		const { upBoundary, downBoundary, isScrollUp, scrollTop, differentScrollTop } = this
-
-		const differential = scrollTop - differentScrollTop
+		const { upBoundary, downBoundary, isScrollUp, scrollTop } = this
 		const computedResult = isScrollUp
-			? Math.max(upBoundary - differential * 1.5, upBoundary)
+			? downBoundary
 			: Math.max(upBoundary - scrollTop, downBoundary)
-		if (scrollTop < downBoundary && isScrollUp) return `${upBoundary}px`
+
+		const historyBoundary = downBoundary + window.outerHeight * 0.2
+		if (scrollTop < historyBoundary && isScrollUp) return `${upBoundary}px`
 		return `${computedResult}px`
 	}
 

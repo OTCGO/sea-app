@@ -16,10 +16,10 @@ export class TabsPage {
 
   @ViewChild('ionTabs') tabRef: Tabs
 
-  private balancesTitle: string = 'possessions'
-  private marketsTitle: string = 'markets'
-  private discoverTitle: string = 'discover'
-  private profileTitle: string = 'profile'
+  private balancesTitle = 'possessions'
+  private marketsTitle = 'markets'
+  private discoverTitle = 'discover'
+  private profileTitle = 'profile'
 
   constructor (private trs: TranslateService) {
     this.tabs = [

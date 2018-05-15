@@ -5,12 +5,12 @@ import { debounceTime, map } from 'rxjs/operators'
 import { isWIF } from '../../shared/utils'
 
 
-export function wifValidator (wifCtrl: FormControl): Observable<ValidationErrors | null> {
+export function asyncWIFValidator (wifCtrl: FormControl): Observable<ValidationErrors | null> {
 	return Observable.create(obs =>
 		wifCtrl
 		.valueChanges
 		.pipe(
-			debounceTime(400),
+			debounceTime(250),
 			map(value => value.trim()),
 			map(value => {
 				if (value && isWIF(value)) {
@@ -27,4 +27,8 @@ export function wifValidator (wifCtrl: FormControl): Observable<ValidationErrors
 			}
 		)
 	)
+}
+
+export function WIFValidator (wifCtrl: FormControl): ValidationErrors | null {
+	return isWIF(wifCtrl.value) ? null : { invalidWIF: true }
 }

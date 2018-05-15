@@ -23,11 +23,15 @@ export class SendModalProvider {
 	decrypt (passphrase) {
 		try {
 			if (this.account.WIF) return this.account.WIF
+		} catch (e) {
+			console.log(e)
+		}
+		try {
 			const wif = wallet.decrypt(this.account.encrypted, passphrase)
 			const pr = wallet.getPrivateKeyFromWIF(wif)
 			return Promise.resolve(pr)
 		} catch (e) {
-			console.log('what the heck', e)
+			console.log(e)
 			return Promise.reject('密码错误')
 		}
 	}

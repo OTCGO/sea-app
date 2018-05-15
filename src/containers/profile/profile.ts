@@ -1,10 +1,12 @@
 import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
 import {
 	IonicPage,
 	NavController,
 	NavParams
 } from 'ionic-angular'
-import { AccountProvider } from '../../providers/account/account.provider'
+import { RootState } from '../../store/reducers'
+import { WalletSelectors } from '../../store/selectors'
 
 
 @IonicPage({
@@ -16,7 +18,7 @@ import { AccountProvider } from '../../providers/account/account.provider'
 	templateUrl: 'profile.html',
 })
 export class ProfilePage {
-	account = this.accountProvider.defaultAccount
+	account
 	avatar = 'assets/imgs/icon-avatar.svg'
 
 	menus = [
@@ -46,14 +48,11 @@ export class ProfilePage {
 		}
 	]
 
-
-	constructor (
-		public navCtrl: NavController,
-		public navParams: NavParams,
-		private accountProvider: AccountProvider
-	) { }
-
-	handleImageError (event) {
-		this.avatar = ''
+	constructor (public navCtrl: NavController, public navParams: NavParams, private store: Store<RootState>) {
+		store.select(WalletSelectors.getAccount).take(1).subscribe(
+			account => this.account = account
+		)
 	}
+
+	handleImageError = () => this.avatar = ''
 }

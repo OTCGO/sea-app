@@ -98,12 +98,15 @@ export class SendModalComponent implements OnInit {
 		this.passphrase.markAsTouched()
 		this.amount.markAsTouched()
 
-		if (!this.formGroup.valid || !this.toAddress.valid
-			|| !this.amount.valid || !this.passphrase.valid) {
+		if (!this.formGroup.valid ||
+			!this.toAddress.valid ||
+			!this.amount.valid ||
+			!this.passphrase.valid) {
 			return
 		}
 		const loading = this.loadingCtrl.create()
 		await loading.present()
+		
 
 		this.sendModalProvider
 		    .decrypt(this.passphrase.value)

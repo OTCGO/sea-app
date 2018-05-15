@@ -16,9 +16,7 @@ export class RouterProvider {
 		return this.app.getActiveNav()
 	}
 
-	constructor (private app: App) {
-		console.log(app)
-	}
+	constructor (private app: App) {}
 
 	setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
 		return this.navController.setRoot(pageOrViewCtrl, params, opts, done)

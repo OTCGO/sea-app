@@ -1,0 +1,52 @@
+<form [formGroup]="loginForm" (submit)="login(loginForm)">
+	<ion-label class="login__error">
+		<h5 *ngIf="wif.invalid && (wif.dirty || wif.touched) && wif.errors.invalidWIF">
+			{{ 'LOGIN.wif_error' | translate }}
+		</h5>
+	</ion-label>
+
+	<ion-row class="login__wif-section">
+		<ion-col>
+			<ion-item class="login__wif-input rounded">
+				<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="wif"></ion-input>
+			</ion-item>
+
+			<button
+				class="login__import-button"
+				type="button"
+				[class.is-active]="!isWIFKey"
+				(click)="switchImportBox(fileInput)">
+				<span *ngIf="!isWIFKey">{{ importText }}</span>
+				<img src="assets/imgs/icon-login_file.svg" alt="" class="icon">
+			</button>
+
+			<input accept="application/json, text/plain, .json" type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
+
+			<button
+				class="login__wif-switcher"
+				type="button"
+				*ngIf="!isWIFKey"
+				(click)="switchWIFKeyBox()">
+				<img src="assets/imgs/icon-login_WIF.svg" alt="" class="icon">
+			</button>
+		</ion-col>
+	</ion-row>
+
+	<ion-row class="login__password-section" *ngIf="isOldWallet && !isWIFKey">
+		<ion-col>
+			<ion-item class="login__password-input">
+				<ion-input type="password" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required></ion-input>
+			</ion-item>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col>
+			<button
+				ion-button round block outline
+				[disabled]="loginForm.valid"
+				class="login__button"
+				type="submit">{{ 'LOGIN.' + tip | translate }}</button>
+		</ion-col>
+	</ion-row>
+</form>

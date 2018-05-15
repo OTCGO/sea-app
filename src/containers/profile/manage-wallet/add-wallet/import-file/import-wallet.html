@@ -6,4 +6,12 @@
 
 <ion-content class="login">
 
+    <div class="login__container">
+        <login-form
+            tip="import_wallet"
+            (onNEP5)="importNEP5($event)"
+            (onOldWallet)="importOldWallet($event)"
+            (onWIF)="importWIF($event)"></login-form>
+    </div>
+
 </ion-content>

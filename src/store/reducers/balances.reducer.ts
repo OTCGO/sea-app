@@ -47,6 +47,13 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 			}
 		}
 
+		case BalancesActionTypes.CLEAN_SELECTED_COIN: {
+			return {
+				...state,
+				selectedBalanceSymbol: ''
+			}
+		}
+
 		default:
 			return state
 	}

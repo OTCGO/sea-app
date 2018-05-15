@@ -4,6 +4,7 @@ import {
 } from '@ngrx/store'
 import { State } from '../reducers/markets.reducer'
 import {
+	last,
 	reduce,
 	prop,
 	compose,
@@ -26,42 +27,56 @@ export const getPreMarketsLoadTime = createSelector(getMarketsState, (state: Sta
 export const getPreDetailsLoadTime = createSelector(getMarketsState, (state: State) => state.preDetailsLoadTime)
 
 
-export const getHigh = createSelector(
+export const getHighest = createSelector(
 	getDetails,
-	details => compose<DetailData[], Array<number>, Ord>(
+	compose<DetailData[], Array<number>, Ord>(
 		reduce(max, 0),
 		map(prop('high'))
-	)(details)
+	)
 )
 
-export const getLow = createSelector(
+export const getLowest = createSelector(
 	getDetails,
-	details => compose<DetailData[], number[], Ord>(
+	compose<DetailData[], number[], Ord>(
 		reduce(min, Infinity),
 		map(prop('low'))
-	)(details)
+	)
 )
 
 export const getVolume = createSelector(
 	getDetails,
-	details => compose<DetailData[], number[], number>(
+	compose<DetailData[], number[], number>(
 		sum,
 		map(prop('volumeto'))
-	)(details)
+	)
 )
 
 export const getOpen = createSelector(
 	getDetails,
-	details => compose<DetailData[], DetailData, number>(
-		prop('open'),
+	compose<DetailData[], DetailData, number>(
+		prop('close'),
 		head
-	)(details)
+	)
+)
+
+export const getClose = createSelector(
+	getDetails,
+	compose<DetailData[], DetailData, number>(
+		prop('close'),
+		last
+	)
+)
+
+export const getChangePercentage = createSelector(
+	getOpen,
+	getClose,
+	(open, close) => (close - open) / open * 100
 )
 
 export const getChangeData = createSelector(
 	getOpen,
-	getHigh,
-	getLow,
+	getHighest,
+	getLowest,
 	getVolume,
 	(open, high, low, volume) => [open, high, low, volume / 1000]
 )

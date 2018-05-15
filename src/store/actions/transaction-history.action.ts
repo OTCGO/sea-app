@@ -8,7 +8,7 @@ export enum TransactionHistoryActionTypes {
 	LOAD_DETAIL = "[Transaction History] Load Detail",
 	LOAD_DETAIL_FAIL = "[Transaction History] Load Detail Fail",
 	LOAD_DETAIL_SUCCESS = "[Transaction History] Load Detail Success",
-	SELECT = '[Transaction History] Select History TransactionID'
+	SELECT = '[Transaction History] Select History TransactionID',
 }
 
 export class Load implements Action {

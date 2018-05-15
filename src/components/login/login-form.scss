@@ -1,0 +1,71 @@
+login-form {
+  .login__wif-section {
+    .login__wif-input {
+      transition: all 0.2s ease-in-out;
+      padding-left: 2vh !important;
+      margin-bottom: 10px;
+      min-height: 3.8rem;
+      max-height: 3.8rem;
+
+      &.input-has-value + button.login__import-button {
+        opacity: 0;
+      }
+
+      .item-inner {
+        border: none;
+      }
+
+      &.rounded {
+        width: 100%;
+        border-radius: 50px;
+        border: 1px solid rgb(222, 222, 222);
+      }
+    }
+
+    .login__import-button,
+    .login__wif-switcher {
+      position: absolute;
+      top: 7px;
+      right: 8px;
+      width: 3.4rem;
+      min-height: 3.4rem;
+      border-radius: 50%;
+      transition: all 0.2s ease-in-out;
+
+      box-shadow: rgba(0, 147, 211, 0.5) -3px 0 4px 0px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & .icon {
+        height: 1.6rem;
+        width: 1.6rem;
+      }
+    }
+
+    .login__import-button {
+      color: #fff;
+      background: linear-gradient(270deg, rgb(47, 177, 213), rgb(47, 177, 213) 6%, rgb(50, 118, 217));
+
+      &:active,
+      &:focus,
+      &.is-active {
+        top: 5px;
+        right: 5px;
+        height: 3.8rem;
+        width: 100%;
+        border-radius: 50px;
+        box-shadow: none;
+
+        & .icon {
+          display: none;
+        }
+      }
+    }
+
+    .login__wif-switcher {
+      background-color: #fff;
+    }
+  }
+}

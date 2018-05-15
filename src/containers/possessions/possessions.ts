@@ -41,7 +41,7 @@ export class PossessionsPage implements OnInit {
 		this.updateBalances(val)
 		this._displayZero = val
 	}
-	private _displayZero = false
+	private _displayZero = true
 
 
 	constructor (
@@ -51,9 +51,7 @@ export class PossessionsPage implements OnInit {
 		private store: Store<fromBalances.State | fromWallet.State>
 	) {}
 
-	ionViewCanEnter () {
-		return this.exits
-	}
+	ionViewCanEnter = () => this.exits
 
 	ngOnInit () {
 		this.updateBalances()
@@ -64,7 +62,7 @@ export class PossessionsPage implements OnInit {
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
-	updateBalances (displayZero: boolean = false) {
+	updateBalances (displayZero: boolean = true) {
 		this.balances = displayZero
 			? this.store.select(BalancesSelectors.getDefaultEntities)
 			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)

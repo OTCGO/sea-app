@@ -63,9 +63,7 @@ export class TransactionHistoryEffects {
 					skip(1)
 				)
 
-				const options = asset ? {
-					params: { asset }
-				} : {}
+				const options = asset ? { params: { asset } } : {}
 
 				return this.apiProvider
 									 .get(`${API_CONSTANTS.HISTORY}/${address}`, options)

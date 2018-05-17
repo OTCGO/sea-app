@@ -59,8 +59,10 @@
 
 		<div class="claims__svg-text"
 		     text-center>
+			<p>{{ 'PROFILE.CLAIMS.unavailable' | translate }}</p>
+			<p class="title">{{ (claims | async)?.available }} GAS</p>
 			<p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
-			<p class="title">{{ availableGas }} GAS</p>
+			<p class="title">{{ (claims | async)?.unavailable }} GAS</p>
 		</div>
 
 

@@ -45,6 +45,7 @@ export class LoginPage implements OnInit {
 		return wifValue === 'test'
 			? this.loginNEP5(nep5Wallet)
 			: this.store.dispatch(new AuthActions.LoginWif(wifValue))
+
 	}
 
 	loginOldWallet = ({ oldWallet, passphrase }) =>

@@ -157,8 +157,10 @@
     },
     "CLAIMS": {
       "title": "Claims",
+      "loading": "loading",
       "available": "Available GAS",
-      "do_claims": "Do claims"
+      "unavailable": "UnAvailable GAS",
+      "do_claims": "Do claims(Available)"
     }
   }
 }

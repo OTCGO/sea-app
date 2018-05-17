@@ -11,6 +11,7 @@
     "serve": "ionic-app-scripts serve --webpack ./webpack.config.js",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
+    "ios": "ionic cordova emulate ios",
     "test": "karma start ./config/karma.conf.js",
     "test-ci": "karma start ./config/karma.conf.js --single-run",
     "test-coverage": "karma start ./config/karma.conf.js --coverage",

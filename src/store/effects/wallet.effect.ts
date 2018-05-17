@@ -108,7 +108,7 @@ export class WalletEffects {
 			withLatestFrom(this.store$.select(getEntity)),
 			tap(([_, walletEntities]) => {
 				try {
-					console.log('Save Wallet file')
+					console.log('Save Wallet file', walletEntities)
 					this.walletProvider.saveWalletFile(new wallet.Wallet(walletEntities).export())
 				} catch (e) {
 					console.log('Catch Error on SaveWalletFile$ .do', e)

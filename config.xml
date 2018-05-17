@@ -96,9 +96,6 @@
     <allow-navigation href="http://192.168.247.1:8100" />
     <allow-navigation href="http://192.168.0.101:8100" />
     <allow-navigation href="http://10.0.75.1:8100" />
-    <engine name="browser" spec="5.0.3" />
-    <engine name="ios" spec="4.5.4" />
-    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-clipboard" spec="^1.2.1" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.0" />
@@ -121,4 +118,7 @@
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
+    <engine name="browser" spec="5.0.3" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="6.3.0" />
 </widget>

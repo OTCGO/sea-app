@@ -154,8 +154,10 @@
 		},
 		"CLAIMS": {
 			"title": "提取分红",
-			"available": "可以提取",
-			"do_claims": "一键提取"
+			"loading": "正在提取",
+			"available": "可提取",
+			"unavailable": "不可提取",
+			"do_claims": "一键提取(可提取)"
 		}
 	}
 }

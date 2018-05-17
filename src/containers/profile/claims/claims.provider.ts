@@ -75,6 +75,11 @@ export class ClaimsProvider {
 	doSendAsset (pr: string, publicKey) {
 		const NEO = this.balances.find(bal => bal.hash === NEO_HASH)
 		const address = this._account.address
+		console.log('doSendAsset:NEO',NEO)
+		if(!NEO || !NEO.amount ){
+			console.log('testtttrrr')
+			return 
+		}
 		const data = {
 			dests: address,
 			amounts: NEO.amount.toString(),

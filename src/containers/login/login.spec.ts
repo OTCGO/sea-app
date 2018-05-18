@@ -16,10 +16,7 @@ import { By } from '@angular/platform-browser'
 
 class NavParamsMock {
 	data = {}
-
-	get () {
-
-	}
+	get () {}
 }
 
 const walletFile: File = new File([new Blob([JSON.stringify(nep5Wallet)])], 'OTCGO-mobile-wallet.json')
@@ -75,7 +72,7 @@ describe('Login page', () => {
 			wifInput.nativeElement.value = WIF
 			wifInput.nativeElement.dispatchEvent(new Event('input'))
 
-			expect(comp.loginForm.value['wif']).toBe(WIF)
+			expect(comp.loginForm.value['key']).toBe(WIF)
 
 			let passphraseInput = inputs[2]
 			passphraseInput.nativeElement.value = pwd

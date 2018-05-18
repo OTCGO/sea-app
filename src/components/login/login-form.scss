@@ -1,3 +1,5 @@
+@import "../../theme/otcgo/variables";
+
 login-form {
   .login__wif-section {
     .login__wif-input {
@@ -32,7 +34,7 @@ login-form {
       border-radius: 50%;
       transition: all 0.2s ease-in-out;
 
-      box-shadow: rgba(0, 147, 211, 0.5) -3px 0 4px 0px;
+      box-shadow: rgba(6, 1, 63, 0.12) -3px 0 2px 0px;
 
       display: flex;
       justify-content: center;
@@ -46,7 +48,7 @@ login-form {
 
     .login__import-button {
       color: #fff;
-      background: linear-gradient(270deg, rgb(47, 177, 213), rgb(47, 177, 213) 6%, rgb(50, 118, 217));
+      background: $primary-color;
 
       &:active,
       &:focus,

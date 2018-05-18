@@ -1,3 +1,4 @@
+@import "../../../theme/otcgo/variables";
 
 page-possession-detail {
   ion-header.otcgo-header {
@@ -19,7 +20,7 @@ page-possession-detail {
     }
 
     ion-card.possession-data-card {
-      background: linear-gradient(0deg, rgb(47, 177, 213), #2a72da);
+      background: $primary-color;
 
       border-radius: 0;
 

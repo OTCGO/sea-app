@@ -1,3 +1,5 @@
+@import "../../theme/otcgo/variables";
+
 page-create-wallet {
   .cw {
     text-align: center;
@@ -63,7 +65,7 @@ page-create-wallet {
     .cw-button {
 
       button {
-        background: linear-gradient(270deg, rgb(47, 177, 213), rgb(47, 177, 213) 6%, rgb(50, 118, 217));
+        background: $primary-color;
       }
     }
 
@@ -71,7 +73,7 @@ page-create-wallet {
 
       button {
         background-color: #fff !important;
-        border: 1px solid #448aff;
+        border: 1px solid $primary-color;
       }
     }
   }

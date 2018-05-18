@@ -38,7 +38,7 @@ export class PossessionsPage implements OnInit {
 
 	get displayZero () { return this._displayZero }
 	set displayZero (val) {
-		this.updateBalances(val)
+		this.switchBalances(val)
 		this._displayZero = val
 	}
 	private _displayZero = true
@@ -54,15 +54,20 @@ export class PossessionsPage implements OnInit {
 	ionViewCanEnter = () => this.exits
 
 	ngOnInit () {
+		this.switchBalances()
 		this.updateBalances()
-		this.store.dispatch(new MarketsActions.Load())
-		this.store.dispatch(new BalancesActions.Load())
+    this.store.select(SettingsSelectors.getCurrency).subscribe(() => this.updateBalances())
 		this.store.select(BalancesSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
 		this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 	}
 
-	updateBalances (displayZero: boolean = true) {
+	updateBalances () {
+    this.store.dispatch(new MarketsActions.Load())
+    this.store.dispatch(new BalancesActions.Load())
+  }
+
+	switchBalances (displayZero: boolean = true) {
 		this.balances = displayZero
 			? this.store.select(BalancesSelectors.getDefaultEntities)
 			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
@@ -70,18 +75,14 @@ export class PossessionsPage implements OnInit {
 
 	doRefresh (refresher: Refresher) {
 		this.store.dispatch(new BalancesActions.Load())
-		this.store
-				.select(BalancesSelectors.getLoading)
-				.subscribe(loading => !loading && refresher.complete())
-	}
+    this.store.dispatch(new MarketsActions.Load())
+		this.store.select(BalancesSelectors.getLoading).subscribe(loading => !loading && refresher.complete())
+  }
 
 	handleBalanceSelect (symbol) {
 		this.store.dispatch(new BalancesActions.Select(symbol))
-		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance)
-																				 .take(1)
-																				 .subscribe(selectedBalance => {
-																					 selectedBalance && this.navCtrl.push('PossessionDetail')
-																				 })
+		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance).take(1)
+                                       .subscribe(selectedBalance => {selectedBalance && this.navCtrl.push('PossessionDetail')})
 	}
 
 	handleDisplayZeroClick (bool) {

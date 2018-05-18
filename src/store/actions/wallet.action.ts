@@ -4,6 +4,7 @@ import {
 	Wallet
 } from '../../shared/typings'
 
+
 export enum WalletActionTypes {
 	LOAD = '[Wallet] Load',
 	LOAD_FAIL = '[Wallet] Load Fail',

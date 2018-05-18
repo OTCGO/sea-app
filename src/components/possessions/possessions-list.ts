@@ -46,7 +46,7 @@ export class PossessionsListComponent {
 	@Input() balances: Array<IBalance>
 	@Input() displayZero: boolean
 	@Input() amount = 0.00
-	@Input() baseCurrency: string = 'cny'
+	@Input() baseCurrency = 'cny'
 	@Output() select = new EventEmitter()
 	@Output() displayZeroClick = new EventEmitter()
 }

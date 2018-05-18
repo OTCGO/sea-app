@@ -77,15 +77,11 @@ export const reducer: ActionReducer<State> = (
 														.filter(account => account.address !== payload.address)
 														.map(account => new wallet.Account(account))
 
-			console.log(accounts)
-
 			if (payload.isDefault) {
 				accounts[0].isDefault = true
 			}
 
 			const entity = new wallet.Wallet({ ...state.entity, accounts })
-
-			console.log(entity)
 
 			return {
 				...state,

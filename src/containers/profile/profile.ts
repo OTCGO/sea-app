@@ -21,11 +21,11 @@ export class ProfilePage {
 	account
 	avatar = 'assets/imgs/icon-avatar.svg'
 
-	menus = [
+	/*menus = [
 		{ icon: 'notification', page: 'Notification', enabled: false },
 		{ icon: 'setting', page: 'Settings' },
 		{ icon: 'helpcentre', page: 'Helpcentre', enabled: false }
-	]
+	]*/
 
 	navs = [
 		{
@@ -34,12 +34,12 @@ export class ProfilePage {
 			translation: 'manage_wallet',
 			enabled: true,
 		},
-		{
+		/*{
 			icon: 'contacts',
 			page: 'Contacts',
 			translation: 'contacts',
 			enabled: true,
-		},
+		},*/
 		{
 			icon: 'tx-history',
 			page: 'Histories',
@@ -49,10 +49,9 @@ export class ProfilePage {
 	]
 
 	constructor (public navCtrl: NavController, public navParams: NavParams, private store: Store<RootState>) {
-		store.select(WalletSelectors.getAccount).take(1).subscribe(
-			account => this.account = account
-		)
+		store.select(WalletSelectors.getAccount).take(1).subscribe(account => this.account = account)
 	}
 
 	handleImageError = () => this.avatar = ''
 }
+

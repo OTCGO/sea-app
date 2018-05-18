@@ -106,7 +106,6 @@ export class SendModalComponent implements OnInit {
 		}
 		const loading = this.loadingCtrl.create()
 		await loading.present()
-		
 
 		this.sendModalProvider
 		    .decrypt(this.passphrase.value)

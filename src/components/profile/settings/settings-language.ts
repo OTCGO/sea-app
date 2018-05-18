@@ -10,13 +10,14 @@ import {
 	selector: 'settings-language',
 	templateUrl: 'settings-language.html'
 })
-export class SettingsLanguage implements OnInit {
+export class SettingsLanguage {
 	@Input() languages
+  @Input() currentLanguage: string
 	@Output() localeClick = new EventEmitter()
 
-	ngOnInit () { }
+  translationPrefix = 'PROFILE.SETTINGS.LANGUAGES.'
 
-	handleClick (locale) {
-		this.localeClick.emit(locale)
-	}
+  get selectedLanguage () {
+	  return this.languages && this.languages.find(lang => this.currentLanguage.includes(lang.locale)).title
+  }
 }

@@ -11,9 +11,11 @@
     "tip": "Create Wallet",
     "login_wallet": "Login",
     "import_wallet": "Import",
-    "wif_placeholder": "Using WIF Key",
+    "wif_placeholder": "Using WIF Key or with NEP2 Encrypted key",
     "password": "Enter password",
     "wif_error": "Invalid WIF format, please retry.",
+    "nep2_error": "Invalid Encrypted Key format, please retry",
+    "nep2_passphrase_error": "Incorrect passphrase, please retry",
     "import_long": "Import Wallet File",
     "import_short": "Import"
   },
@@ -35,7 +37,7 @@
   },
   "POSSESSIONS": {
     "totalBalances": "Total Balances",
-    "displayZero": "Hide 0 Assets",
+    "displayZero": "Hide 0",
     "DETAILS": {
       "title": "Histories",
       "transfer": "Transfer",
@@ -128,7 +130,7 @@
       }
     },
     "HISTORIES": {
-      "title": "Transaction History",
+      "title": "Histories",
       "name": "name",
       "time_operation": "Time/Operation",
       "amount": "amount",

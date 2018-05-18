@@ -13,8 +13,8 @@ import {
 import { TranslateService } from '@ngx-translate/core'
 import { AlertController } from 'ionic-angular'
 
-import { WIFValidator, asyncWIFValidator } from './login.validator'
-import { isOldWallet, isWallet } from '../../shared/utils'
+import { keyValidator, asyncKeyValidator } from './login.validator'
+import { isNEP2, isWIF, isOldWallet, isWallet } from '../../shared/utils'
 
 
 @Component({
@@ -26,30 +26,28 @@ export class LoginForm implements OnInit {
 	@Output() onPrivateKey = new EventEmitter()
 	@Output() onOldWallet = new EventEmitter()
 	@Output() onNEP5 = new EventEmitter()
-	@Output() onWIF = new EventEmitter()
+  @Output() onWIF = new EventEmitter()
+  @Output() onNEP2 = new EventEmitter()
 
 
 	file
 	importText
 	importTextShort: 'Import' | '导入'
 	importTextLong: 'Import Wallet File' | '导入钱包文件'
-	isWIFKey = true
+	isKey = true
+  isWIF = true
 	isOldWallet = false
 	loginForm: FormGroup
 	translationPrefix = 'LOGIN.'
 
-	constructor (
-		private fb: FormBuilder,
-		private ts: TranslateService,
-		private alertCtrl: AlertController
-	) {}
+	constructor (private fb: FormBuilder, private ts: TranslateService, private alertCtrl: AlertController) {}
 
-	get wif () { return this.loginForm.get('wif') }
+	get key () { return this.loginForm.get('key') }
 	get passphrase () { return this.loginForm.get('passphrase') }
 
 	ngOnInit () {
 		this.loginForm = this.fb.group({
-			wif: ['', [Validators.required, WIFValidator], asyncWIFValidator],
+			key: ['', [Validators.required, keyValidator], asyncKeyValidator],
 			passphrase: ['', [Validators.required, Validators.minLength(4)]]
 		})
 		this.getTranslations()
@@ -66,15 +64,23 @@ export class LoginForm implements OnInit {
 	}
 
 	switchImportBox (fileInput: HTMLInputElement) {
-		this.isWIFKey = false
+		this.isKey = false
 		this.importText = this.importTextLong
-		if (window.navigator && !this.wif.value) fileInput.click()
+		if (window.navigator && !this.key.value) fileInput.click()
 	}
 
 	switchWIFKeyBox () {
-		this.isWIFKey = true
+		this.isKey = true
+    this.isWIF = true
 		this.importText = this.importTextShort
 	}
+
+	onKeyChange ({ value }) {
+    if (isNEP2(value)) {
+	    return this.isWIF = false
+    }
+    return this.isWIF = true
+  }
 
 	showPrompt = (msg: string) => this.alertCtrl.create({ title: msg }).present()
 
@@ -114,20 +120,21 @@ export class LoginForm implements OnInit {
 		return this.showPrompt('Invalid wallet file')
 	}
 
-	login ({ controls, value }) {
-		const { file, isWIFKey } = this
-		const { wif: wifControl, passphrase: passphraseControl } = controls
-		const { wif: wifValue, passphrase: passphraseValue } = value
+	login ({ controls, value }: FormGroup) {
+		const { file, isKey } = this
+		const { key: keyControl, passphrase: passphraseControl } = controls
+		const { key: keyValue, passphrase: passphraseValue } = value
 
 		if (file && !this.isOldWallet) {
-			wifControl.setValue('')
+			keyControl.setValue('')
 			passphraseControl.setValue('')
 		}
 
-		if (wifValue && isWIFKey && !passphraseValue) {
-			if (wifControl.invalid && wifValue !== 'test') return
-			return this.onWIF.emit(wifValue)
-		} else if (file && !isWIFKey && !wifValue) {
+		if (keyValue && isKey) {
+			if (keyControl.invalid && keyValue !== 'test') return
+			if (isWIF(keyValue) || keyValue === 'test') return this.onWIF.emit(keyValue)
+      if (isNEP2(keyValue)) return this.onNEP2.emit({ encrypted: keyValue, passphrase: passphraseValue })
+		} else if (file && !isKey && !keyValue) {
 			if (isOldWallet(file)) {
 				if (!passphraseControl.valid) return
 				return this.onOldWallet.emit({ oldWallet: file, passphrase: passphraseValue })

@@ -113,7 +113,7 @@ export class ManageWalletCard {
 		await commonLoading.present()
 		try {
 			const wif = wallet.decrypt(encryptedKey, passphrase)
-			let account = new wallet.Account(wif)
+			const account = new wallet.Account(wif)
 			await commonLoading.dismiss()
 			if (type === 'privateKey') return this.showKeyBox({ title: '私钥', message: account['privateKey'] })
 			return this.showKeyBox({ title: 'WIF', message: account['WIF'] })

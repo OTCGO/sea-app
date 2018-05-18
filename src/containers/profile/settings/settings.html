@@ -7,7 +7,17 @@
 <ion-content padding>
 
 	<ion-list>
-		<settings-language [languages]="locales" (localeClick)="handleLocaleClick($event)"></settings-language>
-	</ion-list>
+		<settings-language
+      [languages]="locales"
+      [currentLanguage]="currentLanguage | async"
+      (localeClick)="handleLocaleClick($event)"></settings-language>
+  </ion-list>
+
+  <ion-list>
+    <settings-currencies
+      [currencies]="currencies"
+      [currentCurrency]="currentCurrency | async"
+      (currencyClick)="handleCurrencyClick($event)"></settings-currencies>
+  </ion-list>
 
 </ion-content>

@@ -13,6 +13,7 @@ import { defer } from 'rxjs/observable/defer'
 import { from } from 'rxjs/observable/from'
 import { of } from 'rxjs/observable/of'
 import { fromPromise } from 'rxjs/observable/fromPromise'
+import { empty } from 'rxjs/Observable/empty'
 import {
 	skip,
 	mergeMap,
@@ -42,8 +43,11 @@ import { Load as LoadPricesSuccess } from '../actions/prices.action'
 import { api } from '../../libs/neon'
 import { SettingsSelectors, MarketsSelectors } from '../selectors'
 import { FIVE_MINUTES_MS } from '../../shared/constants'
-import { fromPairs, toPairs } from 'ramda'
+import { fromPairs, toPairs, values, compose, map as rMap, zipObj } from 'ramda'
 
+
+const enti2aob = compose(rMap(zipObj(['symbol', 'price'])), toPairs)
+const aob2enti = compose(fromPairs, rMap(values))
 
 @Injectable()
 export class MarketsEffects {
@@ -56,11 +60,12 @@ export class MarketsEffects {
 			ofType<Load>(MarketsActionTypes.LOAD),
 			withLatestFrom(
 				this.store$.select(SettingsSelectors.getCurrency),
-				this.store$.select(MarketsSelectors.getPreMarketsLoadTime),
-				(_, currency, preTime) => ({ currency, preTime })),
-			switchMap(({ currency, preTime }) => {
-				const isPreLoadTimeLessThanFiveMinutes = preTime + FIVE_MINUTES_MS > Date.now()
-				if (isPreLoadTimeLessThanFiveMinutes) return this.loadFromDatabase()
+        this.store$.select(SettingsSelectors.getPreCurrency),
+        this.store$.select(MarketsSelectors.getPreMarketsLoadTime),
+				(_, currency, preCurrency, preTime) => ({ currency, preCurrency, preTime })),
+			switchMap(({ currency, preCurrency, preTime }) => {
+			  const isPreLoadTimeLessThanFiveMinutes = preTime + FIVE_MINUTES_MS > Date.now()
+        if (isPreLoadTimeLessThanFiveMinutes && preCurrency === currency) return this.loadFromDatabase()
 
 				const nextLoad$ = this.actions$.pipe(
 					ofType<Load>(MarketsActionTypes.LOAD),
@@ -129,17 +134,15 @@ export class MarketsEffects {
 	}
 
 	loadFromDatabase () {
-		console.log('loadFromDatabase', this.db)
-
 		if (this.platform.is('mobileweb')) {
 			return combineLatest(
 				this.db.query('markets').pipe(toArray()),
 				this.db.query('prices').pipe(toArray()),
 			).pipe(
 				mergeMap(([markets, prices]) => {
-					const enti = fromPairs(prices)
+          const enti = aob2enti(prices)
 					console.log('markets', markets)
-					console.log('reversed pairs', enti)
+					console.log('reversed prices', enti)
 					return [new LoadSuccess(markets), new LoadPricesSuccess(enti)]
 				}),
 				catchError(e => {
@@ -176,23 +179,22 @@ function loadMarkets (nextLoad$, baseCurrency = 'cny') {
 					if (markets) {
 						const mappedPrices = mappingPrices(markets)
 						if (this.platform.is('mobileweb') || this.platform.is('core')) {
-							const pairsPrices = toPairs(mappedPrices)
-							console.log('db', this.db)
-							this.db.insert('markets', markets).pipe(toArray())
-									.subscribe(
-										m => console.log('Insert markets successful', m),
-										e => console.log('Insert markets fail', e),
-										c => console.log('Insert markets complete', c)
-									)
-							this.db.insert('prices', pairsPrices).pipe(toArray())
-									.subscribe(
-										m => console.log('Insert markets successful', m),
-										e => console.log('Insert markets fail', e),
-										c => console.log('Insert markets complete', c)
-									)
+							const arrayOfPrices = enti2aob(mappedPrices)
+							this.db.insert('markets', markets)
+                .subscribe(
+                  m => console.log('Insert markets successful', m),
+                  e => console.log('Insert markets fail', e),
+                  c => console.log('Insert markets complete', c)
+                )
+							this.db.insert('prices', arrayOfPrices)
+                .subscribe(
+                  m => console.log('Insert prices successful', m),
+                  e => console.log('Insert prices fail', e),
+                  c => console.log('Insert prices complete', c)
+                )
 							console.log('Fallback using DB')
 							console.log('Insert markets', markets)
-							console.log('Insert prices', pairsPrices)
+							console.log('Insert prices', arrayOfPrices)
 						} else {
 							try {
 								this.nativeStorage.setItem('prices', mappedPrices)

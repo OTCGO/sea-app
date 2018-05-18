@@ -19,8 +19,9 @@ export class PossessionsInfoComponent {
 	@Input() account: Account
 
 	constructor (private navCtrl: NavController) {}
-	
+
 	openQRCode () {
 		this.navCtrl.push('payment-qrcode', { address: this.account && this.account.address })
 	}
 }
+

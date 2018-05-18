@@ -11,10 +11,12 @@
 		"tip": "创建钱包",
 		"login_wallet": "确认",
 		"import_wallet": "导入",
-		"wif_placeholder": "WIF码登录",
+		"wif_placeholder": "WIF码 或 NEP2 登录",
 		"password": "请输入密码",
 		"wif_error": "无法识别的 WIF，请重试！",
-		"import_long": "导入钱包文件",
+    "nep2_error": "无法识别的 NEP2，请重试！",
+    "nep2_passphrase_error": "密码错误，请重试！",
+    "import_long": "导入钱包文件",
 		"import_short": "导入"
 	},
 	"CW": {
@@ -35,13 +37,13 @@
 	},
 	"POSSESSIONS": {
 		"totalBalances": "总资产",
-		"displayZero": "隐藏0元资产",
+		"displayZero": "零资产",
 		"DETAILS": {
-			"title": "交易记录",
+			"title": "转账记录",
 			"transfer": "转账",
 			"in": "转入",
 			"out": "转出",
-			"nodata": "没有交易记录"
+			"nodata": "没有转账记录"
 		},
 		"QR_CODE": {
 			"address": "钱包地址",
@@ -76,7 +78,7 @@
 	"PROFILE": {
 		"manage_wallet": "管理钱包",
 		"contacts": "联系人",
-		"histories": "交易记录",
+		"histories": "转账记录",
 		"claims": "提取 GAS",
 		"logout": "退出登录",
 		"MANAGE_WALLET": {
@@ -128,7 +130,7 @@
 			}
 		},
 		"HISTORIES": {
-			"title": "交易记录",
+			"title": "转账记录",
 			"name": "名称",
 			"time_operation": "时间/操作",
 			"amount": "数量",
@@ -150,7 +152,10 @@
 			"title": "设置",
 			"LANGUAGES": {
 				"title": "语言"
-			}
+			},
+      "CURRENCIES": {
+        "title": "基础货币"
+      }
 		},
 		"CLAIMS": {
 			"title": "提取分红",

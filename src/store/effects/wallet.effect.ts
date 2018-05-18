@@ -80,12 +80,12 @@ export class WalletEffects {
 			map(({ accountFile, accounts }) => {
 				if (accountFile instanceof wallet.Account) {
 					const { _WIF, address, encrypted: key, label, } = accountFile as any
-					let account = new wallet.Account(_WIF || { address, key, label })
-					if (!accounts.some(account => account.isDefault)) account.isDefault = true
-					return new AddAccountSuccess(account)
+					const appAcct = new wallet.Account(_WIF || { address, key, label })
+					if (!accounts.some(acct => acct.isDefault)) appAcct.isDefault = true
+					return new AddAccountSuccess(appAcct)
 				}
 				const account = new wallet.Account(accountFile)
-				if (!accounts.some(account => account.isDefault)) account.isDefault = true
+				if (!accounts.some(acct => acct.isDefault)) account.isDefault = true
 				return new AddAccountSuccess(account)
 			}),
 			catchError(e => of(new AddAccountFail(e)))

@@ -13,7 +13,7 @@ export interface ScryptParams {
 export interface WalletFile {
 	name: string
 	version: string
-	scrypt: WalletScryptParams | ScryptParams
+	scrypt: WalletScryptParams
 	accounts: WalletAccount[]
 	extra: any
 }
@@ -34,7 +34,7 @@ export interface Account extends WalletAccount {
 	publicKey: string
 	scriptHash: string
 	address: string
-
+  encrypted: string
 
 	getPublicKey (encoded: boolean): string
 	encrypt (keyphrase: string, scryptParams?: ScryptParams): Account
@@ -61,7 +61,7 @@ export interface Wallet extends WalletFile {
 	decryptAll (keyphrase: string): boolean[]
 	encrypt (index: number, keyphrase: string): boolean
 	encryptAll (keyphrase: string): boolean[]
-	export (): string
+	export ()
 
 	addAccount (acct: WalletAccount | Account | object): number
 	setDefault (index: number): this

@@ -47,7 +47,10 @@ export const nep5Wallet = {
       'lock': false,
       'key': '6PYLnNeafXYEt3jnv9Z7oLa3obcTM3BLqt13MBBzk25yo613WQ3pnBD93B',
       'contract': {},
-      'extra': null
+      'extra': {
+        CONTACT_A,
+        CONTACT_B
+      }
     },
     {
       'address': 'AXoibWhJXYRxckemGa8ZydGpQdBP7GX7st',
@@ -56,12 +59,13 @@ export const nep5Wallet = {
       'lock': false,
       'key': '6PYU48pchs8osmxzHoKFX4Ka16SyutmvzkdH1ptjhJymPxJ39nx6qfBs8x',
       'contract': {},
-      'extra': null
+      'extra': {
+        CONTACT_A,
+        CONTACT_B
+      }
     }
   ],
-  'extra': {
-    contacts: TEST_CONTACTS
-  }
+  'extra': null
 }
 
 export const oldWallet = {

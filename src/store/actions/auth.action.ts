@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store'
 import { OldWalletFile } from '../../shared/models'
-import { Wallet, WalletFile } from '../../shared/typings'
+import { Wallet } from '../../shared/typings'
 
 
 // Data Definition
@@ -26,6 +26,9 @@ export enum AuthActionTypes {
 	LOGIN_NEO_DUN = '[Auth] Login NEO DUN',
 	LOGIN_NEO_DUN_FAIL = '[Auth] Login NEO DUN Fail',
 	LOGIN_NEO_DUN_SUCCESS = '[Auth] Login NEO DUN Success',
+  LOGIN_NEP2 = '[Auth] Login NEP2',
+  LOGIN_NEP2_FAIL = '[Auth] Login NEP2 Fail',
+  LOGIN_NEP2_SUCCESS = '[Auth] Login NEP2 Success',
 	CREATE_WALLET = '[Auth] Create Wallet',
 	CREATE_WALLET_FAIL = '[Auth] Create Wallet Fail',
 	CREATE_WALLET_SUCCESS = '[Auth] Create Wallet Success',
@@ -34,7 +37,7 @@ export enum AuthActionTypes {
 export class Login implements Action {
 	readonly type = AuthActionTypes.LOGIN
 
-	constructor (public payload: WalletFile) {}
+	constructor (public payload) {}
 }
 
 export class LoginFail implements Action {
@@ -111,6 +114,24 @@ export class LoginNeoDunSuccess implements Action {
 	readonly type = AuthActionTypes.LOGIN_NEO_DUN_SUCCESS
 
 	constructor (public payload) { }
+}
+
+export class LoginNEP2 implements Action {
+  readonly type = AuthActionTypes.LOGIN_NEP2
+
+  constructor (public payload) { }
+}
+
+export class LoginNEP2Fail implements Action {
+  readonly type = AuthActionTypes.LOGIN_NEP2_FAIL
+
+  constructor (public payload) { }
+}
+
+export class LoginNEP2Success implements Action {
+  readonly type = AuthActionTypes.LOGIN_NEP2_SUCCESS
+
+  constructor (public payload) { }
 }
 
 export class CreateWallet implements Action {

@@ -10,7 +10,7 @@
       true,
       "check-space"
     ],
-    "curly": true,
+    "curly": ["error", "multi"],
     "eofline": true,
     "forin": true,
     "import-blacklist": [true, "rxjs"],
@@ -68,6 +68,7 @@
       true,
       "allow-null-check"
     ],
+
     "quotemark": [ true, "single"],
     "typedef-whitespace": [
       true,

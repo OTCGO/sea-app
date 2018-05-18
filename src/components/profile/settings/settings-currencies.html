@@ -1,12 +1,11 @@
 <expansion-panel class="expansion-demo-width" #myPanel>
 	<expansion-panel-header>
-		<panel-title>{{ 'PROFILE.SETTINGS.LANGUAGES.title' | translate }}</panel-title>
-		<p>{{ 'PROFILE.SETTINGS.LANGUAGES.subtitle' | translate }}</p>
+		<panel-title>{{ translationPrefix + 'title' | translate }}</panel-title>
+		<p>{{ currentCurrency.toUpperCase() }}</p>
 	</expansion-panel-header>
 
-	<button ion-button clear full text-capitalize disabled *ngFor="let lang of languages" (click)="handleClick(lang.locale)">
-		<span>{{ lang.title }}</span>
-		<span class="subtitle">{{ lang.subtitle }}</span>
+	<button ion-button clear full *ngFor="let currency of currencies" (click)="currencyClick.emit(currency)">
+		<span>{{ currency.toUpperCase() }}</span>
 	</button>
 
 </expansion-panel>

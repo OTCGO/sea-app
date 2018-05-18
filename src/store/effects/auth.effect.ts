@@ -39,8 +39,8 @@ import {
 	CreateWalletSuccess,
 	CreateWalletFail,
 } from '../actions/auth.action'
-
 import { WalletActions, ContactsActions } from '../actions'
+import { merge } from 'ramda'
 
 
 @Injectable()
@@ -52,7 +52,13 @@ export class AuthEffects {
 			map(action => action.payload),
 			exhaustMap((walletFile) => {
 				const nepWallet: Wallet = new wallet.Wallet(walletFile)
-				const contacts = nepWallet.extra && nepWallet.extra.contacts
+				let contacts = nepWallet.extra && nepWallet.extra.contacts
+        nepWallet.accounts.forEach(account => {
+          if (account.extra && account.extra.contacts) {
+            contacts = merge(contacts, account.extra.contacts)
+          }
+        })
+
 				return contacts
 					? [new LoginSuccess(nepWallet), new ContactsActions.Load(contacts)]
 					: [new LoginSuccess(nepWallet)]

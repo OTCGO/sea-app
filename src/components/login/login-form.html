@@ -1,22 +1,25 @@
 <form [formGroup]="loginForm" (submit)="login(loginForm)">
 	<ion-label class="login__error">
-		<h5 *ngIf="wif.invalid && (wif.dirty || wif.touched) && wif.errors.invalidWIF">
+		<h5 *ngIf="key.invalid && (key.dirty || key.touched) && key.errors.invalidWIF">
 			{{ 'LOGIN.wif_error' | translate }}
 		</h5>
+    <h5 *ngIf="key.invalid && (key.dirty || key.touched) && key.errors.invalidNEP2">
+      {{ 'LOGIN.nep2_error' | translate }}
+    </h5>
 	</ion-label>
 
 	<ion-row class="login__wif-section">
 		<ion-col>
 			<ion-item class="login__wif-input rounded">
-				<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="wif"></ion-input>
+				<ion-input (ionChange)="onKeyChange($event)" type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="key"></ion-input>
 			</ion-item>
 
 			<button
 				class="login__import-button"
 				type="button"
-				[class.is-active]="!isWIFKey"
+				[class.is-active]="!isKey"
 				(click)="switchImportBox(fileInput)">
-				<span *ngIf="!isWIFKey">{{ importText }}</span>
+				<span *ngIf="!isKey">{{ importText }}</span>
 				<img src="assets/imgs/icon-login_file.svg" alt="" class="icon">
 			</button>
 
@@ -25,14 +28,14 @@
 			<button
 				class="login__wif-switcher"
 				type="button"
-				*ngIf="!isWIFKey"
+				*ngIf="!isKey"
 				(click)="switchWIFKeyBox()">
 				<img src="assets/imgs/icon-login_WIF.svg" alt="" class="icon">
 			</button>
 		</ion-col>
 	</ion-row>
 
-	<ion-row class="login__password-section" *ngIf="isOldWallet && !isWIFKey">
+	<ion-row class="login__password-section" *ngIf="isOldWallet || !isWIF">
 		<ion-col>
 			<ion-item class="login__password-input">
 				<ion-input type="password" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required></ion-input>

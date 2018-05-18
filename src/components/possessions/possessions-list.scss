@@ -5,7 +5,7 @@ possessions-list {
   display: block;
 
   ion-grid.possessions__base-accumulator {
-    width: calc(100% - 40px);
+    width: calc(100% - 29px);
     padding: 0;
 
     ion-col {
@@ -42,13 +42,12 @@ possessions-list {
     ion-card {
       margin-bottom: 0;
       background: transparent;
-      box-shadow: none;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       padding: 1.4rem 0.5rem;
-      background: $background-gradient;
+      background: $primary-color;
       border-radius: 5px !important;
     }
 

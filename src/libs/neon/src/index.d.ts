@@ -21,7 +21,7 @@ declare const semantic: {
     signature: (tx: string, privateKey: string) => string
     wallet: (k: any) => wallet.Wallet,
     contractParam: (args: any) => sc.ContractParam
-    script: (sp: scriptParams) => string
+    script: ({ scriptHash, operation, args, useTailCall }: scriptParams) => string
     scriptBuilder: (args: any) => sc.ScriptBuilder
     deployScript: (args: any) => string
     rpcClient: (net: string) => rpc.RPCClient

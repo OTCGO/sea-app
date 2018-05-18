@@ -17,6 +17,7 @@ export interface State {
 	loading: boolean
 	error: string | Error
 	currency: keyof ICurrency
+  preCurrency: keyof ICurrency
 }
 
 const initialSettingsState: State = {
@@ -24,6 +25,7 @@ const initialSettingsState: State = {
 	loading: false,
 	error: '',
 	currency: DEFAULT_CURRENCY,
+  preCurrency: DEFAULT_CURRENCY
 }
 
 export const reducer = (state = initialSettingsState, action: SettingsActions): State => {
@@ -57,7 +59,8 @@ export const reducer = (state = initialSettingsState, action: SettingsActions): 
 			return {
 				...state,
 				loading: false,
-				currency: action.payload
+				currency: action.payload,
+        preCurrency: state.currency
 			}
 		}
 

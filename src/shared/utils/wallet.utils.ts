@@ -12,10 +12,6 @@ export const isWallet = (items) => NEW_WALLET_CHECK_LIST.every(i => items.hasOwn
 
 export const isOldWallet = (items): boolean => OLD_WALLET_CHECK_LIST.every(i => items.hasOwnProperty(i))
 
-export const isWIF = wallet.isWIF
-
-export const isAddress = wallet.isAddress
-
 export const doSign = (prvkey, msg) => {
 	const sha256withECDSA = new (<any>KJ).crypto.Signature({ 'alg': 'SHA256withECDSA' })
 
@@ -51,14 +47,23 @@ export const verifyKeyPair = (prvkey, pubkey) => {
 	return doVerify(pubkey, msg, sigval)
 }
 
-export const findDefaultAccount = (wallet: Wallet): Account => {
+export const findDefaultAccount = (appWallet: Wallet): Account => {
 	try {
-		return wallet.defaultAccount
-			|| wallet.accounts.find(account => account.isDefault || !!(<any>account)._privateKey || !!(<any>account)._WIF)
-			|| wallet.accounts[0]
+		return appWallet.defaultAccount
+			|| appWallet.accounts.find(account => account.isDefault || !!(<any>account)._privateKey || !!(<any>account)._WIF)
+			|| appWallet.accounts[0]
 	} catch (e) {
 		return null
 	}
 }
 
-export const getEveryAccountAddress = (wallet: Wallet) => wallet.accounts.map(account => account.address)
+export const getEveryAccountAddress = (appWallet: Wallet) => appWallet.accounts.map(account => account.address)
+
+export const {
+  isWIF,
+  isAddress,
+  isNEP2,
+  isPrivateKey,
+  isPublicKey,
+  decryptAsync
+} = wallet

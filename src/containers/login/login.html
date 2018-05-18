@@ -6,9 +6,10 @@
 		</ion-label>
 
 		<login-form tip="login_wallet"
-		            (onWIF)="loginWIF($event)"
-		            (onOldWallet)="loginOldWallet($event)"
-		            (onNEP5)="loginNEP5($event)"></login-form>
+                (onNEP2)="NEP2Login($event)"
+                (onWIF)="wifLogin($event)"
+		            (onOldWallet)="oldWalletLogin($event)"
+		            (onNEP5)="NEP5Login($event)"></login-form>
 
 		<div class="login__tip">
 			<a (click)="navCtrl.setRoot('CreateWallet')">{{ 'LOGIN.tip' | translate }}</a>

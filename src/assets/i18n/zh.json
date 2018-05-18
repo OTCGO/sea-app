@@ -157,7 +157,7 @@
 			"loading": "正在提取",
 			"available": "可提取",
 			"unavailable": "不可提取",
-			"do_claims": "一键提取(可提取)"
+			"do_claims": "一键提取"
 		}
 	}
 }

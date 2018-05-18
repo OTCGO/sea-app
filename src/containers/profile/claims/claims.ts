@@ -23,13 +23,14 @@ import { Observable } from 'rxjs/Observable'
 export class ClaimsPage {
 	account = this.accountProvider.defaultAccount
 	private claims: Observable<Claims>; 
+	private btnLoading = false
 
 	constructor (
 		private claimsProvider: ClaimsProvider,
 		private accountProvider: AccountProvider,
-	  private alertCtrl: AlertController,
-	  private store: Store<RootState>,
-	  private loadingCtrl: LoadingController
+		private alertCtrl: AlertController,
+		private store: Store<RootState>,
+		private loadingCtrl: LoadingController
 	) {}
 
 	ionViewDidLoad () {
@@ -38,21 +39,25 @@ export class ClaimsPage {
 	}
 
 	async doClaim () {
-		const loading = this.loadingCtrl.create()
-		loading.present();
+		// const loading = this.loadingCtrl.create()
+		// loading.present();
 
 		
+
 		// wif login
 		if(this.account._WIF){
 			try {
+				this.btnLoading = true
 				const result = await this.claimsProvider.doClaims(this.account._privateKey)
 				result && this.showPrompt('提取成功！')
 
-				await loading.dismiss()
+				this.btnLoading = false
+				//await loading.dismiss()
 
 			} catch (e) {
+				this.btnLoading = false
 				this.showPrompt(e.message || e)
-				await loading.dismiss()
+				// await loading.dismiss()
 				console.log(e)
 			}
 			return
@@ -66,23 +71,46 @@ export class ClaimsPage {
 				{ text: '取消' },
 				{
 					text: '确认',
-					handler: ({ passphrase }) => {
+					handler:  ({ passphrase }) => {
 						if (passphrase === '' || passphrase.length < 4) return false
-						loading.present().then(async () => {
-							try {
-								const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
-								const result = await this.claimsProvider.doClaims(pr)
-								result && this.showPrompt('提取成功！')
+						
 
-								await loading.dismiss()
-								await prompt.dismiss()
-							} catch (e) {
-								await loading.dismiss()
-								await prompt.dismiss()
-								this.showPrompt(e.message || e)
-								console.log(e)
-							}
+						this.btnLoading = true
+
+						const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+						this.claimsProvider.doClaims(pr).then(result => {
+							result && this.showPrompt('提取成功！')
+
+							prompt.dismiss()
+							this.btnLoading = false
+							
+						}).catch((e) =>{
+							this.showPrompt(e.message || e)
+							console.log(e)
+
+							prompt.dismiss()
+							this.btnLoading = false
 						})
+
+						
+							
+
+
+						// loading.present().then(async () => {
+						// 	try {
+						// 		const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+						// 		const result = await this.claimsProvider.doClaims(pr)
+						// 		result && this.showPrompt('提取成功！')
+
+						// 		await loading.dismiss()
+						// 		await prompt.dismiss()
+						// 	} catch (e) {
+						// 		await loading.dismiss()
+						// 		await prompt.dismiss()
+						// 		this.showPrompt(e.message || e)
+						// 		console.log(e)
+						// 	}
+						// })
 					}
 				}
 			]

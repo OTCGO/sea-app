@@ -66,7 +66,12 @@
 		</div>
 
 
-		<button ion-button round full clear class="claims__button otcgo-button" (click)="doClaim()">
+		<button *ngIf = "btnLoading" ion-button round full clear class="claims__button otcgo-button">
+			<ion-spinner  item-start name="crescent"></ion-spinner>
+			{{ 'PROFILE.CLAIMS.loading' | translate }}
+		</button>
+
+		<button *ngIf = "!btnLoading" ion-button round full clear class="claims__button otcgo-button" (click)="doClaim()">
 			{{ 'PROFILE.CLAIMS.do_claims' | translate }}
 		</button>
 	</div>

@@ -59,12 +59,19 @@
 
 		<div class="claims__svg-text"
 		     text-center>
+			<p>{{ 'PROFILE.CLAIMS.unavailable' | translate }}</p>
+			<p class="title">{{ (claims | async)?.available }} GAS</p>
 			<p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
-			<p class="title">{{ availableGas }} GAS</p>
+			<p class="title">{{ (claims | async)?.unavailable }} GAS</p>
 		</div>
 
 
-		<button ion-button round full clear class="claims__button otcgo-button" (click)="doClaim()">
+		<button *ngIf = "btnLoading" ion-button round full clear class="claims__button otcgo-button">
+			<ion-spinner  item-start name="crescent"></ion-spinner>
+			{{ 'PROFILE.CLAIMS.loading' | translate }}
+		</button>
+
+		<button *ngIf = "!btnLoading" ion-button round full clear class="claims__button otcgo-button" (click)="doClaim()">
 			{{ 'PROFILE.CLAIMS.do_claims' | translate }}
 		</button>
 	</div>

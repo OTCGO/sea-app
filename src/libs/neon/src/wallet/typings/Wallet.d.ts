@@ -8,6 +8,7 @@ export interface WalletLike {
   defaultAccount: Account | AccountLike
 }
 
+
 export interface WalletScryptParams {
   n: number
   r: number

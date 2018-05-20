@@ -110,15 +110,17 @@ export class SendModalComponent implements OnInit {
 		this.sendModalProvider
 		    .decrypt(this.passphrase.value)
 		    .then(async pr => {
-			    const result = await this.sendModalProvider.doSendAsset({
+			    const result:any = await this.sendModalProvider.doSendAsset({
 				    dests: this.toAddress.value,
 				    amounts: this.amount.value,
 				    assetId: this.selectedBalance.hash
-			    }, pr)
-			    if (result) {
-				    await this.handleClose()
-				    this.notificationProvider.emit({ message: '转账成功' })
-			    }
+				}, pr)
+				await this.handleClose()
+			    if (result.result) {
+					this.notificationProvider.emit({ message: '转账成功' })
+					return
+				}
+				this.notificationProvider.emit({ message: '转账失败，请稍候再试' })
 		    })
 		    .catch(err => {
 		    	if (err.message)

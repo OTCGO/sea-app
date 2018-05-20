@@ -45,13 +45,20 @@ export class ClaimsPage {
 		
 
 		// wif login
-		if(this.account._WIF){
+		if(this.account.WIF){
 			try {
 				this.btnLoading = true
-				const result = await this.claimsProvider.doClaims(this.account._privateKey)
-				result && this.showPrompt('提取成功！')
-
+				const result:any = await this.claimsProvider.doClaims(this.account.privateKey)
+				
 				this.btnLoading = false
+
+				console.log('doClaim',result)
+				if(result){
+					this.showPrompt('提取成功！')
+					return
+				}
+
+				this.showPrompt('提取失败!，请稍候再试')
 				//await loading.dismiss()
 
 			} catch (e) {

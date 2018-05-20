@@ -46,18 +46,11 @@ export class LoginPage implements OnInit {
 
 	NEP5Login = file => this.store.dispatch(new AuthActions.Login(file))
 
-<<<<<<< HEAD
-	loginWIF (wifValue) {
-		return wifValue === 'test'
-			? this.loginNEP5(nep5Wallet)
-			: this.store.dispatch(new AuthActions.LoginWif(wifValue))
 
-=======
 	wifLogin (keyValue) {
 		return keyValue === 'test'
 			? this.NEP5Login(nep5Wallet)
 			: this.store.dispatch(new AuthActions.LoginWif(keyValue))
->>>>>>> master
 	}
 
 	oldWalletLogin = ({ oldWallet, passphrase }) =>

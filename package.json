@@ -49,6 +49,7 @@
     "@ngrx/store-devtools": "^5.2.0",
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^2.0.1",
+    "axios": "^0.18.0",
     "bignumber.js": "^6.0.0",
     "copy-to-clipboard": "^3.0.8",
     "cordova-android": "6.3.0",

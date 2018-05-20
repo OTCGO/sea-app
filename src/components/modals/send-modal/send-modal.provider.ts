@@ -20,9 +20,9 @@ export class SendModalProvider {
 		private accountProvider: AccountProvider
 	) {}
 
-	decrypt (passphrase) {
+	async decrypt (passphrase) {
 		try {
-			if (this.account.WIF) return this.account.WIF
+			if (this.account.WIF) return wallet.getPrivateKeyFromWIF(this.account.WIF)
 		} catch (e) {
 			console.log(e)
 		}
@@ -47,7 +47,8 @@ export class SendModalProvider {
 	}
 
 	private generateSignature (transaction, pr) {
-		const publicKey = wallet.getPublicKeyFromPrivateKey(pr)
+		const publicKey = this.account.publicKey
+		console.log('generateSignature',pr)
 		const signature = generateSignature(transaction, pr)
 
 		return {

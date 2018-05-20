@@ -16,7 +16,7 @@ export interface State {
 const initialState: State = {
 	error: '',
 	loading: false,
-	entity: new wallet.Wallet(DEFAULT_EMPTY_WALLET)
+	entity: new wallet.Wallet(<any>DEFAULT_EMPTY_WALLET)
 }
 
 export const reducer: ActionReducer<State> = (
@@ -29,7 +29,7 @@ export const reducer: ActionReducer<State> = (
 			const accounts = state.entity.accounts.slice().map(account => new wallet.Account(account))
 			accounts.push(payload)
 
-			const entity = new wallet.Wallet({ ...state.entity, accounts })
+			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
 
 			return {
 				...state,
@@ -46,7 +46,7 @@ export const reducer: ActionReducer<State> = (
 					: account
 			)
 
-			const entity = new wallet.Wallet({ ...state.entity, accounts })
+			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
 
 			return {
 				...state,
@@ -62,7 +62,7 @@ export const reducer: ActionReducer<State> = (
 				tempAcct.isDefault = account.address === payload.address
 				return tempAcct
 			})
-			const entity = new wallet.Wallet({ ...state.entity, accounts })
+			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
 
 			return {
 				...state,
@@ -81,7 +81,7 @@ export const reducer: ActionReducer<State> = (
 				accounts[0].isDefault = true
 			}
 
-			const entity = new wallet.Wallet({ ...state.entity, accounts })
+			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
 
 			return {
 				...state,

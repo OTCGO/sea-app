@@ -12,10 +12,10 @@ if (!Array.prototype.includes) {
 				throw new TypeError('"this" is null or not defined')
 			}
 
-			let o = Object(this)
+			const o = Object(this)
 
 			// 2. Let len be ? ToLength(? Get(O, "length")).
-			let len = o.length >>> 0
+			const len = o.length >>> 0
 
 			// 3. If len is 0, return false.
 			if (len === 0) {
@@ -24,7 +24,7 @@ if (!Array.prototype.includes) {
 
 			// 4. Let n be ? ToInteger(fromIndex).
 			//    (If fromIndex is undefined, this step produces the value 0.)
-			let n = fromIndex | 0
+			const n = fromIndex | 0
 
 			// 5. If n ≥ 0, then
 			//  a. Let k be n.

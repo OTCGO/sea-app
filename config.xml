@@ -3,7 +3,7 @@
     <name>OTCGO</name>
     <description>An awesome Neo Wallet app.</description>
     <author email="AmagiDDmxh@qq.com" href="https://otcgo.cn">Otcgo Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.31.90:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -118,7 +118,9 @@
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
+    <allow-navigation href="http://192.168.31.90:8100" />
+    <allow-navigation href="http://192.168.31.90:8101" />
     <engine name="browser" spec="5.0.3" />
+    <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="6.3.0" />
-    <engine name="ios" spec="~4.5.4" />
 </widget>

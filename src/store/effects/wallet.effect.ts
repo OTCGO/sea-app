@@ -65,7 +65,7 @@ export class WalletEffects {
 	@Effect({ dispatch: false })
 	LoadSuccess$ =
 		this.actions$.pipe(
-			ofType(WalletActionTypes.LOAD_SUCCESS,),
+			ofType(WalletActionTypes.LOAD_SUCCESS, ),
 			tap(() => {
 				this.router.setRoot('Tabs')
 			})

@@ -13,5 +13,5 @@ export class CdkAccordion {
 	@Input()
 	get multi(): boolean { return this._multi }
 	set multi(multi: boolean) { this._multi = coerceBooleanProperty(multi) }
-	private _multi: boolean = false
+	private _multi = false
 }

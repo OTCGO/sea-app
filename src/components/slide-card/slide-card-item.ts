@@ -31,13 +31,13 @@ export class SlideCardItem implements AfterContentInit, OnDestroy {
 		return this.parent.el.nativeElement.offsetWidth
 	}
 
-	hover: boolean = false
-	translate: number = 0
-	scale: number = 1
-	isActive: boolean = false
-	ready: boolean = false
-	inStage: boolean = false
-	animating: boolean = false
+	hover = false
+	translate = 0
+	scale = 1
+	isActive = false
+	ready = false
+	inStage = false
+	animating = false
 
 	constructor (
 		@Inject(forwardRef(() => SlideCard)) public parent: SlideCard

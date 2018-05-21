@@ -2,15 +2,15 @@ import { EventEmitter, Input, Output } from '@angular/core'
 
 export class SlideCardProps {
   @Input() height: string
-  @Input() trigger: string = 'hover'
-  @Input() interval: number = 3000
-  @Input() autoplay: boolean = false
-  @Input() indicator: boolean = true
+  @Input() trigger = 'hover'
+  @Input() interval = 3000
+  @Input() autoplay = false
+  @Input() indicator = true
 
-  @Input() type: string = 'card'
-  @Input() arrow: string = 'hover'
+  @Input() type = 'card'
+  @Input() arrow = 'hover'
 
-  @Input() initialIndex: number = 0
+  @Input() initialIndex = 0
   @Input() indicatorPosition: string
 
   @Output() change = new EventEmitter()

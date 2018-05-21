@@ -34,7 +34,7 @@ export class SlideCard extends SlideCardProps {
   containerWidth = 0
   time = null
 
-  hover: boolean = false
+  hover = false
 
   private _items = []
   get items() {
@@ -103,9 +103,9 @@ export class SlideCard extends SlideCardProps {
 
   playSlides () {
     if (this.activeIndex < this.items.length - 1) {
-      this.activeIndex++;
+      this.activeIndex++
     } else {
-      this.activeIndex = 0;
+      this.activeIndex = 0
     }
   }
 

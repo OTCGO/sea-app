@@ -42,7 +42,7 @@ export class WalletProvider {
 
 	private _upgradeToNEP5Account (oldWalletJSON, passphrase): Account {
 		const { privateKeyEncrypted, publicKey } = <any>oldWalletJSON
-		let privateKey = decryptPrv(privateKeyEncrypted, passphrase)
+		const privateKey = decryptPrv(privateKeyEncrypted, passphrase)
 		const result = verifyKeyPair(privateKey, publicKey)
 
 		if (result) {

@@ -110,7 +110,7 @@ export class SendModalComponent implements OnInit {
 		this.sendModalProvider
 		    .decrypt(this.passphrase.value)
 		    .then(async pr => {
-			    const result:any = await this.sendModalProvider.doSendAsset({
+			    const result: any = await this.sendModalProvider.doSendAsset({
 				    dests: this.toAddress.value,
 				    amounts: this.amount.value,
 				    assetId: this.selectedBalance.hash
@@ -127,7 +127,7 @@ export class SendModalComponent implements OnInit {
 						return this.showPrompt({ message: err.message, title: '错误' })
 					this.showPrompt({ message: err, title: '错误' })
 				})
-		    .then(_=> {
+		    .then(_ => {
 		    	this.store.dispatch(new BalancesActions.Load())
 					this.store.dispatch(new TransactionsActions.CleanSelectedContact())
 					loading.dismissAll()

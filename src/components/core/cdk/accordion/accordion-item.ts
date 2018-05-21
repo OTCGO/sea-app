@@ -47,7 +47,7 @@ export class CdkAccordionItem implements OnDestroy {
 	@Input()
 	get disabled(): boolean { return this._disabled }
 	set disabled(disabled: boolean) { this._disabled = coerceBooleanProperty(disabled) }
-	private _disabled: boolean = false
+	private _disabled = false
 
 	private _removeUniqueSelectionListener: () => void = () => {}
 

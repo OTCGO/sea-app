@@ -39,37 +39,32 @@ export class ClaimsPage {
 	}
 
 	async doClaim () {
-		// const loading = this.loadingCtrl.create()
-		// loading.present();
-
 		
-
+		
 		// wif login
-		if(this.account.WIF){
+		if(this.account._WIF){
 			try {
 				this.btnLoading = true
-				const result:any = await this.claimsProvider.doClaims(this.account.privateKey)
+				const result = await this.claimsProvider.doClaims(this.account._privateKey)
 				
 				this.btnLoading = false
 
-				console.log('doClaim',result)
 				if(result){
 					this.showPrompt('提取成功！')
 					return
 				}
 
 				this.showPrompt('提取失败!，请稍候再试')
-				//await loading.dismiss()
 
 			} catch (e) {
 				this.btnLoading = false
-				this.showPrompt(e.message || e)
-				// await loading.dismiss()
-				console.log(e)
+				this.showPrompt('提取失败!，请稍候再试')
 			}
 			return
 		}
+
 		
+		// file login
 		const prompt = this.alertCtrl.create({
 			title: '输入密码',
 			message: '输入您的密码！',
@@ -79,51 +74,39 @@ export class ClaimsPage {
 				{
 					text: '确认',
 					handler:  ({ passphrase }) => {
-						if (passphrase === '' || passphrase.length < 4) return false
+						if (!passphrase || passphrase === '' || passphrase.length < 4) return false
 						
 
 						this.btnLoading = true
 
 						const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 						this.claimsProvider.doClaims(pr).then(result => {
-							result && this.showPrompt('提取成功！')
 
 							prompt.dismiss()
 							this.btnLoading = false
+
+							if(result){
+								this.showPrompt('提取成功！')
+								return
+							}
+			
+							this.showPrompt('提取失败!，请稍候再试')
+
+
+
 							
 						}).catch((e) =>{
-							this.showPrompt(e.message || e)
+							this.showPrompt('提取失败!，请稍候再试')
 							console.log(e)
 
 							prompt.dismiss()
 							this.btnLoading = false
 						})
-
-						
-							
-
-
-						// loading.present().then(async () => {
-						// 	try {
-						// 		const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
-						// 		const result = await this.claimsProvider.doClaims(pr)
-						// 		result && this.showPrompt('提取成功！')
-
-						// 		await loading.dismiss()
-						// 		await prompt.dismiss()
-						// 	} catch (e) {
-						// 		await loading.dismiss()
-						// 		await prompt.dismiss()
-						// 		this.showPrompt(e.message || e)
-						// 		console.log(e)
-						// 	}
-						// })
 					}
 				}
 			]
 		})
 		prompt.present()
-		
 	}
 
 	showPrompt (msg) {

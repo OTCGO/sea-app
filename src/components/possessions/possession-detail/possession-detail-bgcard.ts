@@ -11,7 +11,9 @@ import { IBalance } from '../../../shared/models'
 	template: `
 	  <ion-card class="possession-data-card scroll-animation" [style.height]="height">
 		  <div class="possession-data-amount">{{ balance.amount?.toString() }}</div>
+		  <!--
 		  <div class="possession-data-approximation">≈ ￥ {{ balance.amount * price }}</div>
+		  -->
 		  <button color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="balance.amount <= 0">
 			  {{ 'POSSESSIONS.DETAILS.transfer' | translate }}
 		  </button>

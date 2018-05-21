@@ -8,8 +8,11 @@ import { IBalance } from '../../shared/models'
 		  <ion-row class="card-base">
 			  <ion-col col-9>
 				  <ion-card class="possessions__total-balances">
+				  <ion-row>{{ 'POSSESSIONS.totalBalances' | translate }}</ion-row>
+				  	<!--
 					  <ion-row>{{ 'POSSESSIONS.totalBalances' | translate }} {{ baseCurrency.toUpperCase() }}</ion-row>
 					  <ion-row class="possessions__volume">{{ amount | number:'1.1-4' }}</ion-row>
+					-->
 				  </ion-card>
 			  </ion-col>
 			  <ion-col col-3 class="possessions__hide-zero" align-self-end>

@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
 
 	ngOnInit () {
 		this.store.select(AuthSelectors.getError).subscribe(error => error && this.np.emit({ message: error }))
-		this.store.select(AuthSelectors.getLoading).subscribe(bool => bool && this.lp.emit(bool))
+    this.store.select(AuthSelectors.getLoading).subscribe(bool => bool && this.lp.emit(bool))
 	}
 
 	NEP5Login = file => this.store.dispatch(new AuthActions.Login(file))

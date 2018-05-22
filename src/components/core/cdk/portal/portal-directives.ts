@@ -36,7 +36,7 @@ export class CdkPortal extends TemplatePortal {
 /**
  * Possible attached references to the CdkPortalOutlet.
  */
-export type CdkPortalOutletAttachedRef = ComponentRef<any> | EmbeddedViewRef<any> | null;
+export type CdkPortalOutletAttachedRef = ComponentRef<any> | EmbeddedViewRef<any> | null
 
 /**
  * Directive version of a PortalOutlet. Because the directive *is* a PortalOutlet, portals can be

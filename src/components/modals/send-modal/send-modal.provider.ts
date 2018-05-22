@@ -24,16 +24,16 @@ export class SendModalProvider {
 
 	async decrypt (passphrase) {
 		try {
-			
+
 			if (this.account._WIF) return wallet.getPrivateKeyFromWIF(this.account._WIF)
 		} catch (e) {
 			console.log(e)
 		}
 		try {
 			const wif = wallet.decrypt(this.account.encrypted, passphrase)
-			console.log('decrypt:passphrase',passphrase)
+			console.log('decrypt:passphrase', passphrase)
 			const pr = wallet.getPrivateKeyFromWIF(wif)
-			console.log('decrypt:pr',pr)
+			console.log('decrypt:pr', pr)
 			return Promise.resolve(pr)
 		} catch (e) {
 			console.log(e)
@@ -42,7 +42,7 @@ export class SendModalProvider {
 	}
 
 	doSendAsset ({ dests, amounts, assetId }: ISendOpts, pr) {
-		console.log('doSendAsset',pr)
+		console.log('doSendAsset', pr)
 		return this.postTransfer({ dests, amounts, assetId, source: this.account.address })
 		           .then(res => this.generateSignature(res['transaction'], pr))
 		           .then(res => this.apiProvider.broadcast(res).toPromise())
@@ -53,11 +53,11 @@ export class SendModalProvider {
 	}
 
 	private generateSignature (transaction, pr) {
-		    
-		const publicKey = wallet.getPublicKeyFromPrivateKey('c5ba9b99c81cefe9227160669a5f3058fa8a7fb40abfd85cd7eee57d6315107d',true)
-		console.log('publicKey',publicKey)
-	
-		console.log('generateSignature',pr)
+
+		const publicKey = wallet.getPublicKeyFromPrivateKey('c5ba9b99c81cefe9227160669a5f3058fa8a7fb40abfd85cd7eee57d6315107d', true)
+		console.log('publicKey', publicKey)
+
+		console.log('generateSignature', pr)
 		const signature = generateSignature(transaction, pr)
 
 		return {

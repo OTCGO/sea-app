@@ -2,12 +2,12 @@ import { Action } from '@ngrx/store'
 import { TransactionHistory } from '../../shared/models'
 
 export enum TransactionHistoryActionTypes {
-	LOAD = "[Transaction History] Load",
-	LOAD_FAIL = "[Transaction History] Load Fail",
-	LOAD_SUCCESS = "[Transaction History] Load Success",
-	LOAD_DETAIL = "[Transaction History] Load Detail",
-	LOAD_DETAIL_FAIL = "[Transaction History] Load Detail Fail",
-	LOAD_DETAIL_SUCCESS = "[Transaction History] Load Detail Success",
+	LOAD = '[Transaction History] Load',
+	LOAD_FAIL = '[Transaction History] Load Fail',
+	LOAD_SUCCESS = '[Transaction History] Load Success',
+	LOAD_DETAIL = '[Transaction History] Load Detail',
+	LOAD_DETAIL_FAIL = '[Transaction History] Load Detail Fail',
+	LOAD_DETAIL_SUCCESS = '[Transaction History] Load Detail Success',
 	SELECT = '[Transaction History] Select History TransactionID',
 }
 

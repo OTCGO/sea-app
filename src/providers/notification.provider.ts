@@ -8,7 +8,7 @@ import {
 import { Subject } from 'rxjs/Subject'
 
 
-export interface notificationOpts {
+export interface NotificationOpts {
 	message: string | Error,
 	position?: string,
 	duration?: number
@@ -25,7 +25,7 @@ export class NotificationProvider {
 		this.subscribeNotification()
 	}
 
-	emit (options: notificationOpts | string) {
+	emit (options: NotificationOpts | string) {
 		const nomi = typeof options === 'object' ? options : { message: options }
 		this.subject.next(nomi)
 	}
@@ -40,10 +40,10 @@ export class NotificationProvider {
 	}
 
 	subscribeNotification () {
-		this.notification$.subscribe((opts: notificationOpts) => this.showNotification(opts))
+		this.notification$.subscribe((opts: NotificationOpts) => this.showNotification(opts))
 	}
 
-	showNotification (opts: notificationOpts) {
+	showNotification (opts: NotificationOpts) {
 		const toastOptions = Object.assign(opts, {
 			message: opts.message['message'] || opts.message,
 			position: 'bottom',

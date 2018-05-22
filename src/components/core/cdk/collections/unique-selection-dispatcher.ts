@@ -7,7 +7,7 @@ export class UniqueSelectionDispatcher {
 	private _listeners: UniqueSelectionDispatcherListener[] = []
 
 	notify(id: string, name: string) {
-		for (let listener of this._listeners) listener(id, name)
+		for (const listener of this._listeners) listener(id, name)
 	}
 
 	listen(listener: UniqueSelectionDispatcherListener): () => void {

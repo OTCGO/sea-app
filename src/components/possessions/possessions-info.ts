@@ -5,10 +5,10 @@ import { Account } from '../../shared/typings'
 @Component({
 	selector: 'possessions-info',
 	template: `
-	  <ion-card class="card-info">
-		  <div class="card-avatar" (click)="openQRCode()">
-			  <img src="assets/imgs/icon-qrcode-avatar.svg" alt="">
-		  </div>
+		<ion-card class="card-info">
+				<div class="card-avatar" (click)="openQRCode()">
+					<img src="assets/imgs/icon-qrcode-avatar.svg" alt="">
+				</div>
 		  <div class="card-title">{{ account?.address | addressCollapse }}</div>
 			<div class="bg"></div>
 	  </ion-card>

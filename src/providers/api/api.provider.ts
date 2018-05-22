@@ -30,7 +30,7 @@ export class ApiProvider implements OnDestroy {
 								 takeUntil(this.onDestroy),
 								 timeout(10000)
 							 )
-		
+
 	}
 
 	get (endpoint: string, options?: any): Observable<any> {

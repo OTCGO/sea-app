@@ -20,7 +20,7 @@ const { getPublicKeyFromPrivateKey, generateSignature } = wallet
 export class ClaimsProvider {
 	_account = this.accountProvider.defaultAccount
 	balances
-	
+
 
 	constructor (
 		private apiProvider: ApiProvider,
@@ -76,9 +76,9 @@ export class ClaimsProvider {
 	doSendAsset (pr: string, publicKey) {
 		const NEO = this.balances.find(bal => bal.hash === NEO_HASH)
 		const address = this._account.address
-		console.log('doSendAsset:NEO',NEO)
-		if(!NEO || !NEO.amount ){
-			return 
+		console.log('doSendAsset:NEO', NEO)
+		if (!NEO || !NEO.amount ){
+			return
 		}
 		const data = {
 			dests: address,

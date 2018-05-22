@@ -11,7 +11,7 @@ import {
 	Validators
 } from '@angular/forms'
 import { TranslateService } from '@ngx-translate/core'
-import { AlertController } from 'ionic-angular'
+import { AlertController, LoadingController } from 'ionic-angular'
 
 import { keyValidator, asyncKeyValidator } from './login.validator'
 import { isNEP2, isWIF, isOldWallet, isWallet } from '../../shared/utils'
@@ -40,7 +40,11 @@ export class LoginForm implements OnInit {
 	loginForm: FormGroup
 	translationPrefix = 'LOGIN.'
 
-	constructor (private fb: FormBuilder, private ts: TranslateService, private alertCtrl: AlertController) {}
+	constructor (
+		private fb: FormBuilder, private ts: TranslateService,
+		private loadingCtrl: LoadingController,
+		private alertCtrl: AlertController
+		) {}
 
 	get key () { return this.loginForm.get('key') }
 	get passphrase () { return this.loginForm.get('passphrase') }
@@ -121,6 +125,15 @@ export class LoginForm implements OnInit {
 	}
 
 	login ({ controls, value }: FormGroup) {
+		const loading = this.loadingCtrl.create()
+		loading.present()
+
+
+		setTimeout(() => {
+		loading.dismiss()
+		}, 1000)
+
+
 		const { file, isKey } = this
 		const { key: keyControl, passphrase: passphraseControl } = controls
 		const { key: keyValue, passphrase: passphraseValue } = value

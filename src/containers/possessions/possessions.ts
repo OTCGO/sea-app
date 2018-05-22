@@ -15,7 +15,7 @@ import 'rxjs/add/operator/take'
 import { IBalance } from '../../shared/models'
 import { Account } from '../../shared/typings'
 import { LoadingProvider, NotificationProvider } from '../../providers'
-import { MarketsActions, BalancesActions } from '../../store/actions'
+import { BalancesActions } from '../../store/actions'
 import { WalletSelectors, BalancesSelectors, PricesSelectors, SettingsSelectors } from '../../store/selectors'
 import { fromBalances, fromWallet } from '../../store/reducers'
 
@@ -63,7 +63,7 @@ export class PossessionsPage implements OnInit {
 	}
 
 	updateBalances () {
-    this.store.dispatch(new MarketsActions.Load())
+    // this.store.dispatch(new MarketsActions.Load())
     this.store.dispatch(new BalancesActions.Load())
   }
 
@@ -75,14 +75,18 @@ export class PossessionsPage implements OnInit {
 
 	doRefresh (refresher: Refresher) {
 		this.store.dispatch(new BalancesActions.Load())
-    this.store.dispatch(new MarketsActions.Load())
+    	// this.store.dispatch(new MarketsActions.Load())
 		this.store.select(BalancesSelectors.getLoading).subscribe(loading => !loading && refresher.complete())
   }
 
 	handleBalanceSelect (symbol) {
 		this.store.dispatch(new BalancesActions.Select(symbol))
 		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance).take(1)
-                                       .subscribe(selectedBalance => {selectedBalance && this.navCtrl.push('PossessionDetail')})
+                                       .subscribe(selectedBalance => {
+										   if (selectedBalance) {
+										this.navCtrl.push('PossessionDetail')
+									   }}
+									)
 	}
 
 	handleDisplayZeroClick (bool) {

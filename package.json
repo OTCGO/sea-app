@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
+    "web:build":"ionic build --minifyjs --minifyjs",
     "build": "ionic-app-scripts build --webpack ./webpack.config.js",
     "lint": "tslint --fix   --project tslint.json ./src/**/*.ts -e ./src/libs/**/*.ts",
     "serve": "ionic-app-scripts serve --webpack ./webpack.config.js",

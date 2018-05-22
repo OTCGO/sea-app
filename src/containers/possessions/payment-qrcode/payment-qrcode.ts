@@ -8,6 +8,7 @@ import { Clipboard } from '@ionic-native/clipboard'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { NotificationProvider } from '../../../providers/notification.provider'
 
+
 @IonicPage({
 	name: 'payment-qrcode'
 })
@@ -22,14 +23,15 @@ import { NotificationProvider } from '../../../providers/notification.provider'
 			  <ngx-qrcode [qrc-value]="address"></ngx-qrcode>
 
 			  <div class="title">{{ 'POSSESSIONS.QR_CODE.address' | translate }}</div>
-			  <div class="address">{{ address }}</div>
+			  <div class="address" id="copy" >{{ address }}</div>
 
 			  <button ion-button
 			          class="otcgo-button--colour"
 			          round
 			          full
-			          (click)="copy()">{{ 'POSSESSIONS.QR_CODE.copy' | translate }}
+			          (click)="copy()" >{{ 'POSSESSIONS.QR_CODE.copy' | translate }}
 			  </button>
+			  <!--
 			  <button ion-button
 			          class="otcgo-button--edge"
 			          round
@@ -37,12 +39,14 @@ import { NotificationProvider } from '../../../providers/notification.provider'
 			          full
 			          (click)="share()">{{ 'POSSESSIONS.QR_CODE.share' | translate }}
 			  </button>
+			  -->
 		  </div>
 	  </ion-content>
 	`
 })
 export class PaymentQRCodePage {
 	address: string
+
 
 	constructor (
 		navParams: NavParams,
@@ -55,11 +59,18 @@ export class PaymentQRCodePage {
 	}
 
 	copy () {
+		console.log('this.platform', this.platform)
+		// console.log('element', element)
 		if (this.platform.is('mobileweb')) {
 			try {
-				const successful = document.execCommand('copy')
-				const msg = successful ? 'successful' : 'fail'
-				return this.np.emit({ message: `copy ${msg}` })
+				const el = document.createElement('textarea')
+				el.value = this.address
+				document.body.appendChild(el)
+				el.select()
+				document.execCommand('copy')
+				document.body.removeChild(el)
+
+				return this.np.emit({ message: `copy successful` })
 			} catch (err) {
 				console.log('unable to copy', err)
 			}

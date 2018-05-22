@@ -58,7 +58,7 @@ describe('Login page', () => {
 	beforeEach(() => {
 		fixture = TestBed.createComponent(LoginPage)
 		comp = fixture.componentInstance
-		let de: DebugElement = fixture.debugElement
+		const de: DebugElement = fixture.debugElement
 
 		walletProvider = de.injector.get(WalletProvider)
 		alertCtrl = de.injector.get(AlertController)
@@ -67,14 +67,14 @@ describe('Login page', () => {
 	describe('Login with WIF key', () => {
 		it('Should create new NEP5 encrypted wallet with given passphrase', () => {
 			fixture.detectChanges()
-			let inputs = fixture.debugElement.queryAll(By.css('input'))
-			let wifInput = inputs[0]
+			const inputs = fixture.debugElement.queryAll(By.css('input'))
+			const wifInput = inputs[0]
 			wifInput.nativeElement.value = WIF
 			wifInput.nativeElement.dispatchEvent(new Event('input'))
 
 			expect(comp.loginForm.value['key']).toBe(WIF)
 
-			let passphraseInput = inputs[2]
+			const passphraseInput = inputs[2]
 			passphraseInput.nativeElement.value = pwd
 			passphraseInput.nativeElement.dispatchEvent(new Event('input'))
 

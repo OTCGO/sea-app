@@ -23,8 +23,8 @@ import { IBalance } from '../../../shared/models'
 export class PossessionDetailBgcard {
 	@Input() isScrollUp: boolean
 	@Input() isScrollDown: boolean
-	@Input() scrollTop: number = 0
-	@Input() differentScrollTop: number = 0
+	@Input() scrollTop = 0
+	@Input() differentScrollTop = 0
 	@Input() balance: IBalance
 	@Input() price: number
 

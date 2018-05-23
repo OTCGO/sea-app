@@ -84,8 +84,8 @@ export class PossessionsPage implements OnInit {
 		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance).take(1)
                                        .subscribe(selectedBalance => {
 										   if (selectedBalance) {
-										this.navCtrl.push('PossessionDetail')
-									   }}
+											this.navCtrl.push('PossessionDetail')
+									   	}}
 									)
 	}
 

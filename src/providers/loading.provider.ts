@@ -19,7 +19,7 @@ export class LoadingProvider {
 	constructor (private loadingCtrl: LoadingController) {
 		this.loading$
 				.distinctUntilChanged()
-				// .timeout(0)
+				.timeout(0)
 				.catch(() => of(false))
 				.subscribe(
 					(boolOrOptions) => {

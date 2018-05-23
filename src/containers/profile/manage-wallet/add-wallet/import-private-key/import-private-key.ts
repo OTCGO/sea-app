@@ -13,5 +13,5 @@ import { WalletProvider } from '../../../../../providers/wallet/wallet.provider'
 	templateUrl: 'import-private-key.html',
 })
 export class ImportPrivateKeyPage {
-	
+
 }

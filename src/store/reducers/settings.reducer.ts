@@ -22,10 +22,10 @@ export interface State {
 
 const initialSettingsState: State = {
 	language: DEFAULT_LANGUAGE,
+  currency: DEFAULT_CURRENCY,
+  preCurrency: DEFAULT_CURRENCY,
 	loading: false,
 	error: '',
-	currency: DEFAULT_CURRENCY,
-  preCurrency: DEFAULT_CURRENCY
 }
 
 export const reducer = (state = initialSettingsState, action: SettingsActions): State => {
@@ -47,11 +47,13 @@ export const reducer = (state = initialSettingsState, action: SettingsActions): 
 		}
 
 		case SettingsActionTypes.LOAD_SUCCESS: {
+			const { currency, language } = action.payload
+
 			return {
 				...state,
-				loading: false,
-				currency: action.payload.currency,
-				language: action.payload.language
+        currency,
+        language,
+				loading: false
 			}
 		}
 

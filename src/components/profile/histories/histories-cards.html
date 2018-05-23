@@ -6,8 +6,8 @@
 				<span>{{ getDate(history.time) }}</span>
 				<p>{{ getTime(history.time) }} {{ (translationPrefix + history.operation) | translate }}</p>
 			</div>
-			<ion-col item-end col-4 text-right>
-				{{ computeNumber(history.value) }}
+			<ion-col item-end col-6 text-right>
+				{{ history.value }}
 			</ion-col>
 		</button>
 	</ion-list>

@@ -44,8 +44,8 @@ import { PossessionsPage } from '../possessions/possessions'
 })
 export class OnboardingPage {
 	@ViewChild(Slides) slides: Slides
-	skipMsg: string = 'Skip'
-	state: string = 'x'
+	skipMsg = 'Skip'
+	state = 'x'
 
 	constructor (public navCtrl: NavController, public navParams: NavParams) {}
 

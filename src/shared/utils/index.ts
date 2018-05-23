@@ -20,7 +20,8 @@ export function getBrowserLanguage () {
 		browserLang = browserLang.split('_')[0]
 	}
 
-	return browserLang
+	console.log('getBrowserLanguage', browserLang)
+	return browserLang || 'zh'
 }
 
 // There only have two language is available, so..

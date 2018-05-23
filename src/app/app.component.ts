@@ -40,8 +40,8 @@ export class MyApp implements OnInit {
 	) {}
 
 	ngOnInit () {
-		this.initApp()
 		this.store.dispatch(new SettingsActions.Load())
+		this.initApp()
 	}
 
 	initApp () {
@@ -70,12 +70,13 @@ export class MyApp implements OnInit {
 	}
 
 	initTranslate () {
-		this.translateService.setDefaultLang('en')
+		this.translateService.addLangs(['zh', 'en'])
+		this.translateService.setDefaultLang('zh')
 
 		this.store.select(SettingsSelectors.getLanguage)
 				.subscribe(language => {
 					const locale = language.split('-')[0]
-					this.translateService.use(locale)
+					this.translateService.use(locale || 'zh')
 				})
 	}
 }

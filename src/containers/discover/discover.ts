@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
 
 @IonicPage({
@@ -11,7 +11,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'discover.html',
 })
 export class DiscoverPage {
-  user: object;
+  user: object
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

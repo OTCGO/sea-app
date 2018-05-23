@@ -82,7 +82,7 @@ export class ClaimsPage {
 						const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 						this.claimsProvider.doClaims(pr).then(result => {
 
-							prompt.dismiss()
+							prompt.dismiss().catch(() => {})
 							this.btnLoading = false
 
 							if (result) {
@@ -99,7 +99,7 @@ export class ClaimsPage {
 							this.showPrompt('提取失败!，请稍候再试')
 							console.log(e)
 
-							prompt.dismiss()
+							prompt.dismiss().catch(() => {})
 							this.btnLoading = false
 						})
 					}
@@ -115,7 +115,7 @@ export class ClaimsPage {
 		alert.present()
 
 		setTimeout(() => {
-			alert.dismiss()
+			alert.dismiss().catch(() => {})
 		}, 1000)
 	}
 }

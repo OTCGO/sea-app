@@ -35,26 +35,26 @@ import {
 		`
 })
 export class PossessionDetailHistory {
-	@Input() isScrollUp
-	@Input() isScrollDown
+	// @Input() isScrollUp
+	// @Input() isScrollDown
 	@Input() symbol
 	@Input() transactionHistories
-	@Input() scrollTop = 0
-	@Input() differentScrollTop = 0
+	// @Input() scrollTop = 0
+	// @Input() differentScrollTop = 0
 
 	translationPrefix = 'POSSESSIONS.DETAILS.'
-	upBoundary = window.outerHeight * 0.1
-	cardBoundary = window.outerHeight * 0.2
-	downBoundary = window.outerHeight * 0.5
+	// upBoundary = window.outerHeight * 0.1
+	// cardBoundary = window.outerHeight * 0.2
+	// downBoundary = window.outerHeight * 0.5
 
-	get height () {
-		const { downBoundary, upBoundary, cardBoundary, isScrollUp, scrollTop, differentScrollTop } = this
+	// get height () {
+	// 	const { downBoundary, upBoundary, cardBoundary, isScrollUp, scrollTop, differentScrollTop } = this
 
-		const differential = scrollTop - differentScrollTop
-		const computedResult = isScrollUp
-			? Math.min(downBoundary + scrollTop * 2, upBoundary)
-			: Math.max(upBoundary + differential * 2, downBoundary)
-		if (scrollTop < cardBoundary && isScrollUp) return `${upBoundary}px`
-		return `${computedResult}px`
-	}
+	// 	const differential = scrollTop - differentScrollTop
+	// 	const computedResult = isScrollUp
+	// 		? Math.min(downBoundary + scrollTop * 2, upBoundary)
+	// 		: Math.max(upBoundary + differential * 2, downBoundary)
+	// 	if (scrollTop < cardBoundary && isScrollUp) return `${upBoundary}px`
+	// 	return `${computedResult}px`
+	// }
 }

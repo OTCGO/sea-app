@@ -78,8 +78,8 @@ export class TransactionHistoryEffects {
 												 : this.apiProvider
 															 .get(`${API_CONSTANTS.ASSET}`)
 															 .pipe(
-																 map((asset: { NEP5, Global }) =>
-																	 new LoadSuccess(mapTransactionHistory(result, flatten(values(asset)))))
+																 map((assets: { NEP5, Global }) =>
+																	 new LoadSuccess(mapTransactionHistory(result, flatten(values(assets)))))
 															 )
 										 ),
 										 catchError(error => of(new LoadFail(error)))
@@ -126,4 +126,4 @@ const mapTransactionHistory = (histories: TransactionHistory[], asset: (NEP5 | G
 		return { ...history, symbol }
 	})
 }
-//const parseTxx = compose(rMap())
+// const parseTxx = compose(rMap())

@@ -11,6 +11,8 @@ export class ProfileNavComponent {
 	constructor (private navCtrl: NavController) {}
 
 	handleNavClick (item) {
-    item.enabled && this.navCtrl.push(item.page)
+    if (item.enabled) {
+			this.navCtrl.push(item.page)
+		}
   }
 }

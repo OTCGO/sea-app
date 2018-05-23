@@ -19,6 +19,8 @@ import { dev } from '../environments/environment'
 import { reducers, metaReducers } from '../store/reducers'
 import { schema } from './db-schema'
 import { CoreModule } from './core.module'
+
+
 import {
   BalancesEffects,
   MarketsEffects,
@@ -68,7 +70,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
         deps: [HttpClient]
       }
     }),
-    CoreModule.forRoot(),
+    CoreModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

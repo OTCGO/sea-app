@@ -86,7 +86,7 @@
       "change_name": "Change name",
       "export": "Export",
       "export_wif": "Export WIF",
-      "export_key": "Export EncryptedKey",
+      "export_key": "Export NEP2 WIF",
       "export_file": "Export File",
       "save": "Save",
       "save_success": "Save Wallet Success",

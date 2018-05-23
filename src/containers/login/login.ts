@@ -48,13 +48,38 @@ export class LoginPage implements OnInit {
 
 
 	wifLogin (keyValue) {
-		return keyValue === 'test'
-			? this.NEP5Login(nep5Wallet)
-			: this.store.dispatch(new AuthActions.LoginWif(keyValue))
+		// return keyValue === 'test'
+		// 	? this.NEP5Login(nep5Wallet)
+    // 	: this.store.dispatch(new AuthActions.LoginWif(keyValue))\
+
+   // this.store.dispatch(new AuthActions.LoginWif(keyValue))
+    // const loading = this.loadingCtrl.create()
+    // loading.present()
+    try {
+      // loading.dismissAll()
+      this.store.dispatch(new AuthActions.LoginWif(keyValue))
+
+    } catch (error) {
+      // loading.dismissAll()
+    }
 	}
 
-	oldWalletLogin = ({ oldWallet, passphrase }) =>
-		this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet, passphrase }))
+	oldWalletLogin = ({ oldWallet, passphrase }) => {
+    // const loading = this.loadingCtrl.create()
+    // loading.present()
+    try {
+
+      // loading.dismissAll()
+      this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet, passphrase }))
+
+    } catch (error) {
+
+      // loading.dismissAll()
+      console.log('error', error)
+    }
+
+  }
+
 
   NEP2Login ({ encrypted, passphrase }) {
     const loading = this.loadingCtrl.create()
@@ -69,14 +94,17 @@ export class LoginPage implements OnInit {
         key: encrypted,
         isDefault: true
       })
-      this.store.dispatch(new WalletActions.AddAccount(acct))
+
       loading.dismissAll()
+      this.store.dispatch(new WalletActions.AddAccount(acct))
       this.navCtrl.setRoot('Tabs')
+
+
     }).catch((e) => {
       /* It is usually to get there because the passphrase is wrong */
       console.log('error on NEP2Login', e)
       let msg: string
-      this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(e => msg = e)
+      this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => msg = data)
       this.np.emit(msg)
       loading.dismissAll()
     })

@@ -24,7 +24,7 @@ import { IBalance } from '../../shared/models'
 			  </ion-col>
 		  </ion-row>
 	  </ion-grid>
-	  
+
 	  <ion-card class="card-list"
 	            *ngFor="let balance of balances">
 
@@ -38,7 +38,7 @@ import { IBalance } from '../../shared/models'
 			  <p class="possessions__symbol">{{ balance?.symbol }}</p>
 
 			  <ion-note item-end>
-				  {{ balance?.amount | number:'1.1-2' }}
+				  {{ balance?.amount | number:'1.1-8' }}
 			  </ion-note>
 		  </ion-item>
 

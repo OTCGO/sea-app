@@ -54,7 +54,7 @@ export class SendModalProvider {
 
 	private generateSignature (transaction, pr) {
 
-		const publicKey = wallet.getPublicKeyFromPrivateKey('c5ba9b99c81cefe9227160669a5f3058fa8a7fb40abfd85cd7eee57d6315107d', true)
+		const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 		console.log('publicKey', publicKey)
 
 		console.log('generateSignature', pr)

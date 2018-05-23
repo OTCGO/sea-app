@@ -55,7 +55,7 @@ export class ManageWalletPage {
 	) { }
 
 	get marginTop () {
-		return parseInt(this.elementRef.nativeElement.querySelector('.scroll-content').style.marginTop) / 2 + 'px'
+		return parseInt(this.elementRef.nativeElement.querySelector('.scroll-content').style.marginTop, 10) / 2 + 'px'
 	}
 
 	handleSetDefaultAccount (account) {

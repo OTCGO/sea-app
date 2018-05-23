@@ -15,6 +15,7 @@ import { NotificationProvider } from '../../../providers'
 import { wallet } from '../../../libs/neon'
 import { Account } from '../../../shared/typings'
 import * as copy from 'copy-to-clipboard'
+import { IfObservable } from 'rxjs/observable/IfObservable'
 
 @Component({
 	selector: 'manage-wallet-card',
@@ -58,9 +59,13 @@ export class ManageWalletCard {
 	handleWIFClick (account) { this.showWIFKeyBox(account) }
 	handleEncryptedClick (account) {
 		try {
+			console.log('handleEncryptedClick:account', account)
+			// if (!account.encrypted) {
+			// 	this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
+			// }
 			this.showKeyBox({ title: 'EncryptedKey', message: account.encrypted })
 		} catch (e) {
-			this.np.emit(e)
+			this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
 		}
 	}
 
@@ -97,8 +102,15 @@ export class ManageWalletCard {
 	showKeyBox ({ title, message }) {
 		const handler = () => {
 			if (this.platform.is('mobileweb') || this.platform.is('core')) {
-				const state = copy(message) ? 'success' : 'fail'
-				return this.np.emit(`copy ${state}!`)
+				// const state = copy(message) ? 'success' : 'fail'
+				const el = document.createElement('textarea')
+				el.value = message
+				document.body.appendChild(el)
+				el.select()
+				document.execCommand('copy')
+				document.body.removeChild(el)
+
+				return this.np.emit(`copy success!`)
 			}
 			this.clipBoard.copy(message).then(() => this.np.emit('copy success'))
 		}

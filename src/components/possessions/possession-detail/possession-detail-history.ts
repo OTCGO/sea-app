@@ -39,8 +39,8 @@ export class PossessionDetailHistory {
 	@Input() isScrollDown
 	@Input() symbol
 	@Input() transactionHistories
-	@Input() scrollTop: number = 0
-	@Input() differentScrollTop: number = 0
+	@Input() scrollTop = 0
+	@Input() differentScrollTop = 0
 
 	translationPrefix = 'POSSESSIONS.DETAILS.'
 	upBoundary = window.outerHeight * 0.1

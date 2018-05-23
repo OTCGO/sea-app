@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Observable'
 })
 export class ClaimsPage {
 	account = this.accountProvider.defaultAccount
-	private claims: Observable<Claims>; 
+	private claims: Observable<Claims>
 	private btnLoading = false
 
 	constructor (
@@ -39,17 +39,17 @@ export class ClaimsPage {
 	}
 
 	async doClaim () {
-		
-		
+
+
 		// wif login
-		if(this.account._WIF){
+		if (this.account._WIF) {
 			try {
 				this.btnLoading = true
 				const result = await this.claimsProvider.doClaims(this.account._privateKey)
-				
+
 				this.btnLoading = false
 
-				if(result){
+				if (result) {
 					this.showPrompt('提取成功！')
 					return
 				}
@@ -63,7 +63,7 @@ export class ClaimsPage {
 			return
 		}
 
-		
+
 		// file login
 		const prompt = this.alertCtrl.create({
 			title: '输入密码',
@@ -75,7 +75,7 @@ export class ClaimsPage {
 					text: '确认',
 					handler:  ({ passphrase }) => {
 						if (!passphrase || passphrase === '' || passphrase.length < 4) return false
-						
+
 
 						this.btnLoading = true
 
@@ -85,17 +85,17 @@ export class ClaimsPage {
 							prompt.dismiss()
 							this.btnLoading = false
 
-							if(result){
-								this.showPrompt('提取成功！')
+							if (result) {
+								this.showPrompt('提取成功！,请稍后查看余额')
 								return
 							}
-			
+
 							this.showPrompt('提取失败!，请稍候再试')
 
 
 
-							
-						}).catch((e) =>{
+
+						}).catch((e) => {
 							this.showPrompt('提取失败!，请稍候再试')
 							console.log(e)
 
@@ -111,6 +111,11 @@ export class ClaimsPage {
 
 	showPrompt (msg) {
 		const message = msg.message || msg
-		this.alertCtrl.create({ message }).present()
+		const alert = this.alertCtrl.create({ message })
+		alert.present()
+
+		setTimeout(() => {
+			alert.dismiss()
+		}, 1000)
 	}
 }

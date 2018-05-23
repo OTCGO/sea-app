@@ -2,31 +2,26 @@
 
 	<ion-navbar>
 		<ion-title>
-			{{ (selectedBalance | async)?.symbol }}
+			
 		</ion-title>
 	</ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding class="possession-detail-content" (ionScroll)="handleScroll($event)">
+
+
+<ion-content padding class="possession-detail-content" >
 
 	<possession-detail-bgcard
-		[balance]="selectedBalance | async"
-		[price]="selectedPrice | async"
-		[isScrollDown]="isScrollDown"
-		[isScrollUp]="isScrollUp"
-		[scrollTop]="scrollTop"
-		[differentScrollTop]="differentScrollTop">
+		[balance]="selectedBalance | async">
 	</possession-detail-bgcard>
 
 	<possession-detail-history
 		[symbol]="(selectedBalance | async).symbol"
-		[transactionHistories]="transactionHistories | async"
-		[isScrollDown]="isScrollDown"
-		[isScrollUp]="isScrollUp"
-		[scrollTop]="scrollTop"
-		[differentScrollTop]="differentScrollTop">
-	</possession-detail-history>
+		[transactionHistories]="transactionHistories | async">
+		
+	</possession-detail-history> 
 
 </ion-content>
+

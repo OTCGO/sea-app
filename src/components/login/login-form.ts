@@ -130,7 +130,10 @@ export class LoginForm implements OnInit {
 
 
 		setTimeout(() => {
-		loading.dismiss()
+			if (loading) {
+				loading.dismiss().catch(() => {})
+			}
+
 		}, 1000)
 
 

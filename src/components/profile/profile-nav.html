@@ -4,7 +4,7 @@
 		*ngFor="let nav of navs"
 		(click)="handleNavClick(nav)">
 		<img class="card-img"
-		     [src]="'assets/imgs/icon-profile_' + nav?.icon + '.svg'">
+		     [src]="'assets/imgs/icon-profile_' + nav?.icon + '.png'">
 		<span class="card-title">
 			{{ 'PROFILE.' + nav.translation | translate }}
 		</span>

@@ -7,8 +7,6 @@
 	<possessions-info [account]="account | async"></possessions-info>
 
 	<possessions-list [balances]="balances | async"
-	                  [amount]="amount | async"
-	                  [baseCurrency]="baseCurrency | async"
 	                  [displayZero]="displayZero"
 	                  (select)="handleBalanceSelect($event)"
 	                  (displayZeroClick)="handleDisplayZeroClick($event)">

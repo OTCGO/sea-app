@@ -126,7 +126,7 @@ export class ManageWalletCard {
 		try {
 			const wif = wallet.decrypt(encryptedKey, passphrase)
 			const account = new wallet.Account(wif)
-			await commonLoading.dismiss()
+			await commonLoading.dismiss().catch(() => {})
 			if (type === 'privateKey') return this.showKeyBox({ title: '私钥', message: account['privateKey'] })
 			return this.showKeyBox({ title: 'WIF', message: account['WIF'] })
 		} catch (error) {
@@ -135,7 +135,7 @@ export class ManageWalletCard {
 	}
 
 	async handleError (loading) {
-		await loading.dismiss()
+		await loading.dismiss().catch(() => {})
 		await this.alertCtrl.create({
 			title: '提示',
 			message: '密码错误',

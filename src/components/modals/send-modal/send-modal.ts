@@ -82,7 +82,7 @@ export class SendModalComponent implements OnInit {
 	}
 
 	handleClose () {
-		this.viewCtrl.dismiss()
+		this.viewCtrl.dismiss().catch(() => {})
 		this.formGroup.reset()
 	}
 
@@ -130,7 +130,7 @@ export class SendModalComponent implements OnInit {
 		    .then(_ => {
 		    	this.store.dispatch(new BalancesActions.Load())
 					this.store.dispatch(new TransactionsActions.CleanSelectedContact())
-					loading.dismissAll()
+					loading.dismiss().catch(() => {}).catch(() => {})
 		    })
 	}
 

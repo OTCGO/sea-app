@@ -19,15 +19,27 @@ export class LoadingProvider {
 	constructor (private loadingCtrl: LoadingController) {
 		this.loading$
 				.distinctUntilChanged()
-				.timeout(3456)
+				.timeout(0)
 				.catch(() => of(false))
 				.subscribe(
 					(boolOrOptions) => {
-						if (boolOrOptions) {
-							this.loading = this.loadingCtrl.create()
-							return this.loading.present()
+						try {
+							if (boolOrOptions) {
+								this.loading = this.loadingCtrl.create()
+								return this.loading.present()
+							}
+
+							if (this.loading) {
+								this.loading.dismiss().catch(() => {}).catch(() => {})
+							}
+						} catch (error) {
+							this.loading.dismiss().catch(() => {}).catch(() => {})
 						}
-						return this.loading && this.loading.dismissAll()
+
+
+						// if (this.loading) {
+
+						// }
 					}
 				)
 	}

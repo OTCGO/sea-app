@@ -70,7 +70,7 @@ export class CreateWalletPage implements OnInit {
 
 
 		setTimeout(() => {
-		loading.dismiss()
+		loading.dismiss().catch(() => {})
 		}, 1000)
 
     if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1)) {
@@ -103,7 +103,7 @@ export class CreateWalletPage implements OnInit {
       label: this.name,
       passphrase: this.passphrase1
     }
-    loading.dismissAll()
+    loading.dismiss().catch(() => {}).catch(() => {})
     this.store.dispatch(new AuthActions.CreateWallet(dispatchOption))
 
   }

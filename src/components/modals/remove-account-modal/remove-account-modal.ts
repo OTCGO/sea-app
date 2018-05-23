@@ -55,7 +55,7 @@ import { RootState } from '@store/reducers'
 					          (click)="handleConfirmClick()">
 						  {{ 'PROFILE.MANAGE_WALLET.REMOVE_ACCOUNT.confirm' | translate }}
 					  </button>
-				  </div>					
+				  </div>
 			  </div>
 		  </ion-slide>
 	  </ion-slides>
@@ -90,7 +90,7 @@ export class RemoveAccountModal implements OnInit {
 	}
 
 	handleCloseClick () {
-		this.viewCtrl.dismiss()
+		this.viewCtrl.dismiss().catch(() => {})
 	}
 
 	handleConfirmClick () {

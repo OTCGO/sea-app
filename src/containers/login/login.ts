@@ -56,11 +56,11 @@ export class LoginPage implements OnInit {
     // const loading = this.loadingCtrl.create()
     // loading.present()
     try {
-      // loading.dismissAll()
+      // loading.dismiss().catch(() => {}).catch(() => {})
       this.store.dispatch(new AuthActions.LoginWif(keyValue))
 
     } catch (error) {
-      // loading.dismissAll()
+      // loading.dismiss().catch(() => {}).catch(() => {})
     }
 	}
 
@@ -69,12 +69,12 @@ export class LoginPage implements OnInit {
     // loading.present()
     try {
 
-      // loading.dismissAll()
+      // loading.dismiss().catch(() => {}).catch(() => {})
       this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet, passphrase }))
 
     } catch (error) {
 
-      // loading.dismissAll()
+      // loading.dismiss().catch(() => {}).catch(() => {})
       console.log('error', error)
     }
 
@@ -95,7 +95,7 @@ export class LoginPage implements OnInit {
         isDefault: true
       })
 
-      loading.dismissAll()
+      loading.dismiss().catch(() => {}).catch(() => {})
       this.store.dispatch(new WalletActions.AddAccount(acct))
       this.navCtrl.setRoot('Tabs')
 
@@ -106,7 +106,7 @@ export class LoginPage implements OnInit {
       let msg: string
       this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => msg = data)
       this.np.emit(msg)
-      loading.dismissAll()
+      loading.dismiss().catch(() => {}).catch(() => {})
     })
     // this.store.dispatch(new AuthActions.LoginNEP2())
   }

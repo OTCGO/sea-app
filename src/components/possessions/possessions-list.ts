@@ -9,16 +9,13 @@ import { IBalance } from '../../shared/models'
 			  <ion-col col-9>
 				  <ion-card class="possessions__total-balances">
 				  <ion-row>{{ 'POSSESSIONS.totalBalances' | translate }}</ion-row>
-				  	<!--
-					  <ion-row>{{ 'POSSESSIONS.totalBalances' | translate }} {{ baseCurrency.toUpperCase() }}</ion-row>
-					  <ion-row class="possessions__volume">{{ amount | number:'1.1-4' }}</ion-row>
-					-->
+
 				  </ion-card>
 			  </ion-col>
 			  <ion-col col-3 class="possessions__hide-zero" align-self-end>
 				  <ion-card (click)="displayZeroClick.emit(!displayZero)">
-					  <img *ngIf="displayZero" src="assets/imgs/icon-possessions_hide-zero.svg" alt="">
-						<img *ngIf="!displayZero" src="assets/imgs/icon-possessions_hide-zero-on.svg" alt="">
+					  <img *ngIf="displayZero" src="assets/imgs/icon-possessions_hide-zero.png" alt="">
+						<img *ngIf="!displayZero" src="assets/imgs/icon-possessions_hide-zero-on.png" alt="">
 						<h5>{{ 'POSSESSIONS.displayZero' | translate }}</h5>
 				  </ion-card>
 			  </ion-col>
@@ -38,7 +35,7 @@ import { IBalance } from '../../shared/models'
 			  <p class="possessions__symbol">{{ balance?.symbol }}</p>
 
 			  <ion-note item-end>
-				  {{ balance?.amount | number:'1.1-8' }}
+				  {{ balance?.amount  }}
 			  </ion-note>
 		  </ion-item>
 
@@ -48,8 +45,8 @@ import { IBalance } from '../../shared/models'
 export class PossessionsListComponent {
 	@Input() balances: Array<IBalance>
 	@Input() displayZero: boolean
-	@Input() amount = 0.00
-	@Input() baseCurrency = 'cny'
+	// @Input() amount = 0.00
+	// @Input() baseCurrency = 'cny'
 	@Output() select = new EventEmitter()
 	@Output() displayZeroClick = new EventEmitter()
 }

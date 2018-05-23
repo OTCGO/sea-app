@@ -24,14 +24,14 @@ import { TransactionHistoryActions, BalancesActions } from '../../../store/actio
 	templateUrl: 'possession-detail.html',
 })
 export class PossessionDetailPage implements OnInit, OnDestroy {
-	selectedPrice: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
+	// selectedPrice: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
 	selectedBalance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
 	transactionHistories: Observable<TransactionHistory[]> = this.store.select(TransactionHistorySelectors.getEntitiesBySelectedSymbol)
 
-	isScrollUp: boolean
-	isScrollDown: boolean
-	scrollTop: number
-	differentScrollTop: number
+	// isScrollUp: boolean
+	// isScrollDown: boolean
+	// scrollTop: number
+	// differentScrollTop: number
 	lastStack = []
 
 	constructor (
@@ -45,24 +45,24 @@ export class PossessionDetailPage implements OnInit, OnDestroy {
 
 	ionViewDidLeave () { this.transactionHistories = empty() }
 
-	handleScroll (e: ScrollEvent) {
-		const { scrollTop } = e
-		this.scrollTop = scrollTop
-		if (!this.differentScrollTop) this.differentScrollTop = scrollTop
-		this.lastStack.push(() => this.differentScrollTop = scrollTop)
-		if (this.lastStack.length >= 2) this.lastStack.shift().bind(this)()
+	// handleScroll (e: ScrollEvent) {
+	// 	const { scrollTop } = e
+	// 	this.scrollTop = scrollTop
+	// 	if (!this.differentScrollTop) this.differentScrollTop = scrollTop
+	// 	this.lastStack.push(() => this.differentScrollTop = scrollTop)
+	// 	if (this.lastStack.length >= 2) this.lastStack.shift().bind(this)()
 
-		if (e.directionY === 'down') {
-			this.zone.run(() => {
-				this.isScrollDown = true
-				this.isScrollUp = false
-			})
-		}
-		if (e.directionY === 'up') {
-			this.zone.run(() => {
-				this.isScrollDown = false
-				this.isScrollUp = true
-			})
-		}
-	}
+	// 	if (e.directionY === 'down') {
+	// 		this.zone.run(() => {
+	// 			this.isScrollDown = true
+	// 			this.isScrollUp = false
+	// 		})
+	// 	}
+	// 	if (e.directionY === 'up') {
+	// 		this.zone.run(() => {
+	// 			this.isScrollDown = false
+	// 			this.isScrollUp = true
+	// 		})
+	// 	}
+	// }
 }

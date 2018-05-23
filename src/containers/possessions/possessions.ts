@@ -16,7 +16,7 @@ import { IBalance } from '../../shared/models'
 import { Account } from '../../shared/typings'
 import { LoadingProvider, NotificationProvider } from '../../providers'
 import { BalancesActions } from '../../store/actions'
-import { WalletSelectors, BalancesSelectors, PricesSelectors, SettingsSelectors } from '../../store/selectors'
+import { WalletSelectors, BalancesSelectors, SettingsSelectors } from '../../store/selectors'
 import { fromBalances, fromWallet } from '../../store/reducers'
 
 
@@ -32,8 +32,8 @@ export class PossessionsPage implements OnInit {
 	exits: boolean
 	balances: Observable<IBalance[]>
 	account: Observable<Account> = this.store.select(WalletSelectors.getAccount)
-	amount: Observable<number> = this.store.select(PricesSelectors.getDefaultAccountAmount)
-	baseCurrency: Observable<string> = this.store.select(SettingsSelectors.getCurrency)
+	// amount: Observable<number> = this.store.select(PricesSelectors.getDefaultAccountAmount)
+	// baseCurrency: Observable<string> = this.store.select(SettingsSelectors.getCurrency)
 	selectedBalanceSubscriber: Subscription
 
 	get displayZero () { return this._displayZero }

@@ -77,7 +77,7 @@ export class ContactsPage implements OnInit {
 
 	handleContactSelect (address) {
 		this.store.dispatch(new TransactionsActions.SelectContact(address))
-		this.viewCtrl.dismiss()
+		this.viewCtrl.dismiss().catch(() => {})
 	}
 
 	createPrompt (entities, handler) {

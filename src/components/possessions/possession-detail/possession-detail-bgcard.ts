@@ -11,12 +11,16 @@ import { IBalance } from '../../../shared/models'
 	template: `
 
 	  <ion-card class="possession-data-card">
-		  <div class="possession-data-amount">{{ balance.amount?.toString() }} {{ balance.symbol }}</div>
+		  <div class="possession-data-amount">{{ balance.amount?.toString() }} </div>
 		  <!--
 		  <div class="possession-data-approximation">≈ ￥ {{ balance.amount * price }}</div>
-		  -->
+
 		  <button  color="light" ion-button round class="otcgo-button" (click)="showSendModal()" [disabled]="balance.amount <= 0">
 			  {{ 'POSSESSIONS.DETAILS.transfer' | translate }}
+		  </button>
+		  -->
+		  <button  color="light"   ion-button round  class="custom-btn"  (click)="showSendModal()" [disabled]="balance.amount <= 0">
+		  	{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
 		  </button>
 	  </ion-card>
 	`

@@ -18,6 +18,8 @@ self.toolbox.options.cache = {
 // pre-cache our key assets
 self.toolbox.precache(
   [
+    "./assets/i18n/en.json",
+    "./assets/i18n/zh.json",
     './build/main.js',
     './build/vendor.js',
     './build/main.css',
@@ -32,15 +34,15 @@ self.toolbox.precache(
     "./assets/imgs/icon-contacts_remove.svg",
     "./assets/imgs/icon-login_file.svg",
     "./assets/imgs/icon-login_WIF.svg",
-    "./assets/imgs/icon-possessions_hide-zero-on.svg",
-    "./assets/imgs/icon-possessions_hide-zero.svg",
+    "./assets/imgs/icon-possessions_hide-zero-on.png",
+    "./assets/imgs/icon-possessions_hide-zero.png",
     "./assets/imgs/icon-profile_contacts.svg",
     "./assets/imgs/icon-profile_helpcentre.svg",
-    "./assets/imgs/icon-profile_manage-wallet.svg",
+    "./assets/imgs/icon-profile_manage-wallet.png",
     "./assets/imgs/icon-profile_notification.svg",
     "./assets/imgs/icon-profile_setting.svg",
-    "./assets/imgs/icon-profile_tx-history.svg",
-    "./assets/imgs/icon-qrcode-avatar.svg",
+    "./assets/imgs/icon-profile_tx-history.png",
+    "./assets/imgs/icon-qrcode-avatar.png",
     "./assets/imgs/icon-send-modal_contact.svg",
     "./assets/imgs/icon-send-modal_scan.svg",
     "./assets/imgs/icon-tabs_balances_off.svg",
@@ -54,8 +56,6 @@ self.toolbox.precache(
     "./assets/imgs/logo--white.png",
     "./assets/imgs/logo.png",
     "./assets/imgs/whitebg.svg",
-    "./assets/i18n/en.json",
-    "./assets/i18n/zh.json",
     'index.html',
     'manifest.json'
   ]

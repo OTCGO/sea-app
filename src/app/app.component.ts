@@ -69,9 +69,9 @@ export class MyApp implements OnInit {
 		})
 	}
 
-	async initWallet () {
-		this.store.dispatch(new WalletActions.Load())
-	}
+	// async initWallet () {
+	// 	this.store.dispatch(new WalletActions.Load())
+	// }
 
 	initTranslate () {
 		this.translateService.addLangs(['zh', 'en'])

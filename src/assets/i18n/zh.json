@@ -23,7 +23,7 @@
 		"title": "创建钱包",
 		"name": "请设置钱包名称",
 		"wif": "[可选] 使用 WIF，可不填",
-		"passphrase": "数字、大小写、字母、至少11位的字符",
+		"passphrase": "至少8~11位的字符",
 		"passphrase_confirm": "请再次输入密码确认",
 		"agreement_prefix": "已阅读同意",
 		"agreement_text": "蓝鲸淘用户协议与服务条款",

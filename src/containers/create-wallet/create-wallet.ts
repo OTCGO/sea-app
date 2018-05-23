@@ -65,22 +65,24 @@ export class CreateWalletPage implements OnInit {
   }
 
   createWallet () {
-    const loading = this.loadingCtrl.create()
-    loading.present()
+		const loading = this.loadingCtrl.create()
+		loading.present()
+
+
+		setTimeout(() => {
+		loading.dismiss()
+		}, 1000)
 
     if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1)) {
-      loading.dismiss()
       return this.np.emit({ message: '密码至少包含数字、大小写、字母，11位的字符。' })
     }
 
 
     if (this.passphrase1 !== this.passphrase2) {
-      loading.dismiss()
       return
     }
 
     if (this.wif && !wallet.isWIF(this.wif)) {
-      loading.dismiss()
       this.np.emit({ message: 'WIF format wrong' })
       return
     }
@@ -107,6 +109,7 @@ export class CreateWalletPage implements OnInit {
   }
 
   validatePassphraseStrength (passphrase) {
-    return /\d/.test(this.passphrase1) && /[a-z]/.test(this.passphrase1) && /[A-Z]/.test(this.passphrase1) && this.passphrase1.length > 10
+    return  8 <= this.passphrase1.length && this.passphrase1.length <= 16
+    // return /\d/.test(this.passphrase1) && /[a-z]/.test(this.passphrase1) && /[A-Z]/.test(this.passphrase1) && this.passphrase1.length > 10
   }
 }

@@ -21,9 +21,9 @@
 		</div>
 
 		<div class="mw__changes-feature">
-			<ion-input class="mw__changes__input"
+			<!-- <ion-input class="mw__changes__input"
 			           placeholder="{{ 'PROFILE.MANAGE_WALLET.change_name' | translate }}"
-			           [(ngModel)]="tempLabel"></ion-input>
+			           [(ngModel)]="tempLabel"></ion-input> -->
 		</div>
 
 		<div class="mw__exports-feature" *ngIf="!account.lock">
@@ -72,12 +72,12 @@
 			</button>-->
 		</div>
 
-		<div class="mw__exports-action">
+		<!-- <div class="mw__exports-action">
 			<button ion-button class="otcgo-button--colour" block round
 			        (click)="handleSaveClick(account)">{{ 'PROFILE.MANAGE_WALLET.save' | translate }}</button>
 			<a [class.is-default]="isDefault"
 			   (click)="!isDefault && onSetDefault.emit(account)">
 				{{ translationPrefix + (isDefault ? 'default' : 'default_action') | translate }}</a>
-		</div>
+		</div> -->
 	</div>
 </ion-slide>

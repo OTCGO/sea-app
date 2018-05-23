@@ -26,8 +26,8 @@ export class LoginForm implements OnInit {
 	@Output() onPrivateKey = new EventEmitter()
 	@Output() onOldWallet = new EventEmitter()
 	@Output() onNEP5 = new EventEmitter()
-  @Output() onWIF = new EventEmitter()
-  @Output() onNEP2 = new EventEmitter()
+	@Output() onWIF = new EventEmitter()
+	@Output() onNEP2 = new EventEmitter()
 
 
 	file
@@ -35,7 +35,7 @@ export class LoginForm implements OnInit {
 	importTextShort: 'Import' | '导入'
 	importTextLong: 'Import Wallet File' | '导入钱包文件'
 	isKey = true
-  isWIF = true
+  	isWIF = true
 	isOldWallet = false
 	loginForm: FormGroup
 	translationPrefix = 'LOGIN.'
@@ -75,16 +75,16 @@ export class LoginForm implements OnInit {
 
 	switchWIFKeyBox () {
 		this.isKey = true
-    this.isWIF = true
+    	this.isWIF = true
 		this.importText = this.importTextShort
 	}
 
 	onKeyChange ({ value }) {
-    if (isNEP2(value)) {
-	    return this.isWIF = false
-    }
-    return this.isWIF = true
-  }
+		if (isNEP2(value)) {
+			return this.isWIF = false
+		}
+		return this.isWIF = true
+  	}
 
 	showPrompt = (msg: string) => this.alertCtrl.create({ title: msg }).present()
 

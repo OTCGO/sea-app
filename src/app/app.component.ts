@@ -64,13 +64,10 @@ export class MyApp implements OnInit {
 				return await this.platform.exitApp()
 			})
 
-			// this.initWallet()
+      this.store.dispatch(new WalletActions.Load())
+      this.store.dispatch(new SettingsActions.Load())
 			this.initTranslate()
 		})
-	}
-
-	async initWallet () {
-		this.store.dispatch(new WalletActions.Load())
 	}
 
 	initTranslate () {

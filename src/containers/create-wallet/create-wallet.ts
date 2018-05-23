@@ -65,14 +65,6 @@ export class CreateWalletPage implements OnInit {
   }
 
   createWallet () {
-		const loading = this.loadingCtrl.create()
-		loading.present()
-
-
-		setTimeout(() => {
-		loading.dismiss().catch(() => {})
-		}, 1000)
-
     if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1)) {
       return this.np.emit({ message: '密码至少包含数字、大小写、字母，11位的字符。' })
     }
@@ -86,6 +78,13 @@ export class CreateWalletPage implements OnInit {
       this.np.emit({ message: 'WIF format wrong' })
       return
     }
+    const loading = this.loadingCtrl.create()
+    loading.present()
+
+
+    setTimeout(() => {
+      loading.dismiss().catch(() => {})
+    }, 1000)
 
     // const variations: object = {
     //     digits: /\d/.test(this.passphrase1), // 数字

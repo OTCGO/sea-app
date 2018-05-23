@@ -4,7 +4,7 @@ import { IBalance } from '../../shared/models'
 @Component({
 	selector: 'possessions-list',
 	template: `
-	  <ion-grid class="possessions__base-accumulator">
+	  <!--<ion-grid class="possessions__base-accumulator">
 		  <ion-row class="card-base">
 			  <ion-col col-9>
 				  <ion-card class="possessions__total-balances">
@@ -20,7 +20,7 @@ import { IBalance } from '../../shared/models'
 				  </ion-card>
 			  </ion-col>
 		  </ion-row>
-	  </ion-grid>
+	  </ion-grid>-->
 
 	  <ion-card class="card-list"
 	            *ngFor="let balance of balances">

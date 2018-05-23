@@ -125,19 +125,7 @@ export class LoginForm implements OnInit {
 	}
 
 	login ({ controls, value }: FormGroup) {
-		const loading = this.loadingCtrl.create()
-		loading.present()
-
-
-		setTimeout(() => {
-			if (loading) {
-				loading.dismiss().catch(() => {})
-			}
-
-		}, 1000)
-
-
-		const { file, isKey } = this
+	  const { file, isKey } = this
 		const { key: keyControl, passphrase: passphraseControl } = controls
 		const { key: keyValue, passphrase: passphraseValue } = value
 

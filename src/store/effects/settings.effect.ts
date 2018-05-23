@@ -4,22 +4,25 @@ import {
 	Effect,
 	ofType
 } from '@ngrx/effects'
+import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import {
-	catchError,
-	map,
-	switchMap,
-	tap
+  catchError,
+  map,
+  switchMap,
+  tap, withLatestFrom
 } from 'rxjs/operators'
 import { FileStorageProvider } from '../../providers'
 
-import { SettingsActionTypes, Load, LoadFail, LoadSuccess, ChangeCurrency, ChangeLanguage } from '../actions/settings.action'
+import { SettingsActionTypes, Load, LoadFail, LoadSuccess, ChangeCurrency, ChangeLanguage, Save } from '../actions/settings.action'
 import {
 	DEFAULT_SETTING,
 	OTCGO_SETTING_FILE_NAME
 } from '../../shared/constants'
+import { RootState } from '../reducers'
+import { getCurrency, getLanguage } from '../selectors/settings.selector'
 
 @Injectable()
 export class SettingsEffects {
@@ -43,8 +46,17 @@ export class SettingsEffects {
 		tap(locale => this.ts.use(locale))
 	)
 
-	/*@Effect()
-	Save$ = this.actions$.pipe()*/
+	@Effect()
+	Save$ = this.actions$.pipe(
+	  ofType<Save>(SettingsActionTypes.SAVE),
+    withLatestFrom(this.store$.select(getCurrency), this.store$.select(getLanguage)),
+    map(([_, currency, language]) => this.fileStorage.save(OTCGO_SETTING_FILE_NAME, { currency, language }))
+  )
 
-	constructor (private actions$: Actions, private fileStorage: FileStorageProvider, private ts: TranslateService) {}
+	constructor (
+	  private actions$: Actions,
+    private store$: Store<RootState>,
+    private fileStorage: FileStorageProvider,
+    private ts: TranslateService
+  ) {}
 }

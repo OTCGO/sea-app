@@ -11,6 +11,7 @@ export enum SettingsActionTypes {
 	LOAD_SUCCESS = '[Settings] Load Success',
 	CHANGE_LANGUAGE = '[Settings] Change Language',
 	CHANGE_CURRENCY = '[Settings] Change Currency',
+  SAVE = '[Settings] Save Setting'
 }
 
 export class Load implements Action {
@@ -41,5 +42,8 @@ export class ChangeCurrency implements Action {
 	constructor (public payload: keyof ICurrency) {}
 }
 
+export class Save implements Action {
+  readonly type = SettingsActionTypes.SAVE
+}
 
-export type SettingsActions = Load | LoadFail | LoadSuccess | ChangeLanguage | ChangeCurrency
+export type SettingsActions = Load | LoadFail | LoadSuccess | ChangeLanguage | ChangeCurrency | Save

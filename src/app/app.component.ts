@@ -37,11 +37,15 @@ export class MyApp implements OnInit {
 		private translateService: TranslateService,
 		private np: NotificationProvider,
 		private store: Store<RootState>
-	) {}
+	) {
+
+
+	}
 
 	ngOnInit () {
-		this.store.dispatch(new SettingsActions.Load())
+		// this.store.dispatch(new SettingsActions.Load())
 		this.initApp()
+
 	}
 
 	initApp () {
@@ -69,6 +73,7 @@ export class MyApp implements OnInit {
 	initTranslate () {
 		this.translateService.addLangs(['zh', 'en'])
 		this.translateService.setDefaultLang('zh')
+		// this.translateService.use('zh')
 
 		this.store.select(SettingsSelectors.getLanguage)
 				.subscribe(language => {

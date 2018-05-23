@@ -83,7 +83,7 @@ export class PossessionsPage implements OnInit {
 		this.store.dispatch(new BalancesActions.Select(symbol))
 		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance).take(1)
       .subscribe(selectedBalance => selectedBalance && this.navCtrl.push('PossessionDetail'))
-	}
+}
 
 	handleDisplayZeroClick (bool) {
 		this.displayZero = bool

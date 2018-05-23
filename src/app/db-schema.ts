@@ -10,7 +10,7 @@ export const schema: DBSchema = {
 		},
 		prices: {
 			autoIncrement: false,
-      primaryKey: 'symbol'
+      		primaryKey: 'symbol'
 		}
 	}
 }

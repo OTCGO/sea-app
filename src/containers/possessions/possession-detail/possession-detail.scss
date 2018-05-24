@@ -129,3 +129,8 @@ ion-modal.inset-modal {
   transition: opacity .25s ease-in-out;
   padding: 50% 0 0;
 }
+
+
+ion-app.md [padding] .scroll-content{
+  padding: 0
+}

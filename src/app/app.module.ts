@@ -32,7 +32,7 @@ import {
   ClaimsEffects
 } from '../store/effects'
 
-const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http)
+const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'assets/i18n/', '.json')
 
 
 @NgModule({

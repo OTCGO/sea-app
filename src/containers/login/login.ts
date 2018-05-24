@@ -95,7 +95,7 @@ export class LoginPage implements OnInit {
         isDefault: true
       })
 
-      loading.dismiss().catch(() => {}).catch(() => {})
+      loading.dismiss().catch(() => {})
       this.store.dispatch(new WalletActions.AddAccount(acct))
       this.navCtrl.setRoot('Tabs')
 
@@ -106,7 +106,8 @@ export class LoginPage implements OnInit {
       let msg: string
       this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => msg = data)
       this.np.emit(msg)
-      loading.dismiss().catch(() => {}).catch(() => {})
+      loading.dismiss().catch(() => {})
+
     })
     // this.store.dispatch(new AuthActions.LoginNEP2())
   }

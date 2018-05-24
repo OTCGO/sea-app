@@ -76,7 +76,7 @@ export class MyApp implements OnInit {
 	initTranslate () {
 		this.translateService.addLangs(['zh', 'en'])
 		this.translateService.setDefaultLang('zh')
-		// this.translateService.use('zh')
+		this.translateService.use('zh')
 
 		this.store.select(SettingsSelectors.getLanguage)
 				.subscribe(language => {

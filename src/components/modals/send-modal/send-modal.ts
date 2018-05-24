@@ -115,12 +115,18 @@ export class SendModalComponent implements OnInit {
 				    amounts: this.amount.value,
 				    assetId: this.selectedBalance.hash
 				}, pr)
+
+
+
 				await this.handleClose()
 			    if (result.result) {
 					this.notificationProvider.emit({ message: '转账成功' })
+
 					return
 				}
 				this.notificationProvider.emit({ message: '转账失败，请稍候再试' })
+
+
 		    })
 		    .catch(err => {
 		    	if (err.message)

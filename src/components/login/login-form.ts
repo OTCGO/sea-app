@@ -11,11 +11,13 @@ import {
 	Validators
 } from '@angular/forms'
 import { TranslateService } from '@ngx-translate/core'
-import { AlertController, LoadingController } from 'ionic-angular'
+import { AlertController, LoadingController, Platform } from 'ionic-angular'
+import { File } from '@ionic-native/file'
 
 import { keyValidator, asyncKeyValidator } from './login.validator'
 import { isNEP2, isWIF, isOldWallet, isWallet } from '../../shared/utils'
 
+declare let cordova: any
 
 @Component({
 	selector: 'login-form',
@@ -40,10 +42,13 @@ export class LoginForm implements OnInit {
 	loginForm: FormGroup
 	translationPrefix = 'LOGIN.'
 
+
 	constructor (
 		private fb: FormBuilder, private ts: TranslateService,
 		private loadingCtrl: LoadingController,
-		private alertCtrl: AlertController
+		private alertCtrl: AlertController,
+		private platform: Platform,
+		private Cfile: File
 		) {}
 
 	get key () { return this.loginForm.get('key') }
@@ -88,7 +93,8 @@ export class LoginForm implements OnInit {
 
 	showPrompt = (msg: string) => this.alertCtrl.create({ title: msg }).present()
 
-	fileChange (file) {
+	async fileChange (file) {
+
 		if (/.json$/.test(file.name)) {
 			const reader = new FileReader()
 			const ng = this
@@ -119,6 +125,50 @@ export class LoginForm implements OnInit {
 			reader.readAsText(file)
 			return
 		}
+		// console.log('file', file)
+
+		/*
+		if (this.platform.is('mobileweb')) {
+			if (/.json$/.test(file.name)) {
+				const reader = new FileReader()
+				const ng = this
+
+				// In the onload function `this` is reference to reader itself
+				reader.onload = function () {
+					try {
+						const JSONFile = JSON.parse(this.result)
+
+						if (isOldWallet(JSONFile)) {
+							ng.file = JSONFile
+							ng.isOldWallet = true
+							ng.importText = file.name
+							return
+						} else if (isWallet(JSONFile)) {
+							ng.file = JSONFile
+							ng.isOldWallet = false
+							ng.importText = file.name
+							return
+						}
+						throw new Error()
+					} catch (e) {
+						console.log('file change error', e)
+						ng.showPrompt('Invalid wallet file')
+					}
+				}
+
+				reader.readAsText(file)
+				return
+			}
+		}
+		*/
+
+
+		// if (this.platform.is('android')) {
+		// 	const fs: string = cordova.file.externalRootDirectory
+		// 	const string = await this.Cfile.readAsText(fs, file)
+		// 	this.showPrompt(string)
+		// }
+
 
 		console.log('invalid file', file)
 		return this.showPrompt('Invalid wallet file')

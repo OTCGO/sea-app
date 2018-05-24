@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
 import 'rxjs/add/operator/take'
+import { interval } from 'rxjs/observable/interval'
 
 import { IBalance } from '../../shared/models'
 import { Account } from '../../shared/typings'
@@ -56,21 +57,25 @@ export class PossessionsPage implements OnInit {
 	ngOnInit () {
 		this.switchBalances()
 		this.updateBalances()
-    this.store.select(SettingsSelectors.getCurrency).subscribe(() => this.updateBalances())
+    	// this.store.select(SettingsSelectors.getCurrency).subscribe(() => this.updateBalances())
 		this.store.select(BalancesSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
 		this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
+
 	}
 
 	updateBalances () {
-    // this.store.dispatch(new MarketsActions.Load())
-    this.store.dispatch(new BalancesActions.Load())
+	// this.store.dispatch(new MarketsActions.Load())
+		interval(5000).subscribe(val => {
+			this.store.dispatch(new BalancesActions.Load())
+		})
+		this.store.dispatch(new BalancesActions.Load())
   }
 
 	switchBalances (displayZero: boolean = true) {
 		this.balances = displayZero
-			? this.store.select(BalancesSelectors.getDefaultEntities)
-			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities)
+			? this.store.select(BalancesSelectors.getDefaultEntities).distinctUntilChanged()
+			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities).distinctUntilChanged()
 	}
 
 	doRefresh (refresher: Refresher) {

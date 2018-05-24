@@ -4,15 +4,15 @@ import { IBalance } from '../../shared/models'
 @Component({
 	selector: 'possessions-list',
 	template: `
-	  <!--<ion-grid class="possessions__base-accumulator">
+	  <ion-grid class="possessions__base-accumulator">
 		  <ion-row class="card-base">
-			  <ion-col col-9>
+			  <!--<ion-col col-9>
 				  <ion-card class="possessions__total-balances">
 				  <ion-row>{{ 'POSSESSIONS.totalBalances' | translate }}</ion-row>
 
 				  </ion-card>
-			  </ion-col>
-			  <ion-col col-3 class="possessions__hide-zero" align-self-end>
+			  </ion-col>-->
+			  <ion-col class="possessions__hide-zero" align-self-end>
 				  <ion-card (click)="displayZeroClick.emit(!displayZero)">
 					  <img *ngIf="displayZero" src="assets/imgs/icon-possessions_hide-zero.png" alt="">
 						<img *ngIf="!displayZero" src="assets/imgs/icon-possessions_hide-zero-on.png" alt="">
@@ -20,7 +20,7 @@ import { IBalance } from '../../shared/models'
 				  </ion-card>
 			  </ion-col>
 		  </ion-row>
-	  </ion-grid>-->
+	  </ion-grid>
 
 	  <ion-card class="card-list"
 	            *ngFor="let balance of balances">

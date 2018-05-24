@@ -35,7 +35,7 @@ export class LoginForm implements OnInit {
 	importTextShort: 'Import' | '导入'
 	importTextLong: 'Import Wallet File' | '导入钱包文件'
 	isKey = true
-  	isWIF = true
+  isWIF = true
 	isOldWallet = false
 	loginForm: FormGroup
 	translationPrefix = 'LOGIN.'
@@ -137,7 +137,9 @@ export class LoginForm implements OnInit {
 		if (keyValue && isKey) {
 			if (keyControl.invalid && keyValue !== 'test') return
 			if (isWIF(keyValue) || keyValue === 'test') return this.onWIF.emit(keyValue)
-      if (isNEP2(keyValue)) return this.onNEP2.emit({ encrypted: keyValue, passphrase: passphraseValue })
+      if (isNEP2(keyValue)) {
+			  return this.onNEP2.emit({ encrypted: keyValue, passphrase: passphraseValue })
+      }
 		} else if (file && !isKey && !keyValue) {
 			if (isOldWallet(file)) {
 				if (!passphraseControl.valid) return

@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core'
+import { Store, ActionsSubject } from '@ngrx/store'
 import { Actions, Effect, ofType } from '@ngrx/effects'
 import { of } from 'rxjs/observable/of'
 import {
 	catchError,
 	exhaustMap,
+  switchMap,
 	map,
 	tap
 } from 'rxjs/operators'
+import { merge } from 'ramda'
 import {
 	Account,
 	Wallet
@@ -17,7 +20,6 @@ import {
 	WalletProvider
 } from '../../providers'
 import { wallet } from '../../libs/neon'
-
 import {
 	AuthActionTypes,
 	Login,
@@ -40,7 +42,8 @@ import {
 	CreateWalletFail,
 } from '../actions/auth.action'
 import { WalletActions, ContactsActions } from '../actions'
-import { merge } from 'ramda'
+import { RootState } from '..//reducers'
+import { WalletActionTypes } from '../actions/wallet.action'
 
 
 @Injectable()
@@ -148,6 +151,8 @@ export class AuthEffects {
 
 	constructor (
 		private actions$: Actions,
+		private store$: Store<RootState>,
+		private actionsSubject$: ActionsSubject,
 		private walletProvider: WalletProvider,
 		private router: RouterProvider,
 		private lp: LoadingProvider

@@ -55,29 +55,18 @@ export class LoginPage implements OnInit {
    // this.store.dispatch(new AuthActions.LoginWif(keyValue))
     // const loading = this.loadingCtrl.create()
     // loading.present()
-    try {
-      // loading.dismiss().catch(() => {}).catch(() => {})
-      this.store.dispatch(new AuthActions.LoginWif(keyValue))
-
-    } catch (error) {
-      // loading.dismiss().catch(() => {}).catch(() => {})
-    }
+    // loading.dismiss().catch(() => {}).catch(() => {})
+    this.store.dispatch(new AuthActions.LoginWif(keyValue))
+    // loading.dismiss().catch(() => {}).catch(() => {})
 	}
 
 	oldWalletLogin = ({ oldWallet, passphrase }) => {
     // const loading = this.loadingCtrl.create()
     // loading.present()
-    try {
-
-      // loading.dismiss().catch(() => {}).catch(() => {})
-      this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet, passphrase }))
-
-    } catch (error) {
-
-      // loading.dismiss().catch(() => {}).catch(() => {})
-      console.log('error', error)
-    }
-
+    // loading.dismiss().catch(() => {}).catch(() => {})
+    this.store.dispatch(new AuthActions.LoginOldWallet({ oldWallet, passphrase }))
+    console.log('login with old wallet', oldWallet, passphrase)
+    // loading.dismiss().catch(() => {}).catch(() => {})
   }
 
 

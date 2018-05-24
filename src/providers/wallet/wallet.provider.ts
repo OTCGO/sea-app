@@ -31,13 +31,14 @@ export class WalletProvider {
 			throw new Error('Is not an old wallet, Please check again!')
 		}
 
-		try {
-			return this._upgradeToNEP5Account(oldWalletJSON, passphrase)
+    return this._upgradeToNEP5Account(oldWalletJSON, passphrase)
+		/*try {
+
 		} catch (e) {
 			// Because the error come from decryption, It looks like 'Malform format...'
 			// So we just using 'Incorrect password' instead
 			throw new Error('Incorrect password')
-		}
+		}*/
 	}
 
 	private _upgradeToNEP5Account (oldWalletJSON, passphrase): Account {

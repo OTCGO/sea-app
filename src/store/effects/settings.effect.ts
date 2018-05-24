@@ -46,11 +46,20 @@ export class SettingsEffects {
 		tap(locale => this.ts.use(locale))
 	)
 
-	@Effect()
+	@Effect({ dispatch: false })
 	Save$ = this.actions$.pipe(
-	  ofType<Save>(SettingsActionTypes.SAVE),
+	  ofType<Save>(
+	    SettingsActionTypes.CHANGE_LANGUAGE,
+      SettingsActionTypes.CHANGE_CURRENCY,
+      SettingsActionTypes.SAVE
+    ),
     withLatestFrom(this.store$.select(getCurrency), this.store$.select(getLanguage)),
-    map(([_, currency, language]) => this.fileStorage.save(OTCGO_SETTING_FILE_NAME, { currency, language }))
+    map(([_, currency, language]) => this.fileStorage.save(OTCGO_SETTING_FILE_NAME, { currency, language })),
+    catchError((err, caught) => {
+      console.log('Catch on SaveWalletFile')
+      console.log(err, caught)
+      return caught
+    })
   )
 
 	constructor (

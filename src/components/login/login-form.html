@@ -14,16 +14,17 @@
 				<ion-input (ionChange)="onKeyChange($event)" type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="key"></ion-input>
 			</ion-item>
 
-			<button
+			<!-- <button
 				class="login__import-button"
 				type="button"
 				[class.is-active]="!isKey"
 				(click)="switchImportBox(fileInput)">
 				<span *ngIf="!isKey">{{ importText }}</span>
 				<img src="assets/imgs/icon-login_file.svg" alt="" class="icon">
-			</button>
+			</button> 
+		    -->
 
-			<input accept="application/json, text/plain, .json" type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])">
+			<!-- <input accept="application/json, text/plain, .json" type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])"> -->
 
 			<button
 				class="login__wif-switcher"

@@ -1,6 +1,6 @@
 {
   "name": "otcgo-app",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,
@@ -14,6 +14,7 @@
     "ionic:serve": "ionic-app-scripts serve",
     "debug:android": "ionic cordova run android --device -l --debug",
     "debug:ios": "ionic cordova emulate ios -l --debug",
+    "rm:ios": "ionic cordova platform rm ios",
     "test": "karma start ./config/karma.conf.js",
     "test-ci": "karma start ./config/karma.conf.js --single-run",
     "test-coverage": "karma start ./config/karma.conf.js --coverage",
@@ -128,14 +129,7 @@
       "cordova-clipboard": {},
       "cordova-plugin-file": {},
       "cordova-plugin-x-socialsharing": {},
-      "cordova-plugin-ionic": {
-        "APP_ID": "52f9b83b",
-        "CHANNEL_NAME": "Master",
-        "UPDATE_METHOD": "background",
-        "WARN_DEBUG": "true",
-        "UPDATE_API": "https://api.ionicjs.com",
-        "MAX_STORE": "2"
-      },
+      "cordova-plugin-ionic": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
@@ -150,8 +144,8 @@
     },
     "platforms": [
       "browser",
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

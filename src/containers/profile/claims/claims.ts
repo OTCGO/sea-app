@@ -74,6 +74,7 @@ export class ClaimsPage {
 				{
 					text: '确认',
 					handler:  ({ passphrase }) => {
+						try {
 						if (!passphrase || passphrase === '' || passphrase.length < 4) return false
 
 
@@ -102,6 +103,12 @@ export class ClaimsPage {
 							prompt.dismiss().catch(() => {})
 							this.btnLoading = false
 						})
+
+					} catch (error) {
+							this.showPrompt('提取失败!，请稍候再试')
+						// prompt.dismiss().catch(() => {})
+							this.btnLoading = false
+						}
 					}
 				}
 			]

@@ -19,7 +19,7 @@ import { dev } from '../environments/environment'
 import { reducers, metaReducers } from '../store/reducers'
 import { schema } from './db-schema'
 import { CoreModule } from './core.module'
-
+import { InAppBrowser } from '@ionic-native/in-app-browser'
 
 import {
   BalancesEffects,
@@ -71,6 +71,9 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
       }
     }),
     CoreModule.forRoot()
+  ],
+  providers: [
+    InAppBrowser
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

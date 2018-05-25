@@ -82,6 +82,9 @@ export class LoginPage implements OnInit {
 
 
   NEP2Login ({ encrypted, passphrase }) {
+    if (passphrase === '') {
+      return
+    }
     const loading = this.loadingCtrl.create()
     loading.present()
 

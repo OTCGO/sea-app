@@ -5,12 +5,15 @@ import { Account } from '../../shared/typings'
 import { isOldWallet, decryptPrv, verifyKeyPair } from '../../shared/utils'
 import { OTCGO_WALLET_FILE_NAME } from '../../shared/constants'
 import { OldWalletFile } from '../../shared/models'
+import { Observable } from 'rxjs'
+import { of } from 'rxjs/observable/of'
+import { _throw } from 'rxjs/observable/throw'
 
 
 @Injectable()
 export class WalletProvider {
 	constructor (
-		private fileStorageProvider: FileStorageProvider
+		private fileStorageProvider: FileStorageProvider,
 	) { }
 
 	async checkWalletFile () {
@@ -21,27 +24,26 @@ export class WalletProvider {
 		return await this.fileStorageProvider.read(OTCGO_WALLET_FILE_NAME)
 	}
 
-	async saveWalletFile (wallet) {
-		const walletTextFile = JSON.stringify(wallet)
+	async saveWalletFile (walletFile) {
+		const walletTextFile = JSON.stringify(walletFile)
 		return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
 	}
 
-	upgradeToNEP5Account (oldWalletJSON: OldWalletFile, passphrase: string): Account {
+	upgradeToNEP5Account (oldWalletJSON: OldWalletFile, passphrase: string, isDefault): Observable<Account> {
 		if (!isOldWallet(oldWalletJSON)) {
-			throw new Error('Is not an old wallet, Please check again!')
+			_throw('Is not an old wallet, Please check again!')
 		}
 
-    return this._upgradeToNEP5Account(oldWalletJSON, passphrase)
-		/*try {
-
+		try {
+      return this._upgradeToNEP5Account(oldWalletJSON, passphrase, isDefault)
 		} catch (e) {
 			// Because the error come from decryption, It looks like 'Malform format...'
 			// So we just using 'Incorrect password' instead
 			throw new Error('Incorrect password')
-		}*/
+		}
 	}
 
-	private _upgradeToNEP5Account (oldWalletJSON, passphrase): Account {
+	private _upgradeToNEP5Account (oldWalletJSON, passphrase, isDefault = false): Observable<Account> {
 		const { privateKeyEncrypted, publicKey } = <any>oldWalletJSON
 		const privateKey = decryptPrv(privateKeyEncrypted, passphrase)
 		const result = verifyKeyPair(privateKey, publicKey)
@@ -49,9 +51,10 @@ export class WalletProvider {
 		if (result) {
 			const account = new wallet.Account(privateKey)
 			account.encrypt(passphrase)
-			return account
+      if (isDefault) account.isDefault = true
+			return of(account)
 		}
-		throw new Error('Incorrect Password!')
+		_throw('Incorrect Password!')
 	}
 
 	/*createWalletAndDecrypt (walletFile, passphrase) {

@@ -128,14 +128,6 @@
       "cordova-clipboard": {},
       "cordova-plugin-file": {},
       "cordova-plugin-x-socialsharing": {},
-      "cordova-plugin-ionic": {
-        "APP_ID": "52f9b83b",
-        "CHANNEL_NAME": "Master",
-        "UPDATE_METHOD": "background",
-        "WARN_DEBUG": "true",
-        "UPDATE_API": "https://api.ionicjs.com",
-        "MAX_STORE": "2"
-      },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
@@ -146,7 +138,15 @@
         "CAMERA_USAGE_DESCRIPTION": " ",
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
-      "cordova-plugin-nativestorage": {}
+      "cordova-plugin-nativestorage": {},
+      "cordova-plugin-ionic": {
+        "APP_ID": "52f9b83b",
+        "CHANNEL_NAME": "Master",
+        "UPDATE_METHOD": "background",
+        "WARN_DEBUG": "true",
+        "UPDATE_API": "https://api.ionicjs.com",
+        "MAX_STORE": "2"
+      }
     },
     "platforms": [
       "browser",

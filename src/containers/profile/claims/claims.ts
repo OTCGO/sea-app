@@ -12,6 +12,7 @@ import { wallet } from '../../../libs/neon'
 const { decrypt, getPrivateKeyFromWIF } = wallet
 import { Observable } from 'rxjs/Observable'
 
+
 @IonicPage({
 	name: 'Claims',
 	segment: 'claims'
@@ -37,6 +38,15 @@ export class ClaimsPage {
 		this.store.dispatch(new ClaimsActions.Load())
 		this.claims = this.store.select(ClaimsSelectors.getEntities)
 	}
+
+	get btnDisabled () {
+	  let state = true
+	  if (this.claims)
+	    this.claims.take(1).subscribe(claims => {
+        if (claims && +claims.unavailable) state = false
+      })
+	  return state
+  }
 
 	async doClaim () {
 
@@ -79,24 +89,28 @@ export class ClaimsPage {
 
 						this.btnLoading = true
 
-						const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+            let pr
+            try {
+              pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+            } catch (e) {
+						  this.showPrompt('密码错误！')
+            }
+
 						this.claimsProvider.doClaims(pr).then(result => {
 
 							prompt.dismiss().catch(() => {})
 							this.btnLoading = false
 
 							if (result) {
-								this.showPrompt('提取成功！,请稍后查看余额')
+								this.showPrompt('提取成功！请稍后查看余额')
 								return
 							}
 
-							this.showPrompt('提取失败!，请稍候再试')
-
-
+							this.showPrompt('提取失败！请稍候再试')
 
 
 						}).catch((e) => {
-							this.showPrompt('提取失败!，请稍候再试')
+							this.showPrompt('提取失败！请稍候再试')
 							console.log(e)
 
 							prompt.dismiss().catch(() => {})

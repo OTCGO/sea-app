@@ -33,6 +33,7 @@ export class ProfilePage {
 			page: 'ManageWallet',
 			translation: 'manage_wallet',
 			enabled: true,
+      click (navCtrl) { return this.enabled && navCtrl.push(this.page) }
 		},
 		/*{
 			icon: 'contacts',
@@ -45,6 +46,13 @@ export class ProfilePage {
 			page: 'Histories',
 			translation: 'histories',
 			enabled: true,
+      click: () => {
+        console.log('click on this', this)
+			  const alink = document.createElement('a')
+        alink.href = `http://state.otcgo.cn/addrinfo.html?address=${this.account.address}`
+        alink.target = '_blank'
+        alink.click()
+      }
 		}
 	]
 

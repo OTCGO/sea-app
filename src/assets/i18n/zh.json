@@ -78,7 +78,7 @@
 	"PROFILE": {
 		"manage_wallet": "管理钱包",
 		"contacts": "联系人",
-		"histories": "转账记录",
+		"histories": "区块查询（转账记录）",
 		"claims": "提取 GAS",
 		"logout": "退出登录",
 		"MANAGE_WALLET": {

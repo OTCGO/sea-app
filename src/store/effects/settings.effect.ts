@@ -39,7 +39,7 @@ export class SettingsEffects {
 		catchError(error => of(new LoadFail(error)))
 	)
 
-	@Effect({ dispatch: false })
+	@Effect()
 	ChangeLanguage$ = this.actions$.pipe(
 		ofType<ChangeLanguage>(SettingsActionTypes.CHANGE_LANGUAGE),
 		map(action => action.payload),
@@ -56,7 +56,7 @@ export class SettingsEffects {
     withLatestFrom(this.store$.select(getCurrency), this.store$.select(getLanguage)),
     map(([_, currency, language]) => this.fileStorage.save(OTCGO_SETTING_FILE_NAME, { currency, language })),
     catchError((err, caught) => {
-      console.log('Catch on SaveWalletFile')
+      console.log('Catch on SaveSetting')
       console.log(err, caught)
       return caught
     })

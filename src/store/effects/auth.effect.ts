@@ -5,13 +5,11 @@ import { of } from 'rxjs/observable/of'
 import {
 	catchError,
 	exhaustMap,
-  switchMap,
 	map,
 	tap
 } from 'rxjs/operators'
 import { merge } from 'ramda'
 import {
-	Account,
 	Wallet
 } from '../../shared/typings'
 import {
@@ -75,13 +73,12 @@ export class AuthEffects {
 			ofType<LoginOldWallet>(AuthActionTypes.LOGIN_OLD_WALLET),
 			map(action => action.payload),
 			exhaustMap(({ oldWallet, passphrase }) => {
-				const account: Account = this.walletProvider.upgradeToNEP5Account(oldWallet, passphrase)
-				account.isDefault = true
-				return [
-					// TODO: Which supposes to when AddAccountSuccess then LoginSuccess, But there been just succeeded, is weird, fix
-					new WalletActions.AddAccount(account),
-					new LoginOldWalletSuccess()
-				]
+				return this.walletProvider.upgradeToNEP5Account(oldWallet, passphrase, true)
+          .pipe(
+            map(account => new WalletActions.AddAccount(account)),
+            map(() => new LoginOldWalletSuccess()),
+            catchError(error => of(new LoginOldWalletFail(error)))
+          )
 			}),
 			catchError(error => of(new LoginOldWalletFail(error)))
 		)

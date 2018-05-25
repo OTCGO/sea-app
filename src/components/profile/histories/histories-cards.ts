@@ -13,7 +13,7 @@ import {
 	nth
 } from 'ramda'
 import { TransactionHistory } from '../../../shared/models'
-
+import * as moment from 'moment'
 
 @Component({
 	selector: 'histories-cards',

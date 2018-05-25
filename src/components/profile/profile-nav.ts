@@ -9,10 +9,4 @@ export class ProfileNavComponent {
 	@Input() navs
 
 	constructor (private navCtrl: NavController) {}
-
-	handleNavClick (item) {
-    if (item.enabled) {
-			this.navCtrl.push(item.page)
-		}
-  }
 }

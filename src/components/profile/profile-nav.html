@@ -2,7 +2,7 @@
 	<div
 		class="nav-item"
 		*ngFor="let nav of navs"
-		(click)="handleNavClick(nav)">
+		(click)="nav.click(navCtrl)">
 		<img class="card-img"
 		     [src]="'assets/imgs/icon-profile_' + nav?.icon + '.png'">
 		<span class="card-title">

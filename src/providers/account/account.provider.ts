@@ -22,20 +22,4 @@ export class AccountProvider {
 	getPublicKey (encoded: boolean) {
 		return this.defaultAccount.getPublicKey(encoded)
 	}
-
-	decrypt (passphrase) {
-
-	}
-
-	getPrivateKey () {
-		return this.defaultAccount.privateKey
-	}
-
-	getWIF (account) {
-
-	}
-
-	getAddress (account) {
-		return account ? (new Account(account)).address : this.defaultAccount.address
-	}
 }

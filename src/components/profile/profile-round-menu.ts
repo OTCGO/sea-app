@@ -22,9 +22,7 @@ interface menu {
 })
 export class ProfileRoundMenuComponent {
 	@Input()
-	get menus() {
-		return this._menus
-	}
+	get menus() {return this._menus}
 	set menus(items: Array<menu>) {
 		this._menus = items.map(item => {
 			if (typeof item.enabled === 'undefined')

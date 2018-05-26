@@ -28,8 +28,8 @@ import { IBalance } from '../../shared/models'
 		  <ion-item (click)="select.emit(balance.symbol)">
 			  <div class="possessions__icon"
 			       item-start>
-				  <img src="{{ 'assets/icon/' + balance?.symbol +'.png' }}"
-				       onerror="this.src='assets/icon/申一币.png'" />
+				  <img src="{{ 'https://api.otcgo.cn/icon/' + balance?.symbol +'.png' }}"
+				       onerror="this.src='assets/icon/default.png'" />
 			  </div>
 
 			  <p class="possessions__symbol">{{ balance?.symbol }}</p>
@@ -42,6 +42,8 @@ import { IBalance } from '../../shared/models'
 	  </ion-card>
 	`
 })
+
+
 export class PossessionsListComponent {
 	@Input() balances: Array<IBalance>
 	@Input() displayZero: boolean

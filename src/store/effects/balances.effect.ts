@@ -21,11 +21,13 @@ import {
 	refCount,
 	withLatestFrom,
 	mergeMap,
+	merge
 } from 'rxjs/operators'
 import {
 	getEveryAccountAddress
 } from '../../shared/utils'
 import { RootState } from '../../store/reducers'
+import { interval } from 'rxjs/observable/interval'
 
 import { BalancesActionTypes, Load, LoadFail, LoadSuccess } from '../actions/balances.action'
 import { ApiProvider, API_CONSTANTS } from '../../providers/api'
@@ -39,25 +41,29 @@ export class BalancesEffects {
 	Load$: Observable<Action> =
 		this.actions$.pipe(
 			ofType<Load>(BalancesActionTypes.LOAD),
+
+			// merge(interval(10000)),
 			withLatestFrom(
 				this.store$,
 				(_, state: RootState) => getEveryAccountAddress(state.wallet.entity)
 			),
+
 			switchMap(addresses => {
 				const nextGet$ = this.actions$.pipe(
 					ofType(BalancesActionTypes.LOAD),
 					skip(1)
 				)
-
 				return this.apiProvider
 									 .get(`${API_CONSTANTS.ASSET}`)
 									 .pipe(
 										 mergeMap((asset: { NEP5, Global }) =>
 											 forkJoin(addresses.map(this.getBalance.bind(this))).pipe(
+
 												 takeUntil(nextGet$),
+
 												 map(balances => new LoadSuccess(balances.reduce(balancesReducer(flatten(values(asset))), {}))),
 												 catchError(error => of(new LoadFail(error)))
-											 )
+											 ),
 										 ),
 										 catchError(error => of(new LoadFail(error)))
 									 )
@@ -68,8 +74,9 @@ export class BalancesEffects {
 		return this.apiProvider
 							 .get(`${API_CONSTANTS.BALANCES}/${addr}`)
 							 .pipe(
-								 publishLast(),
-								 refCount(),
+
+								  publishLast(),
+								  refCount(),
 								 catchError(error => of(new LoadFail(error)))
 							 )
 	}

@@ -44,7 +44,7 @@ self.toolbox.precache(
     "./assets/imgs/icon-profile_tx-history.png",
     "./assets/imgs/icon-qrcode-avatar.png",
     "./assets/imgs/icon-send-modal_contact.svg",
-    "./assets/imgs/icon-send-modal_scan.svg",
+    "./assets/imgs/icon-send-modal_scan.png",
     "./assets/imgs/icon-tabs_balances_off.svg",
     "./assets/imgs/icon-tabs_balances_on.svg",
     "./assets/imgs/icon-tabs_discover_off.svg",

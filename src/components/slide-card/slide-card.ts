@@ -137,11 +137,9 @@ export class SlideCard extends SlideCardProps {
 
     if (index < 0) {
       this.activeIndex = length - 1
-		}
-    else if (index >= length) {
+		} else if (index >= length) {
       this.activeIndex = 0
-		}
-    else {
+		} else {
       this.activeIndex = index
 		}
 

@@ -42,7 +42,8 @@ export class PossessionsPage implements OnInit {
 		this.switchBalances(val)
 		this._displayZero = val
 	}
-	private _displayZero = true
+	//
+	private _displayZero = false
 
 
 	constructor (
@@ -66,13 +67,13 @@ export class PossessionsPage implements OnInit {
 
 	updateBalances () {
 	// this.store.dispatch(new MarketsActions.Load())
-		interval(5000).subscribe(val => {
+		interval(10000).subscribe(val => {
 			this.store.dispatch(new BalancesActions.Load())
 		})
 		this.store.dispatch(new BalancesActions.Load())
   }
 
-	switchBalances (displayZero: boolean = true) {
+	switchBalances (displayZero: boolean = false) {
 		this.balances = displayZero
 			? this.store.select(BalancesSelectors.getDefaultEntities).distinctUntilChanged()
 			: this.store.select(BalancesSelectors.getDefaultNonZeroEntities).distinctUntilChanged()
@@ -94,7 +95,12 @@ export class PossessionsPage implements OnInit {
 									)
 	}
 
-	handleDisplayZeroClick (bool) {
+	handleDisplayZeroClick (bool: false) {
 		this.displayZero = bool
 	}
+
+	// ionViewCanLeave() {
+	// 	this.subscription.unsubscribe()
+
+	// }
 }

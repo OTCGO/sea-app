@@ -4,12 +4,28 @@
 
 	<div class="backup-wallet__content">
 		<img class="backup-wallet__success-icon" src="assets/imgs/icon-success.png" alt="">
-		{{ 'CW.BACKUP.notes' | translate }}
+		
+		{{ 'CW.BACKUP.notes_nep2' | translate }}
+
+		<br>
+		<br>
+		<br>
+		<span class="notes-wif">
+				{{ 'CW.BACKUP.notes_wif' | translate }}
+		</span>
+		
+
 	</div>
 
+
+
 	<div class="backup-wallet__button">
-		<button class="otcgo-button--colour" ion-button round full block (click)="openHome()">
+		<button class="otcgo-button--colour" *ngIf="isCopy" ion-button round full block (click)="openHome()">
 			{{ 'CW.BACKUP.enter' | translate }}
+		</button>
+
+		<button class="otcgo-button--colour" *ngIf="!isCopy" ion-button round full block (click)="handleEncryptedClick()">
+				{{ 'POSSESSIONS.QR_CODE.copy' | translate }}
 		</button>
 	</div>
 

@@ -77,7 +77,7 @@ export class ClaimsProvider {
 		const NEO = this.balances.find(bal => bal.hash === NEO_HASH)
 		const address = this._account.address
 		console.log('doSendAsset:NEO', NEO)
-		if (!NEO || !NEO.amount ){
+		if (!NEO || !NEO.amount ) {
 			return
 		}
 		const data = {

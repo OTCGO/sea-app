@@ -44,7 +44,8 @@ export class CreateWalletPage implements OnInit {
     private store: Store<fromWallet.State>,
     private np: NotificationProvider,
     private lp: LoadingProvider,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private ts: TranslateService,
   ) { }
 
   ngOnInit () {
@@ -70,11 +71,15 @@ export class CreateWalletPage implements OnInit {
 
 
 		setTimeout(() => {
-		loading.dismiss().catch(() => {})
+		    loading.dismiss().catch(() => {})
 		}, 1000)
 
+    let pwdtip
+    this.ts.get('CW.pwdtip').subscribe(data => {
+      pwdtip = data
+    })
     if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1)) {
-      return this.np.emit({ message: '密码至少包含数字、大小写、字母，11位的字符。' })
+      return this.np.emit({ message: pwdtip })
     }
 
 
@@ -82,10 +87,10 @@ export class CreateWalletPage implements OnInit {
       return
     }
 
-    if (this.wif && !wallet.isWIF(this.wif)) {
-      this.np.emit({ message: 'WIF format wrong' })
-      return
-    }
+    // if (this.wif && !wallet.isWIF(this.wif)) {
+    //   this.np.emit({ message: 'WIF format wrong' })
+    //   return
+    // }
 
     // const variations: object = {
     //     digits: /\d/.test(this.passphrase1), // 数字
@@ -105,6 +110,8 @@ export class CreateWalletPage implements OnInit {
     }
     loading.dismiss().catch(() => {}).catch(() => {})
     this.store.dispatch(new AuthActions.CreateWallet(dispatchOption))
+
+
 
   }
 

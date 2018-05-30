@@ -11,6 +11,7 @@ import { ClaimsSelectors } from '../../../store/selectors'
 import { wallet } from '../../../libs/neon'
 const { decrypt, getPrivateKeyFromWIF } = wallet
 import { Observable } from 'rxjs/Observable'
+import { TranslateService } from '@ngx-translate/core'
 
 @IonicPage({
 	name: 'Claims',
@@ -25,22 +26,24 @@ export class ClaimsPage {
 	private claims: Observable<Claims>
 	private btnLoading = false
 
-	constructor (
+	constructor(
+		private ts: TranslateService,
 		private claimsProvider: ClaimsProvider,
 		private accountProvider: AccountProvider,
 		private alertCtrl: AlertController,
 		private store: Store<RootState>,
 		private loadingCtrl: LoadingController
-	) {}
+	) { }
 
-	ionViewDidLoad () {
+	ionViewDidLoad() {
 		this.store.dispatch(new ClaimsActions.Load())
 		this.claims = this.store.select(ClaimsSelectors.getEntities)
 	}
 
-	async doClaim () {
+	async doClaim() {
 
 
+		/*
 		// wif login
 		if (this.account._WIF) {
 			try {
@@ -50,63 +53,108 @@ export class ClaimsPage {
 				this.btnLoading = false
 
 				if (result) {
-					this.showPrompt('提取成功！')
+
+					this.ts.get('CLAIMS.success').take(1).subscribe(data => {
+						this.showPrompt(data)
+					})
+
 					return
 				}
 
-				this.showPrompt('提取失败!，请稍候再试')
+				this.ts.get('CLAIMS.fail').take(1).subscribe(data => {
+					this.showPrompt(data)
+				})
+
 
 			} catch (e) {
 				this.btnLoading = false
-				this.showPrompt('提取失败!，请稍候再试')
+				this.ts.get('CLAIMS.fail').take(1).subscribe(data => {
+					this.showPrompt(data)
+				})
 			}
 			return
 		}
 
+		*/
+
+		let title
+		// let message
+		// let placeholder
+		let btnCancle
+		let btnConfirm
+
+		let successText
+		let failText
+
+		this.ts.get('LOGIN.password').subscribe(data => {
+			title = data
+			// message = data
+			// placeholder = data
+		})
+
+		this.ts.get('PROFILE.CONTACTS.remove_disagree').subscribe(data => {
+			btnCancle = data
+		})
+		this.ts.get('PROFILE.CONTACTS.remove_agree').subscribe(data => {
+			btnConfirm = data
+		})
+
+		this.ts.get('PROFILE.CLAIMS.success').subscribe(data => {
+			successText = data
+		})
+
+
+		this.ts.get('PROFILE.CLAIMS.fail').subscribe(data => {
+			failText = data
+		})
+
+
+		console.log('successText', successText)
+		console.log('failText', failText)
 
 		// file login
 		const prompt = this.alertCtrl.create({
-			title: '输入密码',
-			message: '输入您的密码！',
-			inputs: [{ name: 'passphrase', placeholder: '密码', type: 'password' }],
+			title: title,
+			// message: title,
+			inputs: [{ name: 'passphrase', placeholder: title, type: 'password' }],
 			buttons: [
-				{ text: '取消' },
+				{ text: btnCancle },
 				{
-					text: '确认',
-					handler:  ({ passphrase }) => {
+					text: btnConfirm,
+					handler: ({ passphrase }) => {
 						try {
-						if (!passphrase || passphrase === '' || passphrase.length < 4) return false
+							if (!passphrase || passphrase === '' || passphrase.length < 4) return false
 
 
-						this.btnLoading = true
+							this.btnLoading = true
 
-						const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
-						this.claimsProvider.doClaims(pr).then(result => {
+							const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+							this.claimsProvider.doClaims(pr).then(result => {
 
-							prompt.dismiss().catch(() => {})
-							this.btnLoading = false
+								prompt.dismiss().catch(() => { })
+								this.btnLoading = false
 
-							if (result) {
-								this.showPrompt('提取成功！,请稍后查看余额')
-								return
-							}
+								if (result) {
+									this.showPrompt(successText)
+									return
+								}
 
-							this.showPrompt('提取失败!，请稍候再试')
-
-
+								this.showPrompt(failText)
 
 
-						}).catch((e) => {
-							this.showPrompt('提取失败!，请稍候再试')
-							console.log(e)
 
-							prompt.dismiss().catch(() => {})
-							this.btnLoading = false
-						})
 
-					} catch (error) {
-							this.showPrompt('提取失败!，请稍候再试')
-						// prompt.dismiss().catch(() => {})
+							}).catch((e) => {
+								this.showPrompt(failText)
+								console.log(e)
+
+								prompt.dismiss().catch(() => { })
+								this.btnLoading = false
+							})
+
+						} catch (error) {
+							this.showPrompt(failText)
+							// prompt.dismiss().catch(() => {})
 							this.btnLoading = false
 						}
 					}
@@ -116,13 +164,13 @@ export class ClaimsPage {
 		prompt.present()
 	}
 
-	showPrompt (msg) {
+	showPrompt(msg) {
 		const message = msg.message || msg
 		const alert = this.alertCtrl.create({ message })
 		alert.present()
 
 		setTimeout(() => {
-			alert.dismiss().catch(() => {})
+			alert.dismiss().catch(() => { })
 		}, 1000)
 	}
 }

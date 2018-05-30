@@ -50,15 +50,15 @@ export class ManageWalletPlay implements OnInit {
 
 	handleRemoveAccount (account) {
 		// this.store.dispatch(new WalletActions.RemoveAccount(account))
-		const { offsetHeight, offsetWidth } = this.cards.slides.container.querySelector('.card') as HTMLElement
-		const data = { account, offsetHeight, offsetWidth, }
-		this.openModal(data)
+		// const { offsetHeight, offsetWidth } = this.cards.slides.container.querySelector('.card') as HTMLElement
+		// const data = { account, offsetHeight, offsetWidth, }
+		// this.openModal(data)
 	}
 
 	openModal (data) {
-		const removeModal = this.modalCtrl.create('RemoveAccountModal', data, {
-			cssClass: 'sea-card'
-		})
-		removeModal.present()
+		// const removeModal = this.modalCtrl.create('RemoveAccountModal', data, {
+		// 	cssClass: 'sea-card'
+		// })
+		// removeModal.present()
 	}
 }

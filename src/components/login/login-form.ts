@@ -13,18 +13,22 @@ import {
 import { TranslateService } from '@ngx-translate/core'
 import { AlertController, LoadingController, Platform } from 'ionic-angular'
 import { File } from '@ionic-native/file'
-
+import { NativeStorage } from '@ionic-native/native-storage'
 import { keyValidator, asyncKeyValidator } from './login.validator'
 import { isNEP2, isWIF, isOldWallet, isWallet } from '../../shared/utils'
+import { wallet } from '../../libs/neon/src'
 
-declare let cordova: any
+
 
 @Component({
 	selector: 'login-form',
 	templateUrl: `login-form.html`
 })
 export class LoginForm implements OnInit {
+
 	@Input() tip: string
+	@Input() isSwitch: boolean
+
 	@Output() onPrivateKey = new EventEmitter()
 	@Output() onOldWallet = new EventEmitter()
 	@Output() onNEP5 = new EventEmitter()
@@ -41,9 +45,11 @@ export class LoginForm implements OnInit {
 	isOldWallet = false
 	loginForm: FormGroup
 	translationPrefix = 'LOGIN.'
+	accountCache = undefined
 
 
 	constructor (
+		private nativeStorage: NativeStorage,
 		private fb: FormBuilder, private ts: TranslateService,
 		private loadingCtrl: LoadingController,
 		private alertCtrl: AlertController,
@@ -55,6 +61,24 @@ export class LoginForm implements OnInit {
 	get passphrase () { return this.loginForm.get('passphrase') }
 
 	ngOnInit () {
+		console.log('ngOnInit:isSwitch', this.isSwitch)
+		this.isSwitch = false
+		this.platform.ready().then(() => {
+			this.nativeStorage.getItem('account').then((value) => {
+				console.log('this.account', value )
+				if (value) {
+					return this.accountCache = value
+				}
+
+				this.isSwitch = true
+				// console.log('this.accountCache', this.accountCache )
+			  }).catch((err) => {
+				console.log('this.nativeStorage:get', err )
+				this.isSwitch = true
+			})
+		})
+
+
 		this.loginForm = this.fb.group({
 			key: ['', [Validators.required, keyValidator], asyncKeyValidator],
 			passphrase: ['', [Validators.required, Validators.minLength(4)]]
@@ -84,12 +108,14 @@ export class LoginForm implements OnInit {
 		this.importText = this.importTextShort
 	}
 
-	onKeyChange ({ value }) {
-		if (isNEP2(value)) {
-			return this.isWIF = false
-		}
-		return this.isWIF = true
-  	}
+	// onKeyChange ({ value }) {
+		// console.log('onKeyChange', value)
+		// if (wallet.isNEP2(value)) {
+		// 	return this.isKey = false
+		// }
+		// return this.isKey = true
+
+  	// }
 
 	showPrompt = (msg: string) => this.alertCtrl.create({ title: msg }).present()
 
@@ -174,39 +200,81 @@ export class LoginForm implements OnInit {
 		return this.showPrompt('Invalid wallet file')
 	}
 
-	login ({ controls, value }: FormGroup) {
-		const loading = this.loadingCtrl.create()
-		loading.present()
+	async login ({ controls, value }: FormGroup) {
+		try {
+			// console.log('login', this.accountCache.encrypted)
+			// const loading = this.loadingCtrl.create()
+			// loading.present()
 
 
-		setTimeout(() => {
-			if (loading) {
-				loading.dismiss().catch(() => {})
+			// setTimeout(() => {
+			// 	if (loading) {
+			// 		loading.dismiss().catch(() => {})
+			// 	}
+
+			// }, 1000)
+
+			const { key: keyValue, passphrase: passphraseValue } = value
+
+
+
+			if (!passphraseValue) {
+				return
+			}
+			// if (!keyValue) {
+			// 	return
+			// }
+			// nep2 input
+			if (this.isSwitch) {
+
+				if (!keyValue) {
+					return
+				}
+
+				return this.onNEP2.emit({ encrypted: keyValue, passphrase: passphraseValue  })
+			} else {
+				return this.onNEP2.emit({ encrypted: this.accountCache.encrypted, passphrase: passphraseValue  })
 			}
 
-		}, 1000)
 
 
-		const { file, isKey } = this
-		const { key: keyControl, passphrase: passphraseControl } = controls
-		const { key: keyValue, passphrase: passphraseValue } = value
+			// if (keyValue) {
+			// 	return this.onNEP2.emit({ encrypted: keyValue, passphrase: passphraseValue  })
+			// } else {
+			// 	return this.onNEP2.emit({ encrypted: this.accountCache.encrypted, passphrase: passphraseValue  })
+			// }
 
-		if (file && !this.isOldWallet) {
-			keyControl.setValue('')
-			passphraseControl.setValue('')
+
+
+		} catch (error) {
+			console.log('error', error)
+
+
 		}
 
-		if (keyValue && isKey) {
-			if (keyControl.invalid && keyValue !== 'test') return
-			if (isWIF(keyValue) || keyValue === 'test') return this.onWIF.emit(keyValue)
-      if (isNEP2(keyValue)) return this.onNEP2.emit({ encrypted: keyValue, passphrase: passphraseValue })
-		} else if (file && !isKey && !keyValue) {
-			if (isOldWallet(file)) {
-				if (!passphraseControl.valid) return
-				return this.onOldWallet.emit({ oldWallet: file, passphrase: passphraseValue })
-			} else if (isWallet(file)) {
-				return this.onNEP5.emit(file)
-			}
-		}
+
+
+
+	// 	const { file, isKey } = this
+	// 	const { key: keyControl, passphrase: passphraseControl } = controls
+	// 	const { key: keyValue, passphrase: passphraseValue } = value
+
+	// 	if (file && !this.isOldWallet) {
+	// 		keyControl.setValue('')
+	// 		passphraseControl.setValue('')
+	// 	}
+
+	// 	if (keyValue && isKey) {
+	// 		if (keyControl.invalid && keyValue !== 'test') return
+	// 		if (isWIF(keyValue) || keyValue === 'test') return this.onWIF.emit(keyValue)
+    //   if (isNEP2(keyValue)) return this.onNEP2.emit({ encrypted: keyValue, passphrase: passphraseValue })
+	// 	} else if (file && !isKey && !keyValue) {
+	// 		if (isOldWallet(file)) {
+	// 			if (!passphraseControl.valid) return
+	// 			return this.onOldWallet.emit({ oldWallet: file, passphrase: passphraseValue })
+	// 		} else if (isWallet(file)) {
+	// 			return this.onNEP5.emit(file)
+	// 		}
+	// 	}
 	}
 }

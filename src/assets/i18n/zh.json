@@ -1,168 +1,177 @@
 {
-	"TABS": {
-		"possessions": "资产",
-		"markets": "行情",
-		"discover": "发现",
-		"profile": "个人",
-		"exit_action": "再按一次退出应用"
-	},
-	"LOGIN": {
-		"title": "登录钱包",
-		"tip": "创建钱包",
-		"login_wallet": "确认",
-		"import_wallet": "导入",
-		"wif_placeholder": "WIF码 或 NEP2 登录",
-		"password": "请输入密码",
-		"wif_error": "无法识别的 WIF，请重试！",
-    "nep2_error": "无法识别的 NEP2，请重试！",
+  "TABS": {
+    "possessions": "资产",
+    "markets": "行情",
+    "discover": "发现",
+    "profile": "个人",
+    "exit_action": "再按一次退出应用"
+  },
+  "LOGIN": {
+    "title": "登录钱包",
+    "tip": "创建钱包",
+    "switch": "切换钱包",
+    "login_wallet": "确认",
+    "import_wallet": "导入",
+    "wif_placeholder": "NEP2字符",
+    "password": "请输入密码",
+    "wif_error": "无法识别的NEP2字符",
+    "nep2_error": "无法识别的NEP2字符",
     "nep2_passphrase_error": "密码错误，请重试！",
     "import_long": "导入钱包文件",
-		"import_short": "导入"
-	},
-	"CW": {
-		"title": "创建钱包",
-		"name": "请设置钱包名称",
-		"wif": "[可选] 使用 WIF，可不填",
-		"passphrase": "至少8~11位的字符",
-		"passphrase_confirm": "请再次输入密码确认",
-		"agreement_prefix": "已阅读同意",
-		"agreement_text": "蓝鲸淘用户协议与服务条款",
-		"create_wallet": "创建钱包",
-		"tip": "登陆钱包",
-		"BACKUP": {
-			"title": "创建钱包成功!",
-			"notes": "钱包已经生成，请妥善保管！如想导出钱包已便别处使用，请进入钱包管理进行导出操作。",
-			"enter": "进入钱包"
-		}
-	},
-	"POSSESSIONS": {
-		"totalBalances": "总资产",
-		"displayZero": "零资产",
-		"DETAILS": {
-			"title": "转账记录",
-			"transfer": "转账",
-			"in": "转入",
-			"out": "转出",
-			"nodata": "没有转账记录"
-		},
-		"QR_CODE": {
-			"address": "钱包地址",
-			"copy": "复制",
-			"share": "分享"
-		},
-		"SEND_MODAL": {
-			"title": "转账",
-			"address": "地址",
-			"password": "密码",
-			"amount": "数量",
-			"label": "备注",
-			"transfer": "点击转账"
-		}
-	},
-	"MARKETS": {
-		"title": "行情",
-		"name": "资产名称",
-		"price": "最新价",
-		"change": "跌涨幅",
-		"DETAILS": {
-			"hour": "时",
-			"day": "日",
-			"week": "周",
-			"month": "月",
-			"open": "开盘价",
-			"high": "最高价",
-			"low": "最低价",
-			"volume": "成交量/K"
-		}
-	},
-	"PROFILE": {
-		"manage_wallet": "管理钱包",
-		"contacts": "联系人",
-		"histories": "转账记录",
-		"claims": "提取 GAS",
-		"logout": "退出登录",
-		"MANAGE_WALLET": {
-			"title": "管理钱包",
-			"change_name": "更改钱包名字",
-			"export": "导出",
-			"export_wif": "导出 WIF",
-			"export_key": "导出 NEP2私钥",
-			"export_file": "导出文件",
-			"save": "保存",
-			"save_success": "保存钱包成功",
-			"default": "默认钱包",
-			"default_action": "设为默认钱包",
-			"REMOVE_ACCOUNT": {
-				"title": "删除钱包",
-				"tips_prefix": "确定要删除",
-				"tips_suffix": "这个钱包吗?",
-				"input": "输入密码",
-				"confirm": "确认删除"
-			},
-			"ADD_WALLET": {
-				"title": "添加钱包",
-				"import_wallet": "导入钱包",
-				"create_wallet": "创建钱包",
-				"watch_only": "观察模式"
-			},
-			"IMPORT_WALLET": {
-				"title": "导入钱包"
-			},
-			"WATCH_ONLY": {
-				"title": "观察模式"
-			}
-		},
-		"CONTACTS": {
-			"title": "联系人",
-			"remove_title": "删除联系人？",
-			"remove_agree": "确认",
-			"remove_disagree": "取消",
-			"EDIT": {
-				"name": "名称",
-				"address": "地址",
-				"description": "描述",
-				"save": "保存更改",
-				"address_error": "地址错误",
-				"name_error": "名称不能为空",
-				"name_length_error": "名称不能超过8位字符",
-				"update_success": "保存联系人成功",
-				"update_confirm": "地址已存在！再点击一次保存修改"
-			}
-		},
-		"HISTORIES": {
-			"title": "转账记录",
-			"name": "名称",
-			"time_operation": "时间/操作",
-			"amount": "数量",
-			"DETAIL": {
-				"operation": "操作",
-				"operation_in": "转入",
-				"operation_out": "转出",
-				"amount": "数量",
-				"address": "地址",
-				"txid": "交易号",
-				"block_height": "区块高度",
-				"status_fail": "失败",
-				"status_success": "成功",
-				"status_pending": "执行中",
-				"open_in_browser": "在浏览器中打开"
-			}
-		},
-		"SETTINGS": {
-			"title": "设置",
-			"LANGUAGES": {
-				"title": "语言"
-			},
+    "import_short": "导入"
+  },
+  "CW": {
+    "title": "创建钱包",
+    "name": "请设置钱包名称",
+    "wif": "请输入WIF私钥[选填]",
+    "passphrase": "请输入8~16位钱包密码",
+    "passphrase_confirm": "请再次输入钱包密码",
+    "agreement_prefix": "已阅读同意",
+    "agreement_text": "蓝鲸淘用户协议与服务条款",
+    "create_wallet": "创建钱包",
+    "create_error": "创建错误，请重新创建",
+    "tip": "登陆钱包",
+    "BACKUP": {
+      "success": "复制成功",
+      "title": "创建钱包成功!",
+      "pwdtip":"密码至少8~11位的字符。",
+      "notes_nep2":"点击'复制',备份保管好你的NEP2字符",
+      "notes_wif": "WIF私钥是您个人资产所有权的唯一凭证，请务必备份保管好。",
+      "enter": "进入钱包"
+    }
+  },
+  "POSSESSIONS": {
+    "totalBalances": "总资产",
+    "displayZero": "零资产",
+    "DETAILS": {
+      "title": "转账记录",
+      "transfer": "转账",
+      "in": "转入",
+      "out": "转出",
+      "nodata": "没有转账记录"
+    },
+    "QR_CODE": {
+      "address": "钱包地址",
+      "copy": "复制",
+      "share": "分享"
+    },
+    "SEND_MODAL": {
+      "title": "转账",
+      "address": "地址",
+      "password": "密码",
+      "amount": "数量",
+      "label": "备注",
+      "transfer": "点击转账"
+    }
+  },
+  "MARKETS": {
+    "title": "行情",
+    "name": "资产名称",
+    "price": "最新价",
+    "change": "跌涨幅",
+    "DETAILS": {
+      "hour": "时",
+      "day": "日",
+      "week": "周",
+      "month": "月",
+      "open": "开盘价",
+      "high": "最高价",
+      "low": "最低价",
+      "volume": "成交量/K"
+    }
+  },
+  "PROFILE": {
+    "manage_wallet": "管理钱包",
+    "contacts": "联系人",
+    "histories": "转账记录",
+    "claims": "提取 GAS",
+    "logout": "退出登录",
+    "MANAGE_WALLET": {
+      "prompt":"提示",
+      "title": "管理钱包",
+      "change_name": "更改钱包名字",
+      "export": "导出",
+      "export_wif": "导出WIF私钥",
+      "export_key": "导出NEP2字符",
+      "export_file": "导出文件",
+      "save": "保存",
+      "message":"注意，导出 私钥  并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替",
+      "save_success": "保存钱包成功",
+      "default": "默认钱包",
+      "default_action": "设为默认钱包",
+      "REMOVE_ACCOUNT": {
+        "title": "删除钱包",
+        "tips_prefix": "确定要删除",
+        "tips_suffix": "这个钱包吗?",
+        "input": "输入密码",
+        "confirm": "确认删除"
+      },
+      "ADD_WALLET": {
+        "title": "添加钱包",
+        "import_wallet": "导入钱包",
+        "create_wallet": "创建钱包",
+        "watch_only": "观察模式"
+      },
+      "IMPORT_WALLET": {
+        "title": "导入钱包"
+      },
+      "WATCH_ONLY": {
+        "title": "观察模式"
+      }
+    },
+    "CONTACTS": {
+      "title": "联系人",
+      "remove_title": "删除联系人？",
+      "remove_agree": "确认",
+      "remove_disagree": "取消",
+      "EDIT": {
+        "name": "名称",
+        "address": "地址",
+        "description": "描述",
+        "save": "保存更改",
+        "address_error": "地址错误",
+        "name_error": "名称不能为空",
+        "name_length_error": "名称不能超过8位字符",
+        "update_success": "保存联系人成功",
+        "update_confirm": "地址已存在！再点击一次保存修改"
+      }
+    },
+    "HISTORIES": {
+      "title": "转账记录",
+      "name": "名称",
+      "time_operation": "时间/操作",
+      "amount": "数量",
+      "DETAIL": {
+        "operation": "操作",
+        "operation_in": "转入",
+        "operation_out": "转出",
+        "amount": "数量",
+        "address": "地址",
+        "txid": "交易号",
+        "block_height": "区块高度",
+        "status_fail": "失败",
+        "status_success": "成功",
+        "status_pending": "执行中",
+        "open_in_browser": "在浏览器中打开"
+      }
+    },
+    "SETTINGS": {
+      "title": "设置",
+      "LANGUAGES": {
+        "title": "语言"
+      },
       "CURRENCIES": {
         "title": "基础货币"
       }
-		},
-		"CLAIMS": {
-			"title": "提取分红",
-			"loading": "正在提取",
-			"available": "可提取",
-			"unavailable": "不可提取",
-			"do_claims": "一键提取"
-		}
-	}
+    },
+    "CLAIMS": {
+      "title": "提取分红",
+      "loading": "正在提取",
+      "available": "可提取",
+      "unavailable": "不可提取",
+	  "do_claims": "一键提取",
+	  "success": "提取成功",
+	  "fail": "提取失败"
+    }
+  }
 }

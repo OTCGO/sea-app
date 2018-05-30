@@ -1,5 +1,6 @@
 page-possessions {
   ion-content.possessions-content {
+    
 
     ion-card {
       margin: 0;
@@ -37,7 +38,7 @@ page-possessions {
       & .bg {
         background-image: url(../assets/imgs/bg-possessions.png);
         background-repeat: no-repeat;
-        background-position: top 4% center;
+        background-position: top 0 center;
         background-size: 101%;
         z-index: -1;
         position: absolute;

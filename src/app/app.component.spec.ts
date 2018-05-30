@@ -26,7 +26,7 @@ describe('MyApp Component', () => {
 			declarations: [MyApp],
 			imports: [
 				IonicModule.forRoot(MyApp),
-			  HttpClientTestingModule,
+			  	HttpClientTestingModule,
 				TranslateModule.forRoot({
 					loader: {
 						provide: TranslateLoader,

@@ -111,11 +111,10 @@ export class SendModalComponent implements OnInit {
 		    .decrypt(this.passphrase.value)
 		    .then(async pr => {
 			    const result: any = await this.sendModalProvider.doSendAsset({
-				    dests: this.toAddress.value,
+				    dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
 				    amounts: this.amount.value,
 				    assetId: this.selectedBalance.hash
 				}, pr)
-
 
 
 				await this.handleClose()

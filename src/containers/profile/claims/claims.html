@@ -60,14 +60,14 @@
 		<div class="claims__svg-text"
 		     text-center>
 			<p>{{ 'PROFILE.CLAIMS.unavailable' | translate }}</p>
-			<p class="title">{{ (claims | async)?.available }} GAS</p>
-			<p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
 			<p class="title">{{ (claims | async)?.unavailable }} GAS</p>
+			<p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
+			<p class="title">{{ (claims | async)?.available }} GAS</p>
 		</div>
 
 
 		<button *ngIf = "btnLoading" ion-button round full clear class="claims__button otcgo-button">
-			<ion-spinner  item-start name="crescent"></ion-spinner>
+			<ion-spinner  item-start name="ios"></ion-spinner>
 			{{ 'PROFILE.CLAIMS.loading' | translate }}
 		</button>
 

@@ -44,7 +44,7 @@ page-possession-detail {
       color: white;
 
       .possession-data-amount {
-        padding-top: 50px;
+        padding-top: 1rem;
 
         font-size: 4.4rem;
         text-shadow: 0 2px 2px rgba(0, 0, 0, 0.14),
@@ -130,7 +130,10 @@ ion-modal.inset-modal {
   padding: 50% 0 0;
 }
 
+ion-app.ios [padding] .scroll-content{
+  padding: 0px
+}
 
 ion-app.md [padding] .scroll-content{
-  padding: 0
+  padding: 0px
 }

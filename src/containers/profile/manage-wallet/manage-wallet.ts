@@ -75,6 +75,6 @@ export class ManageWalletPage {
 	}
 
 	openModal (data) {
-		this.modalCtrl.create('RemoveAccountModal', data, { cssClass: 'sea-card' }).present()
+		// this.modalCtrl.create('RemoveAccountModal', data, { cssClass: 'sea-card' }).present()
 	}
 }

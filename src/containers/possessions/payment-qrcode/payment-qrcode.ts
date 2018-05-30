@@ -7,6 +7,7 @@ import {
 import { Clipboard } from '@ionic-native/clipboard'
 import { SocialSharing } from '@ionic-native/social-sharing'
 import { NotificationProvider } from '../../../providers/notification.provider'
+import { TranslateService } from '@ngx-translate/core'
 
 
 @IonicPage({
@@ -49,7 +50,8 @@ export class PaymentQRCodePage {
 
 
 	constructor (
-		navParams: NavParams,
+		private navParams: NavParams,
+		private ts: TranslateService,
 		private clipboard: Clipboard,
 		private socialSharing: SocialSharing,
 		private np: NotificationProvider,
@@ -75,7 +77,14 @@ export class PaymentQRCodePage {
 				console.log('unable to copy', err)
 			}
 		}
-		this.clipboard.copy(this.address).then(() => this.np.emit({ message: 'copy success' }))
+
+		let copyText
+		this.ts.get('CW.BACKUP.success').subscribe(data => {
+			copyText = data
+		})
+
+
+		this.clipboard.copy(this.address).then(() => this.np.emit({ message: copyText }))
 	}
 
 	share () {

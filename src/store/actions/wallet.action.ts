@@ -77,7 +77,7 @@ export class AddAccountSuccess implements Action {
 export class RemoveAccount implements Action {
 	readonly type = WalletActionTypes.REMOVE_ACCOUNT
 
-	constructor (public payload: Account) { }
+	constructor () { }
 }
 
 export class RemoveAccountFail implements Action {

@@ -16,6 +16,8 @@ import { AuthSelectors } from '../../store/selectors'
 import { decryptAsync } from '../../shared/utils'
 import { TranslateService } from '@ngx-translate/core'
 import { wallet } from '../../libs/neon'
+import { NativeStorage } from '@ionic-native/native-storage'
+
 
 
 @IonicPage({
@@ -27,16 +29,18 @@ import { wallet } from '../../libs/neon'
 	templateUrl: 'login.html',
 })
 export class LoginPage implements OnInit {
-	translationPrefix = 'LOGIN.'
-
+  translationPrefix = 'LOGIN.'
+  private account
+  private isSwitch: boolean
 	constructor (
+    private nativeStorage: NativeStorage,
 		public navCtrl: NavController,
 		public navParams: NavParams,
 		private np: NotificationProvider,
 		private lp: LoadingProvider,
 		private ts: TranslateService,
 		private loadingCtrl: LoadingController,
-		private store: Store<RootState>
+    private store: Store<RootState>,
 	) {}
 
 	ngOnInit () {
@@ -80,17 +84,36 @@ export class LoginPage implements OnInit {
 
   }
 
+  switchAccount() {
+    console.log('this.isSwitch')
+    this.store.dispatch(new WalletActions.RemoveAccount())
+    this.isSwitch = true
+    // clear all storage
+    this.nativeStorage.clear()
+    console.log('this.isSwitch', this.isSwitch)
+  }
 
-  NEP2Login ({ encrypted, passphrase }) {
-    if (passphrase === '') {
-      return
-    }
+  async NEP2Login ({ encrypted, passphrase }) {
     const loading = this.loadingCtrl.create()
     loading.present()
+    try {
+      if (passphrase === '') {
+        return
+      }
 
-    decryptAsync(encrypted, passphrase).then(wif => {
+      const start = new Date().getTime()
+
+     const wif = await decryptAsync(encrypted, passphrase)
+     // const wif = wallet.decrypt(encrypted, passphrase)
+   //  const acct = new wallet.Account(wif)
+  　　const end = new Date().getTime()
+  　　console.log('NEP2Login', end - start)
+
+
       const tempAcct = new wallet.Account(wif)
+
       const { address } = tempAcct
+
       const acct = new wallet.Account({
         address,
         label: address,
@@ -100,18 +123,40 @@ export class LoginPage implements OnInit {
 
       loading.dismiss().catch(() => {})
       this.store.dispatch(new WalletActions.AddAccount(acct))
-      this.navCtrl.setRoot('Tabs')
+
+      this.nativeStorage.setItem('account', { encrypted })
 
 
-    }).catch((e) => {
-      /* It is usually to get there because the passphrase is wrong */
-      console.log('error on NEP2Login', e)
-      let msg: string
-      this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => msg = data)
-      this.np.emit(msg)
+      // this.navCtrl.setRoot('Tabs')
+      this.navCtrl.push('Tabs')
+    } catch (error) {
+      console.log('error on NEP2Login', error)
+     // let msg: string
+      this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => {
+        this.np.emit(data)
+      })
+
       loading.dismiss().catch(() => {})
+    }
 
-    })
+    // decryptAsync(encrypted, passphrase).then(async wif => {
+    //   try {
+
+    //   } catch (error) {
+
+    //   }
+
+
+
+    // }).catch((e) => {
+    //   /* It is usually to get there because the passphrase is wrong */
+    //   console.log('error on NEP2Login', e)
+    //   let msg: string
+    //   this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => msg = data)
+    //   this.np.emit(msg)
+    //   loading.dismiss().catch(() => {})
+
+    // })
     // this.store.dispatch(new AuthActions.LoginNEP2())
   }
 }

@@ -9,12 +9,13 @@
   "LOGIN": {
     "title": "Login Wallet",
     "tip": "Create Wallet",
+    "switch": "Switch Wallet",
     "login_wallet": "Login",
     "import_wallet": "Import",
-    "wif_placeholder": "Using WIF Key or with NEP2 Encrypted key",
-    "password": "Enter password",
-    "wif_error": "Invalid WIF format, please retry.",
-    "nep2_error": "Invalid Encrypted Key format, please retry",
+    "wif_placeholder": "NEP2 Encrypted Key",
+    "password": "Enter Password",
+    "wif_error": "Invalid Encrypted Key Format",
+    "nep2_error": "Invalid Encrypted Key Format",
     "nep2_passphrase_error": "Incorrect passphrase, please retry",
     "import_long": "Import Wallet File",
     "import_short": "Import"
@@ -28,10 +29,14 @@
     "agreement_prefix": "Agree on",
     "agreement_text": "Team of Service & Privacy Policy",
     "create_wallet": "Create",
+    "create_error": "Create Error,Please Try",
     "tip": "Login",
     "BACKUP": {
+      "success": "Copy success",
       "title": "Create success!",
-      "notes": "Wallet file can't not be save here! To export 'EncryptedKey' or 'WIF' Go to profile manage-wallet.",
+      "pwdtip":"Password at least 8-11 characters",
+      "notes_nep2":"Click 'copy', and the backup is kept for your NEP2 character",
+      "notes_wif": "WIF private key is the only certificate of ownership of your personal assets. Please backup and keep it well.",
       "enter": "Enter"
     }
   },
@@ -82,13 +87,15 @@
     "claims": "Claims",
     "logout": "Logout",
     "MANAGE_WALLET": {
+      "prompt":"prompt",
       "title": "Manage wallet",
       "change_name": "Change name",
       "export": "Export",
       "export_wif": "Export WIF",
-      "export_key": "Export NEP2 WIF",
+      "export_key": "Export NEP2 ",
       "export_file": "Export File",
       "save": "Save",
+      "message":"Note that exporting the private key and using it is a very dangerous thing. It is recommended to use the encrypted private key (EncryptedKey) instead of",
       "save_success": "Save Wallet Success",
       "default": "Default",
       "default_action": "Set to default",
@@ -149,6 +156,8 @@
       }
     },
     "SETTINGS": {
+      "success": "success",
+      "fail": "fail",
       "title": "Setting",
       "LANGUAGES": {
         "title": "Languages"
@@ -162,7 +171,9 @@
       "loading": "Handing",
       "available": "Available GAS",
       "unavailable": "UnAvailable GAS",
-      "do_claims": "Do claims"
+      "do_claims": "Do claims",
+      "success": "success",
+      "fail": "fail"
     }
   }
 }

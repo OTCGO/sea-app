@@ -13,11 +13,23 @@
       (localeClick)="handleLocaleClick($event)"></settings-language>
   </ion-list>
 
-  <ion-list>
+  <ion-row>
+      <ion-col>
+          <button ion-button round  full color="danger" (click)="logout()">{{ 'PROFILE.logout' | translate }}</button>
+      </ion-col>
+  </ion-row>
+
+
+
+ <!-- <ion-list>
+    
+  </ion-list> -->
+
+  <!-- <ion-list>
     <settings-currencies
       [currencies]="currencies"
       [currentCurrency]="currentCurrency | async"
       (currencyClick)="handleCurrencyClick($event)"></settings-currencies>
-  </ion-list>
+  </ion-list> -->
 
 </ion-content>

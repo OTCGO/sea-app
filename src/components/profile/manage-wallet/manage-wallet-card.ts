@@ -16,6 +16,7 @@ import { wallet } from '../../../libs/neon'
 import { Account } from '../../../shared/typings'
 import * as copy from 'copy-to-clipboard'
 import { IfObservable } from 'rxjs/observable/IfObservable'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
 	selector: 'manage-wallet-card',
@@ -23,12 +24,7 @@ import { IfObservable } from 'rxjs/observable/IfObservable'
 })
 export class ManageWalletCard {
 	tempLabel = ''
-	baseAlertOptions = {
-		cssClass: 'mw__exports-actions--box',
-		message: '注意，导出 私钥 或 WIF 并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替',
-		inputs: [{ name: 'passphrase', placeholder: '钱包密码', type: 'password' }],
-		buttons: [ { text: '取消' } ]
-	}
+	baseAlertOptions: any
 	translationPrefix = 'PROFILE.MANAGE_WALLET.'
 
 	@Input() account: Account
@@ -53,10 +49,40 @@ export class ManageWalletCard {
 		private loadingCtrl: LoadingController,
 		private np: NotificationProvider,
 		private platform: Platform,
-		private el: ElementRef
-	) { }
+		private el: ElementRef,
+		private ts: TranslateService,
+	) {
+
+		let message
+
+		this.ts.get('PROFILE.MANAGE_WALLET.message').subscribe(data => {
+			message = data
+		})
+
+		let placeholder
+
+		this.ts.get('PROFILE.MANAGE_WALLET.REMOVE_ACCOUNT.input').subscribe(data => {
+			placeholder = data
+		})
+
+		let btnCancle
+
+		this.ts.get('PROFILE.CONTACTS.remove_disagree').subscribe(data => {
+			btnCancle = data
+		})
+
+		this.baseAlertOptions = {
+			cssClass: 'mw__exports-actions--box',
+			// message: '注意，导出 私钥  并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替',
+			message ,
+			inputs: [{ name: 'passphrase', placeholder: placeholder, type: 'password' }],
+			buttons: [ { text: btnCancle } ]
+		}
+	 }
 
 	handleWIFClick (account) { this.showWIFKeyBox(account) }
+
+
 	handleEncryptedClick (account) {
 		try {
 			console.log('handleEncryptedClick:account', account)
@@ -80,14 +106,29 @@ export class ManageWalletCard {
 
 	showWIFKeyBox (account) {
 		try {
-			if (account.WIF) return this.showKeyBox({ title: 'WIF', message: account.WIF })
-		} catch (e) {
+			// if (account.WIF) return this.showKeyBox({ title: 'WIF', message: account.WIF })
+
+			// let btnCancle
+			let btnConfirm
+
+
+
+			// this.ts.get('PROFILE.CONTACTS.remove_disagree').subscribe(data => {
+			// 	btnCancle = data
+			// })
+			this.ts.get('PROFILE.CONTACTS.remove_agree').subscribe(data => {
+				btnConfirm = data
+			})
+
+
+
+
 			const commonLoading = this.loadingCtrl.create()
 			const alertOptions = Object.assign({}, this.baseAlertOptions, {
-				title: '导出WIF',
+				title: 'wif',
 				buttons: [
 					...this.baseAlertOptions.buttons, {
-						text: '确认',
+						text: btnConfirm,
 						handler: ({ passphrase }) =>
 							passphrase &&
 							passphrase.length >= 4 &&
@@ -96,6 +137,8 @@ export class ManageWalletCard {
 				]
 			})
 			this.alertCtrl.create(alertOptions).present()
+		} catch (e) {
+
 		}
 	}
 
@@ -112,33 +155,66 @@ export class ManageWalletCard {
 
 				return this.np.emit(`copy success!`)
 			}
-			this.clipBoard.copy(message).then(() => this.np.emit('copy success'))
+
+			let copyText
+			this.ts.get('CW.BACKUP.success').subscribe(data => {
+				copyText = data
+			})
+			this.clipBoard.copy(message).then(() => this.np.emit(copyText))
 		}
+
+		let btnCancle
+		let btnCopy
+
+		this.ts.get('PROFILE.CONTACTS.remove_disagree').subscribe(data => {
+			btnCancle = data
+    	})
+
+    	this.ts.get('POSSESSIONS.QR_CODE.copy').subscribe(data => {
+			btnCopy = data
+		})
 
 		this.alertCtrl.create({
 			title, message, cssClass: 'mw__exports-actions--key',
-			buttons: [{ text: '取消' }, { text: '复制', handler }]
+			buttons: [{ text: btnCancle }, { text: btnCopy, handler }]
 		}).present()
 	}
 
 	async parsePassphrase (encryptedKey, passphrase, commonLoading, type) {
 		await commonLoading.present()
 		try {
+
+
+
+
 			const wif = wallet.decrypt(encryptedKey, passphrase)
 			const account = new wallet.Account(wif)
 			await commonLoading.dismiss().catch(() => {})
-			if (type === 'privateKey') return this.showKeyBox({ title: '私钥', message: account['privateKey'] })
+			if (type === 'privateKey') return this.showKeyBox({ title: wif, message: account['privateKey'] })
 			return this.showKeyBox({ title: 'WIF', message: account['WIF'] })
 		} catch (error) {
 			await this.handleError(commonLoading)
 		}
 	}
 
+
+
 	async handleError (loading) {
+
+		let title
+		let message
+
+		this.ts.get('PROFILE.MANAGE_WALLET.prompt').subscribe(data => {
+			title = data
+		})
+
+		this.ts.get('LOGIN.nep2_passphrase_error').subscribe(data => {
+			message = data
+		})
 		await loading.dismiss().catch(() => {})
 		await this.alertCtrl.create({
-			title: '提示',
-			message: '密码错误',
+			title: title,
+			message: message,
 			buttons: ['OK']
 		}).present()
 	}
@@ -154,9 +230,24 @@ export class ManageWalletCard {
 			if (!passphrase || passphrase.length < 4) return false
 			this.parsePassphrase(account.encrypted, passphrase, commonLoading, 'privateKey')
 		}
+
+		let title
+		let btnConfirm
+
+		this.ts.get('PROFILE.MANAGE_WALLET.export_wif').subscribe(data => {
+			title = data
+			// message = data
+			// placeholder = data
+		})
+
+		this.ts.get('PROFILE.CONTACTS.remove_agree').subscribe(data => {
+			btnConfirm = data
+		})
+
+
 		const alertOptions = Object.assign({}, this.baseAlertOptions, {
-			title: '导出私钥',
-			buttons: [...this.baseAlertOptions.buttons, { text: '确认', handler }]
+			title: title,
+			buttons: [...this.baseAlertOptions.buttons, { text: btnConfirm, handler }]
 		})
 		this.alertCtrl.create(alertOptions).present()
 	}

@@ -94,7 +94,7 @@ export class RemoveAccountModal implements OnInit {
 	}
 
 	handleConfirmClick () {
-		this.store.dispatch(new WalletActions.RemoveAccount(this.account))
-		this.handleCloseClick()
+		// this.store.dispatch(new WalletActions.RemoveAccount(this.account))
+		// this.handleCloseClick()
 	}
 }

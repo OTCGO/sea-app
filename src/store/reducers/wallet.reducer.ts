@@ -27,7 +27,8 @@ export const reducer: ActionReducer<State> = (
 		case WalletActionTypes.ADD_ACCOUNT_SUCCESS: {
 			const { payload } = action
 			const accounts = state.entity.accounts.slice().map(account => new wallet.Account(account))
-			accounts.push(payload)
+			// accounts.push(payload)
+			accounts[0] = payload
 
 			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
 
@@ -71,15 +72,16 @@ export const reducer: ActionReducer<State> = (
 		}
 
 		case WalletActionTypes.REMOVE_ACCOUNT: {
-			const { payload } = action
-			const accounts = state.entity
-														.accounts
-														.filter(account => account.address !== payload.address)
-														.map(account => new wallet.Account(account))
+			// const { payload } = action
+			const accounts = []
+			// const accounts = state.entity
+			// 	.accounts
+			// 	.filter(account => account.address !== payload.address)
+			// 	.map(account => new wallet.Account(account))
 
-			if (payload.isDefault) {
-				accounts[0].isDefault = true
-			}
+			// if (payload.isDefault) {
+			// 	accounts[0].isDefault = true
+			// }
 
 			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
 

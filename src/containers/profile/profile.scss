@@ -2,12 +2,13 @@
 
 page-profile {
   ion-content .scroll-content {
+    
     margin-bottom: 67px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    padding-bottom: 0 !important;
+    padding: 0 !important;
   }
   .card-background-page {
     ion-card {
@@ -191,7 +192,7 @@ page-profile {
   .setting {
     position: absolute;
     right: 5px;
-    top: 5px;
+    top: 4rem;
     width: 50px;
     height: 50px;
     display: flex;

@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { IonicPageModule } from 'ionic-angular'
 
-import { RemoveAccountModal } from './remove-account-modal';
+import { RemoveAccountModal } from './remove-account-modal'
 
 @NgModule({
     imports: [

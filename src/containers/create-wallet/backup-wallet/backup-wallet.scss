@@ -29,6 +29,14 @@ page-backup-wallet {
       .backup-wallet__button {
         width: 80%;
       }
+
+      .backup-wallet__nep2{
+        width: 70%;
+        height: 15rem;
+      }
+      .notes-wif{
+        color: tomato
+      }
     }
   }
 }

@@ -3,7 +3,7 @@
     <name>SEA</name>
     <description>An awesome Neo Wallet app.</description>
     <author email="AmagiDDmxh@qq.com" href="https://otcgo.cn">Otcgo Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.0.104:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

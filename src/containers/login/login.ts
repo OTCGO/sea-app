@@ -103,8 +103,8 @@ export class LoginPage implements OnInit {
 
       const start = new Date().getTime()
 
-     const wif = await decryptAsync(encrypted, passphrase)
-     // const wif = wallet.decrypt(encrypted, passphrase)
+      const wif = await decryptAsync(encrypted, passphrase)
+     // const wif = await wallet.decryptAsync(encrypted, passphrase)
    //  const acct = new wallet.Account(wif)
   　　const end = new Date().getTime()
   　　console.log('NEP2Login', end - start)

@@ -81,9 +81,9 @@
     }
   },
   "PROFILE": {
-    "manage_wallet": "Manage wallet",
+    "manage_wallet": "Manage Wallet",
     "contacts": "Contacts",
-    "histories": "Histories",
+    "histories": "Transaction Records",
     "claims": "Claims",
     "logout": "Logout",
     "MANAGE_WALLET": {
@@ -137,7 +137,7 @@
       }
     },
     "HISTORIES": {
-      "title": "Histories",
+      "title": "Transaction Records",
       "name": "name",
       "time_operation": "Time/Operation",
       "amount": "amount",

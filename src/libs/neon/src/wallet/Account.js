@@ -25,6 +25,7 @@ class Account {
     if (!str) {
       this._privateKey = core.generatePrivateKey()
     } else if (typeof str === 'object') {
+      this._WIF = str.wif || ''
       this._encrypted = str.key
       this._address = str.address
       this.label = str.label || ''

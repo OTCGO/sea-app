@@ -112,6 +112,44 @@ export class ClaimsPage {
 		console.log('successText', successText)
 		console.log('failText', failText)
 
+		try {
+
+			this.btnLoading = true
+
+			// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+
+			console.log('pr:WIF', this.account.WIF)
+			const pr = getPrivateKeyFromWIF(this.account.WIF)
+
+			console.log('pr', pr)
+			this.claimsProvider.doClaims(pr).then(result => {
+
+				this.btnLoading = false
+
+				if (result) {
+					this.showPrompt(successText)
+					return
+				}
+
+				this.showPrompt(failText)
+
+
+
+
+			}).catch((e) => {
+				this.showPrompt(failText)
+				console.log(e)
+
+				this.btnLoading = false
+			})
+
+		} catch (error) {
+			this.showPrompt(failText)
+			// prompt.dismiss().catch(() => {})
+			this.btnLoading = false
+		}
+
+		/*
 		// file login
 		const prompt = this.alertCtrl.create({
 			title: title,
@@ -162,6 +200,8 @@ export class ClaimsPage {
 			]
 		})
 		prompt.present()
+
+		*/
 	}
 
 	showPrompt(msg) {

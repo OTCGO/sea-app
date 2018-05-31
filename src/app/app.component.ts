@@ -20,6 +20,8 @@ import { RootState } from '../store/reducers'
 import {
 	SettingsSelectors,
 } from '../store/selectors'
+import { Globalization } from '@ionic-native/globalization'
+
 
 
 @Component({
@@ -36,7 +38,8 @@ export class MyApp implements OnInit {
 		private splashScreen: SplashScreen,
 		private translateService: TranslateService,
 		private np: NotificationProvider,
-		private store: Store<RootState>
+		private store: Store<RootState>,
+		private globalization: Globalization
 	) {
 
 
@@ -73,15 +76,26 @@ export class MyApp implements OnInit {
 	// 	this.store.dispatch(new WalletActions.Load())
 	// }
 
-	initTranslate () {
-		this.translateService.addLangs(['zh', 'en'])
-		this.translateService.setDefaultLang('zh')
-		this.translateService.use('zh')
+	async initTranslate () {
+		try {
+			this.translateService.addLangs(['zh', 'en'])
+			this.translateService.setDefaultLang('zh')
 
-		this.store.select(SettingsSelectors.getLanguage)
-				.subscribe(language => {
-					const locale = language.split('-')[0]
-					this.translateService.use(locale || 'zh')
-				})
+			const syslan = await this.globalization.getPreferredLanguage()
+			console.log('syslan', syslan)
+			// .then(res => console.log(res))
+			// .catch(e => console.log(e))
+			const locale = syslan.value.split('-')[0]
+			this.translateService.use(locale || 'zh')
+
+
+		} catch (error) {
+			this.store.select(SettingsSelectors.getLanguage)
+					.subscribe(language => {
+						const locale = language.split('-')[0]
+						this.translateService.use(locale || 'zh')
+					})
+		}
+
 	}
 }

@@ -121,6 +121,8 @@ export class LoginPage implements OnInit {
         isDefault: true
       })
 
+      console.log('acct', acct)
+
       loading.dismiss().catch(() => {})
       this.store.dispatch(new WalletActions.AddAccount(acct))
 

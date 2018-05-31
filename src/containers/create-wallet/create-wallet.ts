@@ -65,27 +65,32 @@ export class CreateWalletPage implements OnInit {
       !this.protocolAgreement
   }
 
-  createWallet () {
+  async createWallet () {
+    try {
+
 		const loading = this.loadingCtrl.create()
-		loading.present()
+		await loading.present()
 
 
 		setTimeout(() => {
 		    loading.dismiss().catch(() => {})
-		}, 1000)
+    }, 1000)
+
+    if (this.passphrase1 !== this.passphrase2) {
+      return
+    }
 
     let pwdtip
-    this.ts.get('CW.pwdtip').subscribe(data => {
+    this.ts.get('CW.BACKUP.pwdtip').subscribe(data => {
       pwdtip = data
     })
+
     if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1)) {
       return this.np.emit({ message: pwdtip })
     }
 
 
-    if (this.passphrase1 !== this.passphrase2) {
-      return
-    }
+
 
     // if (this.wif && !wallet.isWIF(this.wif)) {
     //   this.np.emit({ message: 'WIF format wrong' })
@@ -111,7 +116,9 @@ export class CreateWalletPage implements OnInit {
     loading.dismiss().catch(() => {}).catch(() => {})
     this.store.dispatch(new AuthActions.CreateWallet(dispatchOption))
 
+  } catch (error) {
 
+  }
 
   }
 

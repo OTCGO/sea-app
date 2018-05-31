@@ -36,7 +36,7 @@
       "title": "创建钱包成功!",
       "pwdtip":"密码至少8~11位的字符。",
       "notes_nep2":"点击'复制',备份保管好你的NEP2字符",
-      "notes_wif": "WIF私钥是您个人资产所有权的唯一凭证，请务必备份保管好。",
+      "notes_wif": "WIF私钥是您个人资产所有权的唯一凭证，请务必备份保管好。进入'钱包管理',请务必备份保管好",
       "enter": "进入钱包"
     }
   },
@@ -89,13 +89,15 @@
     "MANAGE_WALLET": {
       "prompt":"提示",
       "title": "管理钱包",
+      "wif":"WIF私钥",
+      "nep2":"NEP2字符",
       "change_name": "更改钱包名字",
       "export": "导出",
       "export_wif": "导出WIF私钥",
       "export_key": "导出NEP2字符",
       "export_file": "导出文件",
       "save": "保存",
-      "message":"注意，导出 私钥  并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替",
+      "message":"注意，导出 私钥  并使用是一件非常危险的事情，建议使用加密私钥NEP2字符代替",
       "save_success": "保存钱包成功",
       "default": "默认钱包",
       "default_action": "设为默认钱包",

@@ -25,7 +25,7 @@ const initialSettingsState: State = {
 	loading: false,
 	error: '',
 	currency: DEFAULT_CURRENCY,
-  preCurrency: DEFAULT_CURRENCY
+  	preCurrency: DEFAULT_CURRENCY
 }
 
 export const reducer = (state = initialSettingsState, action: SettingsActions): State => {
@@ -60,7 +60,7 @@ export const reducer = (state = initialSettingsState, action: SettingsActions): 
 				...state,
 				loading: false,
 				currency: action.payload,
-        preCurrency: state.currency
+        		preCurrency: state.currency
 			}
 		}
 

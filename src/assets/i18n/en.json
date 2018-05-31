@@ -88,6 +88,8 @@
     "logout": "Logout",
     "MANAGE_WALLET": {
       "prompt":"prompt",
+      "wif":"WIF",
+      "nep2":"NEP2",
       "title": "Manage wallet",
       "change_name": "Change name",
       "export": "Export",

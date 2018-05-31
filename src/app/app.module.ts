@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { DBModule } from '@ngrx/db'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { Globalization } from '@ionic-native/globalization'
 
 import { MyApp } from './app.component'
 import { dev } from '../environments/environment'
@@ -73,7 +74,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     CoreModule.forRoot()
   ],
   providers: [
-    InAppBrowser
+    InAppBrowser,
+    Globalization
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

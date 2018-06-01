@@ -1,7 +1,7 @@
 import {
-	Component,
-	OnDestroy,
-	OnInit
+  Component,
+  OnDestroy,
+  OnInit
 } from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
@@ -39,7 +39,7 @@ export class CreateWalletPage implements OnInit {
   private wifError: string
 
 
-  constructor (
+  constructor(
     private navCtrl: NavController,
     private store: Store<fromWallet.State>,
     private np: NotificationProvider,
@@ -48,12 +48,16 @@ export class CreateWalletPage implements OnInit {
     private ts: TranslateService,
   ) { }
 
-  ngOnInit () {
+  ngOnInit() {
     this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
-		this.store.select(AuthSelectors.getError).subscribe(err => this.np.emit({ message: err }))
+    this.store.select(AuthSelectors.getError).subscribe(err => {
+      this.ts.get('CW.create_error').subscribe(data => {
+        return this.np.emit({ message: data })
+      })
+    })
   }
 
-  get disabledButton () {
+  get disabledButton() {
     if (this.wif)
       return !this.passphrase1 || !this.passphrase2 ||
         (this.passphrase1 !== this.passphrase2) ||
@@ -65,65 +69,69 @@ export class CreateWalletPage implements OnInit {
       !this.protocolAgreement
   }
 
-  async createWallet () {
+  async createWallet() {
     try {
 
-		const loading = this.loadingCtrl.create()
-		await loading.present()
+      const loading = this.loadingCtrl.create()
+      await loading.present()
 
 
-		setTimeout(() => {
-		    loading.dismiss().catch(() => {})
-    }, 1000)
+      setTimeout(() => {
+        loading.dismiss().catch(() => { })
+      }, 1000)
 
-    if (this.passphrase1 !== this.passphrase2) {
-      return
+      if (this.passphrase1 !== this.passphrase2) {
+        return
+      }
+
+      let pwdtip
+      this.ts.get('CW.BACKUP.pwdtip').subscribe(data => {
+        pwdtip = data
+      })
+
+      if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1)) {
+        return this.np.emit({ message: pwdtip })
+      }
+
+
+
+
+      // if (this.wif && !wallet.isWIF(this.wif)) {
+      //   this.np.emit({ message: 'WIF format wrong' })
+      //   return
+      // }
+
+      // const variations: object = {
+      //     digits: /\d/.test(this.passphrase1), // 数字
+      //     lower: /[a-z]/.test(this.passphrase1), // 小写
+      //     upper: /[A-Z]/.test(this.passphrase1), // 大写
+      //     length: this.passphrase1.length > 10 // 长度 11位
+      // }
+
+      // if (/\d/.test(this.passphrase1) && /[a-z]/.test(this.passphrase1) && /[A-Z]/.test(this.passphrase1) && this.passphrase1.length > 10 ) {
+
+      // }
+
+      const dispatchOption = {
+        wif: this.wif,
+        label: this.name,
+        passphrase: this.passphrase1
+      }
+      loading.dismiss().catch(() => { }).catch(() => { })
+      this.store.dispatch(new AuthActions.CreateWallet(dispatchOption))
+
+    } catch (error) {
+
+      this.ts.get('CW.create_error').subscribe(data => {
+        return this.np.emit({ message: data })
+      })
+
     }
-
-    let pwdtip
-    this.ts.get('CW.BACKUP.pwdtip').subscribe(data => {
-      pwdtip = data
-    })
-
-    if (this.passphrase1 && !this.validatePassphraseStrength(this.passphrase1)) {
-      return this.np.emit({ message: pwdtip })
-    }
-
-
-
-
-    // if (this.wif && !wallet.isWIF(this.wif)) {
-    //   this.np.emit({ message: 'WIF format wrong' })
-    //   return
-    // }
-
-    // const variations: object = {
-    //     digits: /\d/.test(this.passphrase1), // 数字
-    //     lower: /[a-z]/.test(this.passphrase1), // 小写
-    //     upper: /[A-Z]/.test(this.passphrase1), // 大写
-    //     length: this.passphrase1.length > 10 // 长度 11位
-    // }
-
-    // if (/\d/.test(this.passphrase1) && /[a-z]/.test(this.passphrase1) && /[A-Z]/.test(this.passphrase1) && this.passphrase1.length > 10 ) {
-
-    // }
-
-    const dispatchOption = {
-      wif: this.wif,
-      label: this.name,
-      passphrase: this.passphrase1
-    }
-    loading.dismiss().catch(() => {}).catch(() => {})
-    this.store.dispatch(new AuthActions.CreateWallet(dispatchOption))
-
-  } catch (error) {
 
   }
 
-  }
-
-  validatePassphraseStrength (passphrase) {
-    return  8 <= this.passphrase1.length && this.passphrase1.length <= 16
+  validatePassphraseStrength(passphrase) {
+    return 8 <= this.passphrase1.length && this.passphrase1.length <= 16
     // return /\d/.test(this.passphrase1) && /[a-z]/.test(this.passphrase1) && /[A-Z]/.test(this.passphrase1) && this.passphrase1.length > 10
   }
 }

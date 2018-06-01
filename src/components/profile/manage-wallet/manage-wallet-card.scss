@@ -61,7 +61,8 @@ manage-wallet-card {
   }
 
   .mw__label {
-    position: absolute;
+    position: fixed;
+    top:8rem;
     left: 2rem;
     width: 86%;
     text-align: left;

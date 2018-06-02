@@ -53,9 +53,9 @@ if (!Array.prototype.includes) {
 }
 
 
-// if (!dev && window) {
-// 	window.console.log = function() {}
-// }
+if (!dev && window) {
+	window.console.log = function() {}
+}
 
 
 enableProdMode()

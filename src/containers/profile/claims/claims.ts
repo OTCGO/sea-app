@@ -128,23 +128,28 @@ export class ClaimsPage {
 						try {
 							if (!passphrase || passphrase === '' || passphrase.length < 4) return false
 
+							const loading = this.loadingCtrl.create()
+							loading.present().then(() => {
+								this.btnLoading = true
 
-							this.btnLoading = true
+								const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+								this.claimsProvider.doClaims(pr).then(result => {
 
-							const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
-							this.claimsProvider.doClaims(pr).then(result => {
+									prompt.dismiss().catch(() => { })
+									this.btnLoading = false
 
-								prompt.dismiss().catch(() => { })
-								this.btnLoading = false
+									loading.dismiss().catch(() => { }).catch(() => { })
+									if (result) {
+										this.showPrompt(successText)
+										return
+									}
 
-								if (result) {
-									this.showPrompt(successText)
-									return
-								}
-
-								this.showPrompt(failText)
+									this.showPrompt(failText)
+							})
+/*
 
 
+*/
 
 
 							}).catch((e) => {
@@ -152,6 +157,7 @@ export class ClaimsPage {
 								console.log(e)
 
 								prompt.dismiss().catch(() => { })
+								loading.dismiss().catch(() => { }).catch(() => { })
 								this.btnLoading = false
 							})
 

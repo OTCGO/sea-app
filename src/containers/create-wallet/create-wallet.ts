@@ -49,12 +49,17 @@ export class CreateWalletPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
-    this.store.select(AuthSelectors.getError).subscribe(err => {
-      this.ts.get('CW.create_error').subscribe(data => {
-        return this.np.emit({ message: data })
-      })
-    })
+    // this.store.select(AuthSelectors.getLoading).subscribe(bool => this.lp.emit(bool))
+    // this.store.select(AuthSelectors.getError).subscribe(err => {
+    //   // console.log(err)
+    //   if (err) {
+    //     console.log('err', err)
+    //     this.ts.get('CW.create_error').subscribe(data => {
+    //       return this.np.emit({ message: data })
+    //     })
+    //   }
+
+    // })
   }
 
   get disabledButton() {
@@ -84,6 +89,15 @@ export class CreateWalletPage implements OnInit {
         return
       }
 
+
+      if (this.wif && !wallet.isWIF(this.wif)) {
+        this.ts.get('CW.wif_error').subscribe(data => {
+         return this.np.emit({ message: data })
+        })
+        //
+        return
+      }
+
       let pwdtip
       this.ts.get('CW.BACKUP.pwdtip').subscribe(data => {
         pwdtip = data
@@ -96,10 +110,7 @@ export class CreateWalletPage implements OnInit {
 
 
 
-      // if (this.wif && !wallet.isWIF(this.wif)) {
-      //   this.np.emit({ message: 'WIF format wrong' })
-      //   return
-      // }
+
 
       // const variations: object = {
       //     digits: /\d/.test(this.passphrase1), // 数字

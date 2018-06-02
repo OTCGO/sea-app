@@ -118,7 +118,9 @@ export class TransactionHistoryEffects {
 const mapTransactionHistory = (histories: TransactionHistory[], asset: (NEP5 | Global)[]) => {
 	return histories.filter(history => Number(history.value)).map(history => {
 		const coin = asset.find(c => c.id === history.asset || `0x${c.id}` === history.asset)
-		const name = coin.name || 'none'
+		const name = coin.symbol || coin.name
+		console.log('mapTransactionHistory:coin', coin)
+		console.log('mapTransactionHistory:name', name)
 		const sym = Array.isArray(name) ? name[0].name : name
 		const symbol = sym === '小蚁股' ? 'NEO'
 			: sym === '小蚁币' ? 'GAS'

@@ -15,7 +15,11 @@ export const getDetail = createSelector(getState, (state: State) => state.detail
 export const getEntitiesBySelectedSymbol = createSelector(
 	getEntities,
 	getSelectedBalanceSymbol,
-	(histories, symbol) => filter<TransactionHistory>(compose(equals(symbol), prop('symbol')), histories)
+	(histories, symbol) => {
+		console.log('getEntitiesBySelectedSymbol:histories', histories)
+		console.log('getEntitiesBySelectedSymbol:symbol', symbol)
+		return filter<TransactionHistory>(compose(equals(symbol), prop('symbol')), histories)
+	}
 )
 
 export const getSelectedEntities = createSelector(

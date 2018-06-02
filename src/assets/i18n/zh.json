@@ -15,7 +15,7 @@
     "wif_placeholder": "NEP2字符",
     "password": "请输入密码",
     "wif_error": "无法识别的NEP2字符",
-    "nep2_error": "无法识别的NEP2字符",
+    "nep2_error": "非法的NEP2字符",
     "nep2_passphrase_error": "密码错误，请重试！",
     "import_long": "导入钱包文件",
     "import_short": "导入"
@@ -24,6 +24,7 @@
     "title": "创建钱包",
     "name": "请设置钱包名称",
     "wif": "请输入WIF私钥[选填]",
+    "wif_error": "非法WIF私钥，请仔细核对",
     "passphrase": "请输入8~16位钱包密码",
     "passphrase_confirm": "请再次输入钱包密码",
     "agreement_prefix": "已阅读同意",

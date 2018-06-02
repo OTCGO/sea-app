@@ -44,15 +44,16 @@ export class LoginPage implements OnInit {
 	) {}
 
 	ngOnInit () {
-		this.store.select(AuthSelectors.getError).subscribe(error => {
-      if (error) {
-        this.ts.get(this.translationPrefix + 'nep2_passphrase_error').subscribe(data => {
-          this.np.emit(data)
-        })
+		// this.store.select(AuthSelectors.getError).subscribe(error => {
+    //   if (error) {
+    //     console.log()
+    //     this.ts.get(this.translationPrefix + 'nep2_passphrase_error').subscribe(data => {
+    //       this.np.emit(data)
+    //     })
 
-      }
+    //   }
 
-    })
+    // })
     this.store.select(AuthSelectors.getLoading).subscribe(bool => bool && this.lp.emit(bool))
 	}
 

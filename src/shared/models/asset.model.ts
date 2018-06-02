@@ -5,7 +5,8 @@ export interface Global {
 	name: GlobalName[]
 	owner: string
 	precision: number
-	time: string
+	time: string,
+	symbol: string
 	type: string
 }
 

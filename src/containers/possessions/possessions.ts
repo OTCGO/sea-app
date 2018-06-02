@@ -86,13 +86,15 @@ export class PossessionsPage implements OnInit {
   }
 
 	handleBalanceSelect (symbol) {
+		console.log('handleBalanceSelect:symbol', symbol)
 		this.store.dispatch(new BalancesActions.Select(symbol))
-		this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance).take(1)
-                                       .subscribe(selectedBalance => {
-										   if (selectedBalance) {
-											this.navCtrl.push('PossessionDetail')
-									   	}}
-									)
+		this.navCtrl.push('PossessionDetail')
+		// this.selectedBalanceSubscriber = this.store.select(BalancesSelectors.getSelectedBalance).take(1)
+        //                                .subscribe(selectedBalance => {
+		// 								   if (selectedBalance) {
+		// 									this.navCtrl.push('PossessionDetail')
+		// 							   	}}
+		// 							)
 	}
 
 	handleDisplayZeroClick (bool: false) {

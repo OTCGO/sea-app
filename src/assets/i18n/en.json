@@ -24,6 +24,7 @@
     "title": "Create Wallet",
     "name": "Wallet name",
     "wif": "[optional] Using WIF key",
+    "wif_error": "error wif",
     "passphrase": "Enter password",
     "passphrase_confirm": "Confirm password",
     "agreement_prefix": "Agree on",

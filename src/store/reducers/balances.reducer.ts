@@ -33,6 +33,7 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 		}
 
 		case BalancesActionTypes.LOAD_SUCCESS: {
+			console.log('BalancesActionTypes.LOAD_SUCCESS', action.payload)
 			return {
 				...state,
 				entities: action.payload,
@@ -41,6 +42,7 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 		}
 
 		case BalancesActionTypes.SELECT: {
+			console.log('BalancesActionTypes.SELECT', action.payload)
 			return {
 				...state,
 				selectedBalanceSymbol: action.payload

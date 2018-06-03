@@ -39,10 +39,10 @@ page-possessions {
         background-image: url(../assets/imgs/bg-possessions.png);
         background-repeat: no-repeat;
         background-position: top 0 center;
-        background-size: 101%;
+        background-size: 100%;
         z-index: -1;
         position: absolute;
-        top: 0;
+        top: -1px;
         width: 101%;
         height: 40%;
       }

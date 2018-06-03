@@ -48,8 +48,8 @@ export const getSelectedBalance = createSelector(
 	getDefaultEntities,
 	getSelectedBalanceSymbol,
 	(balances: IBalance[], symbol) => {
-		console.log('getSelectedBalance:balances', balances)
-		console.log('getSelectedBalance:symbol', symbol)
+		// console.log('getSelectedBalance:balances', balances)
+		// console.log('getSelectedBalance:symbol', symbol)
 		return symbol && balances && !isEmpty(balances) && balances.find(balance => balance.symbol === symbol)
 	}
 )

@@ -17,7 +17,7 @@ import {
 			    </ion-col>
 
 			    <ion-col col-4>
-				    <timeline-time [time]="history.time"></timeline-time>
+				    <timeline-time [time]="history.time | date:'yyyy-MM-dd HH:mm:ss'"></timeline-time>
 			    </ion-col>
 
 			    <ion-col col-6>

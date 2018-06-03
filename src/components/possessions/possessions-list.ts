@@ -30,7 +30,7 @@ import { IBalance } from '../../shared/models'
 			  <div class="possessions__icon"
 			       item-start>
 				  <img src="{{ 'https://api.otcgo.cn/icon/' + balance?.symbol +'.png' }}"
-				       onerror="this.src='assets/icon/default.png'" />
+				       />
 			  </div>
 
 			  <p class="possessions__symbol">{{ balance?.symbol }}</p>

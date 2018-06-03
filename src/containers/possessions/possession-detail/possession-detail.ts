@@ -41,10 +41,10 @@ export class PossessionDetailPage implements OnInit, OnDestroy {
 
 	ngOnInit () {
 		this.store.dispatch(new TransactionHistoryActions.Load())
-		console.log('ngOnInit')
-		this.transactionHistories.subscribe(data => {
-			console.log('ngOnInit:data', data)
-		})
+		// console.log('ngOnInit')
+		// this.transactionHistories.subscribe(data => {
+		// 	console.log('ngOnInit:data', data)
+		// })
 	}
 	ngOnDestroy () { this.store.dispatch(new BalancesActions.CleanSelectedCoin() )}
 

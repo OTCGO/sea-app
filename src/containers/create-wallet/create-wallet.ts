@@ -18,6 +18,7 @@ import { AuthActions } from '../../store/actions'
 import { AuthSelectors, WalletSelectors } from '../../store/selectors'
 import 'rxjs/add/operator/take'
 import { concat } from 'rxjs/operators'
+import { InAppBrowser } from '@ionic-native/in-app-browser'
 
 
 @IonicPage({
@@ -46,6 +47,7 @@ export class CreateWalletPage implements OnInit {
     private lp: LoadingProvider,
     private loadingCtrl: LoadingController,
     private ts: TranslateService,
+    private iab: InAppBrowser,
   ) { }
 
   ngOnInit() {
@@ -139,6 +141,17 @@ export class CreateWalletPage implements OnInit {
 
     }
 
+  }
+
+  openProto() {
+    console.log('this.protocolAgreement', this.protocolAgreement)
+    if (this.protocolAgreement) {
+      this.iab.create(`https://otcgo.cn/#/protocol`)
+     return
+    }
+    // console.log('openProto')
+    // this.iab.create(`https://otcgo.cn/#/protocol`)
+    // return
   }
 
   validatePassphraseStrength(passphrase) {

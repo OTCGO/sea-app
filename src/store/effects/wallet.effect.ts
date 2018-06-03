@@ -42,25 +42,25 @@ import {
 
 @Injectable()
 export class WalletEffects {
-	@Effect()
-	Load$ =
-		this.actions$
-				.pipe(
-					ofType<Load>(WalletActionTypes.LOAD),
-					map(_ => fromPromise(this.walletProvider.checkWalletFile())),
-					concatMap(exists => exists
-						? fromPromise(this.walletProvider.readWalletFile()).map(fileStr => JSON.parse(fileStr) as Wallet)
-						: []),
-					exhaustMap((file?: Wallet) =>
-						file
-							? from([
-								new LoadSuccess(file),
-								new ContactsActions.Load(file.extra.contacts)
-							])
-							: of(new LoadFail('Require login'))
-					),
-					catchError(e => of(new LoadFail(e)))
-				)
+	// @Effect()
+	// Load$ =
+	// 	this.actions$
+	// 			.pipe(
+	// 				ofType<Load>(WalletActionTypes.LOAD),
+	// 				map(_ => fromPromise(this.walletProvider.checkWalletFile())),
+	// 				concatMap(exists => exists
+	// 				// 	? fromPromise(this.walletProvider.readWalletFile()).map(fileStr => JSON.parse(fileStr) as Wallet)
+	// 				//	: []),
+	// 				exhaustMap((file?: Wallet) =>
+	// 					file
+	// 						? from([
+	// 							new LoadSuccess(file),
+	// 							new ContactsActions.Load(file.extra.contacts)
+	// 						])
+	// 						: of(new LoadFail('Require login'))
+	// 				),
+	// 				catchError(e => of(new LoadFail(e)))
+	// 			)
 
 	@Effect({ dispatch: false })
 	LoadSuccess$ =
@@ -109,7 +109,7 @@ export class WalletEffects {
 			tap(([_, walletEntities]) => {
 				try {
 					console.log('Save Wallet file', walletEntities)
-					this.walletProvider.saveWalletFile(new wallet.Wallet(walletEntities).export())
+					// this.walletProvider.saveWalletFile(new wallet.Wallet(walletEntities).export())
 				} catch (e) {
 					console.log('Catch Error on SaveWalletFile$ .do', e)
 				}

@@ -67,10 +67,11 @@ export class PossessionsPage implements OnInit {
 
 	updateBalances () {
 	// this.store.dispatch(new MarketsActions.Load())
+		this.store.dispatch(new BalancesActions.Load())
 		interval(20000).subscribe(val => {
 			this.store.dispatch(new BalancesActions.Load())
 		})
-		this.store.dispatch(new BalancesActions.Load())
+
   }
 
 	switchBalances (displayZero: boolean = false) {

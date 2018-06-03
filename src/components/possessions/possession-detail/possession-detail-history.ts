@@ -7,7 +7,7 @@ import {
 @Component({
     selector: 'possession-detail-history',
     template: `
-	    <timeline endIcon="call" [showEnd]="!!transactionHistories?.length" [style.height]="height" class="scroll-animation">
+	    <timeline endIcon="call" [showEnd]="!!transactionHistories?.length" [style.height]="height" >
 		    <h5 *ngIf="transactionHistories?.length">{{ 'POSSESSIONS.DETAILS.title' | translate }}</h5>
 		    <h5 *ngIf="!transactionHistories?.length">{{ 'POSSESSIONS.DETAILS.nodata' | translate }}</h5>
 

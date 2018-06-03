@@ -18,7 +18,7 @@ import { Component, Input } from '@angular/core'
 	`
 })
 export class TimelineComponent {
-	@Input('end') endIcon = 'ionic'
+	// @Input('end') endIcon = 'ionic'
 	@Input() showEnd = false
 }
 

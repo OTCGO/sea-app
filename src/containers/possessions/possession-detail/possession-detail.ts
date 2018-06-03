@@ -35,7 +35,7 @@ export class PossessionDetailPage implements OnInit, OnDestroy {
 
 	constructor (
 		private lp: LoadingProvider,
-		private zone: NgZone,
+		// private zone: NgZone,
 		private store: Store<RootState>,
 	) {}
 

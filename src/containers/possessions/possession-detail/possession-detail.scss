@@ -15,8 +15,8 @@ page-possession-detail {
   ion-content.possession-detail-content {
 
     .scroll-animation {
-      transition: height 0.12s linear,
-                  top 0.12s linear;
+      // transition: height 0.12s linear,
+      //             top 0.12s linear;
     }
 
     ion-card.possession-data-card {
@@ -24,7 +24,7 @@ page-possession-detail {
 
       border-radius: 0;
 
-      position: fixed;
+      position: absolute;
       // top: -2px;
       left: 0;
       z-index: 1;
@@ -81,8 +81,8 @@ page-possession-detail {
       right: 0;
       padding: 0 20px;
       top: 50%;
-      transition: height 0.2s linear,
-      top 0.2s linear;
+      // transition: height 0.2s linear,
+      // top 0.2s linear;
 
       &.is-scroll-down {
         top: 10vh;
@@ -90,8 +90,8 @@ page-possession-detail {
 
       &.is-scroll-up {
         top: 50%;
-        transition: height 0.2s 0.01s linear,
-                    top 0.2s 0.01s linear;
+        // transition: height 0.2s 0.01s linear,
+        //             top 0.2s 0.01s linear;
       }
     }
 

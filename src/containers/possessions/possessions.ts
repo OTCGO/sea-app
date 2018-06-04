@@ -5,7 +5,8 @@ import {
 import {
 	IonicPage,
 	NavController,
-	Refresher
+	Refresher,
+	Platform
 } from 'ionic-angular'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
@@ -36,6 +37,7 @@ export class PossessionsPage implements OnInit {
 	// amount: Observable<number> = this.store.select(PricesSelectors.getDefaultAccountAmount)
 	// baseCurrency: Observable<string> = this.store.select(SettingsSelectors.getCurrency)
 	selectedBalanceSubscriber: Subscription
+	private balancesInterval: Subscription
 
 	get displayZero () { return this._displayZero }
 	set displayZero (val) {
@@ -47,6 +49,7 @@ export class PossessionsPage implements OnInit {
 
 
 	constructor (
+		private platform: Platform,
 		public navCtrl: NavController,
 		private notificationProvider: NotificationProvider,
 		private lp: LoadingProvider,
@@ -56,21 +59,68 @@ export class PossessionsPage implements OnInit {
 	ionViewCanEnter = () => this.exits
 
 	ngOnInit () {
+
 		this.switchBalances()
 		this.updateBalances()
     	// this.store.select(SettingsSelectors.getCurrency).subscribe(() => this.updateBalances())
 		this.store.select(BalancesSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
-		this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
+		// this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 
 	}
 
-	updateBalances () {
-	// this.store.dispatch(new MarketsActions.Load())
-		this.store.dispatch(new BalancesActions.Load())
-		interval(20000).subscribe(val => {
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad')
+	}
+	ionViewWillLeave() {
+		console.log('ionViewWillLeave')
+		this.balancesInterval.unsubscribe()
+	}
+
+	// ionViewCanLeave() {
+	// 	console.log('ionViewDidLeave')
+	// 	this.balancesInterval.unsubscribe()
+	//  }
+
+	ionViewDidEnter() {
+		console.log('ionViewDidEnter')
+		this.balancesInterval = interval(20000).subscribe(val => {
 			this.store.dispatch(new BalancesActions.Load())
 		})
+
+	}
+	updateBalances () {
+		console.log('updateBalances')
+		this.store.dispatch(new BalancesActions.Load())
+		// 20000
+
+
+
+		this.platform.ready().then(() => {
+
+			    document.addEventListener('resume', () => {
+
+			        console.log('resume') // 进入，前台展示
+					this.balancesInterval = interval(20000).subscribe(val => {
+						this.store.dispatch(new BalancesActions.Load())
+					})
+
+			    }, false)
+
+			    document.addEventListener('pause', () => {
+
+			        console.log('pause') // 退出，后台运行
+					this.balancesInterval.unsubscribe()
+
+
+			    }, false)
+
+			})
+
+
+
+	// this.store.dispatch(new MarketsActions.Load())
+
 
   }
 

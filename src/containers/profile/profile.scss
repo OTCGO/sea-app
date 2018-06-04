@@ -27,16 +27,16 @@ page-profile {
       width: 100%;
 
       box-shadow: none;
-      background-image: url("../assets/imgs/bg-profile.png");
-      background-size: cover;
+      background: url("../assets/imgs/bg-profile.png") no-repeat;
+      background-size: 100% 100%;
       // background-position: center;
-      background-color: #0d5cdb;
+      // background-color: #0d5cdb;
 
       // border-left: 70px solid transparent;
       // border-right: 70px solid transparent;
 
-      border-bottom-right-radius: 45%;
-      border-bottom-left-radius: 45%;
+      // border-bottom-right-radius: 45%;
+      // border-bottom-left-radius: 45%;
 
       & > * {
         margin-bottom: 10px;

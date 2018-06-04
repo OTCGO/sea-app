@@ -13,7 +13,7 @@ import {
 	switchMap,
 	tap
 } from 'rxjs/operators'
-import { FileStorageProvider } from '../../providers'
+// import { FileStorageProvider } from '../../providers'
 
 import { SettingsActionTypes, Load, LoadFail, LoadSuccess, ChangeCurrency, ChangeLanguage } from '../actions/settings.action'
 import {
@@ -26,12 +26,8 @@ export class SettingsEffects {
 	@Effect()
 	Load$ = this.actions$.pipe(
 		ofType<Load>(SettingsActionTypes.LOAD),
-		map(() => fromPromise(this.fileStorage.checkFile(OTCGO_SETTING_FILE_NAME))),
-		switchMap(exits =>
-			exits
-				? fromPromise(this.fileStorage.read(OTCGO_SETTING_FILE_NAME))
-				    .map(file => new LoadSuccess(JSON.parse(file)))  // If file exits, read the file
-				: of(new LoadSuccess(DEFAULT_SETTING))  // if don't, setting up with default
+		switchMap(() =>
+				   of(new LoadSuccess(DEFAULT_SETTING))
 		),
 		catchError(error => of(new LoadFail(error)))
 	)
@@ -46,5 +42,5 @@ export class SettingsEffects {
 	/*@Effect()
 	Save$ = this.actions$.pipe()*/
 
-	constructor (private actions$: Actions, private fileStorage: FileStorageProvider, private ts: TranslateService) {}
+	constructor (private actions$: Actions,  private ts: TranslateService) {}
 }

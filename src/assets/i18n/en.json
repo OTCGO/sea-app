@@ -24,6 +24,7 @@
     "title": "Create Wallet",
     "name": "Wallet name",
     "wif": "[optional] Using WIF key",
+    "wif_error": "error wif",
     "passphrase": "Enter password",
     "passphrase_confirm": "Confirm password",
     "agreement_prefix": "Agree on",
@@ -34,7 +35,7 @@
     "BACKUP": {
       "success": "Copy success",
       "title": "Create success!",
-      "pwdtip":"Password at least 8-11 characters",
+      "pwdtip":"Password at least 8-16 characters",
       "notes_nep2":"Click 'copy', and the backup is kept for your NEP2 character",
       "notes_wif": "WIF private key is the only certificate of ownership of your personal assets. Please backup and keep it well.",
       "enter": "Enter"
@@ -88,6 +89,8 @@
     "logout": "Logout",
     "MANAGE_WALLET": {
       "prompt":"prompt",
+      "wif":"WIF",
+      "nep2":"NEP2",
       "title": "Manage wallet",
       "change_name": "Change name",
       "export": "Export",

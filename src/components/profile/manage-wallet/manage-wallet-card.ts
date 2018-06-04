@@ -89,9 +89,16 @@ export class ManageWalletCard {
 			// if (!account.encrypted) {
 			// 	this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
 			// }
-			this.showKeyBox({ title: 'EncryptedKey', message: account.encrypted })
+
+			let neptext
+
+			this.ts.get('PROFILE.MANAGE_WALLET.nep2').subscribe(data => {
+				neptext = data
+			})
+
+			this.showKeyBox({ title: neptext, message: account.encrypted })
 		} catch (e) {
-			this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
+			// this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
 		}
 	}
 
@@ -121,11 +128,15 @@ export class ManageWalletCard {
 			})
 
 
+			let wiftext
 
+			this.ts.get('PROFILE.MANAGE_WALLET.wif').subscribe(data => {
+				wiftext = data
+			})
 
 			const commonLoading = this.loadingCtrl.create()
 			const alertOptions = Object.assign({}, this.baseAlertOptions, {
-				title: 'wif',
+				title: wiftext,
 				buttons: [
 					...this.baseAlertOptions.buttons, {
 						text: btnConfirm,

@@ -16,8 +16,8 @@ import { File } from '@ionic-native/file'
 import { NativeStorage } from '@ionic-native/native-storage'
 import { keyValidator, asyncKeyValidator } from './login.validator'
 import { isNEP2, isWIF, isOldWallet, isWallet } from '../../shared/utils'
-import { wallet } from '../../libs/neon/src'
-
+import { wallet } from '../../libs/neon'
+import { NotificationProvider } from '../../providers'
 
 
 @Component({
@@ -54,7 +54,8 @@ export class LoginForm implements OnInit {
 		private loadingCtrl: LoadingController,
 		private alertCtrl: AlertController,
 		private platform: Platform,
-		private Cfile: File
+		private Cfile: File,
+		private np: NotificationProvider,
 		) {}
 
 	get key () { return this.loginForm.get('key') }
@@ -227,7 +228,10 @@ export class LoginForm implements OnInit {
 			// nep2 input
 			if (this.isSwitch) {
 
-				if (!keyValue) {
+				if (!wallet.isNEP2(keyValue)) {
+					this.ts.get('LOGIN.nep2_error').subscribe(data => {
+						return this.np.emit({ message: data })
+					})
 					return
 				}
 

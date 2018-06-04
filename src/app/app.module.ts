@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { DBModule } from '@ngrx/db'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { Globalization } from '@ionic-native/globalization'
 
 import { MyApp } from './app.component'
 import { dev } from '../environments/environment'
@@ -20,6 +21,7 @@ import { reducers, metaReducers } from '../store/reducers'
 import { schema } from './db-schema'
 import { CoreModule } from './core.module'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
+import { PipesModule } from '../pipes/pipes.module'
 
 import {
   BalancesEffects,
@@ -70,10 +72,12 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
         deps: [HttpClient]
       }
     }),
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
+    PipesModule
   ],
   providers: [
-    InAppBrowser
+    InAppBrowser,
+    Globalization
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

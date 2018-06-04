@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { FileStorageProvider } from '../file-storage.provider'
+// import { FileStorageProvider } from '../file-storage.provider'
 import { wallet } from '../../libs/neon'
 import { Account } from '../../shared/typings'
 import { isOldWallet, decryptPrv, verifyKeyPair } from '../../shared/utils'
@@ -10,20 +10,20 @@ import { OldWalletFile } from '../../shared/models'
 @Injectable()
 export class WalletProvider {
 	constructor (
-		private fileStorageProvider: FileStorageProvider
+		// private fileStorageProvider: FileStorageProvider
 	) { }
 
 	async checkWalletFile () {
-		return await this.fileStorageProvider.checkFile(OTCGO_WALLET_FILE_NAME)
+	// 	return await this.fileStorageProvider.checkFile(OTCGO_WALLET_FILE_NAME)
 	}
 
 	async readWalletFile () {
-		return await this.fileStorageProvider.read(OTCGO_WALLET_FILE_NAME)
+	// 	return await this.fileStorageProvider.read(OTCGO_WALLET_FILE_NAME)
 	}
 
-	async saveWalletFile (wallet) {
+	async saveWalletFile () {
 		const walletTextFile = JSON.stringify(wallet)
-		return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
+	// 	return await this.fileStorageProvider.save(OTCGO_WALLET_FILE_NAME, walletTextFile)
 	}
 
 	upgradeToNEP5Account (oldWalletJSON: OldWalletFile, passphrase: string): Account {

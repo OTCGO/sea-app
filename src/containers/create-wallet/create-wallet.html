@@ -24,10 +24,11 @@
 			<ion-input placeholder="{{ 'CW.passphrase_confirm' | translate }}" required type="password" [(ngModel)]="passphrase2" ></ion-input>
 		</ion-item>
 
-		<ion-item class="cw-protocol">
-			<ion-label>{{ 'CW.agreement_prefix' | translate }} <span class="blue">{{ 'CW.agreement_text' | translate }}</span></ion-label>
-			<ion-checkbox color="blue" [(ngModel)]="protocolAgreement"></ion-checkbox>
+		<ion-item class="cw-protocol" >
+			<ion-label>{{ 'CW.agreement_prefix' | translate }} <span class="blue" >{{ 'CW.agreement_text' | translate }}</span></ion-label>
+			<ion-checkbox (click)="openProto()" color="blue" [(ngModel)]="protocolAgreement"></ion-checkbox>
 		</ion-item>
+
 	</div>
 
 	<div class="cw__actions">

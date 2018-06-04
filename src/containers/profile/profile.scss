@@ -24,19 +24,19 @@ page-profile {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      width: 500px;
+      width: 100%;
 
       box-shadow: none;
-      background-image: url("../assets/imgs/bg-profile.png");
-      background-size: cover;
-      background-position: center;
-      background-color: #0d5cdb;
+      background: url("../assets/imgs/bg-profile.png") no-repeat;
+      background-size: 100% 100%;
+      // background-position: center;
+      // background-color: #0d5cdb;
 
-      border-left: 70px solid transparent;
-      border-right: 70px solid transparent;
+      // border-left: 70px solid transparent;
+      // border-right: 70px solid transparent;
 
-      border-bottom-right-radius: 50%;
-      border-bottom-left-radius: 50%;
+      // border-bottom-right-radius: 45%;
+      // border-bottom-left-radius: 45%;
 
       & > * {
         margin-bottom: 10px;
@@ -56,9 +56,10 @@ page-profile {
         }
       }
       .card-title {
+        margin-top: 2rem;
         font-size: 2rem;
         letter-spacing: 0.1rem;
-        width: 100%;
+        width: 90%;
         font-weight: bold;
         color: #fff;
       }
@@ -96,6 +97,7 @@ page-profile {
     }
 
     profile-nav {
+      margin-top: 2rem;
       width: 90%;
 
       ion-card.card-nav {
@@ -151,7 +153,7 @@ page-profile {
 
 
         button {
-          width: 99%;
+          width: 100%;
           border-radius: 5px;
           .trade-info {
             position: absolute;

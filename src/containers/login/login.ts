@@ -44,7 +44,16 @@ export class LoginPage implements OnInit {
 	) {}
 
 	ngOnInit () {
-		this.store.select(AuthSelectors.getError).subscribe(error => error && this.np.emit({ message: error }))
+		// this.store.select(AuthSelectors.getError).subscribe(error => {
+    //   if (error) {
+    //     console.log()
+    //     this.ts.get(this.translationPrefix + 'nep2_passphrase_error').subscribe(data => {
+    //       this.np.emit(data)
+    //     })
+
+    //   }
+
+    // })
     this.store.select(AuthSelectors.getLoading).subscribe(bool => bool && this.lp.emit(bool))
 	}
 
@@ -95,7 +104,7 @@ export class LoginPage implements OnInit {
 
   async NEP2Login ({ encrypted, passphrase }) {
     const loading = this.loadingCtrl.create()
-    loading.present()
+    await loading.present()
     try {
       if (passphrase === '') {
         return
@@ -120,6 +129,8 @@ export class LoginPage implements OnInit {
         key: encrypted,
         isDefault: true
       })
+
+      console.log('acct', acct)
 
       loading.dismiss().catch(() => {})
       this.store.dispatch(new WalletActions.AddAccount(acct))

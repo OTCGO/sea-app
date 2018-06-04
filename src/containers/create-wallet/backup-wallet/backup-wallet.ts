@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { CreateWalletPage } from '../create-wallet'
 
 
+
 @IonicPage({
   name: 'BackupWallet',
   segment: 'backup-wallet'

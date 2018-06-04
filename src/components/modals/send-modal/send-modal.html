@@ -24,7 +24,7 @@
 		</div>
 
 		<ion-item class="round" *ngIf="!w">
-			<ion-input placeholder="{{ translationPrefix + 'password' | translate }}" type="password" formControlName="passphrase" required></ion-input>
+			<ion-input placeholder="{{ translationPrefix + 'password' | translate }}" type="password" minlength="4" formControlName="passphrase" required></ion-input>
 			<ion-icon item-end *ngIf="passphrase.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
 			<ion-icon item-end *ngIf="passphrase.invalid && (passphrase.dirty || passphrase.touched)" name="close" style="color: red;"></ion-icon>
 		</ion-item>

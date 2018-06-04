@@ -12,7 +12,7 @@ import { RouterProvider, AccountProvider, ApiProvider, WalletProvider, PriceProv
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
-import { FileStorageProvider } from '../providers/file-storage.provider'
+// import { FileStorageProvider } from '../providers/file-storage.provider'
 import { NotificationProvider } from '../providers/notification.provider'
 import { LoadingProvider } from '../providers/loading.provider'
 import { IonicErrorHandler } from 'ionic-angular'
@@ -36,7 +36,7 @@ import { Logger } from '../providers/logger.provider'
 		PossessionDetailProvider,
 		SendModalProvider,
 		ClaimsProvider,
-	    FileStorageProvider,
+	   //  FileStorageProvider,
 	  	NotificationProvider,
 		LoadingProvider,
 		RouterProvider,

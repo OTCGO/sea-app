@@ -21,6 +21,7 @@ import { reducers, metaReducers } from '../store/reducers'
 import { schema } from './db-schema'
 import { CoreModule } from './core.module'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
+import { PipesModule } from '../pipes/pipes.module'
 
 import {
   BalancesEffects,
@@ -71,7 +72,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
         deps: [HttpClient]
       }
     }),
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
+    PipesModule
   ],
   providers: [
     InAppBrowser,

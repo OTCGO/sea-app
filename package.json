@@ -14,9 +14,9 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "debug:android": "ionic cordova emulate android --device -l --debug -c",
-    "build:android": "ionic cordova run android --minifyjs",
+    "build:android": "ionic cordova build android --minifyjs --minifycss --debug ",
     "debug:ios": "ionic cordova emulate ios -l --debug -c",
-    "build:ios": "ionic cordova build ios --release  --minifyjs",
+    "build:ios": "ionic cordova build ios --release  --minifyjs --minifycss",
     "rm:ios": "ionic cordova platform rm ios",
     "test": "karma start ./config/karma.conf.js",
     "test-ci": "karma start ./config/karma.conf.js --single-run",
@@ -152,7 +152,8 @@
     },
     "platforms": [
       "browser",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

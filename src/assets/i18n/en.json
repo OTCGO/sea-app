@@ -23,6 +23,7 @@
   },
   "CW": {
     "title": "Create Wallet",
+    "create_loading": "Loading",
     "name": "Wallet name",
     "wif": "[optional] Using WIF key",
     "wif_error": "error wif",
@@ -63,7 +64,9 @@
       "password": "Password",
       "amount": "Amount",
       "label": "Label",
-      "transfer": "Transfer"
+      "transfer": "Transfer",
+      "success": "Success",
+      "fails": "Fails"
     }
   },
   "MARKETS": {
@@ -179,5 +182,8 @@
       "success": "success",
       "fail": "fail"
     }
+  },
+  "OPERATOR":{
+    "executing":"executing"
   }
 }

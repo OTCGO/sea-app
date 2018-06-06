@@ -79,7 +79,13 @@ export class CreateWalletPage implements OnInit {
   async createWallet() {
     try {
 
-      const loading = this.loadingCtrl.create()
+      let create_loading
+      this.ts.get('CW.create_loading').subscribe(data => {
+        create_loading = data
+      })
+      const loading = this.loadingCtrl.create({
+        content: create_loading
+      })
       await loading.present()
 
 

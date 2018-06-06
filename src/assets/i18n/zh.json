@@ -23,6 +23,7 @@
   },
   "CW": {
     "title": "创建钱包",
+    "create_loading": "创建钱包中",
     "name": "请设置钱包名称",
     "wif": "请输入WIF私钥[选填]",
     "wif_error": "非法WIF私钥，请仔细核对",
@@ -63,7 +64,9 @@
       "password": "密码",
       "amount": "数量",
       "label": "备注",
-      "transfer": "点击转账"
+      "transfer": "点击转账",
+      "success": "转账记录",
+      "fails": "转账失败，请稍候再试"
     }
   },
   "MARKETS": {
@@ -177,5 +180,8 @@
 	  "success": "提取成功",
 	  "fail": "提取失败"
     }
+  },
+  "OPERATOR":{
+    "executing":"执行中"
   }
 }

@@ -26,12 +26,13 @@ import { NativeStorage } from '@ionic-native/native-storage'
 })
 @Component({
 	selector: 'page-login',
-	templateUrl: 'login.html',
+  templateUrl: 'login.html',
 })
 export class LoginPage implements OnInit {
   translationPrefix = 'LOGIN.'
   private account
   private isSwitch: boolean
+  private myWorker
 	constructor (
     private nativeStorage: NativeStorage,
 		public navCtrl: NavController,
@@ -41,7 +42,17 @@ export class LoginPage implements OnInit {
 		private ts: TranslateService,
 		private loadingCtrl: LoadingController,
     private store: Store<RootState>,
-	) {}
+	) {
+    // const myWorker = new Worker('../../assets/workers/worker.js')
+
+    // myWorker.onmessage = (msg) => {
+    //   console.log('myWorker', msg)
+    // }
+
+    // myWorker.postMessage('main')
+
+
+  }
 
 	ngOnInit () {
 		// this.store.select(AuthSelectors.getError).subscribe(error => {
@@ -52,9 +63,12 @@ export class LoginPage implements OnInit {
     //     })
 
     //   }
-
     // })
+
+
     this.store.select(AuthSelectors.getLoading).subscribe(bool => bool && this.lp.emit(bool))
+
+
 	}
 
 	NEP5Login = file => this.store.dispatch(new AuthActions.Login(file))
@@ -112,9 +126,10 @@ export class LoginPage implements OnInit {
 
       const start = new Date().getTime()
 
-      const wif = await decryptAsync(encrypted, passphrase)
-     // const wif = await wallet.decryptAsync(encrypted, passphrase)
-   //  const acct = new wallet.Account(wif)
+      const wif = wallet.decrypt(encrypted, passphrase)
+      // const wif = await decryptAsync(encrypted, passphrase)
+      // const wif = await wallet.decryptAsync(encrypted, passphrase)
+      //  const acct = new wallet.Account(wif)
   　　const end = new Date().getTime()
   　　console.log('NEP2Login', end - start)
 

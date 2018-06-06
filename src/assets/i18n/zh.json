@@ -11,6 +11,7 @@
     "tip": "创建钱包",
     "switch": "切换钱包",
     "login_wallet": "确认",
+    "login_loading": "登陆中",
     "import_wallet": "导入",
     "wif_placeholder": "NEP2字符",
     "password": "请输入密码",

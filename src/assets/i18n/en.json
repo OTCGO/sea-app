@@ -18,7 +18,8 @@
     "nep2_error": "Invalid Encrypted Key Format",
     "nep2_passphrase_error": "Incorrect passphrase, please retry",
     "import_long": "Import Wallet File",
-    "import_short": "Import"
+    "import_short": "Import",
+    "login_loading": "Loading"
   },
   "CW": {
     "title": "Create Wallet",

@@ -9,7 +9,7 @@ import {
 	NavController,
 	ViewController
 } from 'ionic-angular'
-// import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
+import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { Store } from '@ngrx/store'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import {
@@ -55,7 +55,7 @@ export class SendModalComponent implements OnInit {
 	constructor(
 		public viewCtrl: ViewController,
 		private navCtrl: NavController,
-		// private barcodeScanner: BarcodeScanner,
+		private barcodeScanner: BarcodeScanner,
 		private notificationProvider: NotificationProvider,
 		private alertCtrl: AlertController,
 		private loadingCtrl: LoadingController,
@@ -167,9 +167,9 @@ export class SendModalComponent implements OnInit {
 	}
 
 	handleScanClick() {
-		// this.barcodeScanner.scan()
-		// 		.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
-		//     .catch(err => this.notificationProvider.emit({ message: err }))
+		this.barcodeScanner.scan()
+				.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
+		    .catch(err => this.notificationProvider.emit({ message: err }))
 	}
 
 	handleContactClick() {

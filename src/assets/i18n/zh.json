@@ -65,7 +65,7 @@
       "amount": "数量",
       "label": "备注",
       "transfer": "点击转账",
-      "success": "转账记录",
+      "success": "转账成功",
       "fails": "转账失败，请稍候再试"
     }
   },

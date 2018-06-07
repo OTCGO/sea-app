@@ -47,7 +47,7 @@
     "totalBalances": "Total Balances",
     "displayZero": "Hide 0",
     "DETAILS": {
-      "title": "Histories",
+      "title": "Transaction Records",
       "transfer": "Transfer",
       "in": "In",
       "out": "Out",

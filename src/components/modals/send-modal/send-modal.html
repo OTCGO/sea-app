@@ -1,8 +1,16 @@
+<ion-header class="custom-header">
+
+	<ion-navbar transparent>
+		<ion-title>
+			{{ selectedBalance.symbol }}
+		</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
 <ion-content padding class="send-modal__content" fixed>
 	<div class="content-header">
-		<button ion-button icon-only clear (click)="handleClose()" float-end>
-			<ion-icon name='close'></ion-icon>
-		</button>
+		{{ selectedBalance.amount }} 
 	</div>
 
 	<form class="container" [formGroup]="formGroup" #sendDir="ngForm" (submit)="transfer()">

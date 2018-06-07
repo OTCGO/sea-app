@@ -6,7 +6,7 @@
 
 <ion-content padding>
 
-	<ion-list>
+	<ion-list style="width: 89%;margin: 1rem auto;">
 		<settings-language
       [languages]="locales"
       [currentLanguage]="currentLanguage | async"
@@ -15,7 +15,7 @@
 
   <ion-row>
       <ion-col>
-          <button class="btn" ion-button round  full color="danger" (click)="logout()">{{ 'PROFILE.logout' | translate }}</button>
+          <button class="btn" ion-button   full color="danger" (click)="logout()">{{ 'PROFILE.logout' | translate }}</button>
       </ion-col>
   </ion-row>
 

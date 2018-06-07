@@ -11,6 +11,7 @@
     "tip": "创建钱包",
     "switch": "切换钱包",
     "login_wallet": "确认",
+    "login_loading": "登陆中",
     "import_wallet": "导入",
     "wif_placeholder": "NEP2字符",
     "password": "请输入密码",
@@ -22,6 +23,7 @@
   },
   "CW": {
     "title": "创建钱包",
+    "create_loading": "创建钱包中",
     "name": "请设置钱包名称",
     "wif": "请输入WIF私钥[选填]",
     "wif_error": "非法WIF私钥，请仔细核对",
@@ -62,7 +64,9 @@
       "password": "密码",
       "amount": "数量",
       "label": "备注",
-      "transfer": "点击转账"
+      "transfer": "点击转账",
+      "success": "转账成功",
+      "fails": "转账失败，请稍候再试"
     }
   },
   "MARKETS": {
@@ -176,5 +180,8 @@
 	  "success": "提取成功",
 	  "fail": "提取失败"
     }
+  },
+  "OPERATOR":{
+    "executing":"执行中"
   }
 }

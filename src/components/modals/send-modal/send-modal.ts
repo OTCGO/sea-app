@@ -9,13 +9,14 @@ import {
 	NavController,
 	ViewController
 } from 'ionic-angular'
-// import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
+import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { Store } from '@ngrx/store'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import {
 	addressValidator,
 	amountValidator
 } from './send-modal.validators'
+import { TranslateService } from '@ngx-translate/core'
 
 import { RootState } from '../../../store/reducers'
 import { IBalance } from '../../../shared/models'
@@ -38,11 +39,11 @@ export class SendModalComponent implements OnInit {
 	selectedBalance: IBalance
 	translationPrefix = 'POSSESSIONS.SEND_MODAL.'
 
-	get toAddress () { return this.formGroup.get('address') }
-	get passphrase () { return this.formGroup.get('passphrase') }
-	get amount () { return this.formGroup.get('amount') }
-	get label () { return this.formGroup.get('label') }
-	get w () {
+	get toAddress() { return this.formGroup.get('address') }
+	get passphrase() { return this.formGroup.get('passphrase') }
+	get amount() { return this.formGroup.get('amount') }
+	get label() { return this.formGroup.get('label') }
+	get w() {
 		try {
 			return this.sendModalProvider.account && this.sendModalProvider.account.WIF
 		} catch (e) {
@@ -51,15 +52,16 @@ export class SendModalComponent implements OnInit {
 	}
 
 
-	constructor (
+	constructor(
 		public viewCtrl: ViewController,
 		private navCtrl: NavController,
-		// private barcodeScanner: BarcodeScanner,
+		private barcodeScanner: BarcodeScanner,
 		private notificationProvider: NotificationProvider,
 		private alertCtrl: AlertController,
 		private loadingCtrl: LoadingController,
 		public sendModalProvider: SendModalProvider,
 		private store: Store<RootState>,
+		private ts: TranslateService,
 		private fb: FormBuilder
 	) {
 		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
@@ -71,19 +73,19 @@ export class SendModalComponent implements OnInit {
 		})
 	}
 
-	ngOnInit (): void {
+	ngOnInit(): void {
 	}
 
-	ionViewWillEnter () {
+	ionViewWillEnter() {
 		this.store.select(TransactionsSelectors.getSelectedAddress).take(1).subscribe(address => this.toAddress.setValue(address))
 	}
 
-	ionViewDidLeave () {
+	ionViewDidLeave() {
 		this.store.dispatch(new TransactionsActions.CleanSelectedContact())
 	}
 
-	handleClose () {
-		this.viewCtrl.dismiss().catch(() => {})
+	handleClose() {
+		this.viewCtrl.dismiss().catch(() => { })
 		this.formGroup.reset()
 	}
 
@@ -94,7 +96,7 @@ export class SendModalComponent implements OnInit {
 	 * @then amount is required and translate to big num
 	 * @optional Label
 	 **/
-	async transfer () {
+	async transfer() {
 		this.toAddress.markAsTouched()
 		this.passphrase.markAsTouched()
 		this.amount.markAsTouched()
@@ -105,53 +107,72 @@ export class SendModalComponent implements OnInit {
 			!this.passphrase.valid) {
 			return
 		}
-		const loading = this.loadingCtrl.create()
+
+		let executing
+		this.ts.get('OPERATOR.executing').subscribe(data => {
+			executing = data
+		})
+		const loading = this.loadingCtrl.create({
+			content: executing
+		})
 		await loading.present()
 
 		this.sendModalProvider
-		    .decrypt(this.passphrase.value)
-		    .then(async pr => {
-			    const result: any = await this.sendModalProvider.doSendAsset({
-				    dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-				    amounts: this.amount.value,
-				    assetId: this.selectedBalance.hash
+			.decrypt(this.passphrase.value)
+			.then(async pr => {
+				const result: any = await this.sendModalProvider.doSendAsset({
+					dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+					amounts: this.amount.value,
+					assetId: this.selectedBalance.hash
 				}, pr)
 
 
 				await this.handleClose()
-			    if (result.result) {
-					this.notificationProvider.emit({ message: '转账成功' })
+				if (result.result) {
+
+					this.ts.get('POSSESSIONS.SEND_MODAL.success').subscribe(data => {
+						this.notificationProvider.emit({ message: data })
+					})
+
 
 					return
 				}
-				this.notificationProvider.emit({ message: '转账失败，请稍候再试' })
 
-
-		    })
-		    .catch(err => {
-		    	if (err.message)
-					return this.showPrompt({ message: err.message, title: '错误' })
-					this.showPrompt({ message: err, title: '错误' })
+				this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
+					this.notificationProvider.emit({ message: data })
 				})
-		    .then(_ => {
-		    	this.store.dispatch(new BalancesActions.Load())
-					this.store.dispatch(new TransactionsActions.CleanSelectedContact())
-					loading.dismiss().catch(() => {}).catch(() => {})
-		    })
+
+
+
+			})
+			.catch(err => {
+
+				this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
+					this.showPrompt({ message: data })
+				})
+				// 	if (err.message)
+				// return this.showPrompt({ message: err.message, title: '错误' })
+
+			})
+			.then(_ => {
+				this.store.dispatch(new BalancesActions.Load())
+				this.store.dispatch(new TransactionsActions.CleanSelectedContact())
+				loading.dismiss().catch(() => { }).catch(() => { })
+			})
 	}
 
-	showPrompt (config) {
+	showPrompt(config) {
 		const prompt = this.alertCtrl.create(config)
 		prompt.present()
 	}
 
-	handleScanClick () {
-		// this.barcodeScanner.scan()
-		// 		.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
-		//     .catch(err => this.notificationProvider.emit({ message: err }))
+	handleScanClick() {
+		this.barcodeScanner.scan()
+				.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
+		    .catch(err => this.notificationProvider.emit({ message: err }))
 	}
 
-	handleContactClick () {
+	handleContactClick() {
 		this.navCtrl.push('Contacts', { fromProfile: false })
 	}
 }

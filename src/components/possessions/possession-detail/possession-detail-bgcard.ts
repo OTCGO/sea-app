@@ -2,7 +2,7 @@ import {
 	Component,
 	Input,
 } from '@angular/core'
-import { ModalController } from 'ionic-angular'
+import { ModalController, NavController } from 'ionic-angular'
 
 import { IBalance } from '../../../shared/models'
 
@@ -47,14 +47,17 @@ export class PossessionDetailBgcard {
 	// 	return `${computedResult}px`
 	// }
 
-	constructor(private modalCtrl: ModalController) {}
+	constructor(
+		private navCtrl: NavController,
+		private modalCtrl: ModalController) {}
 
 	showSendModal () {
-		const sendModal = this.modalCtrl.create(
-			'SendModal',
-			null,
-			{ cssClass: 'inset-modal', enableBackdropDismiss: true }
-		)
-		return sendModal.present()
+		this.navCtrl.push('SendModal')
+		// const sendModal = this.modalCtrl.create(
+		// 	'SendModal',
+		// 	null,
+		// 	{ cssClass: 'inset-modal', enableBackdropDismiss: true }
+		// )
+		// return sendModal.present()
 	}
 }

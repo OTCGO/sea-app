@@ -11,12 +11,14 @@
     "lint": "tslint --fix   --project tslint.json ./src/**/*.ts -e ./src/libs/**/*.ts",
     "serve": "ionic-app-scripts serve --webpack ./webpack.config.js",
     "browser": "ionic cordova run browser --livereload --debug --address 0.0.0.0",
+    "build:browser": "ionic cordova build browser  --minifyjs --minifycss",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "debug:android": "ionic cordova emulate android --device -l --debug -c",
-    "build:android": "ionic cordova run android --minifyjs",
+    "debug:android": "ionic cordova run android -l -c",
+    "build:android": "ionic cordova build android --minifyjs --minifycss --debug ",
+    "release:android:": "ionic cordova build android --minifyjs --minifycss --release ",
     "debug:ios": "ionic cordova emulate ios -l --debug -c",
-    "build:ios": "ionic cordova build ios --release  --minifyjs",
+    "build:ios": "ionic cordova build ios --release  --minifyjs --minifycss",
     "rm:ios": "ionic cordova platform rm ios",
     "test": "karma start ./config/karma.conf.js",
     "test-ci": "karma start ./config/karma.conf.js --single-run",
@@ -38,7 +40,7 @@
     "@angular/http": "^5.2.9",
     "@angular/platform-browser": "^5.2.9",
     "@angular/platform-browser-dynamic": "^5.2.9",
-    "@ionic-native/barcode-scanner": "^4.6.0",
+    "@ionic-native/barcode-scanner": "^4.7.0",
     "@ionic-native/clipboard": "^4.6.0",
     "@ionic-native/core": "4.4.0",
     "@ionic-native/file": "^4.6.0",
@@ -57,6 +59,7 @@
     "@ngrx/store-devtools": "^5.2.0",
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^3.0.1",
+    "async": "^2.6.1",
     "axios": "^0.18.0",
     "bignumber.js": "^6.0.0",
     "copy-to-clipboard": "^3.0.8",
@@ -152,6 +155,7 @@
     },
     "platforms": [
       "browser",
+      "android",
       "ios"
     ]
   }

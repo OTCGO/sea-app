@@ -18,10 +18,12 @@
     "nep2_error": "Invalid Encrypted Key Format",
     "nep2_passphrase_error": "Incorrect passphrase, please retry",
     "import_long": "Import Wallet File",
-    "import_short": "Import"
+    "import_short": "Import",
+    "login_loading": "Loading"
   },
   "CW": {
     "title": "Create Wallet",
+    "create_loading": "Loading",
     "name": "Wallet name",
     "wif": "[optional] Using WIF key",
     "wif_error": "error wif",
@@ -45,7 +47,7 @@
     "totalBalances": "Total Balances",
     "displayZero": "Hide 0",
     "DETAILS": {
-      "title": "Histories",
+      "title": "Transaction Records",
       "transfer": "Transfer",
       "in": "In",
       "out": "Out",
@@ -62,7 +64,9 @@
       "password": "Password",
       "amount": "Amount",
       "label": "Label",
-      "transfer": "Transfer"
+      "transfer": "Transfer",
+      "success": "Success",
+      "fails": "Fails"
     }
   },
   "MARKETS": {
@@ -178,5 +182,8 @@
       "success": "success",
       "fail": "fail"
     }
+  },
+  "OPERATOR":{
+    "executing":"executing"
   }
 }

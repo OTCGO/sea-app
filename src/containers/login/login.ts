@@ -1,6 +1,6 @@
 import {
-	Component,
-	OnInit
+  Component,
+  OnInit
 } from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
@@ -21,30 +21,41 @@ import { NativeStorage } from '@ionic-native/native-storage'
 
 
 @IonicPage({
-	name: 'Login',
-	segment: 'login'
+  name: 'Login',
+  segment: 'login'
 })
 @Component({
-	selector: 'page-login',
-	templateUrl: 'login.html',
+  selector: 'page-login',
+  templateUrl: 'login.html',
 })
 export class LoginPage implements OnInit {
   translationPrefix = 'LOGIN.'
   private account
   private isSwitch: boolean
-	constructor (
+  private myWorker
+  constructor(
     private nativeStorage: NativeStorage,
-		public navCtrl: NavController,
-		public navParams: NavParams,
-		private np: NotificationProvider,
-		private lp: LoadingProvider,
-		private ts: TranslateService,
-		private loadingCtrl: LoadingController,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private np: NotificationProvider,
+    private lp: LoadingProvider,
+    private ts: TranslateService,
+    private loadingCtrl: LoadingController,
     private store: Store<RootState>,
-	) {}
+  ) {
+    // const myWorker = new Worker('../../assets/workers/worker.js')
 
-	ngOnInit () {
-		// this.store.select(AuthSelectors.getError).subscribe(error => {
+    // myWorker.onmessage = (msg) => {
+    //   console.log('myWorker', msg)
+    // }
+
+    // myWorker.postMessage('main')
+
+
+  }
+
+  ngOnInit() {
+    // this.store.select(AuthSelectors.getError).subscribe(error => {
     //   if (error) {
     //     console.log()
     //     this.ts.get(this.translationPrefix + 'nep2_passphrase_error').subscribe(data => {
@@ -52,20 +63,23 @@ export class LoginPage implements OnInit {
     //     })
 
     //   }
-
     // })
+
+
     this.store.select(AuthSelectors.getLoading).subscribe(bool => bool && this.lp.emit(bool))
-	}
-
-	NEP5Login = file => this.store.dispatch(new AuthActions.Login(file))
 
 
-	wifLogin (keyValue) {
-		// return keyValue === 'test'
-		// 	? this.NEP5Login(nep5Wallet)
+  }
+
+  NEP5Login = file => this.store.dispatch(new AuthActions.Login(file))
+
+
+  wifLogin(keyValue) {
+    // return keyValue === 'test'
+    // 	? this.NEP5Login(nep5Wallet)
     // 	: this.store.dispatch(new AuthActions.LoginWif(keyValue))\
 
-   // this.store.dispatch(new AuthActions.LoginWif(keyValue))
+    // this.store.dispatch(new AuthActions.LoginWif(keyValue))
     // const loading = this.loadingCtrl.create()
     // loading.present()
     try {
@@ -75,9 +89,9 @@ export class LoginPage implements OnInit {
     } catch (error) {
       // loading.dismiss().catch(() => {}).catch(() => {})
     }
-	}
+  }
 
-	oldWalletLogin = ({ oldWallet, passphrase }) => {
+  oldWalletLogin = ({ oldWallet, passphrase }) => {
     // const loading = this.loadingCtrl.create()
     // loading.present()
     try {
@@ -102,72 +116,55 @@ export class LoginPage implements OnInit {
     console.log('this.isSwitch', this.isSwitch)
   }
 
-  async NEP2Login ({ encrypted, passphrase }) {
-    const loading = this.loadingCtrl.create()
-    await loading.present()
-    try {
-      if (passphrase === '') {
-        return
-      }
-
-      const start = new Date().getTime()
-
-      const wif = await decryptAsync(encrypted, passphrase)
-     // const wif = await wallet.decryptAsync(encrypted, passphrase)
-   //  const acct = new wallet.Account(wif)
-  　　const end = new Date().getTime()
-  　　console.log('NEP2Login', end - start)
-
-
-      const tempAcct = new wallet.Account(wif)
-
-      const { address } = tempAcct
-
-      const acct = new wallet.Account({
-        address,
-        label: address,
-        key: encrypted,
-        isDefault: true
-      })
-
-      console.log('acct', acct)
-
-      loading.dismiss().catch(() => {})
-      this.store.dispatch(new WalletActions.AddAccount(acct))
-
-      this.nativeStorage.setItem('account', { encrypted })
-
-
-      // this.navCtrl.setRoot('Tabs')
-      this.navCtrl.push('Tabs')
-    } catch (error) {
-      console.log('error on NEP2Login', error)
-     // let msg: string
-      this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => {
-        this.np.emit(data)
-      })
-
-      loading.dismiss().catch(() => {})
-    }
-
-    // decryptAsync(encrypted, passphrase).then(async wif => {
-    //   try {
-
-    //   } catch (error) {
-
+  async NEP2Login({ encrypted, passphrase }) {
+    // const loading = this.loadingCtrl.create()
+    // await loading.present()
+    // try {
+    //   if (passphrase === '') {
+    //     return
     //   }
 
+    //   const start = new Date().getTime()
 
 
-    // }).catch((e) => {
-    //   /* It is usually to get there because the passphrase is wrong */
-    //   console.log('error on NEP2Login', e)
-    //   let msg: string
-    //   this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => msg = data)
-    //   this.np.emit(msg)
-    //   loading.dismiss().catch(() => {})
 
-    // })
-    // this.store.dispatch(new AuthActions.LoginNEP2())
+
+    //   const wif = wallet.decrypt(encrypted, passphrase)
+    //   // const wif = await decryptAsync(encrypted, passphrase)
+    //   // const wif = await wallet.decryptAsync(encrypted, passphrase)
+    //   //  const acct = new wallet.Account(wif)
+    //   const end = new Date().getTime()
+    //   console.log('NEP2Login', end - start)
+
+
+    //   const tempAcct = new wallet.Account(wif)
+
+    //   const { address } = tempAcct
+
+    //   const acct = new wallet.Account({
+    //     address,
+    //     label: address,
+    //     key: encrypted,
+    //     isDefault: true
+    //   })
+
+
+    //   loading.dismiss().catch(() => { })
+    //   this.store.dispatch(new WalletActions.AddAccount(acct))
+
+    //   this.nativeStorage.setItem('account', { encrypted })
+
+
+    //   // this.navCtrl.setRoot('Tabs')
+    //   this.navCtrl.push('Tabs')
+    // } catch (error) {
+    //   console.log('error on NEP2Login', error)
+    //   this.ts.get(this.translationPrefix + 'nep2_passphrase_error').take(1).subscribe(data => {
+    //     this.np.emit(data)
+    //   })
+
+    //   loading.dismiss().catch(() => { })
+    // }
+
   }
 }

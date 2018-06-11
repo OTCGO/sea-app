@@ -1,8 +1,14 @@
 page-manage-wallet {
+  width: 100%;
+  
   ion-header.otcgo-header {
     * > * {
       color: white;
     }
+  }
+
+  .mw{
+    width: 100%;
   }
 
   ion-content {
@@ -10,7 +16,7 @@ page-manage-wallet {
     background-position: center top;
     background-size: 101%;
     background-color: #0d5cdb !important;
-    width: 90%;
+
     margin: auto auto;
 
     .scroll-content {

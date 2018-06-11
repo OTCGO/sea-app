@@ -21,7 +21,7 @@ import { NotificationProvider } from '../../providers'
 import { RootState } from '../../store/reducers'
 import { Store } from '@ngrx/store'
 import { WalletActions, AuthActions } from '../../store/actions'
-import { decryptAsync } from '../../shared/utils'
+import { getWif } from '../../shared/utils'
 // import parallel from 'async/parallel'
 import waterfall from 'async/waterfall'
 
@@ -367,11 +367,11 @@ export class LoginForm implements OnInit {
 				*/
 
 
-			const wif = wallet.decrypt(encrypted, passphrase)
+			// const wif = wallet.decrypt(encrypted, passphrase)
 			// const wif = await decryptAsync(encrypted, passphrase)
 			//  const wif = await wallet.decryptAsync(encrypted, passphrase)
 			//  const acct = new wallet.Account(wif)
-
+			const wif = await getWif(encrypted, passphrase)
 
 
 			const tempAcct = new wallet.Account(wif)
@@ -396,6 +396,7 @@ export class LoginForm implements OnInit {
 
 			const end = new Date().getTime()
 			console.log('NEP2Login', end - start)
+
 
 		} catch (error) {
 			console.log('error on NEP2Login', error)
@@ -427,4 +428,6 @@ export class LoginForm implements OnInit {
 		// })
 		// this.store.dispatch(new AuthActions.LoginNEP2())
 	}
+
+
 }

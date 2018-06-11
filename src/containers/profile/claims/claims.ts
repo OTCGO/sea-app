@@ -12,6 +12,7 @@ import { wallet } from '../../../libs/neon'
 const { decrypt, getPrivateKeyFromWIF } = wallet
 import { Observable } from 'rxjs/Observable'
 import { TranslateService } from '@ngx-translate/core'
+import { getWif } from '../../../shared/utils'
 
 @IonicPage({
 	name: 'Claims',
@@ -132,24 +133,35 @@ export class ClaimsPage {
 							loading.present().then(() => {
 								this.btnLoading = true
 
-								const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
-								this.claimsProvider.doClaims(pr).then(result => {
+								getWif(this.account.encrypted, passphrase).then((wif: any) => {
+									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+									const pr = getPrivateKeyFromWIF(wif)
+									this.claimsProvider.doClaims(pr).then(result => {
+
+										prompt.dismiss().catch(() => { })
+										this.btnLoading = false
+
+										loading.dismiss().catch(() => { }).catch(() => { })
+										if (result) {
+											this.showPrompt(successText)
+											return
+										}
+
+										this.showPrompt(failText)
+									})
+
+								}).catch((e) => {
+									this.showPrompt(failText)
+									console.log(e)
 
 									prompt.dismiss().catch(() => { })
-									this.btnLoading = false
-
 									loading.dismiss().catch(() => { }).catch(() => { })
-									if (result) {
-										this.showPrompt(successText)
-										return
-									}
-
-									this.showPrompt(failText)
-							})
-/*
+									this.btnLoading = false
+								})
+								/*
 
 
-*/
+								*/
 
 
 							}).catch((e) => {

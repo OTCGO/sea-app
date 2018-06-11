@@ -27,8 +27,6 @@ import { NotificationProvider } from '../../../providers'
 import { TransactionsActions, BalancesActions } from '../../../store/actions'
 import { TransactionsSelectors, BalancesSelectors } from '../../../store/selectors'
 
-
-
 @IonicPage({
 	name: 'SendModal'
 })

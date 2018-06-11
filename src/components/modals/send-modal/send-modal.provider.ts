@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { ApiProvider, AccountProvider } from '../../../providers'
 
 import { wallet } from '../../../libs/neon'
-
+import { getWif } from '../../../shared/utils'
 const { generateSignature } = wallet
 
 interface ISendOpts {
@@ -30,7 +30,9 @@ export class SendModalProvider {
 			console.log(e)
 		}
 		try {
-			const wif = wallet.decrypt(this.account.encrypted, passphrase)
+			// const wif = wallet.decrypt(this.account.encrypted, passphrase)
+			const wif: any = await getWif(this.account.encrypted, passphrase)
+
 			console.log('decrypt:passphrase', passphrase)
 			const pr = wallet.getPrivateKeyFromWIF(wif)
 			console.log('decrypt:pr', pr)

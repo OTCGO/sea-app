@@ -1,4 +1,7 @@
-#### Notes
-There have two branch currently, 'rollback' and 'master'. rollback is the newest branch.
+# sea-app
 
+## update
+
+#### 2018-06-11
+* 修复管理页面背景
 

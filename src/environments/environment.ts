@@ -2,6 +2,6 @@ export const environment: any = {
 	production: true,
 }
 
-// console.log('process.env.DEV', process.env.DEV)
+// console.log('process.env.DEV', process.env.NODE_ENV)
 
 export const dev = false

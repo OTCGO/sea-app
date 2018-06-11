@@ -1,13 +1,15 @@
 import {
 	Component,
-	OnInit
+	OnInit,
+	ViewChild
 } from '@angular/core'
 import {
 	AlertController,
 	IonicPage,
 	LoadingController,
 	NavController,
-	ViewController
+	ViewController,
+	Navbar
 } from 'ionic-angular'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { Store } from '@ngrx/store'
@@ -17,7 +19,6 @@ import {
 	amountValidator
 } from './send-modal.validators'
 import { TranslateService } from '@ngx-translate/core'
-
 import { RootState } from '../../../store/reducers'
 import { IBalance } from '../../../shared/models'
 import { isAddress } from '../../../shared/utils'
@@ -25,6 +26,7 @@ import { SendModalProvider } from './send-modal.provider'
 import { NotificationProvider } from '../../../providers'
 import { TransactionsActions, BalancesActions } from '../../../store/actions'
 import { TransactionsSelectors, BalancesSelectors } from '../../../store/selectors'
+
 
 
 @IonicPage({
@@ -35,6 +37,8 @@ import { TransactionsSelectors, BalancesSelectors } from '../../../store/selecto
 	templateUrl: 'send-modal.html'
 })
 export class SendModalComponent implements OnInit {
+	@ViewChild(Navbar) navBar: Navbar
+
 	formGroup: FormGroup
 	selectedBalance: IBalance
 	translationPrefix = 'POSSESSIONS.SEND_MODAL.'
@@ -74,6 +78,17 @@ export class SendModalComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+	}
+
+	ionViewDidLoad() {
+		this.navBar.backButtonClick = (e: UIEvent) => {
+			// todo something
+			// this.navCtrl.pop()
+			console.log('backButtonClick')
+			// this.navCtrl.push('Tabs')
+			// this.navCtrl.push('PossessionDetail')
+			this.navCtrl.setRoot('Tabs')
+		}
 	}
 
 	ionViewWillEnter() {

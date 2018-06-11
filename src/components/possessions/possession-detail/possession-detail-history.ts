@@ -2,7 +2,9 @@ import {
 	Component,
 	Input,
 } from '@angular/core'
-
+import { Store } from '@ngrx/store'
+import { RootState } from '../../../store/reducers'
+import { TransactionHistoryActions } from '../../../store/actions'
 
 @Component({
     selector: 'possession-detail-history',
@@ -57,4 +59,20 @@ export class PossessionDetailHistory {
 	// 	if (scrollTop < cardBoundary && isScrollUp) return `${upBoundary}px`
 	// 	return `${computedResult}px`
 	// }
+
+	// this.store.dispatch(new TransactionHistoryActions.Load())
+	ionViewWillEnter() {
+		console.log('ionViewWillEnter')
+		//
+	}
+
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad11')
+	}
+
+	constructor (
+		private store: Store<RootState>,
+	) {
+		// this.transactionHistories = this.store.dispatch(new TransactionHistoryActions.Load())
+	}
 }

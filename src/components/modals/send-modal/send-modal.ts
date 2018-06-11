@@ -87,7 +87,9 @@ export class SendModalComponent implements OnInit {
 			console.log('backButtonClick')
 			// this.navCtrl.push('Tabs')
 			// this.navCtrl.push('PossessionDetail')
-			this.navCtrl.setRoot('Tabs')
+			// this.viewCtrl.dismiss()
+			this.navCtrl.push('Tabs')
+			// this.navCtrl.setRoot('Tabs')
 		}
 	}
 

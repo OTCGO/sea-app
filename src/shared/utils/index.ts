@@ -25,5 +25,6 @@ export function getBrowserLanguage () {
 	return browserLang || 'zh'
 }
 
+
 // There only have two language is available, so..
 // export const getDefaultCurrency = () => getBrowserLanguage() === 'en' ? 'usd' : 'cny'

@@ -46,7 +46,9 @@ export class PossessionDetailPage implements OnInit, OnDestroy {
 		// 	console.log('ngOnInit:data', data)
 		// })
 	}
-	ngOnDestroy () { this.store.dispatch(new BalancesActions.CleanSelectedCoin() )}
+	ngOnDestroy () {
+		// this.store.dispatch(new BalancesActions.CleanSelectedCoin() )
+	}
 
 	ionViewDidLeave () { this.transactionHistories = empty() }
 

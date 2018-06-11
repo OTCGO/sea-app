@@ -17,6 +17,8 @@ import { Account } from '../../../shared/typings'
 import * as copy from 'copy-to-clipboard'
 import { IfObservable } from 'rxjs/observable/IfObservable'
 import { TranslateService } from '@ngx-translate/core'
+import { getWif } from '../../../shared/utils'
+
 
 @Component({
 	selector: 'manage-wallet-card',
@@ -195,10 +197,8 @@ export class ManageWalletCard {
 		await commonLoading.present()
 		try {
 
-
-
-
-			const wif = wallet.decrypt(encryptedKey, passphrase)
+			// const wif = wallet.decrypt(encryptedKey, passphrase)
+			const wif: any  = await getWif(encryptedKey, passphrase)
 			const account = new wallet.Account(wif)
 			await commonLoading.dismiss().catch(() => {})
 			if (type === 'privateKey') return this.showKeyBox({ title: wif, message: account['privateKey'] })

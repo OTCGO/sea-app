@@ -35,7 +35,7 @@ import { TransactionsSelectors, BalancesSelectors } from '../../../store/selecto
 	templateUrl: 'send-modal.html'
 })
 export class SendModalComponent implements OnInit {
-	@ViewChild(Navbar) navBar: Navbar
+	// @ViewChild(Navbar) navBar: Navbar
 
 	formGroup: FormGroup
 	selectedBalance: IBalance
@@ -79,16 +79,16 @@ export class SendModalComponent implements OnInit {
 	}
 
 	ionViewDidLoad() {
-		this.navBar.backButtonClick = (e: UIEvent) => {
-			// todo something
-			// this.navCtrl.pop()
-			console.log('backButtonClick')
-			// this.navCtrl.push('Tabs')
-			// this.navCtrl.push('PossessionDetail')
-			// this.viewCtrl.dismiss()
-			this.navCtrl.push('Tabs')
-			// this.navCtrl.setRoot('Tabs')
-		}
+		// this.navBar.backButtonClick = (e: UIEvent) => {
+		// 	// todo something
+		// 	// this.navCtrl.pop()
+		// 	console.log('backButtonClick')
+		// 	// this.navCtrl.push('Tabs')
+		// 	// this.navCtrl.push('PossessionDetail')
+		// 	// this.viewCtrl.dismiss()
+		// 	this.navCtrl.push('Tabs')
+		// 	// this.navCtrl.setRoot('Tabs')
+		// }
 	}
 
 	ionViewWillEnter() {

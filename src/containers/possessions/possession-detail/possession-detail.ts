@@ -26,7 +26,7 @@ import { TransactionHistoryActions, BalancesActions } from '../../../store/actio
 export class PossessionDetailPage implements OnInit, OnDestroy {
 	// selectedPrice: Observable<number> = this.store.select(PricesSelectors.getSelectedPrice)
 	selectedBalance: Observable<IBalance> = this.store.select(BalancesSelectors.getSelectedBalance)
-	transactionHistories: Observable<TransactionHistory[]> =  this.store.select(TransactionHistorySelectors.getEntitiesBySelectedSymbol)
+	// transactionHistories: Observable<TransactionHistory[]> =  this.store.select(TransactionHistorySelectors.getEntitiesBySelectedSymbol)
 	// isScrollUp: boolean
 	// isScrollDown: boolean
 	// scrollTop: number
@@ -40,7 +40,7 @@ export class PossessionDetailPage implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit () {
-		this.store.dispatch(new TransactionHistoryActions.Load())
+		// this.store.dispatch(new TransactionHistoryActions.Load())
 		// console.log('ngOnInit')
 		// this.transactionHistories.subscribe(data => {
 		// 	console.log('ngOnInit:data', data)
@@ -50,7 +50,9 @@ export class PossessionDetailPage implements OnInit, OnDestroy {
 		// this.store.dispatch(new BalancesActions.CleanSelectedCoin() )
 	}
 
-	ionViewDidLeave () { this.transactionHistories = empty() }
+	ionViewDidLeave () {
+		// this.transactionHistories = empty()
+	}
 
 	// handleScroll (e: ScrollEvent) {
 	// 	const { scrollTop } = e

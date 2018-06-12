@@ -1,10 +1,14 @@
 import {
 	Component,
 	Input,
+	OnInit
 } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from '../../../store/reducers'
 import { TransactionHistoryActions } from '../../../store/actions'
+import { Observable } from 'rxjs/Observable'
+import { TransactionHistorySelectors } from '../../../store/selectors'
+import { TransactionHistory } from '../../../shared/models'
 
 @Component({
     selector: 'possession-detail-history',
@@ -36,15 +40,16 @@ import { TransactionHistoryActions } from '../../../store/actions'
 	    </timeline>
 		`
 })
-export class PossessionDetailHistory {
+export class PossessionDetailHistory implements OnInit {
 	// @Input() isScrollUp
 	// @Input() isScrollDown
 	@Input() symbol
-	@Input() transactionHistories
+	// @Input() transactionHistories
 	// @Input() scrollTop = 0
 	// @Input() differentScrollTop = 0
 
 	translationPrefix = 'POSSESSIONS.DETAILS.'
+	private transactionHistories: TransactionHistory[]
 	// upBoundary = window.outerHeight * 0.1
 	// cardBoundary = window.outerHeight * 0.2
 	// downBoundary = window.outerHeight * 0.5
@@ -60,6 +65,15 @@ export class PossessionDetailHistory {
 	// 	return `${computedResult}px`
 	// }
 
+	ngOnInit () {
+		this.store.dispatch(new TransactionHistoryActions.Load())
+
+		this.store.select(TransactionHistorySelectors.getEntitiesBySelectedSymbol).subscribe((data => {
+			this.transactionHistories = data
+		}))
+
+
+	}
 	// this.store.dispatch(new TransactionHistoryActions.Load())
 	ionViewWillEnter() {
 		console.log('ionViewWillEnter')
@@ -71,7 +85,7 @@ export class PossessionDetailHistory {
 	}
 
 	constructor (
-		private store: Store<RootState>,
+		private store: Store < RootState > ,
 	) {
 		// this.transactionHistories = this.store.dispatch(new TransactionHistoryActions.Load())
 	}

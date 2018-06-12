@@ -53,7 +53,10 @@ export class MyApp implements OnInit {
 
 	initApp () {
 		this.platform.ready().then(() => {
-			this.statusBar.styleDefault()
+			// this.statusBar.styleDefault()
+			this.statusBar.overlaysWebView(true)
+			this.statusBar.backgroundColorByHexString('#ffffff')
+
 			this.splashScreen.hide()
 			this.platform.registerBackButtonAction(async () => {
 				const nav = this.app.getActiveNav()

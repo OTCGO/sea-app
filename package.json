@@ -29,9 +29,9 @@
     "e2e": "npm run e2e-update && npm run e2e-test",
     "e2e-test": "protractor ./config/protractor.conf.js",
     "e2e-update": "webdriver-manager update --standalone false --gecko false",
-    "debug:electron": " tsc main.ts && electron main.js",
-    "build:electron:mac": "  tsc main.ts && npx electron-builder build --mac",
-    "build:electron:win": "  tsc main.ts && npx electron-builder build --win"
+    "debug:electron": "tsc main.ts && electron main.js",
+    "build:electron:mac": "tsc main.ts && npx electron-builder build --mac",
+    "build:electron:win": "tsc main.ts && npx electron-builder build --win"
   },
   "peerDependencies": {
     "hoek": "^5.0.3"

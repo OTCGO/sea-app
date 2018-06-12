@@ -3,7 +3,7 @@ import {
 	OnInit
 } from '@angular/core'
 import { SplashScreen } from '@ionic-native/splash-screen'
-import { StatusBar } from '@ionic-native/status-bar'
+// import { StatusBar } from '@ionic-native/status-bar'
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
 import {
@@ -33,7 +33,7 @@ export class MyApp implements OnInit {
 
 	constructor (
 		private platform: Platform,
-		private statusBar: StatusBar,
+		// private statusBar: StatusBar,
 		private app: App,
 		private splashScreen: SplashScreen,
 		private translateService: TranslateService,
@@ -52,11 +52,11 @@ export class MyApp implements OnInit {
 	}
 
 	initApp () {
-		this.platform.ready().then(() => {
-			// this.statusBar.styleDefault()
-			this.statusBar.overlaysWebView(true)
-			this.statusBar.backgroundColorByHexString('#ffffff')
+		// this.statusBar.styleDefault()
+		// // this.statusBar.overlaysWebView(false)
+		// this.statusBar.backgroundColorByHexString('#ffffff')
 
+		this.platform.ready().then(() => {
 			this.splashScreen.hide()
 			this.platform.registerBackButtonAction(async () => {
 				const nav = this.app.getActiveNav()

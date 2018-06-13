@@ -21,7 +21,7 @@ import {
 	SettingsSelectors,
 } from '../store/selectors'
 import { Globalization } from '@ionic-native/globalization'
-
+import { MessageService } from '../shared/services'
 
 
 @Component({
@@ -39,7 +39,8 @@ export class MyApp implements OnInit {
 		private translateService: TranslateService,
 		private np: NotificationProvider,
 		private store: Store<RootState>,
-		private globalization: Globalization
+		private globalization: Globalization,
+		private msgService: MessageService
 	) {
 
 
@@ -59,6 +60,12 @@ export class MyApp implements OnInit {
 		this.platform.ready().then(() => {
 			this.splashScreen.hide()
 			this.platform.registerBackButtonAction(async () => {
+				console.log('registerBackButtonAction', this.msgService.msg)
+				if (this.msgService.msg) {
+					return this.msgService.sendMessage(this.msgService.msg)
+				}
+
+
 				const nav = this.app.getActiveNav()
 				if (nav.canGoBack()) return nav.pop()
 				if (this.counter === 0) {

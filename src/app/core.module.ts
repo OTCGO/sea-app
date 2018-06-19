@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core'
 import { Clipboard } from '@ionic-native/clipboard'
 import { NativeStorage } from '@ionic-native/native-storage'
 import { SocialSharing } from '@ionic-native/social-sharing'
-import { StatusBar } from '@ionic-native/status-bar'
+// import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { File } from '@ionic-native/file'
 import { BarcodeScanner } from '@ionic-native/barcode-scanner'
@@ -21,7 +21,7 @@ import { Logger } from '../providers/logger.provider'
 
 @NgModule({
 	providers: [
-		StatusBar,
+		// StatusBar,
 		SplashScreen,
 		File,
 		Clipboard,

@@ -4,12 +4,14 @@ import {
 	EventEmitter,
 	Input,
 	Output,
+	OnDestroy
 } from '@angular/core'
 import { Clipboard } from '@ionic-native/clipboard'
 import {
 	AlertController,
 	LoadingController,
-	Platform
+	Platform,
+	ViewController
 } from 'ionic-angular'
 import { NotificationProvider } from '../../../providers'
 import { wallet } from '../../../libs/neon'
@@ -18,16 +20,20 @@ import * as copy from 'copy-to-clipboard'
 import { IfObservable } from 'rxjs/observable/IfObservable'
 import { TranslateService } from '@ngx-translate/core'
 import { getWif } from '../../../shared/utils'
-
+import { MessageService } from '../../../shared/services'
+import { Subscription } from 'rxjs/Subscription'
 
 @Component({
 	selector: 'manage-wallet-card',
 	templateUrl: 'manage-wallet-card.html'
 })
-export class ManageWalletCard {
+export class ManageWalletCard  implements OnDestroy {
 	tempLabel = ''
 	baseAlertOptions: any
 	translationPrefix = 'PROFILE.MANAGE_WALLET.'
+	subscription: Subscription
+	private alert
+	private commonLoading
 
 	@Input() account: Account
 	@Input() oCurrency: string
@@ -53,6 +59,8 @@ export class ManageWalletCard {
 		private platform: Platform,
 		private el: ElementRef,
 		private ts: TranslateService,
+		private msgService: MessageService,
+		private viewCtrl: ViewController,
 	) {
 
 		let message
@@ -80,12 +88,38 @@ export class ManageWalletCard {
 			inputs: [{ name: 'passphrase', placeholder: placeholder, type: 'password' }],
 			buttons: [ { text: btnCancle } ]
 		}
+
+		this.subscription = this.msgService.getMessage().subscribe(data => {
+			// console.log('')
+			console.log('this.subscription', data)
+			if (data.text === 'manage-wallet') {
+				console.log('this.subscription.text', data.text)
+				if (this.alert) {
+					this.alert.dismiss().catch()
+				}
+
+				if (this.commonLoading) {
+					this.commonLoading.dismiss().catch()
+				}
+
+
+				this.msgService.msg = undefined
+				// this.viewCtrl.dismiss()
+			}
+		 })
+
+
 	 }
 
-	handleWIFClick (account) { this.showWIFKeyBox(account) }
+	handleWIFClick (account) {
+		this.msgService.msg = 'manage-wallet'
+		this.showWIFKeyBox(account)
+	}
 
 
 	handleEncryptedClick (account) {
+		this.msgService.msg = 'manage-wallet'
+
 		try {
 			console.log('handleEncryptedClick:account', account)
 			// if (!account.encrypted) {
@@ -102,6 +136,9 @@ export class ManageWalletCard {
 		} catch (e) {
 			// this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
 		}
+
+
+
 	}
 
 	handleSaveClick (account) {
@@ -136,7 +173,7 @@ export class ManageWalletCard {
 				wiftext = data
 			})
 
-			const commonLoading = this.loadingCtrl.create()
+			this.commonLoading = this.loadingCtrl.create()
 			const alertOptions = Object.assign({}, this.baseAlertOptions, {
 				title: wiftext,
 				buttons: [
@@ -145,17 +182,24 @@ export class ManageWalletCard {
 						handler: ({ passphrase }) =>
 							passphrase &&
 							passphrase.length >= 4 &&
-							this.parsePassphrase(account.encrypted, passphrase, commonLoading, 'wif')
+							this.parsePassphrase(account.encrypted, passphrase, this.commonLoading, 'wif')
 					}
 				]
 			})
-			this.alertCtrl.create(alertOptions).present()
+			this.alert = this.alertCtrl.create(alertOptions)
+
+			// this.alertCtrl.create(alertOptions).present()
+
+			this.alert.present()
+
 		} catch (e) {
 
 		}
 	}
 
 	showKeyBox ({ title, message }) {
+
+
 		const handler = () => {
 			if (this.platform.is('mobileweb') || this.platform.is('core')) {
 				// const state = copy(message) ? 'success' : 'fail'
@@ -165,7 +209,6 @@ export class ManageWalletCard {
 				el.select()
 				document.execCommand('copy')
 				document.body.removeChild(el)
-
 				return this.np.emit(`copy success!`)
 			}
 
@@ -187,10 +230,13 @@ export class ManageWalletCard {
 			btnCopy = data
 		})
 
-		this.alertCtrl.create({
+		this.alert = this.alertCtrl.create({
 			title, message, cssClass: 'mw__exports-actions--key',
 			buttons: [{ text: btnCancle }, { text: btnCopy, handler }]
-		}).present()
+		})
+
+		this.alert.present()
+
 	}
 
 	async parsePassphrase (encryptedKey, passphrase, commonLoading, type) {
@@ -262,4 +308,9 @@ export class ManageWalletCard {
 		})
 		this.alertCtrl.create(alertOptions).present()
 	}
+
+	ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.subscription.unsubscribe()
+    }
 }

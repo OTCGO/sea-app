@@ -1,31 +1,31 @@
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar'
+import { SplashScreen } from '@ionic-native/splash-screen'
 
 export class PlatformMock {
 	public ready(): Promise<string> {
 		return new Promise((resolve) => {
-			resolve('READY');
-		});
+			resolve('READY')
+		})
 	}
 
 	public getQueryParam() {
-		return true;
+		return true
 	}
 
 	public registerBackButtonAction(fn: Function, priority?: number): Function {
-		return (() => true);
+		return (() => true)
 	}
 
 	public hasFocus(ele: HTMLElement): boolean {
-		return true;
+		return true
 	}
 
 	public doc(): HTMLDocument {
-		return document;
+		return document
 	}
 
 	public is(): boolean {
-		return true;
+		return true
 	}
 
 	public getElementComputedStyle(container: any): any {
@@ -34,27 +34,27 @@ export class PlatformMock {
 			paddingTop: '10',
 			paddingRight: '10',
 			paddingBottom: '10',
-		};
+		}
 	}
 
 	public onResize(callback: any) {
-		return callback;
+		return callback
 	}
 
 	public registerListener(ele: any, eventName: string, callback: any): Function {
-		return (() => true);
+		return (() => true)
 	}
 
 	public win(): Window {
-		return window;
+		return window
 	}
 
 	public raf(callback: any): number {
-		return 1;
+		return 1
 	}
 
 	public timeout(callback: any, timer: number): any {
-		return setTimeout(callback, timer);
+		return setTimeout(callback, timer)
 	}
 
 	public cancelTimeout(id: any) {
@@ -62,19 +62,19 @@ export class PlatformMock {
 	}
 
 	public getActiveElement(): any {
-		return document['activeElement'];
+		return document['activeElement']
 	}
 }
 
 export class StatusBarMock extends StatusBar {
 	styleDefault() {
-		return;
+		return
 	}
 }
 
 export class SplashScreenMock extends SplashScreen {
 	hide() {
-		return;
+		return
 	}
 }
 
@@ -82,14 +82,14 @@ export class NavMock {
 
 	public pop(): any {
 		return new Promise(function(resolve: Function): void {
-			resolve();
-		});
+			resolve()
+		})
 	}
 
 	public push(): any {
 		return new Promise(function(resolve: Function): void {
-			resolve();
-		});
+			resolve()
+		})
 	}
 
 	public getActive(): any {
@@ -97,15 +97,15 @@ export class NavMock {
 			'instance': {
 				'model': 'something',
 			},
-		};
+		}
 	}
 
 	public setRoot(): any {
-		return true;
+		return true
 	}
 
 	public registerChildNav(nav: any): void {
-		return ;
+		return 
 	}
 
 }

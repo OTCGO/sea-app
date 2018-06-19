@@ -21,7 +21,7 @@ export class Accordion extends CdkAccordion {
 
 	set hideToggle (hideToggle: boolean) { this._hideToggle = coerceBooleanProperty(hideToggle) }
 
-	private _hideToggle: boolean = false
+	private _hideToggle = false
 
 	/**
 	 * The display mode used for all expansion panels in the accordion. Currently two display

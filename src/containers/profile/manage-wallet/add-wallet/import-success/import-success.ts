@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular'
 
 import { WalletProvider } from '../../../../../providers/wallet/wallet.provider'
 import { ManageWalletPage } from '../../manage-wallet'

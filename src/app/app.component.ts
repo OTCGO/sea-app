@@ -3,7 +3,7 @@ import {
 	OnInit
 } from '@angular/core'
 import { SplashScreen } from '@ionic-native/splash-screen'
-import { StatusBar } from '@ionic-native/status-bar'
+// import { StatusBar } from '@ionic-native/status-bar'
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
 import {
@@ -21,7 +21,7 @@ import {
 	SettingsSelectors,
 } from '../store/selectors'
 import { Globalization } from '@ionic-native/globalization'
-
+import { MessageService } from '../shared/services'
 
 
 @Component({
@@ -33,13 +33,14 @@ export class MyApp implements OnInit {
 
 	constructor (
 		private platform: Platform,
-		private statusBar: StatusBar,
+		// private statusBar: StatusBar,
 		private app: App,
 		private splashScreen: SplashScreen,
 		private translateService: TranslateService,
 		private np: NotificationProvider,
 		private store: Store<RootState>,
-		private globalization: Globalization
+		private globalization: Globalization,
+		private msgService: MessageService
 	) {
 
 
@@ -52,10 +53,19 @@ export class MyApp implements OnInit {
 	}
 
 	initApp () {
+		// this.statusBar.styleDefault()
+		// // this.statusBar.overlaysWebView(false)
+		// this.statusBar.backgroundColorByHexString('#ffffff')
+
 		this.platform.ready().then(() => {
-			this.statusBar.styleDefault()
 			this.splashScreen.hide()
 			this.platform.registerBackButtonAction(async () => {
+				console.log('registerBackButtonAction', this.msgService.msg)
+				if (this.msgService.msg) {
+					return this.msgService.sendMessage(this.msgService.msg)
+				}
+
+
 				const nav = this.app.getActiveNav()
 				if (nav.canGoBack()) return nav.pop()
 				if (this.counter === 0) {

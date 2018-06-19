@@ -63,7 +63,7 @@ export class ExpansionPanelHeader implements OnDestroy {
 
 	@Input() collapsedHeight: string
 
-	_toggle ():void {
+	_toggle (): void {
 		this.panel.toggle()
 	}
 

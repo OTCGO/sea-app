@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'
 import { IonicPageModule } from 'ionic-angular'
 
-import { Helpcentre } from './helpcentre';
+import { Helpcentre } from './helpcentre'
 
 @NgModule({
 	imports: [

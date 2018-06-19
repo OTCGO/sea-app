@@ -69,12 +69,12 @@ export class MarketDetailChart {
 			 .attr('stroke-width', 3)
 			 .attr('fill', 'none')
 
-		var focus = group.append("g")
-								 .attr("class", "focus")
-								 .style("display", "none")
+		let focus = group.append('g')
+								 .attr('class', 'focus')
+								 .style('display', 'none')
 
-		focus.append("circle")
-				 .attr("r", 7.5)
+		focus.append('circle')
+				 .attr('r', 7.5)
 				 .style('filter', 'drop-shadow(-1px 0 7.5px rgba(0,0,0,0.3))')
 
 		focus.append('text')
@@ -82,17 +82,17 @@ export class MarketDetailChart {
 				 .attr('x', -20)
 				 .attr('dy', -20)
 
-		svg.append("rect")
-			 .attr("transform", `translate(0, ${marginTop})`)
-			 .attr("class", "overlay")
-			 .attr("width", this.width)
-			 .attr("height", height)
-			 .on("touchstart", function() { focus.style("display", null); })
-			 .on('mouseenter', function() { focus.style("display", null); })
-			 .on("touchend", function() { focus.style("display", "none"); })
-			 .on("mouseout", function() { focus.style("display", "none"); })
-			 .on("touchmove", mousemove(this, xScale, yScale))
-			 .on("mousemove", mousemove(this, xScale, yScale))
+		svg.append('rect')
+			 .attr('transform', `translate(0, ${marginTop})`)
+			 .attr('class', 'overlay')
+			 .attr('width', this.width)
+			 .attr('height', height)
+			 .on('touchstart', function() { focus.style('display', null) })
+			 .on('mouseenter', function() { focus.style('display', null) })
+			 .on('touchend', function() { focus.style('display', 'none') })
+			 .on('mouseout', function() { focus.style('display', 'none') })
+			 .on('touchmove', mousemove(this, xScale, yScale))
+			 .on('mousemove', mousemove(this, xScale, yScale))
 
 		function mousemove (ng, x, y) {
 			return function () {
@@ -102,14 +102,14 @@ export class MarketDetailChart {
 					const d0 = ng.histories[i - 1]
 					const d1 = ng.histories[i]
 					const d: DetailData = (<any>x0 - d0.time) > (d1.time - <any>x0) ? d1 : d0
-					const gasPrice = svg.select("text.base-price").text(() => Number(ng.gasPrice) / d.close)
+					const gasPrice = svg.select('text.base-price').text(() => Number(ng.gasPrice) / d.close)
 					const currency = svg.select('g + g > text').text('￥')
 					const time = new Date(d.time * 1000)
 					const hourAndMinutes = formatTime(time, ng.currentDuration)
-					focus.attr("transform", `translate(${x(d.time)}, ${y(d.close)})`)
-					focus.select("text").text(() => hourAndMinutes)
+					focus.attr('transform', `translate(${x(d.time)}, ${y(d.close)})`)
+					focus.select('text').text(() => hourAndMinutes)
 					svg.select('text.base').text('/GAS').attr('dx', (<any>gasPrice)._groups[0][0].clientWidth + 2)
-					svg.select("text.current-price").attr('dx', (<any>currency)._groups[0][0].clientWidth).text(() => d.close)
+					svg.select('text.current-price').attr('dx', (<any>currency)._groups[0][0].clientWidth).text(() => d.close)
 				} catch (e) {
 					return
 				}
@@ -139,12 +139,12 @@ function formatTime (time: Date, duration) {
 const ordinal = (i) => {
 	switch (i) {
 		case 1:
-			return '1st';
+			return '1st'
 		case 2:
-			return '2nd';
+			return '2nd'
 		case 3:
-			return '3rd';
+			return '3rd'
 		default:
-			return `${i}th`; // NOTE won't get any much bigger ...
+			return `${i}th` // NOTE won't get any much bigger ...
 	}
 }

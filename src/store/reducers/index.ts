@@ -12,6 +12,8 @@ import * as fromSettings from './settings.reducer'
 import * as fromContacts from './contacts.reducer'
 import * as fromTransactions from './transactions.reducer'
 import * as fromClaims from './claims.reducer'
+import * as fromVersion from './version.reducer'
+
 
 export interface RootState {
 	balances: fromBalances.State
@@ -23,7 +25,8 @@ export interface RootState {
 	settings: fromSettings.State,
 	contacts: fromContacts.State,
 	transactions: fromTransactions.State,
-	claims: fromClaims.State
+	claims: fromClaims.State,
+	version: fromVersion.State
 }
 
 export const reducers: ActionReducerMap<RootState> = {
@@ -36,7 +39,8 @@ export const reducers: ActionReducerMap<RootState> = {
 	settings: fromSettings.reducer,
 	contacts: fromContacts.reducer,
 	transactions: fromTransactions.reducer,
-	claims: fromClaims.reducer
+	claims: fromClaims.reducer,
+	version: fromVersion.reducer
 }
 
 
@@ -64,5 +68,6 @@ export {
 	fromTransactionHistory,
 	fromSettings,
 	fromTransactions,
-	fromClaims
+	fromClaims,
+	fromVersion
 }

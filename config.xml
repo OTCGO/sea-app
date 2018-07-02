@@ -2,7 +2,7 @@
 <widget id="one.sea.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>SEA</name>
     <description>An awesome Neo Wallet app.</description>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.31.90:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

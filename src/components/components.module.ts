@@ -3,12 +3,14 @@ import { TimelineModule } from './timeline'
 import { SendModalModule } from './modals'
 import { SlideCardModule } from './slide-card'
 import { ExpansionModule } from './expansion-panel'
+import { VersionModule } from './version'
 
 const MODULES = [
 	TimelineModule,
 	SendModalModule,
 	SlideCardModule,
 	ExpansionModule,
+	VersionModule
 ]
 
 @NgModule({

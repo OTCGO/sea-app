@@ -17,6 +17,7 @@ import { NotificationProvider } from '../providers/notification.provider'
 import { LoadingProvider } from '../providers/loading.provider'
 import { IonicErrorHandler } from 'ionic-angular'
 import { Logger } from '../providers/logger.provider'
+import { VersionProvider } from '../components/version/version.provider'
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { Logger } from '../providers/logger.provider'
 		PossessionDetailProvider,
 		SendModalProvider,
 		ClaimsProvider,
+		VersionProvider,
 	   //  FileStorageProvider,
 	  	NotificationProvider,
 		LoadingProvider,

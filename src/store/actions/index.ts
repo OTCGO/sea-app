@@ -8,6 +8,7 @@ import * as TransactionHistoryActions from './transaction-history.action'
 import * as ContactsActions from './contacts.action'
 import * as TransactionsActions from './transactions.action'
 import * as ClaimsActions from './claims.action'
+import * as VersionActions from './version.action'
 
 export {
 	BalancesActions,
@@ -19,5 +20,6 @@ export {
 	TransactionHistoryActions,
 	ContactsActions,
 	TransactionsActions,
-	ClaimsActions
+	ClaimsActions,
+	VersionActions
 }

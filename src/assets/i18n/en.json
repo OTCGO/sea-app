@@ -185,5 +185,10 @@
   },
   "OPERATOR":{
     "executing":"executing"
+  },
+  "VERSION":{
+    "title":"New Version",
+    "cancle":"Cancle",
+    "confirm":"Update"
   }
 }

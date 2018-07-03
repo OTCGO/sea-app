@@ -36,23 +36,34 @@ import { Version } from '../../shared/models'
 
 @Injectable()
 export class VersionEffects {
+    private isDisplay = false
     @Effect()
     Load$: Observable<Action> =
         this.actions$.pipe(
             ofType<Load>(VersionActionTypes.LOAD),
             map((action: Load) => action.payload),
             switchMap((v: Version) => {
-                const nextGet$ = this.actions$.pipe(
-					ofType(VersionActionTypes.LOAD),
-					skip(1)
-				)
+                // const nextGet$ = this.actions$.pipe(
+				// 	ofType(VersionActionTypes.LOAD),
+				// 	skip(1)
+				// )
                 return this.apiProvider
                     .get(`version/${v.platform}`)
                     .pipe(
-                        takeUntil(nextGet$),
+                        // takeUntil(nextGet$),
                         map(res => {
+                            console.log('isDisplay', this.isDisplay)
                             console.log('res', res)
+                            // this.isDisplay = true
+                            if (!this.isDisplay) {
+                                this.isDisplay = true
+                                res.version.isDisplay = false
+                                return new LoadSuccess(res.version)
+                            }
+
+                            res.version.isDisplay = true
                             return new LoadSuccess(res.version)
+
                         }),
                         catchError(error => of(new LoadFail(error)))
                     )

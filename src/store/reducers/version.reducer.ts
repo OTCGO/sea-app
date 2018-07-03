@@ -35,7 +35,15 @@ export const reducer: ActionReducer<State> = (state = initialVersionState, actio
 			}
 		}
 
+		case VersionActionTypes.LOAD_Display: {
+			console.log('VersionActionTypes.LOAD_SUCCESS', action.payload)
+			return {
+				...state,
+				entities: action.payload,
+			}
+		}
 		default:
+			console.log('ActionReducer:ActionReducerActionReducerActionReducerActionReducer', state)
 			return state
 	}
 }

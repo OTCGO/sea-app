@@ -5,6 +5,7 @@ export enum VersionActionTypes {
 	LOAD = '[Version] Load',
 	LOAD_FAIL = '[Version] Load Fail',
 	LOAD_SUCCESS = '[Version] Load Success',
+	LOAD_Display = '[Version] Load Success',
 
 }
 
@@ -25,6 +26,11 @@ export class LoadFail implements Action {
 	constructor (public payload: Error | string) {}
 }
 
+
+export class LoadDisplay implements Action {
+    readonly type = VersionActionTypes.LOAD_Display
+    constructor (public payload: Version) {}
+}
 
 
 export type VersionActions =

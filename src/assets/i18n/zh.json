@@ -61,9 +61,12 @@
     },
     "SEND_MODAL": {
       "title": "转账",
+      "map": "映射",
+      "mapTransfer": "点击映射",
       "address": "地址",
       "password": "密码",
       "amount": "数量",
+      "mapAmount": "整数数量",
       "label": "备注",
       "transfer": "点击转账",
       "success": "转账成功",

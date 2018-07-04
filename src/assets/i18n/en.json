@@ -62,7 +62,10 @@
     "SEND_MODAL": {
       "title": "Transfer",
       "address": "Address",
+      "map": "Map",
+      "mapTransfer": "Map",
       "password": "Password",
+      "mapAmount": "Int Amout",
       "amount": "Amount",
       "label": "Label",
       "transfer": "Transfer",

@@ -14,7 +14,7 @@
 	</div>
 
 	<form class="container" [formGroup]="formGroup" #sendDir="ngForm" (submit)="transfer()">
-		<h5>{{ translationPrefix + 'title' | translate }}</h5>
+		<h5>{{ translationPrefix + 'map' | translate }}</h5>
 
 		<ion-item class="round">
 			<ion-input placeholder="{{ translationPrefix + 'address' | translate }}" formControlName="address" ></ion-input>
@@ -43,8 +43,7 @@
 
 		<ion-item class="round">
 			<ion-input
-				type="number" placeholder="{{ translationPrefix + 'amount' | translate }}" formControlName="amount"
-				[value]="amount.value"
+				type="number" placeholder="{{ translationPrefix + 'mapAmount' | translate }}" formControlName="amount"
 				[max]="selectedBalance.amount"
 				required></ion-input>
 			<ion-icon item-end *ngIf="amount.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
@@ -65,6 +64,6 @@
 
 		<div class="spacer"></div>
 
-		<button ion-button round full class="otcgo-button--colour" type="submit">{{ translationPrefix + 'transfer' | translate }}</button>
+		<button ion-button round full class="otcgo-button--colour" type="submit">{{ translationPrefix + 'mapTransfer' | translate }}</button>
 	</form>
 </ion-content>

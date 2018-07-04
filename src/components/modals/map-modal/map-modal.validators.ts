@@ -11,9 +11,12 @@ export function addressValidator (addressCtrl: FormControl): ValidationErrors {
 export function amountValidator (maxValue) {
 	return (amountCtrl: FormControl): ValidationErrors | null => {
 		const value = amountCtrl.value
-		if (!value || value <= 0 || value > maxValue) {
+		const reg = /^[1-9]\d*$/
+		if (!value || value <= 0 || value > maxValue || !reg.test(value)) {
 			return { invalidAmount: true }
 		}
 		return null
 	}
 }
+
+

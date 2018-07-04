@@ -49,6 +49,7 @@
     "DETAILS": {
       "title": "转账记录",
       "transfer": "转账",
+      "map": "映射",
       "in": "转入",
       "out": "转出",
       "nodata": "没有转账记录"

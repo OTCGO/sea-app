@@ -49,6 +49,7 @@
     "DETAILS": {
       "title": "Transaction Records",
       "transfer": "Transfer",
+      "map": "Map",
       "in": "In",
       "out": "Out",
       "nodata": "No History Data"

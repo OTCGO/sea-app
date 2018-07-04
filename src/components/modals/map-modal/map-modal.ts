@@ -13,28 +13,28 @@ import {
 } from 'ionic-angular'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { Store } from '@ngrx/store'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import {
 	addressValidator,
 	amountValidator
-} from './send-modal.validators'
+} from './map-modal.validators'
 import { TranslateService } from '@ngx-translate/core'
 import { RootState } from '../../../store/reducers'
 import { IBalance } from '../../../shared/models'
 import { isAddress } from '../../../shared/utils'
-import { SendModalProvider } from './send-modal.provider'
+import { MapModalProvider } from './map-modal.provider'
 import { NotificationProvider } from '../../../providers'
 import { TransactionsActions, BalancesActions } from '../../../store/actions'
 import { TransactionsSelectors, BalancesSelectors } from '../../../store/selectors'
 
 @IonicPage({
-	name: 'SendModal'
+	name: 'MapModal'
 })
 @Component({
-	selector: 'send-modal',
-	templateUrl: 'send-modal.html'
+	selector: 'map-modal',
+	templateUrl: 'map-modal.html'
 })
-export class SendModalComponent implements OnInit {
+export class MapModalComponent implements OnInit {
 	// @ViewChild(Navbar) navBar: Navbar
 
 	formGroup: FormGroup
@@ -47,11 +47,12 @@ export class SendModalComponent implements OnInit {
 	get label() { return this.formGroup.get('label') }
 	get w() {
 		try {
-			return this.sendModalProvider.account && this.sendModalProvider.account.WIF
+			return this.mapModalProvider.account && this.mapModalProvider.account.WIF
 		} catch (e) {
 			return ''
 		}
 	}
+
 
 
 	constructor(
@@ -61,21 +62,30 @@ export class SendModalComponent implements OnInit {
 		private notificationProvider: NotificationProvider,
 		private alertCtrl: AlertController,
 		private loadingCtrl: LoadingController,
-		public sendModalProvider: SendModalProvider,
+		public mapModalProvider: MapModalProvider,
 		private store: Store<RootState>,
 		private ts: TranslateService,
 		private fb: FormBuilder
 	) {
 		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+
 		this.formGroup = this.fb.group({
-			address: ['', [Validators.required, addressValidator]],
+			// address: ['AZ2FJDreaBA9v4YzxsNPnkcvir1Jh3SdoG', [Validators.required, addressValidator]],
+			address: new FormControl({value: 'AZ2FJDreaBA9v4YzxsNPnkcvir1Jh3SdoG', disabled: true}, Validators.required),
 			passphrase: ['', this.w ? [] : Validators.required],
 			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
 			label: [''],
 		})
 	}
 
+
+	// first: new FormControl({value: 'Nancy', disabled: true}, Validators.required),
+	// last: new FormControl('Drew', Validators.required)
+
+
+
 	ngOnInit(): void {
+		console.log('hash:', this.selectedBalance.hash)
 	}
 
 	ionViewDidLoad() {
@@ -132,10 +142,10 @@ export class SendModalComponent implements OnInit {
 		})
 		await loading.present()
 
-		this.sendModalProvider
+		this.mapModalProvider
 			.decrypt(this.passphrase.value)
 			.then(async pr => {
-				const result: any = await this.sendModalProvider.doSendAsset({
+				const result: any = await this.mapModalProvider.doSendAsset({
 					dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
 					amounts: this.amount.value,
 					assetId: this.selectedBalance.hash

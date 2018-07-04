@@ -64,7 +64,7 @@ export class VersionComponent implements OnInit {
       // .catch(e => console.log(e))
       const locale = syslan.value.split('-')[0]
 
-
+      console.log('platform', this.platform.is('ios'))
       const result = (await this.versionProvider.getVersion(this.platform.is('ios') ? 'ios' : 'android')).version
 
 
@@ -89,11 +89,11 @@ export class VersionComponent implements OnInit {
           title: `${title} ${result.version}`,
           // subTitle: locale === 'zh' ? result.update_notes_zh : result.update_notes_en,
           // message: `
-          // <ol>
-          //   <li>Charming Victoria in the Mission.</li>
-          //   <li>Cosy 2BD with Parking Included</li>
-          //   <li>Amazing View from a Mordern Loft</li>
-          // </ol>
+          // <ul class='update'>
+          //   <li>1.Charming Victoria in the Mission</li>
+          //   <li>2.Cosy 2BD with Parking Included</li>
+          //   <li>3.Amazing View from a Mordern Loft</li>
+          // </ul>
           // `,
           message: locale === 'zh' ? result.update_notes_zh : result.update_notes_en,
           buttons: [{

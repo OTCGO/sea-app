@@ -1,0 +1,70 @@
+<ion-header class="custom-header">
+
+	<ion-navbar transparent>
+		<ion-title>
+			{{ selectedBalance.symbol }}
+		</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+<ion-content padding class="send-modal__content" fixed>
+	<div class="content-header">
+		{{ selectedBalance.amount }} 
+	</div>
+
+	<form class="container" [formGroup]="formGroup" #sendDir="ngForm" (submit)="transfer()">
+		<h5>{{ translationPrefix + 'title' | translate }}</h5>
+
+		<ion-item class="round">
+			<ion-input placeholder="{{ translationPrefix + 'address' | translate }}" formControlName="address" ></ion-input>
+			<!-- <ion-icon item-end *ngIf="toAddress.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
+			<ion-icon item-end *ngIf="toAddress.invalid && (toAddress.dirty || toAddress.touched) && toAddress.errors.invalidAddress" name="close" style="color: red;"></ion-icon> -->
+		</ion-item>
+
+
+
+		<div class="tooltips" *ngIf="selectedBalance.hash !== 'ceab719b8baa2310f232ee0d277c061704541cfb'">
+			<div class="icon" (click)="handleScanClick()">
+				<img src="assets/imgs/icon-send-modal_scan.png">
+			</div>
+		</div>
+
+		<ion-item class="round" *ngIf="!w">
+			<ion-input placeholder="{{ translationPrefix + 'password' | translate }}" type="password" minlength="8" maxlength="16" formControlName="passphrase" required></ion-input>
+			<ion-icon item-end *ngIf="passphrase.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
+			<ion-icon item-end *ngIf="passphrase.invalid && (passphrase.dirty || passphrase.touched)" name="close" style="color: red;"></ion-icon>
+		</ion-item>
+
+		<!--<ion-item class="checkbox">
+			<ion-label>记住密码</ion-label>
+			<ion-checkbox formControlName="rememberPassphrase" type="password"></ion-checkbox>
+		</ion-item>-->
+
+		<ion-item class="round">
+			<ion-input
+				type="number" placeholder="{{ translationPrefix + 'amount' | translate }}" formControlName="amount"
+				[value]="amount.value"
+				[max]="selectedBalance.amount"
+				required></ion-input>
+			<ion-icon item-end *ngIf="amount.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
+			<ion-icon item-end *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.invalidAmount" name="close" style="color: red;"></ion-icon>
+		</ion-item>
+
+		<!-- <ion-list class="amount-range">
+			<ion-range step="1" min="0" [max]="selectedBalance.amount"
+			           formControlName="amount">
+				<ion-label range-left>0</ion-label>
+				<ion-label range-right>{{ selectedBalance.amount }}</ion-label>
+			</ion-range>
+		</ion-list> -->
+
+		<!--<ion-item class="round">
+			<ion-input placeholder="{{ translationPrefix + 'label' | translate }}" formControlName="label"></ion-input>
+		</ion-item>-->
+
+		<div class="spacer"></div>
+
+		<button ion-button round full class="otcgo-button--colour" type="submit">{{ translationPrefix + 'transfer' | translate }}</button>
+	</form>
+</ion-content>

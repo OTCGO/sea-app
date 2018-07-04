@@ -19,6 +19,10 @@ import { IBalance } from '../../../shared/models'
 			  {{ 'POSSESSIONS.DETAILS.transfer' | translate }}
 		  </button>
 		  -->
+		<button  color="light" *ngIf="balance.hash === 'ceab719b8baa2310f232ee0d277c061704541cfb'"   ion-button round  class="ont-map-btn" (click)="showMapModal()">
+		{{ 'POSSESSIONS.DETAILS.map' | translate }}
+		</button>
+
 		  <button  color="light"   ion-button round  class="custom-btn"  (click)="showSendModal()" [disabled]="balance.amount <= 0">
 		  	{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
 		  </button>
@@ -53,11 +57,13 @@ export class PossessionDetailBgcard {
 
 	showSendModal () {
 		this.navCtrl.push('SendModal')
-		// const sendModal = this.modalCtrl.create(
-		// 	'SendModal',
-		// 	null,
-		// 	{ cssClass: 'inset-modal', enableBackdropDismiss: true }
-		// )
-		// return sendModal.present()
+	}
+
+	showMapModal () {
+		this.navCtrl.push('MapModal')
+	}
+
+	mapOnt() {
+
 	}
 }

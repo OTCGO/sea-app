@@ -56,7 +56,7 @@ export class BalancesEffects {
 				return this.apiProvider
 									 .get(`${API_CONSTANTS.ASSET}`)
 									 .pipe(
-										 mergeMap((asset: { NEP5, Global }) =>
+										 mergeMap((asset: { NEP5, Global, ONTOLOGY }) =>
 											 forkJoin(addresses.map(this.getBalance.bind(this))).pipe(
 
 												 takeUntil(nextGet$),

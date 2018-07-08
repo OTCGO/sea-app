@@ -122,18 +122,18 @@ export class MapModalComponent implements OnInit {
 	 * @optional Label
 	 **/
 	async transfer() {
-		console.log('transfer')
-		console.log('this.toAddress', this.toAddress)
-		console.log('this.passphrase', this.passphrase)
+		// console.log('transfer')
+		// console.log('this.toAddress', this.toAddress)
+		// console.log('this.passphrase', this.passphrase)
 		console.log('this.amount', this.amount)
 
 		this.toAddress.markAsTouched()
 		this.passphrase.markAsTouched()
 		this.amount.markAsTouched()
 
-		console.log('transfer', 2222)
+		// console.log('transfer', 2222)
 
-		console.log('transfer', !this.formGroup.valid, !this.toAddress.valid, !this.amount.valid, !this.passphrase.valid)
+		// console.log('transfer', !this.formGroup.valid, !this.toAddress.valid, !this.amount.valid, !this.passphrase.valid)
 		if (!this.formGroup.valid ||
 			!this.toAddress.valid ||
 			!this.amount.valid ||

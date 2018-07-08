@@ -106,7 +106,8 @@ function mappingBalances (balances, asset) {
 							return {
 								hash,
 								symbol,
-								amount: Number(balances[hash])
+								// amount: Number(balances[hash])
+								amount: balances[hash]
 							}
 						})
 		: []

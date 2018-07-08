@@ -115,6 +115,75 @@ export class ClaimsPage {
 
 
 		this.claims.subscribe(data => {
+
+			const prompt = this.alertCtrl.create({
+				title: title,
+				// message: title,
+				inputs: [{ name: 'passphrase', placeholder: title, type: 'password' }],
+				buttons: [
+					{ text: btnCancle },
+					{
+						text: btnConfirm,
+						handler: ({ passphrase }) => {
+							try {
+								if (!passphrase || passphrase === '' || passphrase.length < 4) return false
+
+								const loading = this.loadingCtrl.create()
+								loading.present().then(() => {
+									this.btnLoading = true
+
+									getWif(this.account.encrypted, passphrase).then((wif: any) => {
+										// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
+										const pr = getPrivateKeyFromWIF(wif)
+										console.log('getWif', pr)
+										this.claimsProvider.doClaims(data, pr).then(result => {
+
+											prompt.dismiss().catch(() => { })
+											this.btnLoading = false
+
+											loading.dismiss().catch(() => { }).catch(() => { })
+											if (result) {
+												this.showPrompt(successText)
+												return
+											}
+
+											this.showPrompt(failText)
+										})
+
+									}).catch((e) => {
+										this.showPrompt(failText)
+										console.log(e)
+
+										prompt.dismiss().catch(() => { })
+										loading.dismiss().catch(() => { }).catch(() => { })
+										this.btnLoading = false
+									})
+
+
+
+								}).catch((e) => {
+									this.showPrompt(failText)
+									console.log(e)
+
+									prompt.dismiss().catch(() => { })
+									loading.dismiss().catch(() => { }).catch(() => { })
+									this.btnLoading = false
+								})
+
+							} catch (error) {
+								this.showPrompt(failText)
+								// prompt.dismiss().catch(() => {})
+								this.btnLoading = false
+							}
+						}
+					}
+				]
+			})
+			prompt.present()
+
+
+
+			/*
 			// unavailable === '0'
 			console.log('data.unavailable', data.unavailable === '0')
 			if (data.unavailable === '0') {
@@ -161,10 +230,7 @@ export class ClaimsPage {
 											loading.dismiss().catch(() => { }).catch(() => { })
 											this.btnLoading = false
 										})
-										/*
 
-
-										*/
 
 
 									}).catch((e) => {
@@ -230,10 +296,7 @@ export class ClaimsPage {
 											loading.dismiss().catch(() => { }).catch(() => { })
 											this.btnLoading = false
 										})
-										/*
 
-
-										*/
 
 
 									}).catch((e) => {
@@ -256,6 +319,8 @@ export class ClaimsPage {
 				})
 				prompt.present()
 			}
+
+			*/
 		})
 
 

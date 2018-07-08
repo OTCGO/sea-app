@@ -71,6 +71,10 @@
       "transfer": "点击转账",
       "success": "转账成功",
       "fails": "密码错误，请核对"
+    },
+    "MAP_MODAL":{
+      "success": "映射成功",
+      "fails": "密码错误，请核对"
     }
   },
   "MARKETS": {

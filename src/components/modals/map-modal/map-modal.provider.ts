@@ -44,13 +44,6 @@ export class MapModalProvider {
 	}
 
 	doSendAsset ({ dests, amounts, assetId }: ISendOpts, pr) {
-		console.log('doSendAsset', pr)
-
-		// ont map
-		if (assetId === 'ceab719b8baa2310f232ee0d277c061704541cfb') {
-			dests = ''
-		}
-
 		return this.postTransfer({ dests, amounts, assetId, source: this.account.address })
 		           .then(res => this.generateSignature(res['transaction'], pr))
 		           .then(res => this.apiProvider.broadcast(res).toPromise())

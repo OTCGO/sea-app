@@ -65,6 +65,20 @@ export class ClaimsProvider {
 		return Promise.resolve(res['result'])
 	}
 
+	// 不可提取为0
+	async doClaimsUnavailable (pr: string): Promise<boolean> {
+
+		const publicKey = getPublicKeyFromPrivateKey(pr)
+		const { transaction } = await this.postGAS(pr)
+		console.log('transaction', transaction)
+
+		const signature = await this.generateSignatureAndData(transaction, pr, publicKey)
+		console.log(signature)
+
+		const res = await this.apiProvider.broadcast(signature).toPromise()
+		return Promise.resolve(res['result'])
+	}
+
 	postGAS (pr) {
 		return this.apiProvider.post('gas', { publicKey: getPublicKeyFromPrivateKey(pr) }).toPromise()
 							 .then(res => {

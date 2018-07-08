@@ -71,6 +71,10 @@
       "transfer": "Transfer",
       "success": "Success",
       "fails": "Error password,please check"
+    },
+    "MAP_MODAL":{
+      "success": "Map Success",
+      "fails": "Error password,please check"
     }
   },
   "MARKETS": {

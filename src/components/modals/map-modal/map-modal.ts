@@ -70,8 +70,8 @@ export class MapModalComponent implements OnInit {
 		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
 
 		this.formGroup = this.fb.group({
-			// address: ['AZ2FJDreaBA9v4YzxsNPnkcvir1Jh3SdoG', [Validators.required, addressValidator]],
-			address: new FormControl({value: 'AZ2FJDreaBA9v4YzxsNPnkcvir1Jh3SdoG', disabled: true}, Validators.required),
+			// address: new FormControl({value: 'AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', disabled: true}, Validators.required),
+			address: ['AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', [Validators.required, addressValidator]],
 			passphrase: ['', this.w ? [] : Validators.required],
 			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
 			label: [''],
@@ -122,16 +122,27 @@ export class MapModalComponent implements OnInit {
 	 * @optional Label
 	 **/
 	async transfer() {
+		console.log('transfer')
+		console.log('this.toAddress', this.toAddress)
+		console.log('this.passphrase', this.passphrase)
+		console.log('this.amount', this.amount)
+
 		this.toAddress.markAsTouched()
 		this.passphrase.markAsTouched()
 		this.amount.markAsTouched()
 
+		console.log('transfer', 2222)
+
+		console.log('transfer', !this.formGroup.valid, !this.toAddress.valid, !this.amount.valid, !this.passphrase.valid)
 		if (!this.formGroup.valid ||
 			!this.toAddress.valid ||
 			!this.amount.valid ||
 			!this.passphrase.valid) {
 			return
 		}
+
+		console.log('transfer', 3333)
+
 
 		let executing
 		this.ts.get('OPERATOR.executing').subscribe(data => {
@@ -155,7 +166,7 @@ export class MapModalComponent implements OnInit {
 				await this.handleClose()
 				if (result.result) {
 
-					this.ts.get('POSSESSIONS.SEND_MODAL.success').subscribe(data => {
+					this.ts.get('POSSESSIONS.MAP_MODAL.success').subscribe(data => {
 						this.notificationProvider.emit({ message: data })
 					})
 
@@ -163,7 +174,7 @@ export class MapModalComponent implements OnInit {
 					return
 				}
 
-				this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
+				this.ts.get('POSSESSIONS.MAP_MODAL.fails').subscribe(data => {
 					this.notificationProvider.emit({ message: data })
 				})
 

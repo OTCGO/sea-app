@@ -10,10 +10,10 @@ export function addressValidator (addressCtrl: FormControl): ValidationErrors {
 
 export function amountValidator (maxValue) {
 	return (amountCtrl: FormControl): ValidationErrors | null => {
-		const value = Number(amountCtrl.value)
+		const value = amountCtrl.value
 		const reg = /^[1-9]\d*$/
 		console.log('amountValidator', reg.test(value))
-		if (!value || value <= 0 || value > maxValue || !reg.test(value)) {
+		if (!value || Number(value) <= 0 || Number(value) > maxValue || !reg.test(value)) {
 			return { invalidAmount: true }
 		}
 		return null

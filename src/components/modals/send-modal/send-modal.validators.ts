@@ -11,7 +11,7 @@ export function addressValidator (addressCtrl: FormControl): ValidationErrors {
 export function amountValidator (maxValue) {
 	return (amountCtrl: FormControl): ValidationErrors | null => {
 		const value = amountCtrl.value
-		if (!value || value <= 0 || value > maxValue) {
+		if (!value || Number(value) <= 0 || Number(value) > maxValue) {
 			return { invalidAmount: true }
 		}
 		return null

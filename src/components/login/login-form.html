@@ -38,8 +38,11 @@
 
 	<ion-row class="login__password-section" >
 		<ion-col>
-			<ion-item class="login__password-input">
-				<ion-input type="password" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required maxlength=20 minlength="8" ></ion-input>
+			<ion-item class="login__password-input">	
+				<ion-input type="password" *ngIf="inputType" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required maxlength=20 minlength="8" ></ion-input>
+				<ion-input type="text" *ngIf="!inputType" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required maxlength=20 minlength="8" ></ion-input>
+			
+				<button ion-button clear color="dark" type="button" item-right (click)="displayPwd()"> <ion-icon name="eye"> </ion-icon> </button>
 			</ion-item>
 		</ion-col>
 	</ion-row>

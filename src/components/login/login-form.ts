@@ -53,6 +53,8 @@ export class LoginForm implements OnInit {
 	translationPrefix = 'LOGIN.'
 	accountCache = undefined
 
+	private inputType = true
+
 
 	constructor(
 		private nativeStorage: NativeStorage,
@@ -427,6 +429,11 @@ export class LoginForm implements OnInit {
 
 		// })
 		// this.store.dispatch(new AuthActions.LoginNEP2())
+	}
+
+	displayPwd() {
+		console.log('displayPwd')
+		this.inputType = !this.inputType
 	}
 
 

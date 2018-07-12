@@ -11,6 +11,7 @@ import {
 	ViewController,
 	Navbar
 } from 'ionic-angular'
+import { ONT_HASH , ONG_HASH} from '../../../shared/constants'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { Store } from '@ngrx/store'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -136,11 +137,28 @@ export class SendModalComponent implements OnInit {
 		this.sendModalProvider
 			.decrypt(this.passphrase.value)
 			.then(async pr => {
-				const result: any = await this.sendModalProvider.doSendAsset({
-					dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-					amounts: this.amount.value,
-					assetId: this.selectedBalance.hash
-				}, pr)
+
+				let result: any
+
+				console.log('this.selectedBalance.hash', this.selectedBalance.hash)
+				console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
+				if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+					result = await this.sendModalProvider.doSendAssetOnt({
+						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+						amounts: this.amount.value,
+						assetId: this.selectedBalance.hash
+					}, pr)
+
+				} else {
+					 result = await this.sendModalProvider.doSendAsset({
+						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+						amounts: this.amount.value,
+						assetId: this.selectedBalance.hash
+					}, pr)
+				}
+
+
+
 
 
 				await this.handleClose()

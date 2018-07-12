@@ -105,6 +105,7 @@ const ASSET_HASH_TEST = {
 
 export const NEO_HASH = 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
 export const ONT_HASH = '0000000000000000000000000000000000000001'
+export const ONG_HASH = '0000000000000000000000000000000000000002'
 
 
 function enumeralize (obj) {

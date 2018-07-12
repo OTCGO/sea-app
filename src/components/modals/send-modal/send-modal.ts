@@ -16,7 +16,8 @@ import { Store } from '@ngrx/store'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import {
 	addressValidator,
-	amountValidator
+	amountValidator,
+	amountInt
 } from './send-modal.validators'
 import { TranslateService } from '@ngx-translate/core'
 import { RootState } from '../../../store/reducers'
@@ -70,7 +71,7 @@ export class SendModalComponent implements OnInit {
 		this.formGroup = this.fb.group({
 			address: ['', [Validators.required, addressValidator]],
 			passphrase: ['', this.w ? [] : Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
+			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
 			label: [''],
 		})
 	}

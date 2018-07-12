@@ -85,7 +85,7 @@ export class ManageWalletCard  implements OnDestroy {
 			cssClass: 'mw__exports-actions--box',
 			// message: '注意，导出 私钥  并使用是一件非常危险的事情，建议使用加密私钥（EncryptedKey）代替',
 			message ,
-			inputs: [{ name: 'passphrase', placeholder: placeholder, type: 'password' }],
+			inputs: [{ name: 'passphrase', placeholder: placeholder, type: 'password'}],
 			buttons: [ { text: btnCancle } ]
 		}
 
@@ -181,7 +181,7 @@ export class ManageWalletCard  implements OnDestroy {
 						text: btnConfirm,
 						handler: ({ passphrase }) =>
 							passphrase &&
-							passphrase.length >= 4 &&
+							passphrase.length >= 4 && passphrase.length <= 20 &&
 							this.parsePassphrase(account.encrypted, passphrase, this.commonLoading, 'wif')
 					}
 				]
@@ -284,7 +284,7 @@ export class ManageWalletCard  implements OnDestroy {
 	showPrivateKeyBox (account) {
 		const commonLoading = this.loadingCtrl.create()
 		const handler = ({ passphrase }) => {
-			if (!passphrase || passphrase.length < 4) return false
+			if (!passphrase || passphrase.length < 8 ||  passphrase.length > 20) return false
 			this.parsePassphrase(account.encrypted, passphrase, commonLoading, 'privateKey')
 		}
 

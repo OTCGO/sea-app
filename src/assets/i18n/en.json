@@ -97,7 +97,8 @@
     "manage_wallet": "Manage Wallet",
     "contacts": "Contacts",
     "histories": "Transaction Records",
-    "claims": "Claims",
+    "claims": "Claims GAS",
+    "claims_ong": "Claims ONG",
     "logout": "Logout",
     "MANAGE_WALLET": {
       "prompt":"prompt",

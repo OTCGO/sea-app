@@ -4,7 +4,7 @@ import { Claims } from '@shared/models'
 
 import { AlertController, IonicPage, LoadingController } from 'ionic-angular'
 import { AccountProvider } from '../../../providers'
-import { ClaimsProvider } from './claims.provider'
+import { OngProvider } from './ong.provider'
 import { RootState } from '../../../store/reducers'
 import { ClaimsActions } from '../../../store/actions'
 import { ClaimsSelectors } from '../../../store/selectors'
@@ -19,14 +19,14 @@ import { Subscription } from 'rxjs/Subscription'
 
 
 @IonicPage({
-	name: 'Claims',
-	segment: 'claims'
+	name: 'Ong',
+	segment: 'ong'
 })
 @Component({
-	selector: 'page-claims',
-	templateUrl: 'claims.html'
+	selector: 'page-ong',
+	templateUrl: 'ong.html'
 })
-export class ClaimsPage implements OnInit {
+export class OngPage implements OnInit {
 	account = this.accountProvider.defaultAccount
 	private claims: Observable<Claims>
 	private btnLoading = false
@@ -35,7 +35,7 @@ export class ClaimsPage implements OnInit {
 
 	constructor(
 		private ts: TranslateService,
-		private claimsProvider: ClaimsProvider,
+		private ongProvider: OngProvider,
 		private accountProvider: AccountProvider,
 		private alertCtrl: AlertController,
 		private store: Store<RootState>,
@@ -47,7 +47,7 @@ export class ClaimsPage implements OnInit {
 		this.subscription = this.msgService.getMessage().subscribe(data => {
 			// console.log('')
 			console.log('this.subscription', data)
-			if (data.text === 'claims-gas') {
+			if (data.text === 'claims-ong') {
 				console.log('this.subscription.text', data.text)
 				if (this.alert) {
 					this.alert.dismiss().catch()
@@ -65,7 +65,7 @@ export class ClaimsPage implements OnInit {
 			this.alert.dismiss().catch()
 		}
 
-		this.store.dispatch(new ClaimsActions.Load())
+		this.store.dispatch(new ClaimsActions.LoadONG())
 		this.claims = this.store.select(ClaimsSelectors.getEntities)
 	}
 
@@ -82,7 +82,7 @@ export class ClaimsPage implements OnInit {
 		if (this.account._WIF) {
 			try {
 				this.btnLoading = true
-				const result = await this.claimsProvider.doClaims(this.account._privateKey)
+				const result = await this.ongProvider.doClaims(this.account._privateKey)
 
 				this.btnLoading = false
 
@@ -111,7 +111,7 @@ export class ClaimsPage implements OnInit {
 
 		*/
 
-		this.msgService.msg = 'claims-gas'
+		this.msgService.msg = 'claims-ong'
 
 
 		let title
@@ -180,7 +180,7 @@ export class ClaimsPage implements OnInit {
 									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									const pr = getPrivateKeyFromWIF(wif)
 									console.log('getWif', pr)
-									this.claimsProvider.doClaims(c, pr).then(result => {
+									this.ongProvider.doClaims(c, pr).then(result => {
 
 										self.alert.dismiss().catch(() => { })
 										this.btnLoading = false

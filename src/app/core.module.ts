@@ -8,11 +8,12 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 import { File } from '@ionic-native/file'
 import { BarcodeScanner } from '@ionic-native/barcode-scanner'
 
-import { RouterProvider, AccountProvider, ApiProvider, WalletProvider, PriceProvider } from '../providers'
+import { RouterProvider, AccountProvider, ApiProvider, WalletProvider } from '../providers'
 import { PossessionDetailProvider } from '../containers/possessions/possession-detail/possession-detail.provider'
 import { SendModalProvider } from '../components/modals/send-modal/send-modal.provider'
 import { MapModalProvider } from '../components/modals/map-modal/map-modal.provider'
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
+import { OngProvider } from '../containers/profile/ong/ong.provider'
 // import { FileStorageProvider } from '../providers/file-storage.provider'
 import { NotificationProvider } from '../providers/notification.provider'
 import { LoadingProvider } from '../providers/loading.provider'
@@ -34,11 +35,12 @@ import { VersionProvider } from '../components/version/version.provider'
 		WalletProvider,
 		AccountProvider,
 		ApiProvider,
-		PriceProvider,
+		// PriceProvider,
 		PossessionDetailProvider,
 		SendModalProvider,
 		MapModalProvider,
 		ClaimsProvider,
+		OngProvider,
 		VersionProvider,
 	   //  FileStorageProvider,
 	  	NotificationProvider,

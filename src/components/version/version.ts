@@ -106,7 +106,7 @@ export class VersionComponent implements OnInit {
             text: confirm,
             handler: data => {
               console.log('Saved clicked')
-              this.iab.create(result.download_url)
+              this.iab.create('https://www.pgyer.com/mCWD', '_system')
             }
           }]
         })

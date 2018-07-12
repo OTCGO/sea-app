@@ -98,6 +98,7 @@
     "contacts": "联系人",
     "histories": "转账记录",
     "claims": "提取 GAS",
+    "claims_ong": "提取 ONG",
     "logout": "退出登录",
     "MANAGE_WALLET": {
       "prompt":"提示",
@@ -183,7 +184,7 @@
       "title": "提取分红",
       "loading": "正在提取",
       "available": "可提取",
-      "unavailable": "不可提取",
+      "unavailable": "待提取数量",
 	  "do_claims": "一键提取",
 	  "success": "提取成功",
 	  "fail": "提取失败"

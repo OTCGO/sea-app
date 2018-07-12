@@ -9,15 +9,16 @@ import {
 	AccountProvider,
 	ApiProvider
 } from '../../../providers'
-import { NEO_HASH } from '../../../shared/constants'
+import { ONT_HASH } from '../../../shared/constants'
 import { Load } from '../../../store/actions/balances.action'
 import { RootState } from '../../../store/reducers/index'
 import { BalancesSelectors } from '../../../store/selectors'
+import { AnyFn } from '@ngrx/store/src/selector'
 
 const { getPublicKeyFromPrivateKey, generateSignature } = wallet
 
 @Injectable()
-export class ClaimsProvider {
+export class OngProvider {
 	_account = this.accountProvider.defaultAccount
 	balances
 
@@ -32,7 +33,7 @@ export class ClaimsProvider {
 	}
 
 	getClaims() {
-		return this.apiProvider.get('claim/' + this._account.address).toPromise()
+		return this.apiProvider.get('claim/ong' + this._account.address).toPromise()
 	}
 
 	hasDecrypt() {
@@ -44,13 +45,15 @@ export class ClaimsProvider {
 		}
 	}
 
+
+
 	// 可提取变余额
 	async  pick (pr, publicKey) {
-		const { transaction } = await this.postGAS(pr)
-		// console.log('transaction', transaction)
-		const signature = await this.generateSignatureAndData(transaction, pr, publicKey)
+		const { sigdata , transaction} = await this.postOnt(pr)
+		console.log('sigdata', sigdata)
+		const signature = await this.generateSignatureAndData(transaction, pr, publicKey, sigdata)
 		// console.log(signature)
-		const res = await this.apiProvider.broadcast(signature).toPromise()
+		const res = await this.apiProvider.broadcastOnt(signature).toPromise()
 		console.log('pick', res)
 		return res
 		// return Promise.resolve(res['result']).catch()
@@ -146,8 +149,8 @@ export class ClaimsProvider {
 	}
 	*/
 
-	postGAS(pr) {
-		return this.apiProvider.post('gas', { publicKey: getPublicKeyFromPrivateKey(pr) }).toPromise()
+	postOnt(pr) {
+		return this.apiProvider.post('ong', { publicKey: getPublicKeyFromPrivateKey(pr) }).toPromise()
 			.then(res => {
 				if (res.error) throw res.error
 				return res
@@ -155,32 +158,32 @@ export class ClaimsProvider {
 	}
 
 	doSendAsset(pr: string, publicKey) {
-		const NEO = this.balances.find(bal => bal.hash === NEO_HASH)
+		const ONT = this.balances.find(bal => bal.hash === ONT_HASH)
 		const address = this._account.address
-		console.log('doSendAsset:NEO', NEO)
-		if (!NEO || !NEO.amount) {
+		console.log('doSendAsset:ong', ONT)
+		if (!ONT || !ONT.amount) {
 			return
 		}
 		const data = {
 			dests: address,
-			amounts: NEO.amount.toString(),
-			assetId: NEO_HASH,
+			amounts: ONT.amount.toString(),
+			assetId: ONT_HASH,
 			source: address
 		}
-		return this.apiProvider.post('transfer', data).toPromise()
-			.then(res => this.generateSignatureAndData(res['transaction'], pr, publicKey))
-			.then(async signature => await this.apiProvider.broadcast(signature).toPromise())
+		return this.apiProvider.post('transfer/ont', data).toPromise()
+			.then(res => this.generateSignatureAndData(res['transaction'], pr, publicKey, res['sigdata']))
+			.then(async signature => await this.apiProvider.broadcastOnt(signature).toPromise())
 			.catch(err => console.error('from claims provider doSendAsset()', err))
 	}
 
-	private generateSignatureAndData(transaction, pr, publicKey) {
+	private generateSignatureAndData(transaction, pr, publicKey, sigdata) {
 
 		// const signature = generateSignature(transaction, pr)
 		// const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 		console.log('publicKey', publicKey)
 
 		console.log('generateSignature', pr)
-		const signature = generateSignature(transaction, pr)
+		const signature = generateSignature(sigdata, pr)
 
 		return {
 			publicKey,
@@ -188,4 +191,6 @@ export class ClaimsProvider {
 			transaction
 		}
 	}
+
+
 }

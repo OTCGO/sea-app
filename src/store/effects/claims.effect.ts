@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store'
 import { of } from 'rxjs/observable/of'
 import {
 	ClaimsActionTypes,
+	LoadONG,
 	DoClaim,
 	Load,
 	LoadFail,
@@ -42,6 +43,23 @@ export class ClaimsEffects {
 								)
 					)
 				)
+
+	@Effect()
+	LoadONG$ =
+		this.actions$
+				.ofType<Load>(ClaimsActionTypes.LOAD_ONG)
+				.pipe(
+					withLatestFrom(this.store$.select(getAccount), (_, account: Account) => account.address),
+					concatMap(
+						address =>
+							this.api.get(`${API_CONSTANTS.GAS}/ont/${address}`)
+								.pipe(
+									map(res => new LoadSuccess(res)),
+									catchError(error => of(new LoadFail(error)))
+								)
+					)
+				)
+
 
 	@Effect()
 	DoClaims$ =

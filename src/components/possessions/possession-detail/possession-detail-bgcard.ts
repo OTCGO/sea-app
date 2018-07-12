@@ -19,13 +19,27 @@ import { IBalance } from '../../../shared/models'
 			  {{ 'POSSESSIONS.DETAILS.transfer' | translate }}
 		  </button>
 		  -->
-		<button  color="light" *ngIf="balance.hash === 'ceab719b8baa2310f232ee0d277c061704541cfb'"   ion-button round  class="ont-map-btn" (click)="showMapModal()" [disabled]="balance.amount <= 0">
-		{{ 'POSSESSIONS.DETAILS.map' | translate }}
-		</button>
 
-		  <button  color="light"   ion-button round  class="custom-btn"  (click)="showSendModal()" [disabled]="balance.amount <= 0">
-		  	{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
+		  <!--
+		  <button  color="light" *ngIf="balance.hash === 'ceab719b8baa2310f232ee0d277c061704541cfb'"   ion-button round  class="ont-map-btn" (click)="showMapModal()" [disabled]="balance.amount <= 0">
+		  {{ 'POSSESSIONS.DETAILS.map' | translate }}
 		  </button>
+
+			<button  color="light"   ion-button round  class="custom-btn"  (click)="showSendModal()" [disabled]="balance.amount <= 0">
+				{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
+			</button>
+			-->
+
+		  <div class="tran_a">
+				<button  color="light" *ngIf="balance.hash === 'ceab719b8baa2310f232ee0d277c061704541cfb'" ion-button round full  class="po-btn" (click)="showMapModal()" [disabled]="balance.amount <= 0">
+				{{ 'POSSESSIONS.DETAILS.map' | translate }}
+				</button>
+
+				<button  color="light"   ion-button round full  class="po-btn"  (click)="showSendModal()" [disabled]="balance.amount <= 0">
+					{{ 'POSSESSIONS.DETAILS.transfer' | translate }}
+				</button>
+		  </div>
+
 	  </ion-card>
 	`
 })
@@ -53,13 +67,13 @@ export class PossessionDetailBgcard {
 
 	constructor(
 		private navCtrl: NavController,
-		private modalCtrl: ModalController) {}
+		private modalCtrl: ModalController) { }
 
-	showSendModal () {
+	showSendModal() {
 		this.navCtrl.push('SendModal')
 	}
 
-	showMapModal () {
+	showMapModal() {
 		this.navCtrl.push('MapModal')
 	}
 

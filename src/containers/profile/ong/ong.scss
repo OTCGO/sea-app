@@ -28,10 +28,15 @@ page-ong {
       display: flex;
       justify-content: center;
 
-      .claims__button {
+      .claims_a{
         position: absolute;
-        bottom: 20px;
+        bottom: 13rem;
         width: 80%;
+      }
+
+      .claims__button {
+        // position: absolute;
+        background: #f4f4f4;
         color: rgba(242,123,0,1);
       }
 

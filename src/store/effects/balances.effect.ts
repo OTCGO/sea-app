@@ -34,6 +34,8 @@ import { ApiProvider, API_CONSTANTS } from '../../providers/api'
 
 import 'rxjs/add/operator/concatMap'
 
+// import { balanceSort } from '../../shared/utils'
+
 
 @Injectable()
 export class BalancesEffects {
@@ -89,7 +91,12 @@ export class BalancesEffects {
 }
 
 function balancesReducer (asset) {
-	return (acc, { _id: address, balances }) => ({...acc, [address]: mappingBalances(balances, asset)})
+	return (acc, { _id: address, balances }) => {
+		// console.log('balancesReducer', balanceSort(mappingBalances(balances, asset)))
+		 // return ({...acc, [address]: balanceSort(mappingBalances(balances, asset))})
+		 console.log('balancesReducer', mappingBalances(balances, asset))
+		 return ({...acc, [address]: mappingBalances(balances, asset)})
+	}
 }
 
 function mappingBalances (balances, asset) {

@@ -8,8 +8,13 @@ import { getAccount } from './wallet.selector'
 import { State } from '../reducers/balances.reducer'
 import { sort, compose, prop, lt, filter, not, toPairs, isEmpty, is } from 'ramda'
 
+
+
 const getState = createFeatureSelector('balances')
-export const getEntities = createSelector(getState, (state: State) => state.entities)
+export const getEntities = createSelector(getState, (state: State) => {
+
+	return state.entities
+})
 export const getError = createSelector(getState, (state: State) => state.error)
 export const getLoading = createSelector(getState, (state: State) => state.loading)
 export const getSelectedBalanceSymbol = createSelector(getState, (state: State) => state.selectedBalanceSymbol)
@@ -34,7 +39,8 @@ export const getDefaultEntities = createSelector(
 	(account, entities) =>
 		account && entities && entities[account.address] &&
 		!isEmpty(entities[account.address]) &&
-		sort<IBalance>((a, b) => Number(b.amount) - Number(a.amount), entities[account.address]),
+		sort<IBalance>((a, b) => Number(b.amount) - Number(a.amount), entities[account.address])
+
 
 )
 

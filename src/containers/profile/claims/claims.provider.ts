@@ -108,16 +108,19 @@ export class ClaimsProvider {
 
 			}
 
+
+			const res2 = await this.tran(pr, publicKey)
+			if (!res2['result']) {
+				return Promise.resolve(false)
+			}
+
 			const res1 =  await this.pick(pr, publicKey)
 			if (!res1['result']) {
 				return Promise.resolve(false)
 			}
 
 
-			const res2 = await this.tran(pr, publicKey)
-			if (!res2['result']) {
-				return Promise.resolve(false)
-			}
+
 
 			return Promise.resolve(true)
 

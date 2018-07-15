@@ -71,7 +71,7 @@
         {{ 'PROFILE.CLAIMS.loading' | translate }}
       </button>
 
-      <button *ngIf="!btnLoading" [disabled]="((claims | async)?.unavailable) === '0' && ((claims | async)?.available) === '0'"
+      <button *ngIf="!btnLoading" [disabled]="(((claims | async)?.unavailable) === '0' && ((claims | async)?.available) === '0') || btnDisable"
         ion-button round full light class="claims__button" (click)="doClaim()">
         {{ 'PROFILE.CLAIMS.do_claims' | translate }}
       </button>

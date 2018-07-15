@@ -15,8 +15,8 @@ import { TranslateService } from '@ngx-translate/core'
 import { getWif } from '../../../shared/utils'
 import { MessageService } from '../../../shared/services'
 import { Subscription } from 'rxjs/Subscription'
-
-
+import { BalancesActions } from '../../../store/actions'
+import { BalancesSelectors } from '../../../store/selectors'
 
 @IonicPage({
 	name: 'Ong',
@@ -32,6 +32,9 @@ export class OngPage implements OnInit {
 	private btnLoading = false
 	private alert
 	subscription: Subscription
+	private symbol = 'ontology-ONG'
+	private btnDisable = true
+	private ongBalance
 
 	constructor(
 		private ts: TranslateService,
@@ -67,6 +70,32 @@ export class OngPage implements OnInit {
 
 		this.store.dispatch(new ClaimsActions.LoadONG())
 		this.claims = this.store.select(ClaimsSelectors.getEntities)
+
+
+		this.store.dispatch(new BalancesActions.Load())
+
+		this.store.dispatch(new BalancesActions.Select(this.symbol))
+		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(balance => {
+			console.log('ont:ngOnInit', balance)
+			const result = parseFloat(balance.amount)
+
+			this.ongBalance = result
+
+
+			if (result < 0.01 ) {
+				this.btnDisable = true
+			}
+
+			if (result >= 0.02) {
+				this.btnDisable = false
+
+			}
+			if (0.01 <= result && result < 0.02) {
+				this.btnDisable = false
+			}
+
+			console.log('ont:ngOnInit', this.btnDisable)
+		})
 	}
 
 	// ionViewDidLoad() {
@@ -180,7 +209,7 @@ export class OngPage implements OnInit {
 									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									const pr = getPrivateKeyFromWIF(wif)
 									console.log('getWif', pr)
-									this.ongProvider.doClaims(c, pr).then(result => {
+									this.ongProvider.doClaims(c, pr, this.ongBalance ).then(result => {
 
 										self.alert.dismiss().catch(() => { })
 										this.btnLoading = false

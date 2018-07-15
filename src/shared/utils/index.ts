@@ -56,22 +56,30 @@ export function balanceSort(balance) {
 	const seac = R.find(R.propEq('symbol', '申一币'))(result)
 	const neo = R.find(R.propEq('symbol', 'NEO'))(result)
 	const gas = R.find(R.propEq('symbol', 'GAS'))(result)
+	const ont = R.find(R.propEq('symbol', 'ontology-ONT'))(result)
+	const ong = R.find(R.propEq('symbol', 'ontology-ONG'))(result)
 
 	const s = new Set()
 
-	if (seas) {
-		s.add(seas)
-	}
-	if (seac) {
-		s.add(seac)
-	}
+
 	if (neo) {
 		s.add(neo)
 	}
 	if (gas) {
 		s.add(gas)
 	}
-
+	if (ont) {
+		s.add(ont)
+	}
+	if (ong) {
+		s.add(ong)
+	}
+	if (seas) {
+		s.add(seas)
+	}
+	if (seac) {
+		s.add(seac)
+	}
 	// s.add(seas)
 	// s.add(seac)
 	// s.add(neo)

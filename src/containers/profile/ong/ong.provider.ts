@@ -48,8 +48,8 @@ export class OngProvider {
 
 
 	// 可提取变余额
-	async  pick (pr, publicKey) {
-		const { sigdata , transaction} = await this.postOnt(pr)
+	async  pick(pr, publicKey) {
+		const { sigdata, transaction } = await this.postOnt(pr)
 		console.log('sigdata', sigdata)
 		const signature = await this.generateSignatureAndData(transaction, pr, publicKey, sigdata)
 		// console.log(signature)
@@ -77,48 +77,78 @@ export class OngProvider {
 	 * Claims process
 	 * 1. POST GAS, { publicKey } -> { result: boolean, error?: string, transaction?: string }
 	 * 2. POST Broadcase {  publicKey, signature: generateSignature(transaction, privateKey), transaction }
+	 *
+	 * 1. 如果 ong < 0.01 提取按钮不可用
+	 * 2. 如果 ong >= 0.02 正常提取
+	 * 3. 如果 0.1<= ong < 0.2
+	 * 		3,1 如果有可提取   就提取可提取部分
+	 * 		3.2 如果无可提取   就提取不可提取部分
+	 *
+	 *
 	 * */
-	async doClaims(data, pr: string): Promise<boolean> {
+	async doClaims(data, pr: string, ongBalance): Promise<boolean> {
 		console.log('doClaims', pr)
 		try {
 
 
 			this.store.dispatch(new Load())
-
 			// 	const publicKey = getPublicKeyFromPrivateKey(pr)
 			const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 
-			// 不可提取为0   neo 为0
-			if (data.unavailable === '0') {
-				const res = await this.pick(pr, publicKey)
-				// return Promise.resolve(true)
 
-				if (res['result']) {
-					return Promise.resolve(true)
+
+			if (0.01 <= ongBalance && ongBalance < 0.02) {
+
+
+				// 可提取为
+				if (data.available > 0 ) {
+
+					const res = await this.pick(pr, publicKey)
+					// return Promise.resolve(true)
+					if (res['result']) {
+						return Promise.resolve(true)
+					}
+					return Promise.resolve(false)
+
+
+
+
+
+				} else {
+
+					// 不可提取为0   没有ont 不转账
+					if (data.unavailable === '0') {
+						return Promise.resolve(true)
+					} else {
+						const res = await this.tran(pr, publicKey)
+
+						if (res['result']) {
+							return Promise.resolve(true)
+						}
+						return Promise.resolve(false)
+					}
+
 				}
-				return  Promise.resolve(false)
-			}
 
-			// 可提取为0  gas 接口
-			if (data.available === '0') {
-				const res = await this.tran(pr, publicKey)
-
-				if (res['result']) {
-					return Promise.resolve(true)
-				}
-				return  Promise.resolve(false)
 
 
 			}
 
-			const res1 =  await this.pick(pr, publicKey)
-			if (!res1['result']) {
-				return Promise.resolve(false)
-			}
 
+
+
+			// if (ongBalance >= 0.02) {
+
+
+			// }
 
 			const res2 = await this.tran(pr, publicKey)
 			if (!res2['result']) {
+				return Promise.resolve(false)
+			}
+
+			const res1 = await this.pick(pr, publicKey)
+			if (!res1['result']) {
 				return Promise.resolve(false)
 			}
 
@@ -128,7 +158,7 @@ export class OngProvider {
 
 		} catch (error) {
 			console.log('error', error)
-			return  Promise.resolve(false)
+			return Promise.resolve(false)
 		}
 	}
 

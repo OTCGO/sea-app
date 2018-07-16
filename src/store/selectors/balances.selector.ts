@@ -62,3 +62,14 @@ export const getSelectedBalance = createSelector(
 )
 
 
+// ontology-ONG
+export const getOngBalance = createSelector(
+	getAccount,
+	getEntities,
+	(account, entities) =>
+		account && entities && entities[account.address] &&
+		!isEmpty(entities[account.address]) &&
+		entities[account.address].find(balance => balance.symbol === 'ontology-ONG')
+
+)
+

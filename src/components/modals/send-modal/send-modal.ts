@@ -55,6 +55,9 @@ export class SendModalComponent implements OnInit {
 		}
 	}
 
+	private ongBalance
+	// private symbol = 'ontology-ONG'
+
 
 	constructor(
 		public viewCtrl: ViewController,
@@ -78,6 +81,18 @@ export class SendModalComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+
+		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+
+			this.store.select(BalancesSelectors.getOngBalance).subscribe(balance => {
+				console.log('ont:ngOnInit', balance)
+				const result = parseFloat(balance.amount)
+
+				this.ongBalance = result
+
+			})
+		}
+
 	}
 
 	ionViewDidLoad() {
@@ -125,6 +140,20 @@ export class SendModalComponent implements OnInit {
 			return
 		}
 
+		console.log('this.ongBalance', this.ongBalance)
+		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+			// this.ongBalance < 0.01
+
+			if (this.ongBalance < 0.01 ) {
+				let ongBalanceError
+				this.ts.get('PROFILE.CLAIMS.ong_balance_error').subscribe(data => {
+					ongBalanceError = data
+				})
+				this.notificationProvider.emit({ message: ongBalanceError })
+				return false
+			}
+		}
+
 		let executing
 		this.ts.get('OPERATOR.executing').subscribe(data => {
 			executing = data
@@ -143,6 +172,11 @@ export class SendModalComponent implements OnInit {
 				console.log('this.selectedBalance.hash', this.selectedBalance.hash)
 				console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
 				if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+					// this.ongBalance < 0.01
+					if (this.ongBalance < 0.01 ) {
+						return false
+					}
+
 					result = await this.sendModalProvider.doSendAssetOnt({
 						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
 						amounts: this.amount.value,

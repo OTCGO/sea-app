@@ -37,8 +37,8 @@
     "BACKUP": {
       "success": "复制成功",
       "title": "创建钱包成功!",
-      "pwdtip":"请输入8~16位密码字符",
-      "notes_nep2":"点击'复制',备份保管好你的NEP2字符",
+      "pwdtip": "请输入8~16位密码字符",
+      "notes_nep2": "点击'复制',备份保管好你的NEP2字符",
       "notes_wif": "WIF私钥是您个人资产所有权的唯一凭证，请务必备份保管好。进入'钱包管理',请务必备份保管好",
       "enter": "进入钱包"
     }
@@ -72,7 +72,7 @@
       "success": "转账成功",
       "fails": "密码错误，请核对"
     },
-    "MAP_MODAL":{
+    "MAP_MODAL": {
       "success": "映射成功",
       "fails": "密码错误，请核对"
     }
@@ -101,17 +101,17 @@
     "claims_ong": "提取 ONG",
     "logout": "退出登录",
     "MANAGE_WALLET": {
-      "prompt":"提示",
+      "prompt": "提示",
       "title": "管理钱包",
-      "wif":"WIF私钥",
-      "nep2":"NEP2字符",
+      "wif": "WIF私钥",
+      "nep2": "NEP2字符",
       "change_name": "更改钱包名字",
       "export": "导出",
       "export_wif": "导出WIF私钥",
       "export_key": "导出NEP2字符",
       "export_file": "导出文件",
       "save": "保存",
-      "message":"注意，导出 私钥  并使用是一件非常危险的事情，建议使用加密私钥NEP2字符代替",
+      "message": "注意，导出 私钥  并使用是一件非常危险的事情，建议使用加密私钥NEP2字符代替",
       "save_success": "保存钱包成功",
       "default": "默认钱包",
       "default_action": "设为默认钱包",
@@ -181,21 +181,27 @@
       }
     },
     "CLAIMS": {
-      "title": "提取分红",
+      "title": "提取GAS",
+      "title_ONG": "提取ONG",
       "loading": "正在提取",
       "available": "可提取",
       "unavailable": "待提取数量",
-	  "do_claims": "一键提取",
-	  "success": "提取成功",
-	  "fail": "提取失败"
+      "ong_balance_error": "ong余额不足",
+      "do_claims": "一键提取",
+      "success": "提取成功",
+      "fail": "提取失败"
     }
   },
-  "OPERATOR":{
-    "executing":"执行中"
+  "OPERATOR": {
+    "executing": "执行中"
   },
-  "VERSION":{
-    "title":"发现新版本",
-    "cancle":"下次再说",
-    "confirm":"立即更新"
+  "VERSION": {
+    "title": "发现新版本",
+    "cancle": "下次再说",
+    "confirm": "立即更新"
+  },
+  "ONG":{
+    "transer":"转账ONG\\ONT需向本体主网支付0.01ONG。会自动从用户余额中扣除；余额不足时，转账失败。",
+    "claims":"提取ONG需向本体主网支付0.02ONG。会自动从用户余额中扣除；余额不足时，提取失败。建议储备足量的ONG后，再进行提取。"
   }
 }

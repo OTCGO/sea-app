@@ -188,6 +188,7 @@
       "available": "Available GAS",
       "unavailable": "UnAvailable GAS",
       "do_claims": "Do claims",
+      "ong_balance_error": "ong balance error",
       "success": "success",
       "fail": "fail"
     }
@@ -199,5 +200,9 @@
     "title":"New Version",
     "cancle":"Cancle",
     "confirm":"Update"
+  },
+  "ONG":{
+    "transer":"Transfer ONG\\ONT to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail.",
+    "claims":"To extract the ONG, you need to pay 0.02ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the extraction will fail. It is recommended to reserve a sufficient amount of ONG before extracting."
   }
 }

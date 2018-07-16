@@ -68,4 +68,8 @@
 
 		<button ion-button round full class="otcgo-button--colour" type="submit">{{ translationPrefix + 'transfer' | translate }}</button>
 	</form>
+
+	<div class="explain" *ngIf="ongBalance">
+			{{ 'ONG.transer' | translate}}
+	</div>
 </ion-content>

@@ -1,12 +1,17 @@
 <ion-header class="otcgo-header">
   <ion-navbar>
     <ion-title>
-      {{ 'PROFILE.CLAIMS.title' | translate}}
+      {{ 'PROFILE.CLAIMS.title_ONG' | translate}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="claims">
+		<div class="explain">
+				{{ 'ONG.claims' | translate}}
+		</div>
+
+
   <div class="claims__background">
     <!--<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1.12015in" height="1.18516in" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 0.111047 0.117492">
 			<defs>
@@ -56,6 +61,8 @@
 			</g>
 
 		</svg>-->
+
+
 
     <div class="claims__svg-text" text-center>
       <p>{{ 'PROFILE.CLAIMS.unavailable' | translate }}</p>

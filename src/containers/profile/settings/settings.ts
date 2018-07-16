@@ -7,6 +7,8 @@ import { SettingsActions } from '../../../store/actions'
 import { SettingsSelectors } from '../../../store/selectors'
 import { NativeStorage } from '@ionic-native/native-storage'
 import { WalletActions } from '../../../store/actions'
+import { version } from '../../../environments/environment'
+
 
 @IonicPage({ name: 'Settings' })
 @Component({
@@ -22,6 +24,8 @@ export class SettingsPage {
 		{ title: 'English', locale: 'en', enabled: true }
 	]
 
+	private appVersion
+
 	constructor (
 		private navCtrl: NavController,
 		private nativeStorage: NativeStorage,
@@ -29,7 +33,10 @@ export class SettingsPage {
 		private store: Store<RootState>,
 		private viewCtrl: ViewController,
 		private appCtrl: App
-	) {}
+	) {
+		this.appVersion = version
+		console.log('this.appVersion', this.appVersion)
+	}
 
 	handleLocaleClick (locale) {
 		this.store.dispatch(new SettingsActions.ChangeLanguage(locale))

@@ -42,6 +42,7 @@
     "src/libs/**"
   ],
   "compileOnSave": false,
+  "no-shadowed-variable":false,
   "atom": {
     "rewriteTsconfig": false
   }

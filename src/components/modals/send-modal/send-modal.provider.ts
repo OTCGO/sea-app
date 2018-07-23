@@ -50,6 +50,17 @@ export class SendModalProvider {
 		           .then(res => this.apiProvider.broadcast(res).toPromise())
 	}
 
+	doSendAssetOnt ({ dests, amounts, assetId }: ISendOpts, pr) {
+		console.log('doSendAsset', pr)
+		return this.postTransferOnt({ dests, amounts, assetId, source: this.account.address })
+		           .then(res => this.generateSignatureOnt(res['transaction'], pr, res['sigdata']))
+		           .then(res => this.apiProvider.broadcastOnt(res).toPromise())
+	}
+
+	private postTransferOnt (transferPostData) {
+		return this.apiProvider.post('transfer/ont', transferPostData).toPromise()
+	}
+
 	private postTransfer (transferPostData) {
 		return this.apiProvider.post('transfer', transferPostData).toPromise()
 	}
@@ -61,6 +72,24 @@ export class SendModalProvider {
 
 		console.log('generateSignature', pr)
 		const signature = generateSignature(transaction, pr)
+
+		return {
+			publicKey,
+			signature,
+			transaction
+		}
+	}
+
+
+	private generateSignatureOnt(transaction, pr, sigdata) {
+
+		// const signature = generateSignature(transaction, pr)
+		// const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
+		const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
+		console.log('publicKey', publicKey)
+
+		console.log('generateSignature', pr)
+		const signature = generateSignature(sigdata, pr)
 
 		return {
 			publicKey,

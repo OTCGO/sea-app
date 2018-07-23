@@ -1,7 +1,7 @@
 export interface IBalance {
 	hash: string,
 	symbol: string,
-	amount: number
+	amount: string
 }
 
 export interface IBalanceEntities {

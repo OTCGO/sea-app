@@ -51,6 +51,8 @@ const aob2enti = compose(fromPairs, rMap(values))
 
 @Injectable()
 export class MarketsEffects {
+
+	/*
 	@Effect({ dispatch: false })
 	openDB$: Observable<any> = defer(() => this.db.open('sea_app'))
 
@@ -163,8 +165,11 @@ export class MarketsEffects {
 			})
 		)
 	}
+
+	*/
 }
 
+/*
 function loadMarkets (nextLoad$, baseCurrency = 'cny') {
 	return fromPromise(api.cmc.getMarkets(PriceProvider.NEO_CHAIN_COINS, baseCurrency))
 		.pipe(
@@ -220,3 +225,5 @@ function mappingPrices (markets) {
 	return markets.map(ticker => ({ [ticker.symbol]: ticker.currentPrice }))
 								.reduce((acc, cur) => ({...acc, ...cur}), {})
 }
+
+*/

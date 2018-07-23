@@ -31,6 +31,7 @@ export class Select implements Action {
 	constructor (public payload: string) {}
 }
 
+
 export class CleanSelectedCoin implements Action {
 	readonly type = BalancesActionTypes.CLEAN_SELECTED_COIN
 }

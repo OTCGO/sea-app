@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { Claims } from '@shared/models'
 
@@ -13,6 +13,10 @@ const { decrypt, getPrivateKeyFromWIF } = wallet
 import { Observable } from 'rxjs/Observable'
 import { TranslateService } from '@ngx-translate/core'
 import { getWif } from '../../../shared/utils'
+import { MessageService } from '../../../shared/services'
+import { Subscription } from 'rxjs/Subscription'
+
+
 
 @IonicPage({
 	name: 'Claims',
@@ -22,10 +26,12 @@ import { getWif } from '../../../shared/utils'
 	selector: 'page-claims',
 	templateUrl: 'claims.html'
 })
-export class ClaimsPage {
+export class ClaimsPage implements OnInit {
 	account = this.accountProvider.defaultAccount
 	private claims: Observable<Claims>
 	private btnLoading = false
+	private alert
+	subscription: Subscription
 
 	constructor(
 		private ts: TranslateService,
@@ -33,13 +39,40 @@ export class ClaimsPage {
 		private accountProvider: AccountProvider,
 		private alertCtrl: AlertController,
 		private store: Store<RootState>,
+		private msgService: MessageService,
 		private loadingCtrl: LoadingController
-	) { }
+	) {
 
-	ionViewDidLoad() {
+
+		this.subscription = this.msgService.getMessage().subscribe(data => {
+			// console.log('')
+			console.log('this.subscription', data)
+			if (data.text === 'claims-gas') {
+				console.log('this.subscription.text', data.text)
+				if (this.alert) {
+					this.alert.dismiss().catch()
+				}
+
+				this.msgService.msg = undefined
+				// this.viewCtrl.dismiss()
+			}
+		})
+
+	}
+
+	ngOnInit() {
+		if (this.alert) {
+			this.alert.dismiss().catch()
+		}
+
 		this.store.dispatch(new ClaimsActions.Load())
 		this.claims = this.store.select(ClaimsSelectors.getEntities)
 	}
+
+	// ionViewDidLoad() {
+	// 	this.store.dispatch(new ClaimsActions.Load())
+	// 	this.claims = this.store.select(ClaimsSelectors.getEntities)
+	// }
 
 	async doClaim() {
 
@@ -78,6 +111,9 @@ export class ClaimsPage {
 
 		*/
 
+		this.msgService.msg = 'claims-gas'
+
+
 		let title
 		// let message
 		// let placeholder
@@ -110,14 +146,21 @@ export class ClaimsPage {
 		})
 
 
-		console.log('successText', successText)
-		console.log('failText', failText)
+		// console.log('successText', successText)
+		// console.log('failText', failText)
+
+
+
+		let c
+		this.claims.subscribe(data => {
+			c = data
+		})
 
 
 
 
-		// file login
-		const prompt = this.alertCtrl.create({
+		const self = this
+		this.alert = this.alertCtrl.create({
 			title: title,
 			// message: title,
 			inputs: [{ name: 'passphrase', placeholder: title, type: 'password' }],
@@ -127,7 +170,7 @@ export class ClaimsPage {
 					text: btnConfirm,
 					handler: ({ passphrase }) => {
 						try {
-							if (!passphrase || passphrase === '' || passphrase.length < 4) return false
+							if (!passphrase || passphrase === '' || passphrase.length < 8 || passphrase.length > 20) return false
 
 							const loading = this.loadingCtrl.create()
 							loading.present().then(() => {
@@ -136,9 +179,10 @@ export class ClaimsPage {
 								getWif(this.account.encrypted, passphrase).then((wif: any) => {
 									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									const pr = getPrivateKeyFromWIF(wif)
-									this.claimsProvider.doClaims(pr).then(result => {
+									console.log('getWif', pr)
+									this.claimsProvider.doClaims(c, pr).then(result => {
 
-										prompt.dismiss().catch(() => { })
+										self.alert.dismiss().catch(() => { })
 										this.btnLoading = false
 
 										loading.dismiss().catch(() => { }).catch(() => { })
@@ -154,21 +198,18 @@ export class ClaimsPage {
 									this.showPrompt(failText)
 									console.log(e)
 
-									prompt.dismiss().catch(() => { })
+									self.alert.dismiss().catch(() => { })
 									loading.dismiss().catch(() => { }).catch(() => { })
 									this.btnLoading = false
 								})
-								/*
 
-
-								*/
 
 
 							}).catch((e) => {
 								this.showPrompt(failText)
 								console.log(e)
 
-								prompt.dismiss().catch(() => { })
+								self.alert.dismiss().catch(() => { })
 								loading.dismiss().catch(() => { }).catch(() => { })
 								this.btnLoading = false
 							})
@@ -182,7 +223,10 @@ export class ClaimsPage {
 				}
 			]
 		})
-		prompt.present()
+		self.alert.present()
+
+
+
 
 	}
 

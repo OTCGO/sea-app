@@ -1,10 +1,16 @@
 <ion-card class="card-features">
-	<ion-list>
+  <ion-list>
+    <ion-item >
+      <ion-label color="dark" (click)="navCtrl.push('Claims')">
+        {{ 'PROFILE.claims' | translate }}
+      </ion-label>
+    </ion-item>
 
-		<button ion-item icon-right (click)="navCtrl.push('Claims')">
-			{{ 'PROFILE.claims' | translate }}
-			<!-- <ion-icon md="ios-arrow-forward-outline" ios="none" item-end></ion-icon> -->
-		</button>
+    <ion-item>
+      <ion-label color="dark" (click)="navCtrl.push('Ong')">
+        {{ 'PROFILE.claims_ong' | translate }}
+      </ion-label>
+    </ion-item>
 
-	</ion-list>
-</ion-card>
+  </ion-list>
+

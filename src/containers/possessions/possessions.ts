@@ -20,7 +20,7 @@ import { LoadingProvider, NotificationProvider } from '../../providers'
 import { BalancesActions } from '../../store/actions'
 import { WalletSelectors, BalancesSelectors, SettingsSelectors } from '../../store/selectors'
 import { fromBalances, fromWallet } from '../../store/reducers'
-
+import { balanceSort } from '../../shared/utils'
 
 @IonicPage({
 	name: 'Possessions',
@@ -38,6 +38,7 @@ export class PossessionsPage implements OnInit {
 	// baseCurrency: Observable<string> = this.store.select(SettingsSelectors.getCurrency)
 	selectedBalanceSubscriber: Subscription
 	private balancesInterval: Subscription
+	private balancess
 
 	get displayZero () { return this._displayZero }
 	set displayZero (val) {
@@ -66,6 +67,14 @@ export class PossessionsPage implements OnInit {
 		this.store.select(BalancesSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
 		// this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
+
+		// this.balances.subscribe(data => {
+		// 	// console.log('handleDisplayZeroClick', data)
+		// 	console.log('data', data)
+		// 	this.balancess = balanceSort(data)
+		// 	console.log('this.balancess', this.balancess)
+		// })
+
 
 	}
 
@@ -149,6 +158,11 @@ export class PossessionsPage implements OnInit {
 	}
 
 	handleDisplayZeroClick (bool: false) {
+
+		// console.log('PossessionsListComponent', this.balances.subscribe(data => {
+		// 	console.log('handleDisplayZeroClick', data)
+		// }))
+
 		this.displayZero = bool
 	}
 

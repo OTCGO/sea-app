@@ -1,6 +1,8 @@
 import { ActionReducer } from '@ngrx/store'
 import { IBalanceEntities } from '../../shared/models'
 import { BalancesActions, BalancesActionTypes } from '../actions/balances.action'
+// import { balanceSort } from '../../shared/utils'
+
 
 export interface State {
 	selectedBalanceSymbol: string
@@ -34,6 +36,15 @@ export const reducer: ActionReducer<State> = (state = initialBalancesState, acti
 
 		case BalancesActionTypes.LOAD_SUCCESS: {
 			console.log('BalancesActionTypes.LOAD_SUCCESS', action.payload)
+			// console.log('BalancesActionTypes.LOAD_SUCCESS',  Object.keys(action.payload)[0])
+			// const address = Object.keys(action.payload)[0]
+			// console.log('BalancesActionTypes.LOAD_SUCCESS:address', address)
+			// const result = balanceSort(action.payload[address])
+
+			// console.log('BalancesActionTypes.LOAD_SUCCESS:result', result)
+
+			// action.payload[address] = result
+
 			return {
 				...state,
 				entities: action.payload,

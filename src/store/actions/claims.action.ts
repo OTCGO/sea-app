@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store'
 
 export enum ClaimsActionTypes {
 	LOAD = '[Claims] Load Claims',
+	LOAD_ONG = '[Claims] Load Ong Claims',
 	LOAD_FAIL = '[Claims] Load Claims Fail',
 	LOAD_SUCCESS = '[Claims] Load Claims Success',
 	DO_CLAIM = '[Claims] Do Claims',
@@ -11,6 +12,10 @@ export enum ClaimsActionTypes {
 
 export class Load implements Action {
 	readonly type = ClaimsActionTypes.LOAD
+}
+
+export class LoadONG implements Action {
+	readonly type = ClaimsActionTypes.LOAD_ONG
 }
 
 export class LoadFail implements Action {
@@ -40,6 +45,7 @@ export class DoClaimSuccess implements Action {
 
 export type ClaimsActions =
 	Load
+	| LoadONG
 	| LoadFail
 	| LoadSuccess
 	| DoClaim

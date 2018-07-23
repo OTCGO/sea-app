@@ -8,7 +8,7 @@
 
 	<possessions-info [account]="account | async"></possessions-info>
 
-	<possessions-list [balances]="balances | async"
+	<possessions-list [balances]="balances | async | BalanceSortPipe"
 	                  [displayZero]="displayZero"
 	                  (select)="handleBalanceSelect($event)"
 	                  (displayZeroClick)="handleDisplayZeroClick($event)">

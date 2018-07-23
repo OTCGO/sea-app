@@ -8,6 +8,7 @@ import * as SettingsSelectors from './settings.selector'
 import * as ContactsSelectors from './contacts.selector'
 import * as TransactionsSelectors from './transactions.selector'
 import * as ClaimsSelectors from './claims.selector'
+import * as VersionSelectors from './version.selector'
 
 export {
 	PricesSelectors,
@@ -19,5 +20,6 @@ export {
 	SettingsSelectors,
 	ContactsSelectors,
 	TransactionsSelectors,
-	ClaimsSelectors
+	ClaimsSelectors,
+	VersionSelectors
 }

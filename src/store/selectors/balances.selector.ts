@@ -6,10 +6,15 @@ import {
 import { IBalance, } from '../../shared/models'
 import { getAccount } from './wallet.selector'
 import { State } from '../reducers/balances.reducer'
-import { sort, compose, prop, lt, filter, not, toPairs, isEmpty } from 'ramda'
+import { sort, compose, prop, lt, filter, not, toPairs, isEmpty, is } from 'ramda'
+
+
 
 const getState = createFeatureSelector('balances')
-export const getEntities = createSelector(getState, (state: State) => state.entities)
+export const getEntities = createSelector(getState, (state: State) => {
+
+	return state.entities
+})
 export const getError = createSelector(getState, (state: State) => state.error)
 export const getLoading = createSelector(getState, (state: State) => state.loading)
 export const getSelectedBalanceSymbol = createSelector(getState, (state: State) => state.selectedBalanceSymbol)
@@ -18,7 +23,7 @@ export const getNonZeroEntities = createSelector(
 	getEntities,
 	entities => not(isEmpty(entities)) &&
 		toPairs(entities).reduce(
-			(acc, [address, balances]) => ({ ...acc, [address]: balances.filter(b => b.amount > 0) }),
+			(acc, [address, balances]) => ({ ...acc, [address]: balances.filter(b => Number(b.amount) > 0) }),
 			{}
 		)
 )
@@ -34,14 +39,16 @@ export const getDefaultEntities = createSelector(
 	(account, entities) =>
 		account && entities && entities[account.address] &&
 		!isEmpty(entities[account.address]) &&
-		sort<IBalance>((a, b) => b.amount - a.amount, entities[account.address]),
+		sort<IBalance>((a, b) => Number(b.amount) - Number(a.amount), entities[account.address])
+
 
 )
 
+const isNotZero = n => Number(n) > 0
 export const getDefaultNonZeroEntities = createSelector(
 	getDefaultEntities,
 	entities =>
-		entities && !isEmpty(entities) && filter<IBalance>(compose(lt(0), prop('amount')))(entities)
+		entities && !isEmpty(entities) && filter<IBalance>(compose(isNotZero, prop('amount')))(entities)
 )
 
 export const getSelectedBalance = createSelector(
@@ -53,3 +60,16 @@ export const getSelectedBalance = createSelector(
 		return symbol && balances && !isEmpty(balances) && balances.find(balance => balance.symbol === symbol)
 	}
 )
+
+
+// ontology-ONG
+export const getOngBalance = createSelector(
+	getAccount,
+	getEntities,
+	(account, entities) =>
+		account && entities && entities[account.address] &&
+		!isEmpty(entities[account.address]) &&
+		entities[account.address].find(balance => balance.symbol === 'ontology-ONG')
+
+)
+

@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { IBalance } from '../../shared/models'
+import {
+	OnInit
+} from '@angular/core'
+
 
 @Component({
 	selector: 'possessions-list',
@@ -45,11 +49,21 @@ import { IBalance } from '../../shared/models'
 })
 
 
-export class PossessionsListComponent {
+export class PossessionsListComponent implements OnInit {
 	@Input() balances: Array<IBalance>
 	@Input() displayZero: boolean
 	// @Input() amount = 0.00
 	// @Input() baseCurrency = 'cny'
 	@Output() select = new EventEmitter()
 	@Output() displayZeroClick = new EventEmitter()
+
+	constructor() {
+		console.log('PossessionsListComponent', this.balances)
+	}
+
+
+	ngOnInit() {
+		console.log('PossessionsListComponent', this.balances)
+
+	}
 }

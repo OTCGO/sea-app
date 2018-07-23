@@ -49,6 +49,7 @@
     "DETAILS": {
       "title": "Transaction Records",
       "transfer": "Transfer",
+      "map": "Map",
       "in": "In",
       "out": "Out",
       "nodata": "No History Data"
@@ -61,11 +62,18 @@
     "SEND_MODAL": {
       "title": "Transfer",
       "address": "Address",
+      "map": "Map",
+      "mapTransfer": "Map",
       "password": "Password",
+      "mapAmount": "Int Amout",
       "amount": "Amount",
       "label": "Label",
       "transfer": "Transfer",
       "success": "Success",
+      "fails": "Error password,please check"
+    },
+    "MAP_MODAL":{
+      "success": "Map Success",
       "fails": "Error password,please check"
     }
   },
@@ -89,7 +97,8 @@
     "manage_wallet": "Manage Wallet",
     "contacts": "Contacts",
     "histories": "Transaction Records",
-    "claims": "Claims",
+    "claims": "Claims GAS",
+    "claims_ong": "Claims ONG",
     "logout": "Logout",
     "MANAGE_WALLET": {
       "prompt":"prompt",
@@ -179,11 +188,21 @@
       "available": "Available GAS",
       "unavailable": "UnAvailable GAS",
       "do_claims": "Do claims",
+      "ong_balance_error": "ong balance error",
       "success": "success",
       "fail": "fail"
     }
   },
   "OPERATOR":{
     "executing":"executing"
+  },
+  "VERSION":{
+    "title":"New Version",
+    "cancle":"Cancle",
+    "confirm":"Update"
+  },
+  "ONG":{
+    "transer":"Transfer ONG\\ONT to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail.",
+    "claims":"To extract the ONG, you need to pay 0.02ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the extraction will fail. It is recommended to reserve a sufficient amount of ONG before extracting."
   }
 }

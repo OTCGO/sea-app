@@ -1,14 +1,14 @@
 <ion-header class="otcgo-header">
-	<ion-navbar>
-		<ion-title>
-			{{ 'PROFILE.CLAIMS.title' | translate}}
-		</ion-title>
-	</ion-navbar>
+  <ion-navbar>
+    <ion-title>
+      {{ 'PROFILE.CLAIMS.title' | translate}}
+    </ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="claims">
-	<div class="claims__background">
-		<!--<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1.12015in" height="1.18516in" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 0.111047 0.117492">
+  <div class="claims__background">
+    <!--<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1.12015in" height="1.18516in" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 0.111047 0.117492">
 			<defs>
 				<style type="text/css">
 
@@ -57,26 +57,37 @@
 
 		</svg>-->
 
-		<div class="claims__svg-text"
-		     text-center>
-			<p>{{ 'PROFILE.CLAIMS.unavailable' | translate }}</p>
-			<p class="title">{{ (claims | async)?.unavailable }} GAS</p>
-			<p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
-			<p class="title">{{ (claims | async)?.available }} GAS</p>
-		</div>
+    <div class="claims__svg-text" text-center>
+      <p>{{ 'PROFILE.CLAIMS.unavailable' | translate }}</p>
+      <p class="title">{{ (claims | async)?.unavailable }} GAS</p>
+      <p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
+      <p class="title">{{ (claims | async)?.available }} GAS</p>
+    </div>
 
 
-		<button *ngIf = "btnLoading" ion-button round full clear class="claims__button otcgo-button">
+    <!-- <button *ngIf = "btnLoading" ion-button round full clear class="claims__button otcgo-button">
 			<ion-spinner  item-start name="ios"></ion-spinner>
 			{{ 'PROFILE.CLAIMS.loading' | translate }}
 		</button>
 
 		<button *ngIf = "!btnLoading" [disabled]="((claims | async)?.unavailable) === '0' && ((claims | async)?.available) === '0'"  ion-button round full clear class="claims__button otcgo-button" (click)="doClaim()">
 			{{ 'PROFILE.CLAIMS.do_claims' | translate }}
-		</button>
-	</div>
+		</button> -->
 
-	<!--<div class="claims__history">
+    <div class="claims_a">
+         <button *ngIf = "btnLoading"  ion-button round full  light class="claims__button" >
+			<ion-spinner  item-start name="ios"></ion-spinner>
+			{{ 'PROFILE.CLAIMS.loading' | translate }}
+		</button>
+
+		<button *ngIf = "!btnLoading"  [disabled]="((claims | async)?.unavailable) === '0' && ((claims | async)?.available) === '0'"  ion-button round full light  class="claims__button" (click)="doClaim()">
+			{{ 'PROFILE.CLAIMS.do_claims' | translate }}
+		</button>
+     
+    </div>
+  </div>
+
+  <!--<div class="claims__history">
 		<ion-list-header>
 			<ion-row>
 				<ion-col col-3 text-left>名称</ion-col>

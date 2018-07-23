@@ -34,6 +34,8 @@ import { ApiProvider, API_CONSTANTS } from '../../providers/api'
 
 import 'rxjs/add/operator/concatMap'
 
+// import { balanceSort } from '../../shared/utils'
+
 
 @Injectable()
 export class BalancesEffects {
@@ -56,7 +58,7 @@ export class BalancesEffects {
 				return this.apiProvider
 									 .get(`${API_CONSTANTS.ASSET}`)
 									 .pipe(
-										 mergeMap((asset: { NEP5, Global }) =>
+										 mergeMap((asset: { NEP5, Global, ONTOLOGY }) =>
 											 forkJoin(addresses.map(this.getBalance.bind(this))).pipe(
 
 												 takeUntil(nextGet$),
@@ -89,7 +91,12 @@ export class BalancesEffects {
 }
 
 function balancesReducer (asset) {
-	return (acc, { _id: address, balances }) => ({...acc, [address]: mappingBalances(balances, asset)})
+	return (acc, { _id: address, balances }) => {
+		// console.log('balancesReducer', balanceSort(mappingBalances(balances, asset)))
+		 // return ({...acc, [address]: balanceSort(mappingBalances(balances, asset))})
+		 console.log('balancesReducer', mappingBalances(balances, asset))
+		 return ({...acc, [address]: mappingBalances(balances, asset)})
+	}
 }
 
 function mappingBalances (balances, asset) {
@@ -106,7 +113,8 @@ function mappingBalances (balances, asset) {
 							return {
 								hash,
 								symbol,
-								amount: Number(balances[hash])
+								// amount: Number(balances[hash])
+								amount: balances[hash]
 							}
 						})
 		: []

@@ -166,5 +166,9 @@
       "ios",
       "android"
     ]
+  },
+  "config": {
+    "ionic_bundler": "webpack",
+    "ionic_webpack": "./webpack.config.js"
   }
 }

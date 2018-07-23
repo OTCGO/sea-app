@@ -11,9 +11,23 @@ export function addressValidator (addressCtrl: FormControl): ValidationErrors {
 export function amountValidator (maxValue) {
 	return (amountCtrl: FormControl): ValidationErrors | null => {
 		const value = amountCtrl.value
-		if (!value || value <= 0 || value > maxValue) {
+		if (!value || Number(value) <= 0 || Number(value) > maxValue) {
 			return { invalidAmount: true }
 		}
 		return null
 	}
 }
+
+export function amountInt (hash) {
+	return (amountCtrl: FormControl): ValidationErrors | null => {
+		 const value = amountCtrl.value
+		if (hash === 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b') {
+			const reg = /^[1-9]\d*$/
+			if (!reg.test(value)) {
+				return { invalidAmount: true }
+			}
+		}
+		return null
+	}
+}
+

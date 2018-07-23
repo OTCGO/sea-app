@@ -26,15 +26,28 @@ const config = {
 			'@app': root('src'),
 			'neon': root('src', 'libs/neon/lib')
 		}*/
-	},
-	devServer: {
-		'**/ticker': {
-			target: 'https://api.coinmarketcap.com/v1/ticker',
-			secure: false,
-			changeOrigin: true
-		}
 	}
+	// devServer: {
+	// 	'**/ticker': {
+	// 		target: 'https://api.coinmarketcap.com/v1/ticker',
+	// 		secure: false,
+	// 		changeOrigin: true
+	// 	}
+	// }
 };
+
+if (process.env.NODE_ENV === 'production') {
+	module.exports.plugins = (module.exports.plugins || []).concat([
+	  new webpack.optimize.UglifyJsPlugin({
+		sourceMap: false,
+		compress: {
+		  warnings: false,
+		  drop_console: true
+		}
+	  })
+	])
+  }
+
 
 module.exports = webpackMerge(dev, config)
 

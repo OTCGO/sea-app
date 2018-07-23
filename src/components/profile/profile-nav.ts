@@ -17,7 +17,7 @@ export class ProfileNavComponent {
 
 
 		if (item.page === 'Histories') {
-			this.iab.create(`http://state.otcgo.cn/addrinfo.html?address=${this.address}`)
+			this.iab.create(`http://state.otcgo.cn/addrinfo.html?address=${this.address}`, '_system')
 			return
 		}
 

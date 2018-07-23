@@ -11,12 +11,14 @@ import {
 	ViewController,
 	Navbar
 } from 'ionic-angular'
+import { ONT_HASH , ONG_HASH} from '../../../shared/constants'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { Store } from '@ngrx/store'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import {
 	addressValidator,
-	amountValidator
+	amountValidator,
+	amountInt
 } from './send-modal.validators'
 import { TranslateService } from '@ngx-translate/core'
 import { RootState } from '../../../store/reducers'
@@ -53,6 +55,9 @@ export class SendModalComponent implements OnInit {
 		}
 	}
 
+	private ongBalance
+	// private symbol = 'ontology-ONG'
+
 
 	constructor(
 		public viewCtrl: ViewController,
@@ -70,12 +75,24 @@ export class SendModalComponent implements OnInit {
 		this.formGroup = this.fb.group({
 			address: ['', [Validators.required, addressValidator]],
 			passphrase: ['', this.w ? [] : Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
+			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
 			label: [''],
 		})
 	}
 
 	ngOnInit(): void {
+
+		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+
+			this.store.select(BalancesSelectors.getOngBalance).subscribe(balance => {
+				console.log('ont:ngOnInit', balance)
+				const result = parseFloat(balance.amount)
+
+				this.ongBalance = result
+
+			})
+		}
+
 	}
 
 	ionViewDidLoad() {
@@ -92,11 +109,11 @@ export class SendModalComponent implements OnInit {
 	}
 
 	ionViewWillEnter() {
-		this.store.select(TransactionsSelectors.getSelectedAddress).take(1).subscribe(address => this.toAddress.setValue(address))
+		// this.store.select(TransactionsSelectors.getSelectedAddress).take(1).subscribe(address => this.toAddress.setValue(address))
 	}
 
 	ionViewDidLeave() {
-		this.store.dispatch(new TransactionsActions.CleanSelectedContact())
+		// this.store.dispatch(new TransactionsActions.CleanSelectedContact())
 	}
 
 	handleClose() {
@@ -123,6 +140,20 @@ export class SendModalComponent implements OnInit {
 			return
 		}
 
+		console.log('this.ongBalance', this.ongBalance)
+		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+			// this.ongBalance < 0.01
+
+			if (this.ongBalance < 0.01 ) {
+				let ongBalanceError
+				this.ts.get('PROFILE.CLAIMS.ong_balance_error').subscribe(data => {
+					ongBalanceError = data
+				})
+				this.notificationProvider.emit({ message: ongBalanceError })
+				return false
+			}
+		}
+
 		let executing
 		this.ts.get('OPERATOR.executing').subscribe(data => {
 			executing = data
@@ -135,11 +166,33 @@ export class SendModalComponent implements OnInit {
 		this.sendModalProvider
 			.decrypt(this.passphrase.value)
 			.then(async pr => {
-				const result: any = await this.sendModalProvider.doSendAsset({
-					dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-					amounts: this.amount.value,
-					assetId: this.selectedBalance.hash
-				}, pr)
+
+				let result: any
+
+				console.log('this.selectedBalance.hash', this.selectedBalance.hash)
+				console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
+				if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+					// this.ongBalance < 0.01
+					if (this.ongBalance < 0.01 ) {
+						return false
+					}
+
+					result = await this.sendModalProvider.doSendAssetOnt({
+						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+						amounts: this.amount.value,
+						assetId: this.selectedBalance.hash
+					}, pr)
+
+				} else {
+					 result = await this.sendModalProvider.doSendAsset({
+						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+						amounts: this.amount.value,
+						assetId: this.selectedBalance.hash
+					}, pr)
+				}
+
+
+
 
 
 				await this.handleClose()

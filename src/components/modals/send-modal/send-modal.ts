@@ -202,14 +202,15 @@ export class SendModalComponent implements OnInit {
 						this.notificationProvider.emit({ message: data })
 					})
 
-
 					return
 				}
 
-				this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
+				// network error
+				this.ts.get('ERROR.network_err').subscribe(data => {
 					this.notificationProvider.emit({ message: data })
 				})
 
+				return
 
 
 			})

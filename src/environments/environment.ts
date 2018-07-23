@@ -4,6 +4,6 @@ export const environment: any = {
 	production: true,
 }
 
-export const dev = true
-export const version = '1.1.0'
+export const dev = false
+export const version = '1.3.0'
 

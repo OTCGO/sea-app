@@ -174,7 +174,8 @@ export class MapModalComponent implements OnInit {
 					return
 				}
 
-				this.ts.get('POSSESSIONS.MAP_MODAL.fails').subscribe(data => {
+				// network error
+				this.ts.get('ERROR.network_err').subscribe(data => {
 					this.notificationProvider.emit({ message: data })
 				})
 

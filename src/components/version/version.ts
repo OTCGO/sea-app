@@ -67,7 +67,7 @@ export class VersionComponent implements OnInit {
       console.log('platform', this.platform.is('ios'))
       const result = (await this.versionProvider.getVersion(this.platform.is('ios') ? 'ios' : 'android')).version
 
-
+      console.log('result', JSON.stringify(result))
       if (result && result.version !== version) {
 
         let title
@@ -106,7 +106,7 @@ export class VersionComponent implements OnInit {
             text: confirm,
             handler: data => {
               console.log('Saved clicked')
-              this.iab.create('https://www.pgyer.com/mCWD', '_system')
+              this.iab.create(result.download_url, '_system')
             }
           }]
         })

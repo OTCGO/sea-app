@@ -12,6 +12,7 @@ export class VersionProvider {
 
     getVersion(type) {
         console.log('this.isDisplay', this.isDisplay)
+        console.log('getVersion', type)
         if (this.isDisplay) {
             this.isDisplay = false
             return this.apiProvider.get(`version/${type}`).toPromise()

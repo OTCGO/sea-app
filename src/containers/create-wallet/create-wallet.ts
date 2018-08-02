@@ -151,7 +151,7 @@ export class CreateWalletPage implements OnInit {
 
   openProto() {
     console.log('this.protocolAgreement', this.protocolAgreement)
-    this.iab.create(`https://otcgo.cn/#/protocol`)
+    this.iab.create(`https://otcgo.cn/#/protocol`, '_system')
     // console.log('openProto')
     // this.iab.create(`https://otcgo.cn/#/protocol`)
     // return

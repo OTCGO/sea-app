@@ -52,8 +52,8 @@ export function balanceSort(balance) {
 
 	console.log('balanceSort:result', result)
 
-	const seas = R.find(R.propEq('symbol', '申一股份'))(result)
-	const seac = R.find(R.propEq('symbol', '申一币'))(result)
+	const seas = R.find(R.propEq('symbol', 'SEAS'))(result)
+	const seac = R.find(R.propEq('symbol', 'SEAC'))(result)
 	const neo = R.find(R.propEq('symbol', 'NEO'))(result)
 	const gas = R.find(R.propEq('symbol', 'GAS'))(result)
 	const ont = R.find(R.propEq('symbol', 'ontology-ONT'))(result)

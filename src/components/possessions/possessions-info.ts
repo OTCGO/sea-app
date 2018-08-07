@@ -9,7 +9,8 @@ import { interval } from 'rxjs/observable/interval'
 	template: `
 		<ion-card class="card-info">
 			<div class="block-height">
-				<p class="height"> {{ blockHeight }} </p>
+
+				<div class="height"><img src="assets/imgs/height.png" style="width:2.5rem;display:inline" > {{ blockHeight }} </div>
 				<p class="countdown"> {{ countdown }} </p>
 			</div>
 			<div class="card-avatar" (click)="openQRCode()">

@@ -381,6 +381,7 @@ export class LoginForm implements OnInit {
 			const { address } = tempAcct
 
 			const acct = new wallet.Account({
+				// wif,
 				address,
 				label: address,
 				key: encrypted,

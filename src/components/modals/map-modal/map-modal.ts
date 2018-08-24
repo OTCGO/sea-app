@@ -41,6 +41,10 @@ export class MapModalComponent implements OnInit {
 	selectedBalance: IBalance
 	translationPrefix = 'POSSESSIONS.SEND_MODAL.'
 
+
+
+	private inputType = true
+
 	get toAddress() { return this.formGroup.get('address') }
 	get passphrase() { return this.formGroup.get('passphrase') }
 	get amount() { return this.formGroup.get('amount') }
@@ -156,29 +160,38 @@ export class MapModalComponent implements OnInit {
 		this.mapModalProvider
 			.decrypt(this.passphrase.value)
 			.then(async pr => {
-				const result: any = await this.mapModalProvider.doSendAsset({
-					dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-					amounts: this.amount.value,
-					assetId: this.selectedBalance.hash
-				}, pr)
+				try {
 
 
-				await this.handleClose()
-				if (result.result) {
 
-					this.ts.get('POSSESSIONS.MAP_MODAL.success').subscribe(data => {
+					const result: any = await this.mapModalProvider.doSendAsset({
+						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+						amounts: this.amount.value,
+						assetId: this.selectedBalance.hash
+					}, pr)
+
+
+					await this.handleClose()
+					if (result.result) {
+
+						this.ts.get('POSSESSIONS.MAP_MODAL.success').subscribe(data => {
+							this.notificationProvider.emit({ message: data })
+						})
+
+
+						return
+					}
+
+					// network error
+					this.ts.get('ERROR.network_err').subscribe(data => {
 						this.notificationProvider.emit({ message: data })
 					})
-
-
-					return
+				} catch (error) {
+					// network error
+					this.ts.get('ERROR.network_err').subscribe(data => {
+						this.notificationProvider.emit({ message: data })
+					})
 				}
-
-				// network error
-				this.ts.get('ERROR.network_err').subscribe(data => {
-					this.notificationProvider.emit({ message: data })
-				})
-
 
 
 			})
@@ -209,11 +222,16 @@ export class MapModalComponent implements OnInit {
 
 	handleScanClick() {
 		this.barcodeScanner.scan()
-				.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
-		    .catch(err => this.notificationProvider.emit({ message: err }))
+			.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
+			.catch(err => this.notificationProvider.emit({ message: err }))
 	}
 
 	handleContactClick() {
 		this.navCtrl.push('Contacts', { fromProfile: false })
+	}
+
+	displayPwd() {
+		console.log('displayPwd')
+		this.inputType = !this.inputType
 	}
 }

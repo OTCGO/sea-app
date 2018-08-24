@@ -30,11 +30,29 @@
 			</div>
 		</div>
 
-		<ion-item class="round" *ngIf="!w">
+		<ion-item class="round" *ngIf="!w && inputType">
 			<ion-input placeholder="{{ translationPrefix + 'password' | translate }}" type="password" minlength="8" maxlength="16" formControlName="passphrase" required></ion-input>
+			<button ion-button clear color="dark" type="button" item-right (click)="displayPwd()">
+				<ion-icon name="eye" *ngIf="!inputType"> </ion-icon>
+				<ion-icon name="eye-off" *ngIf="inputType"> </ion-icon>
+		   </button>
+			
 			<ion-icon item-end *ngIf="passphrase.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
 			<ion-icon item-end *ngIf="passphrase.invalid && (passphrase.dirty || passphrase.touched)" name="close" style="color: red;"></ion-icon>
 		</ion-item>
+
+
+		<ion-item class="round" *ngIf="!w && !inputType">
+			<ion-input placeholder="{{ translationPrefix + 'password' | translate }}" type="password" minlength="8" maxlength="16" formControlName="passphrase" required></ion-input>
+			<button ion-button clear color="dark" type="button" item-right (click)="displayPwd()">
+				<ion-icon name="eye" *ngIf="!inputType"> </ion-icon>
+				<ion-icon name="eye-off" *ngIf="inputType"> </ion-icon>
+		   </button>
+			
+			<ion-icon item-end *ngIf="passphrase.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
+			<ion-icon item-end *ngIf="passphrase.invalid && (passphrase.dirty || passphrase.touched)" name="close" style="color: red;"></ion-icon>
+		</ion-item>
+
 
 		<!--<ion-item class="checkbox">
 			<ion-label>记住密码</ion-label>

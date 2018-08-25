@@ -11,7 +11,7 @@ import {
 	ViewController,
 	Navbar
 } from 'ionic-angular'
-import { ONT_HASH , ONG_HASH} from '../../../shared/constants'
+import { ONT_HASH, ONG_HASH } from '../../../shared/constants'
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
 import { Store } from '@ngrx/store'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -58,6 +58,8 @@ export class SendModalComponent implements OnInit {
 	private ongBalance
 	// private symbol = 'ontology-ONG'
 
+	private inputType = true
+
 
 	constructor(
 		public viewCtrl: ViewController,
@@ -71,18 +73,24 @@ export class SendModalComponent implements OnInit {
 		private ts: TranslateService,
 		private fb: FormBuilder
 	) {
-		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
-		this.formGroup = this.fb.group({
-			address: ['', [Validators.required, addressValidator]],
-			passphrase: ['', this.w ? [] : Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
-			label: [''],
-		})
+		try {
+
+
+			this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+			this.formGroup = this.fb.group({
+				address: ['', [Validators.required, addressValidator]],
+				passphrase: ['', this.w ? [] : Validators.required],
+				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
+				label: [''],
+			})
+		} catch (error) {
+
+		}
 	}
 
 	ngOnInit(): void {
 
-		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
 
 			this.store.select(BalancesSelectors.getOngBalance).subscribe(balance => {
 				console.log('ont:ngOnInit', balance)
@@ -141,10 +149,10 @@ export class SendModalComponent implements OnInit {
 		}
 
 		console.log('this.ongBalance', this.ongBalance)
-		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
+		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
 			// this.ongBalance < 0.01
 
-			if (this.ongBalance < 0.01 ) {
+			if (this.ongBalance < 0.01) {
 				let ongBalanceError
 				this.ts.get('PROFILE.CLAIMS.ong_balance_error').subscribe(data => {
 					ongBalanceError = data
@@ -167,51 +175,59 @@ export class SendModalComponent implements OnInit {
 			.decrypt(this.passphrase.value)
 			.then(async pr => {
 
-				let result: any
+				try {
 
-				console.log('this.selectedBalance.hash', this.selectedBalance.hash)
-				console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
-				if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH  ) {
-					// this.ongBalance < 0.01
-					if (this.ongBalance < 0.01 ) {
-						return false
+
+					let result: any
+
+					console.log('this.selectedBalance.hash', this.selectedBalance.hash)
+					console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
+					if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
+						// this.ongBalance < 0.01
+						if (this.ongBalance < 0.01) {
+							return false
+						}
+
+						result = await this.sendModalProvider.doSendAssetOnt({
+							dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+							amounts: this.amount.value,
+							assetId: this.selectedBalance.hash
+						}, pr)
+
+					} else {
+						result = await this.sendModalProvider.doSendAsset({
+							dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+							amounts: this.amount.value,
+							assetId: this.selectedBalance.hash
+						}, pr)
 					}
 
-					result = await this.sendModalProvider.doSendAssetOnt({
-						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-						amounts: this.amount.value,
-						assetId: this.selectedBalance.hash
-					}, pr)
-
-				} else {
-					 result = await this.sendModalProvider.doSendAsset({
-						dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-						amounts: this.amount.value,
-						assetId: this.selectedBalance.hash
-					}, pr)
-				}
 
 
 
 
+					await this.handleClose()
+					if (result.result) {
 
-				await this.handleClose()
-				if (result.result) {
+						this.ts.get('POSSESSIONS.SEND_MODAL.success').subscribe(data => {
+							this.notificationProvider.emit({ message: data })
+						})
 
-					this.ts.get('POSSESSIONS.SEND_MODAL.success').subscribe(data => {
+						return
+					}
+
+					// network error
+					this.ts.get('ERROR.network_err').subscribe(data => {
 						this.notificationProvider.emit({ message: data })
 					})
 
 					return
+				} catch (error) {
+
+					this.ts.get('ERROR.network_err').subscribe(data => {
+						this.notificationProvider.emit({ message: data })
+					})
 				}
-
-				// network error
-				this.ts.get('ERROR.network_err').subscribe(data => {
-					this.notificationProvider.emit({ message: data })
-				})
-
-				return
-
 
 			})
 			.catch(err => {
@@ -241,11 +257,16 @@ export class SendModalComponent implements OnInit {
 
 	handleScanClick() {
 		this.barcodeScanner.scan()
-				.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
-		    .catch(err => this.notificationProvider.emit({ message: err }))
+			.then((data: BarcodeScanResult) => isAddress(data.text) && this.toAddress.setValue(data.text))
+			.catch(err => this.notificationProvider.emit({ message: err }))
 	}
 
 	handleContactClick() {
 		this.navCtrl.push('Contacts', { fromProfile: false })
+	}
+
+	displayPwd() {
+		console.log('displayPwd')
+		this.inputType = !this.inputType
 	}
 }

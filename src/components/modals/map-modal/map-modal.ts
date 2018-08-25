@@ -71,15 +71,22 @@ export class MapModalComponent implements OnInit {
 		private ts: TranslateService,
 		private fb: FormBuilder
 	) {
-		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+		try {
 
-		this.formGroup = this.fb.group({
-			// address: new FormControl({value: 'AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', disabled: true}, Validators.required),
-			address: ['AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', [Validators.required, addressValidator]],
-			passphrase: ['', this.w ? [] : Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
-			label: [''],
-		})
+
+			this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+
+			this.formGroup = this.fb.group({
+				// address: new FormControl({value: 'AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', disabled: true}, Validators.required),
+				address: ['AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', [Validators.required, addressValidator]],
+				passphrase: ['', this.w ? [] : Validators.required],
+				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
+				label: [''],
+			})
+
+		} catch (error) {
+
+		}
 	}
 
 

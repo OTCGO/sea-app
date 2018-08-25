@@ -73,13 +73,19 @@ export class SendModalComponent implements OnInit {
 		private ts: TranslateService,
 		private fb: FormBuilder
 	) {
-		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
-		this.formGroup = this.fb.group({
-			address: ['', [Validators.required, addressValidator]],
-			passphrase: ['', this.w ? [] : Validators.required],
-			amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
-			label: [''],
-		})
+		try {
+
+
+			this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+			this.formGroup = this.fb.group({
+				address: ['', [Validators.required, addressValidator]],
+				passphrase: ['', this.w ? [] : Validators.required],
+				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
+				label: [''],
+			})
+		} catch (error) {
+
+		}
 	}
 
 	ngOnInit(): void {

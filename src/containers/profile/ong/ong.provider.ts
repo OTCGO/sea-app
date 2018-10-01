@@ -149,7 +149,7 @@ export class OngProvider {
 			}
 
 			const res1 = await this.pick(pr, publicKey)
-			console.log('res2', res2)
+			console.log('res1', res1)
 			if (res1 && !res1['result']) {
 				return Promise.resolve(false)
 			}

@@ -3,9 +3,27 @@ import { isAddress } from '../../../shared/utils'
 
 export function addressValidator (addressCtrl: FormControl): ValidationErrors {
 	const { value } = addressCtrl
-	return (!value || !isAddress(value))
-		? { invalidAddress: true }
-		: null
+
+	if ( value ) {
+		if (isAddress(value) || /.neo/i.test(value)) {
+			console.log('addressValidator1')
+			return null
+		}
+	}
+
+	console.log('addressValidator2')
+	return { invalidAddress: true }
+	// console.log('addressValidator', (!value || !isAddress(value) || !/.neo/i.test(value)))
+	// if ( !value || !isAddress(value) || !/.neo/i.test(value)) {
+	//
+	// }
+
+	// if ( !value || !/.neo/i.test(value)) {
+	// 	return { invalidAddress: true }
+	// }
+
+
+
 }
 
 export function amountValidator (maxValue) {

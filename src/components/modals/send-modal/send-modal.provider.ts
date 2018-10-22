@@ -57,6 +57,10 @@ export class SendModalProvider {
 		           .then(res => this.apiProvider.broadcastOnt(res).toPromise())
 	}
 
+	getNncAddress(domain) {
+		return this.apiProvider.get(`resolve/${domain}`).toPromise()
+	}
+
 	private postTransferOnt (transferPostData) {
 		return this.apiProvider.post('transfer/ont', transferPostData).toPromise()
 	}
@@ -97,4 +101,6 @@ export class SendModalProvider {
 			transaction
 		}
 	}
+
+
 }

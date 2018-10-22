@@ -61,7 +61,7 @@
     },
     "SEND_MODAL": {
       "title": "Transfer",
-      "address": "Address",
+      "address": "Address Or NNC",
       "map": "Map",
       "mapTransfer": "Map",
       "password": "Password",

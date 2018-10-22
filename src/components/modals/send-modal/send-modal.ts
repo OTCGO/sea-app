@@ -55,11 +55,11 @@ export class SendModalComponent implements OnInit {
 		}
 	}
 
+
 	private ongBalance
 	// private symbol = 'ontology-ONG'
 
 	private inputType = true
-
 
 	constructor(
 		public viewCtrl: ViewController,
@@ -82,7 +82,9 @@ export class SendModalComponent implements OnInit {
 				passphrase: ['', this.w ? [] : Validators.required],
 				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
 				label: [''],
+				nncAddress: [''],
 			})
+
 		} catch (error) {
 
 		}
@@ -127,6 +129,32 @@ export class SendModalComponent implements OnInit {
 	handleClose() {
 		this.viewCtrl.dismiss().catch(() => { })
 		this.formGroup.reset()
+	}
+
+	async nncValidator() {
+
+		try {
+
+
+			console.log('nncValidator', this.toAddress.value)
+			if (this.toAddress.value) {
+
+				if (/.neo/i.test(this.toAddress.value)) {
+					const result = await this.sendModalProvider.getNncAddress(this.toAddress.value)
+					console.log('result', result)
+					if (result['error']) {
+						this.notificationProvider.emit({ message: 'ra' })
+					}
+
+					return this.formGroup.get('nncAddress').setValue(result['address'])
+				}
+				return this.formGroup.get('nncAddress').setValue(this.toAddress.value)
+			}
+
+		} catch (error) {
+			console.error('nncValidator', error)
+		}
+
 	}
 
 	/**
@@ -189,14 +217,15 @@ export class SendModalComponent implements OnInit {
 						}
 
 						result = await this.sendModalProvider.doSendAssetOnt({
-							dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+							// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+							dests: this.formGroup.get('nncAddress').value.replace(/^\s+|\s+$/g, ''),
 							amounts: this.amount.value,
 							assetId: this.selectedBalance.hash
 						}, pr)
 
 					} else {
 						result = await this.sendModalProvider.doSendAsset({
-							dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+							dests: this.formGroup.get('nncAddress').value.replace(/^\s+|\s+$/g, ''),
 							amounts: this.amount.value,
 							assetId: this.selectedBalance.hash
 						}, pr)

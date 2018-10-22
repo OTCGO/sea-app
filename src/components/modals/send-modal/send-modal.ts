@@ -136,14 +136,16 @@ export class SendModalComponent implements OnInit {
 		try {
 
 
-			console.log('nncValidator', this.toAddress.value)
+			// console.log('nncValidator', this.toAddress.value)
 			if (this.toAddress.value) {
 
 				if (/.neo/i.test(this.toAddress.value)) {
 					const result = await this.sendModalProvider.getNncAddress(this.toAddress.value)
 					console.log('result', result)
 					if (result['error']) {
-						this.notificationProvider.emit({ message: 'ra' })
+						this.ts.get('POSSESSIONS.SEND_MODAL.nncError').subscribe(data => {
+							this.notificationProvider.emit({ message: data })
+						})
 					}
 
 					return this.formGroup.get('nncAddress').setValue(result['address'])

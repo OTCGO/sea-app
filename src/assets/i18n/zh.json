@@ -70,7 +70,8 @@
       "label": "备注",
       "transfer": "点击转账",
       "success": "转账成功",
-      "fails": "密码错误，请核对"
+      "fails": "密码错误，请核对",
+      "nncError":"无效的NNC域名"
     },
     "MAP_MODAL": {
       "success": "映射成功",

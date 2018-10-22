@@ -70,7 +70,8 @@
       "label": "Label",
       "transfer": "Transfer",
       "success": "Success",
-      "fails": "Error password,please check"
+      "fails": "Error password,please check",
+      "nncError":"Error nnc domain"
     },
     "MAP_MODAL":{
       "success": "Map Success",

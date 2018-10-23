@@ -63,14 +63,15 @@
       "title": "转账",
       "map": "映射",
       "mapTransfer": "点击映射",
-      "address": "地址",
+      "address": "地址或者NNC域名",
       "password": "密码",
       "amount": "数量",
       "mapAmount": "整数数量",
       "label": "备注",
       "transfer": "点击转账",
       "success": "转账成功",
-      "fails": "密码错误，请核对"
+      "fails": "密码错误，请核对",
+      "nncError":"无效的NNC域名"
     },
     "MAP_MODAL": {
       "success": "映射成功",

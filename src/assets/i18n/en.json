@@ -61,7 +61,7 @@
     },
     "SEND_MODAL": {
       "title": "Transfer",
-      "address": "Address",
+      "address": "Address Or NNC",
       "map": "Map",
       "mapTransfer": "Map",
       "password": "Password",
@@ -70,7 +70,8 @@
       "label": "Label",
       "transfer": "Transfer",
       "success": "Success",
-      "fails": "Error password,please check"
+      "fails": "Error password,please check",
+      "nncError":"Error nnc domain"
     },
     "MAP_MODAL":{
       "success": "Map Success",

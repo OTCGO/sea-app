@@ -144,7 +144,7 @@ export class SendModalComponent implements OnInit {
 					console.log('result', result)
 					if (result['error']) {
 						this.ts.get('POSSESSIONS.SEND_MODAL.nncError').subscribe(data => {
-							this.notificationProvider.emit({ message: data })
+							return this.notificationProvider.emit({ message: data })
 						})
 					}
 

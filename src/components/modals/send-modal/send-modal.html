@@ -22,7 +22,7 @@
 			<ion-icon item-end *ngIf="toAddress.invalid && (toAddress.dirty || toAddress.touched) && toAddress.errors.invalidAddress" name="close" style="color: red;"></ion-icon>
 		</ion-item>
 
-		<ion-item class="round" *ngIf="toAddress.value" style="border:0" >
+		<ion-item class="round" *ngIf="toAddress.value && (!toAddress.invalid)" style="border:0" >
 			<ion-textarea  type="tex" formControlName="nncAddress" disabled></ion-textarea>
 		</ion-item>
 

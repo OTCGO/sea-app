@@ -63,7 +63,7 @@
       "title": "转账",
       "map": "映射",
       "mapTransfer": "点击映射",
-      "address": "地址或者NNC域名",
+      "address": "地址或者NEO域名",
       "password": "密码",
       "amount": "数量",
       "mapAmount": "整数数量",

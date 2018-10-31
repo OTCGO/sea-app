@@ -17,7 +17,7 @@
 		<h5>{{ translationPrefix + 'title' | translate }}</h5>
 
 		<ion-item class="round">
-			<ion-input placeholder="{{ translationPrefix + 'address' | translate }}" formControlName="address" (blur)="nncValidator()" required></ion-input>
+			<ion-input placeholder="{{ translationPrefix + 'address' | translate }}" formControlName="address" required></ion-input>
 			<ion-icon item-end *ngIf="toAddress.valid" name="checkmark" style="color: #3094d6;"></ion-icon>
 			<ion-icon item-end *ngIf="toAddress.invalid && (toAddress.dirty || toAddress.touched) && toAddress.errors.invalidAddress" name="close" style="color: red;"></ion-icon>
 		</ion-item>

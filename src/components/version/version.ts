@@ -57,11 +57,7 @@ export class VersionComponent implements OnInit {
       } catch (error) {
         syslan = { value: 'zh' }
       }
-      // const syslan = (await this.globalization.getPreferredLanguage()) || {value : 'zh'}
-      // const syslan = { value : 'en' }
-      // console.log('syslan', syslan)
-      // .then(res => console.log(res))
-      // .catch(e => console.log(e))
+
       const locale = syslan.value.split('-')[0]
 
       console.log('platform', this.platform.is('ios'))

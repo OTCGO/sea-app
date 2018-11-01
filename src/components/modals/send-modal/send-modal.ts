@@ -78,7 +78,7 @@ export class SendModalComponent implements OnInit {
 
 			this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
 			this.formGroup = this.fb.group({
-				address: ['', [Validators.required, addressValidator]],
+				address: ['', [Validators.required, addressValidator], [this.nncValidator.bind(this)]],
 				passphrase: ['', this.w ? [] : Validators.required],
 				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
 				label: [''],
@@ -203,6 +203,87 @@ export class SendModalComponent implements OnInit {
 		})
 		await loading.present()
 
+
+		try {
+			let pr
+			try {
+				pr = await this.sendModalProvider.decrypt(this.passphrase.value)
+			} catch (error) {
+				this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
+					this.notificationProvider.emit({ message: data })
+				})
+				loading.dismiss().catch(() => { }).catch(() => { })
+				return
+			}
+
+
+			let result: any
+
+			console.log('this.selectedBalance.hash', this.selectedBalance.hash)
+			console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
+			if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
+				// this.ongBalance < 0.01
+				if (this.ongBalance < 0.01) {
+					return false
+				}
+
+				result = await this.sendModalProvider.doSendAssetOnt({
+					// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+					dests: this.formGroup.get('nncAddress').value.replace(/^\s+|\s+$/g, ''),
+					amounts: this.amount.value,
+					assetId: this.selectedBalance.hash
+				}, pr)
+
+			} else {
+				result = await this.sendModalProvider.doSendAsset({
+					dests: this.formGroup.get('nncAddress').value.replace(/^\s+|\s+$/g, ''),
+					amounts: this.amount.value,
+					assetId: this.selectedBalance.hash
+				}, pr)
+			}
+
+			await this.handleClose()
+			loading.dismiss().catch(() => { }).catch(() => { })
+
+			// 成功
+			if (result.result) {
+
+				this.ts.get('POSSESSIONS.SEND_MODAL.success').subscribe(data => {
+					this.notificationProvider.emit({ message: data })
+				})
+
+				return
+			}
+
+			this.ts.get('ERROR.network_err').subscribe(data => {
+				this.notificationProvider.emit({ message: data })
+			})
+
+
+
+			return
+
+		} catch (error) {
+			console.log('error', error)
+			loading.dismiss().catch(() => { }).catch(() => { })
+
+			this.ts.get('ERROR.network_err').subscribe(data => {
+				this.notificationProvider.emit({ message: data })
+			})
+
+			// this.notificationProvider.emit({ message: error })
+
+			// this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
+
+			// })
+			// this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
+			// 	this.notificationProvider.emit({ message: data })
+			// })
+		}
+
+
+
+		/*
 		this.sendModalProvider
 			.decrypt(this.passphrase.value)
 			.then(async pr => {
@@ -281,6 +362,7 @@ export class SendModalComponent implements OnInit {
 				this.store.dispatch(new TransactionsActions.CleanSelectedContact())
 				loading.dismiss().catch(() => { }).catch(() => { })
 			})
+			*/
 	}
 
 	showPrompt(config) {

@@ -85,6 +85,27 @@ export class ClaimsProvider {
 			// 	const publicKey = getPublicKeyFromPrivateKey(pr)
 			const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 
+
+			if (data.available > 0) {
+				const res = await this.pick(pr, publicKey)
+				// return Promise.resolve(true)
+
+				if (!res['result']) {
+					return  Promise.resolve(false)
+				}
+
+			}
+			if (data.unavailable > 0) {
+				const res = await this.tran(pr, publicKey)
+
+				if (!res['result']) {
+					return  Promise.resolve(false)
+				}
+
+			}
+
+			return Promise.resolve(true)
+			/*
 			// 不可提取为0   neo 为0
 			if (data.unavailable === '0') {
 				const res = await this.pick(pr, publicKey)
@@ -124,7 +145,7 @@ export class ClaimsProvider {
 
 			return Promise.resolve(true)
 
-
+*/
 
 		} catch (error) {
 			console.log('error', error)

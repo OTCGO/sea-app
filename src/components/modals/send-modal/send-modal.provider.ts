@@ -23,12 +23,12 @@ export class SendModalProvider {
 	}
 
 	async decrypt (passphrase) {
-		try {
+		// try {
 
-			if (this.account._WIF) return wallet.getPrivateKeyFromWIF(this.account._WIF)
-		} catch (e) {
-			console.log(e)
-		}
+		// 	if (this.account._WIF) return wallet.getPrivateKeyFromWIF(this.account._WIF)
+		// } catch (e) {
+		// 	console.log(e)
+		// }
 		try {
 			// const wif = wallet.decrypt(this.account.encrypted, passphrase)
 			const wif: any = await getWif(this.account.encrypted, passphrase)

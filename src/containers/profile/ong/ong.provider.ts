@@ -95,8 +95,45 @@ export class OngProvider {
 			// 	const publicKey = getPublicKeyFromPrivateKey(pr)
 			const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 
+			if (ongBalance >= 0.2) {
+				if (data.available > 0 ) {
 
+					const res = await this.pick(pr, publicKey)
+					// return Promise.resolve(true)
+					if (!res['result']) {
+						return Promise.resolve(false)
+					}
 
+				}
+				if (data.unavailable > 0) {
+					const res = await this.tran(pr, publicKey)
+
+					if (!res['result']) {
+						return Promise.resolve(false)
+					}
+				}
+
+				return Promise.resolve(true)
+			} else if (ongBalance >= 0.01 && ongBalance < 0.02) {
+				if (data.available > 0 ) {
+					const res = await this.pick(pr, publicKey)
+					// return Promise.resolve(true)
+					if (res['result']) {
+						return Promise.resolve(true)
+					}
+					return Promise.resolve(false)
+				}
+				if (data.unavailable > 0) {
+					const res = await this.tran(pr, publicKey)
+
+						if (res['result']) {
+							return Promise.resolve(true)
+						}
+						return Promise.resolve(false)
+				}
+			}
+
+			/*
 			if (0.01 <= ongBalance && ongBalance < 0.02) {
 
 
@@ -156,7 +193,7 @@ export class OngProvider {
 
 			return Promise.resolve(true)
 
-
+			*/
 
 		} catch (error) {
 			console.log('error', error)

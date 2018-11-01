@@ -266,7 +266,12 @@ export class SendModalComponent implements OnInit {
 		} catch (error) {
 			console.log('error', error)
 			loading.dismiss().catch(() => { }).catch(() => { })
-			this.notificationProvider.emit({ message: error })
+
+			this.ts.get('ERROR.network_err').subscribe(data => {
+				this.notificationProvider.emit({ message: data })
+			})
+
+			// this.notificationProvider.emit({ message: error })
 
 			// this.ts.get('POSSESSIONS.SEND_MODAL.fails').subscribe(data => {
 

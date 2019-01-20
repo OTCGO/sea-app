@@ -340,8 +340,7 @@ export class LoginForm implements OnInit {
 				address,
 				label: address,
 				key: encrypted,
-				isDefault: true,
-				wwif: wif
+				isDefault: true
 			})
 
 			console.log('acct', acct)

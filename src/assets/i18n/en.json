@@ -47,6 +47,9 @@
     "totalBalances": "Total Balances",
     "displayZero": "Hide 0",
     "DETAILS": {
+      "swap":"Swap",
+      "swap_error":"Swap Error",
+      "swap_success":"Swap Success",
       "title": "Transaction Records",
       "transfer": "Transfer",
       "map": "Map",

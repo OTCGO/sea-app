@@ -21,7 +21,8 @@ export enum WalletActionTypes {
 	CHANGE_ACCOUNT_LABEL = '[Wallet] Change Account Label',
 	SET_DEFAULT_ACCOUNT = '[Wallet] Set Default Account',
 	SAVE_WALLET = '[Wallet] Save Wallet',
-	UPDATE_WALLET = '[Wallet] Update'
+	UPDATE_WALLET = '[Wallet] Update',
+	SaveWif= '[Wallet] SaveWif',
 }
 
 export class Load implements Action {
@@ -108,6 +109,12 @@ export class Update implements Action {
 	constructor (public payload: { key: string, value: any }) { }
 }
 
+export class SaveWif implements Action {
+	readonly type = WalletActionTypes.SaveWif
+
+	constructor (public payload: { wif: any }) { }
+}
+
 export type WalletActions =
 	Load
 	| LoadFail
@@ -122,5 +129,6 @@ export type WalletActions =
 	| RemoveAccountFail
 	| RemoveAccountSuccess
 	| ChangeAccountLabel
-  | SetDefaultAccount
-  | Update
+	| SetDefaultAccount
+	| Update
+	| SaveWif

@@ -47,6 +47,9 @@
     "totalBalances": "总资产",
     "displayZero": "零资产",
     "DETAILS": {
+      "swap":"置换",
+      "swap_error":"置换失败,请稍后重试",
+      "swap_success":"置换成功，请稍后查看",
       "title": "转账记录",
       "transfer": "转账",
       "map": "映射",

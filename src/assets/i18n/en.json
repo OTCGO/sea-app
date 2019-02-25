@@ -49,7 +49,7 @@
     "DETAILS": {
       "swap":"Swap",
       "swap_error":"Swap Error",
-      "swap_success":"Swap Success",
+      "swap_success":"Swap Success, Please Await 1~2 Block",
       "title": "Transaction Records",
       "transfer": "Transfer",
       "map": "Map",

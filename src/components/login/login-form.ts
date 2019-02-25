@@ -324,51 +324,6 @@ export class LoginForm implements OnInit {
 			}
 
 
-			/*
-			waterfall([
-				function (callback) {
-					const wif1 = wallet.decrypt(encrypted, passphrase)
-					callback(null, wif1)
-				},
-				function(arg, callback) {
-					const tempAcct = new wallet.Account(arg)
-
-					const { address } = tempAcct
-
-					const acct = new wallet.Account({
-						address,
-						label: address,
-						key: encrypted,
-						isDefault: true
-					})
-
-					console.log('acct', acct)
-
-					loading.dismiss().catch(() => { })
-					self.store.dispatch(new WalletActions.AddAccount(acct))
-					callback(null, 'done')
-				}
-			],
-				// optional callback
-				function (err, results) {
-					// console.log('results', results)
-					// the results array will equal ['one','two'] even though
-					// the second function had a shorter timeout.
-
-					if (err) {
-						return
-					}
-
-					self.nativeStorage.setItem('account', { encrypted })
-					self.navCtrl.push('Tabs')
-
-					const end = new Date().getTime()
-					console.log('NEP2Login', end - start)
-				})
-
-				*/
-
-
 			// const wif = wallet.decrypt(encrypted, passphrase)
 			// const wif = await decryptAsync(encrypted, passphrase)
 			//  const wif = await wallet.decryptAsync(encrypted, passphrase)
@@ -392,6 +347,7 @@ export class LoginForm implements OnInit {
 
 			loading.dismiss().catch(() => { })
 			this.store.dispatch(new WalletActions.AddAccount(acct))
+			this.store.dispatch(new WalletActions.SaveWif({wif: wif}))
 
 			this.nativeStorage.setItem('account', { encrypted })
 

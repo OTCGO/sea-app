@@ -10,13 +10,15 @@ import { DEFAULT_EMPTY_WALLET } from '../../shared/constants'
 export interface State {
 	error: string | Error
 	loading: boolean
-	entity: Wallet
+	entity: Wallet,
+	result: any
 }
 
 const initialState: State = {
 	error: '',
 	loading: false,
-	entity: new wallet.Wallet(<any>DEFAULT_EMPTY_WALLET)
+	entity: new wallet.Wallet(<any>DEFAULT_EMPTY_WALLET),
+	result: {}
 }
 
 export const reducer: ActionReducer<State> = (
@@ -29,6 +31,7 @@ export const reducer: ActionReducer<State> = (
 			const accounts = state.entity.accounts.slice().map(account => new wallet.Account(account))
 			// accounts.push(payload)
 			accounts[0] = payload
+
 
 			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
 
@@ -52,6 +55,14 @@ export const reducer: ActionReducer<State> = (
 			return {
 				...state,
 				entity
+			}
+		}
+
+		case WalletActionTypes.SaveWif: {
+			const { payload } = action
+			return {
+				...state,
+				result: payload
 			}
 		}
 

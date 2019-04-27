@@ -195,6 +195,16 @@
       "ong_balance_error": "ong balance error",
       "success": "success",
       "fail": "fail"
+    },
+    "RECHARGE":{
+      "title": "Game Deposit",
+      "describe": "Deposit",
+      "btn_confirm":"Deposit",
+      "success": "success",
+      "fail": "fail",
+      "note1":"1.Deposit ONG to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail.",
+      "note12":"2.Deposit ONG to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail."
+  
     }
   },
   "OPERATOR":{

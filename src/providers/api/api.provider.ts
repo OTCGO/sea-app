@@ -10,13 +10,14 @@ import { takeUntil, timeout } from 'rxjs/operators'
 @Injectable()
 export class ApiProvider implements OnDestroy {
 	otcgoApi = 'api.otcgo.cn'
+	// otcgoApi = 'otcgo.cn:8081'
 	onDestroy = new Subject()
 
 	constructor (private http: HttpClient) { }
 
 	getAPIEndpoint () {
 		return dev
-			? `http://${this.otcgoApi}/testnet`
+			? `https://${this.otcgoApi}/mainnet`
 			: `https://${this.otcgoApi}/mainnet`
 	}
 

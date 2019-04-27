@@ -19,8 +19,8 @@
     "debug:android": "ionic cordova run android -l -c",
     "build:android": "ionic cordova build android --minifyjs --minifycss --debug ",
     "release:android": "ionic cordova build android --minifyjs --minifycss --release ",
-    "debug:ios": "ionic cordova emulate ios -l --debug -c",
-    "build:ios": "ionic cordova build ios --release  --minifyjs --minifycss",
+    "debug:ios": "ionic cordova emulate ios -l --debug -c ",
+    "build:ios": "ionic cordova build ios --release  --minifyjs --minifycss --buildFlag='-UseModernBuildSystem=0'",
     "rm:android": "ionic cordova platform rm android",
     "rm:ios": "ionic cordova platform rm ios",
     "test": "karma start ./config/karma.conf.js",
@@ -72,7 +72,7 @@
     "cordova-android": "7.0.0",
     "cordova-browser": "5.0.3",
     "cordova-clipboard": "^1.2.1",
-    "cordova-ios": "4.5.4",
+    "cordova-ios": "4.5.5",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.1",
@@ -163,8 +163,8 @@
     },
     "platforms": [
       "browser",
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "config": {

@@ -27,8 +27,11 @@ export function addressValidator (addressCtrl: FormControl): ValidationErrors {
 }
 
 export function amountValidator (maxValue) {
+
 	return (amountCtrl: FormControl): ValidationErrors | null => {
 		const value = amountCtrl.value
+		console.log('amountValidator,maxValue', maxValue)
+		console.log('amountValidator,value', value)
 		if (!value || Number(value) <= 0 || Number(value) > maxValue) {
 			return { invalidAmount: true }
 		}

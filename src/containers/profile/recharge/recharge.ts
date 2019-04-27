@@ -1,0 +1,217 @@
+
+import { Store } from '@ngrx/store'
+import { IonicPage, NavController, App, ViewController } from 'ionic-angular'
+import { TranslateService } from '@ngx-translate/core'
+import {
+	Component,
+	OnInit,
+	ViewChild
+} from '@angular/core'
+import {
+	AlertController,
+	LoadingController,
+	Navbar
+} from 'ionic-angular'
+import { ONT_HASH, ONG_HASH } from '../../../shared/constants'
+import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { RootState } from '../../../store/reducers'
+import { IBalance } from '../../../shared/models'
+import { isAddress } from '../../../shared/utils'
+import { NotificationProvider } from '../../../providers'
+import { TransactionsActions, BalancesActions } from '../../../store/actions'
+import { TransactionsSelectors, BalancesSelectors } from '../../../store/selectors'
+import { ClaimsActions } from '../../../store/actions'
+import { ClaimsSelectors } from '../../../store/selectors'
+import {
+	amountValidator,
+} from '../../../components/modals/send-modal/send-modal.validators'
+import { SendModalProvider } from '../../../components/modals/send-modal/send-modal.provider'
+
+
+@IonicPage({ name: 'Recharge' })
+@Component({
+	selector: 'page-recharge',
+	templateUrl: 'recharge.html'
+})
+export class RechargePage implements OnInit {
+	formGroup: FormGroup
+	selectedBalance: IBalance
+	translationPrefix = 'POSSESSIONS.SEND_MODAL.'
+
+	translationPrefixr = 'PROFILE.RECHARGE.'
+	get passphrase() { return this.formGroup.get('passphrase') }
+	get amount() { return this.formGroup.get('amount') }
+	get label() { return this.formGroup.get('label') }
+
+
+
+	private ongBalance
+	private claims
+	private symbol = 'ontology-ONG'
+	private btnDisable
+
+
+	private inputType = true
+
+	get toAddress() { return this.formGroup.get('address') }
+
+	constructor(
+		public viewCtrl: ViewController,
+		private navCtrl: NavController,
+		private barcodeScanner: BarcodeScanner,
+		private notificationProvider: NotificationProvider,
+		private alertCtrl: AlertController,
+		private loadingCtrl: LoadingController,
+		private store: Store<RootState>,
+		private ts: TranslateService,
+		private fb: FormBuilder,
+		public sendModalProvider: SendModalProvider,
+	) {
+		try {
+
+
+
+
+			// this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+
+
+		} catch (error) {
+
+		}
+	}
+
+	ngOnInit(): void {
+
+
+
+		this.store.dispatch(new ClaimsActions.LoadONG())
+		this.claims = this.store.select(ClaimsSelectors.getEntities)
+
+
+		this.store.dispatch(new BalancesActions.Load())
+
+		this.store.dispatch(new BalancesActions.Select(this.symbol))
+		this.store.select(BalancesSelectors.getSelectedBalance).subscribe(balance => {
+			console.log('ont:ngOnInit', balance)
+			this.selectedBalance = balance
+
+
+			const result = parseFloat(balance.amount)
+
+
+			this.ongBalance = result
+
+
+			if (result < 0.01 ) {
+				this.btnDisable = true
+			}
+
+			this.formGroup = this.fb.group({
+				address: [''],
+				passphrase: [''],
+				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]]
+			})
+
+			console.log('ont:ngOnInit', this.btnDisable)
+		})
+
+
+
+	}
+
+
+	ionViewWillEnter() {
+		 this.store.select(TransactionsSelectors.getSelectedAddress).take(1).subscribe(address => this.toAddress.setValue(address))
+	}
+
+	ionViewDidLeave() {
+		// this.store.dispatch(new TransactionsActions.CleanSelectedContact())
+	}
+
+	handleClose() {
+		this.viewCtrl.dismiss().catch(() => { })
+		this.formGroup.reset()
+	}
+
+
+	/**
+	 * Address must be check validity and required
+	 * @if address && isAddress(address)
+	 * @then passphrase been use for signature the wallet file is require
+	 * @then amount is required and translate to big num
+	 * @optional Label
+	 **/
+	async Deposit() {
+		try {
+			console.log('Deposit,passphrase', this.passphrase.value)
+			console.log('Deposit,amount', this.amount.value)
+			let pr
+			try {
+				pr = await this.sendModalProvider.decrypt(this.passphrase.value)
+			} catch (error) {
+
+				console.log('Deposit', error)
+				this.ts.get('LOGIN.nep2_passphrase_error').subscribe(data => {
+					this.notificationProvider.emit({ message: data })
+				})
+
+				return
+			}
+
+
+			let result: any
+
+			console.log('this.selectedBalance.hash', this.selectedBalance.hash)
+			console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
+			if (this.selectedBalance.hash === ONG_HASH) {
+
+				if (this.ongBalance < 0.01) {
+					return false
+				}
+
+				console.log('amounts', this.amount.value)
+				console.log('assetId', this.selectedBalance.hash)
+
+				// result = await this.sendModalProvider.doSendAssetOnt({
+				// 	// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+				// 	dests: '',
+				// 	amounts: this.amount.value,
+				// 	assetId: this.selectedBalance.hash
+				// }, pr)
+
+			}
+
+			// 成功
+			if (result.result) {
+
+				this.ts.get('PROFILE.RECHARGE.success').subscribe(data => {
+					this.notificationProvider.emit({ message: data })
+				})
+
+				return
+			}
+
+			this.ts.get('ERROR.network_err').subscribe(data => {
+				this.notificationProvider.emit({ message: data })
+			})
+
+
+
+			return
+
+		} catch (error) {
+
+			this.ts.get('ERROR.network_err').subscribe(data => {
+				this.notificationProvider.emit({ message: data })
+			})
+
+
+		}
+	}
+
+
+	displayPwd() {
+		this.inputType = !this.inputType
+	}
+}

@@ -146,11 +146,16 @@ export class RechargePage implements OnInit {
 		try {
 			console.log('Deposit,passphrase', this.passphrase.value)
 			console.log('Deposit,amount', this.amount.value)
+
+			this.btnDisable = true
+
+
 			let pr
 			try {
 				pr = await this.sendModalProvider.decrypt(this.passphrase.value)
 			} catch (error) {
 
+				this.btnDisable = false
 				console.log('Deposit', error)
 				this.ts.get('LOGIN.nep2_passphrase_error').subscribe(data => {
 					this.notificationProvider.emit({ message: data })
@@ -160,37 +165,34 @@ export class RechargePage implements OnInit {
 			}
 
 
-			let result: any
 
 			console.log('this.selectedBalance.hash', this.selectedBalance.hash)
 			console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
-			if (this.selectedBalance.hash === ONG_HASH) {
 
-				if (this.ongBalance < 0.01) {
-					return false
-				}
 
-				console.log('amounts', this.amount.value)
-				console.log('assetId', this.selectedBalance.hash)
+			const result: any = await this.sendModalProvider.doSendAssetOnt({
+					// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+					dests: 'APV9wADVtSvQQmfuw7gvzsfo3eDrkhpHiK',
+					amounts: this.amount.value,
+					assetId: this.selectedBalance.hash
+				}, pr)
 
-				// result = await this.sendModalProvider.doSendAssetOnt({
-				// 	// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-				// 	dests: '',
-				// 	amounts: this.amount.value,
-				// 	assetId: this.selectedBalance.hash
-				// }, pr)
-
-			}
 
 			// 成功
+
+
 			if (result.result) {
 
+				this.btnDisable = false
 				this.ts.get('PROFILE.RECHARGE.success').subscribe(data => {
 					this.notificationProvider.emit({ message: data })
 				})
 
 				return
 			}
+
+			this.btnDisable = false
+
 
 			this.ts.get('ERROR.network_err').subscribe(data => {
 				this.notificationProvider.emit({ message: data })
@@ -202,6 +204,7 @@ export class RechargePage implements OnInit {
 
 		} catch (error) {
 
+			this.btnDisable = false
 			this.ts.get('ERROR.network_err').subscribe(data => {
 				this.notificationProvider.emit({ message: data })
 			})

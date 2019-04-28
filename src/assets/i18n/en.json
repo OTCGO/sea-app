@@ -197,13 +197,13 @@
       "fail": "fail"
     },
     "RECHARGE":{
-      "title": "Game Deposit",
+      "title": "《 I am kind》ONG Deposit",
       "describe": "Deposit",
       "btn_confirm":"Deposit",
       "success": "success",
       "fail": "fail",
-      "note1":"1.Deposit ONG to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail.",
-      "note12":"2.Deposit ONG to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail."
+      "note1":"1.When recharging the ONG, a fee of 0.01 ONG is required to be paid to the main network; when the balance of the ONG in the wallet is insufficient, the recharge fails.",
+      "note2":"2. Based on Ontology block chain technology, the wallet project is not responsible for personal losses caused by loss of private key and interruption of service by game company."
   
     }
   },

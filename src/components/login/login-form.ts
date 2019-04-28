@@ -100,8 +100,8 @@ export class LoginForm implements OnInit {
 
 		if (dev) {
 			console.log('dev', dev)
-			this.NEP2Login({ encrypted: '', passphrase: '' })
-			// this.login(this.loginForm)
+			// this.NEP2Login({ encrypted: '', passphrase: '' })
+
 		}
 		// this.getTranslations()
 	}

@@ -57,11 +57,11 @@
 		<div class="spacer"></div>
 
 	
-		<button ion-button round full class="otcgo-button--colour" type="submit">{{ translationPrefixr + 'btn_confirm' | translate }}</button>
+		<button ion-button round full class="otcgo-button--colour" type="submit" [disabled] = "btnDisable">{{ translationPrefixr + 'btn_confirm' | translate }}</button>
 	</form>
 
 	<div class="explain" >
-		{{ translationPrefixr + 'note1' | translate }} <br>
+		{{ translationPrefixr + 'note1' | translate }} <br><br>
 		{{ translationPrefixr + 'note2' | translate }}
 </div>
 

@@ -73,15 +73,31 @@ export class RechargePage implements OnInit {
 	) {
 		try {
 
-
-
-
 			// this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
+
+			this.formGroup = this.fb.group({
+				address: [''],
+				passphrase: [''],
+				amount: ['', [Validators.required], [this.checkLength.bind(this)]]
+			})
+
 
 
 		} catch (error) {
 
 		}
+	}
+
+	async checkLength() {
+		try {
+			console.log('checkLength', this.amount.value.toString().split('.')[1].length > 8)
+			if (this.amount.value.toString().split('.')[1].length > 8 ) {
+				return { invalidAmount: true }
+			}
+		} catch (error) {
+
+		}
+
 	}
 
 	ngOnInit(): void {
@@ -110,11 +126,7 @@ export class RechargePage implements OnInit {
 				this.btnDisable = true
 			}
 
-			this.formGroup = this.fb.group({
-				address: [''],
-				passphrase: [''],
-				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]]
-			})
+
 
 			console.log('ont:ngOnInit', this.btnDisable)
 		})
@@ -132,11 +144,6 @@ export class RechargePage implements OnInit {
 		// this.store.dispatch(new TransactionsActions.CleanSelectedContact())
 	}
 
-	handleClose() {
-		this.viewCtrl.dismiss().catch(() => { })
-		this.formGroup.reset()
-	}
-
 
 	/**
 	 * Address must be check validity and required
@@ -150,6 +157,10 @@ export class RechargePage implements OnInit {
 			console.log('Deposit,passphrase', this.passphrase.value)
 			console.log('Deposit,amount', this.amount.value)
 
+			if (!this.passphrase.value || !this.amount.value) {
+				return
+			}
+
 			this.btnDisable = true
 
 
@@ -162,7 +173,7 @@ export class RechargePage implements OnInit {
 
 				this.btnDisable = false
 
-				return false
+				return
 			}
 
 

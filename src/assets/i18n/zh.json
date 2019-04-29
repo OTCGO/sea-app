@@ -67,8 +67,8 @@
       "map": "映射",
       "mapTransfer": "点击映射",
       "address": "地址或者NEO域名",
-      "password": "密码",
-      "amount": "数量",
+      "password": "请输入钱包密码",
+      "amount": "请输入数量",
       "mapAmount": "整数数量",
       "label": "备注",
       "transfer": "点击转账",
@@ -198,6 +198,7 @@
     "RECHARGE":{
       "title": "《我本善良》ONG充值",
       "describe": "充值",
+      "history":"充值历史",
       "btn_confirm":"确认充值",
       "success": "充值成功",
       "fail": "充值失败,请稍后重试",

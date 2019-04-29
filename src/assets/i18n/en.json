@@ -200,6 +200,7 @@
       "title": "《 I am kind》ONG Deposit",
       "describe": "Deposit",
       "btn_confirm":"Deposit",
+      "history":"deposit history",
       "success": "success",
       "fail": "fail",
       "note1":"1.When recharging the ONG, a fee of 0.01 ONG is required to be paid to the main network; when the balance of the ONG in the wallet is insufficient, the recharge fails.",

@@ -6,7 +6,8 @@ import {
 	IonicPage,
 	NavController,
 	Refresher,
-	Platform
+	Platform,
+	LoadingController,
 } from 'ionic-angular'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
@@ -54,6 +55,7 @@ export class PossessionsPage implements OnInit {
 		public navCtrl: NavController,
 		private notificationProvider: NotificationProvider,
 		private lp: LoadingProvider,
+		private loadingCtrl: LoadingController,
 		private store: Store<fromBalances.State | fromWallet.State>
 	) {}
 
@@ -61,10 +63,16 @@ export class PossessionsPage implements OnInit {
 
 	ngOnInit () {
 
+		const loading = this.loadingCtrl.create()
+
+		loading.present()
+
 		this.switchBalances()
 		this.updateBalances()
     	// this.store.select(SettingsSelectors.getCurrency).subscribe(() => this.updateBalances())
-		this.store.select(BalancesSelectors.getLoading).subscribe(loading => this.lp.emit(loading))
+		this.store.select(BalancesSelectors.getLoading).subscribe(() => {
+			loading.dismiss().catch(() => { }).catch(() => { })
+		})
 		// this.store.select(BalancesSelectors.getError).subscribe(error => error && this.notificationProvider.emit({ message: error }))
 		this.store.select(WalletSelectors.getExits).subscribe(exits => this.exits = exits)
 

@@ -2,6 +2,7 @@
 import { Store } from '@ngrx/store'
 import { IonicPage, NavController, App, ViewController } from 'ionic-angular'
 import { TranslateService } from '@ngx-translate/core'
+import { InAppBrowser } from '@ionic-native/in-app-browser'
 import {
 	Component,
 	OnInit,
@@ -27,7 +28,7 @@ import {
 	amountValidator,
 } from '../../../components/modals/send-modal/send-modal.validators'
 import { SendModalProvider } from '../../../components/modals/send-modal/send-modal.provider'
-
+import { AccountProvider } from '../../../providers'
 
 @IonicPage({ name: 'Recharge' })
 @Component({
@@ -50,7 +51,7 @@ export class RechargePage implements OnInit {
 	private claims
 	private symbol = 'ontology-ONG'
 	private btnDisable
-
+	account = this.accountProvider.defaultAccount
 
 	private inputType = true
 
@@ -66,7 +67,9 @@ export class RechargePage implements OnInit {
 		private store: Store<RootState>,
 		private ts: TranslateService,
 		private fb: FormBuilder,
+		private accountProvider: AccountProvider,
 		public sendModalProvider: SendModalProvider,
+		private iab: InAppBrowser
 	) {
 		try {
 
@@ -150,6 +153,19 @@ export class RechargePage implements OnInit {
 			this.btnDisable = true
 
 
+			console.log('Deposit,ongBalance', this.ongBalance)
+			if (parseFloat(this.ongBalance)   < parseFloat(this.amount.value) + 0.01) {
+
+				this.ts.get('PROFILE.CLAIMS.ong_balance_error').subscribe(data => {
+					this.notificationProvider.emit({ message: data })
+				})
+
+				this.btnDisable = false
+
+				return false
+			}
+
+
 			let pr
 			try {
 				pr = await this.sendModalProvider.decrypt(this.passphrase.value)
@@ -182,6 +198,7 @@ export class RechargePage implements OnInit {
 
 
 			if (result.result) {
+				this.formGroup.reset()
 
 				this.btnDisable = false
 				this.ts.get('PROFILE.RECHARGE.success').subscribe(data => {
@@ -216,5 +233,10 @@ export class RechargePage implements OnInit {
 
 	displayPwd() {
 		this.inputType = !this.inputType
+	}
+
+	handleNavClick() {
+		this.iab.create(`https://explorer.ont.io/address/${this.account.address}/20/1`, '_system')
+		return
 	}
 }

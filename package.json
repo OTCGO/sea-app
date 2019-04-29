@@ -19,7 +19,7 @@
     "debug:android": "ionic cordova run android -l -c",
     "build:android": "ionic cordova build android --minifyjs --minifycss --debug ",
     "release:android": "ionic cordova build android --minifyjs --minifycss --release ",
-    "debug:ios": "ionic cordova emulate ios -l --debug -c ",
+    "debug:ios": "ionic cordova emulate ios -l --debug -c -- --buildFlag='-UseModernBuildSystem=0'  ",
     "build:ios": "ionic cordova build ios --release  --minifyjs --minifycss --buildFlag='-UseModernBuildSystem=0'",
     "rm:android": "ionic cordova platform rm android",
     "rm:ios": "ionic cordova platform rm ios",

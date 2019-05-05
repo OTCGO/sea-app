@@ -31,6 +31,7 @@ export class SendModalProvider {
 		// }
 		try {
 			// const wif = wallet.decrypt(this.account.encrypted, passphrase)
+			console.log('this.account.encrypted', this.account.encrypted)
 			const wif: any = await getWif(this.account.encrypted, passphrase)
 
 			console.log('decrypt:passphrase', passphrase)

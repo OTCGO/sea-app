@@ -11,7 +11,7 @@
     "tip": "创建钱包",
     "switch": "切换钱包",
     "login_wallet": "确认",
-    "login_loading": "登陆中",
+    "login_loading": "登录中",
     "import_wallet": "导入",
     "wif_placeholder": "NEP2字符",
     "password": "请输入密码",
@@ -33,7 +33,7 @@
     "agreement_text": "蓝鲸淘用户协议与服务条款",
     "create_wallet": "创建钱包",
     "create_error": "创建错误，请重新创建",
-    "tip": "登陆钱包",
+    "tip": "登录钱包",
     "BACKUP": {
       "success": "复制成功",
       "title": "创建钱包成功!",
@@ -67,8 +67,8 @@
       "map": "映射",
       "mapTransfer": "点击映射",
       "address": "地址或者NEO域名",
-      "password": "密码",
-      "amount": "数量",
+      "password": "请输入钱包密码",
+      "amount": "请输入数量",
       "mapAmount": "整数数量",
       "label": "备注",
       "transfer": "点击转账",
@@ -194,6 +194,16 @@
       "do_claims": "一键提取",
       "success": "提取成功",
       "fail": "提取失败"
+    },
+    "RECHARGE":{
+      "title": "《我本善良》ONG充值",
+      "describe": "充值",
+      "history":"充值历史",
+      "btn_confirm":"确认充值",
+      "success": "充值成功",
+      "fail": "充值失败,请稍后重试",
+      "note1":"1.充值ONG时，需向本体网络支付0.01ONG的手续费；钱包中ONG余额不足时，充值失败。",
+      "note2":"2.本钱包基于本体区块链技术，因个人私钥丢失、游戏公司中断服务等原因造成的个人损失，钱包项目方概不负责。"
     }
   },
   "OPERATOR": {

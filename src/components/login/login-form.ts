@@ -24,7 +24,7 @@ import { WalletActions, AuthActions } from '../../store/actions'
 import { getWif } from '../../shared/utils'
 // import parallel from 'async/parallel'
 import waterfall from 'async/waterfall'
-
+import { dev } from '../../environments/environment'
 
 @Component({
 	selector: 'login-form',
@@ -82,7 +82,10 @@ export class LoginForm implements OnInit {
 				}
 
 				this.isSwitch = true
-				// console.log('this.accountCache', this.accountCache )
+				console.log('this.accountCache', this.accountCache )
+
+
+
 			}).catch((err) => {
 				console.log('this.nativeStorage:get', err)
 				this.isSwitch = true
@@ -94,7 +97,13 @@ export class LoginForm implements OnInit {
 			key: ['', [Validators.required, keyValidator], asyncKeyValidator],
 			passphrase: ['', [Validators.required, Validators.minLength(4)]]
 		})
-		this.getTranslations()
+
+		if (dev) {
+			console.log('dev', dev)
+			// this.NEP2Login({ encrypted: '', passphrase: '' })
+
+		}
+		// this.getTranslations()
 	}
 
 	getTranslations() {
@@ -132,6 +141,7 @@ export class LoginForm implements OnInit {
 
 	async fileChange(file) {
 
+		/*
 		if (/.json$/.test(file.name)) {
 			const reader = new FileReader()
 			const ng = this
@@ -162,6 +172,8 @@ export class LoginForm implements OnInit {
 			reader.readAsText(file)
 			return
 		}
+
+		*/
 		// console.log('file', file)
 
 		/*
@@ -269,8 +281,6 @@ export class LoginForm implements OnInit {
 
 		} catch (error) {
 			console.log('error', error)
-
-
 		}
 
 

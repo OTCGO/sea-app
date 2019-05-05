@@ -195,6 +195,17 @@
       "ong_balance_error": "ong balance error",
       "success": "success",
       "fail": "fail"
+    },
+    "RECHARGE":{
+      "title": "《 I am kind》ONG Deposit",
+      "describe": "Deposit",
+      "btn_confirm":"Deposit",
+      "history":"deposit history",
+      "success": "success",
+      "fail": "fail",
+      "note1":"1.When recharging the ONG, a fee of 0.01 ONG is required to be paid to the main network; when the balance of the ONG in the wallet is insufficient, the recharge fails.",
+      "note2":"2. Based on Ontology blockchain technology, the wallet project is not responsible for personal losses caused by loss of private key and interruption of service by game company."
+  
     }
   },
   "OPERATOR":{

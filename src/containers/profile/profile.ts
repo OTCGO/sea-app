@@ -7,7 +7,7 @@ import {
 } from 'ionic-angular'
 import { RootState } from '../../store/reducers'
 import { WalletSelectors } from '../../store/selectors'
-
+import { TranslateService } from '@ngx-translate/core'
 
 @IonicPage({
 	name: 'Profile',

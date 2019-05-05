@@ -68,11 +68,9 @@ export class CreateWalletPage implements OnInit {
     if (this.wif)
       return !this.passphrase1 || !this.passphrase2 ||
         (this.passphrase1 !== this.passphrase2) ||
-        !this.name ||
         !this.protocolAgreement || !this.wif
     return !this.passphrase1 || !this.passphrase2 ||
       (this.passphrase1 !== this.passphrase2) ||
-      !this.name ||
       !this.protocolAgreement
   }
 

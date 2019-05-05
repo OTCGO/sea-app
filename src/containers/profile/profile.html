@@ -18,4 +18,14 @@
   <profile-nav [navs]="navs" [address]="account.label"></profile-nav>
 
   <profile-feature-list></profile-feature-list>
+
+  <ion-card class="card-features" style="width: 90%;margin-top: 0.2rem">
+    <ion-list style="width:100%;">
+      <ion-item (click)="navCtrl.push('Recharge')" style="width:100%;">
+        <ion-label color="dark" >
+          {{ 'PROFILE.RECHARGE.title' | translate }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

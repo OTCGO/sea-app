@@ -188,6 +188,8 @@
     },
     "CLAIMS": {
       "title": "Claims",
+      "title_ONG": "Claims ONG",
+      "title_SEAC": "Claims SEAC",
       "loading": "Handing",
       "available": "Available GAS",
       "unavailable": "UnAvailable GAS",

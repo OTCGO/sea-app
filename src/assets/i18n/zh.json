@@ -187,13 +187,14 @@
     "CLAIMS": {
       "title": "提取GAS",
       "title_ONG": "提取ONG",
+      "title_SEAC": "提取SEAC",
       "loading": "正在提取",
       "available": "可提取",
       "unavailable": "待提取数量",
       "ong_balance_error": "ong余额不足",
       "do_claims": "一键提取",
-      "success": "提取成功",
-      "fail": "提取失败"
+      "success": "提取成功,到账需要区块确认，请稍后查看余额",
+      "fail": "提取失败，请稍后重试"
     },
     "RECHARGE":{
       "title": "《我本善良》ONG充值",

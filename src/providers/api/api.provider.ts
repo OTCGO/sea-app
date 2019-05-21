@@ -21,6 +21,12 @@ export class ApiProvider implements OnDestroy {
 			: `https://${this.otcgoApi}/mainnet`
 	}
 
+	getAPIV2Endpoint () {
+		return dev
+			? `https://${this.otcgoApi}/v2/mainnet`
+			: `https://${this.otcgoApi}/v2/mainnet`
+	}
+
 	ngOnDestroy () {
 		this.onDestroy.next()
 	}
@@ -38,6 +44,12 @@ export class ApiProvider implements OnDestroy {
 		console.log(endpoint)
 		return this.http
 		           .get(this.getAPIEndpoint() + '/' + endpoint, options)
+							 .pipe(takeUntil(this.onDestroy), timeout(10000))
+	}
+
+	getV2 (endpoint: string, options?: any): Observable<any> {
+		return this.http
+		           .get(this.getAPIV2Endpoint() + '/' + endpoint, options)
 							 .pipe(takeUntil(this.onDestroy), timeout(10000))
 	}
 

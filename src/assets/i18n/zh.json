@@ -103,6 +103,7 @@
     "histories": "转账记录",
     "claims": "提取 GAS",
     "claims_ong": "提取 ONG",
+    "claims_seac": "提取 SEAC",
     "logout": "退出登录",
     "MANAGE_WALLET": {
       "prompt": "提示",

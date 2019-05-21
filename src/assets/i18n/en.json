@@ -103,6 +103,7 @@
     "histories": "Transaction Records",
     "claims": "Claims GAS",
     "claims_ong": "Claims ONG",
+    "claims_seac": "Claims SEAC",
     "logout": "Logout",
     "MANAGE_WALLET": {
       "prompt":"prompt",

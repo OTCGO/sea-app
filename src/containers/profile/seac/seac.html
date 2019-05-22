@@ -1,0 +1,33 @@
+<ion-header class="otcgo-header">
+  <ion-navbar>
+    <ion-title>
+      {{ 'PROFILE.CLAIMS.title_SEAC' | translate}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="claims">
+  <div class="claims__background">
+    <div class="claims__svg-text" text-center>
+      <p>{{ 'PROFILE.CLAIMS.unavailable' | translate }}</p>
+      <p class="title">{{ (claims | async)?.unavailable }} SEAC</p>
+      <p>{{ 'PROFILE.CLAIMS.available' | translate }}</p>
+      <p class="title">{{ (claims | async)?.available }} SEAC</p>
+    </div>
+
+
+
+    <div class="claims_a">
+         <button *ngIf = "btnLoading"  ion-button round full  light class="claims__button" >
+			<ion-spinner  item-start name="ios"></ion-spinner>
+			{{ 'PROFILE.CLAIMS.loading' | translate }}
+		</button>
+
+		<button *ngIf = "!btnLoading"  [disabled]="((claims | async)?.unavailable) === '0' && ((claims | async)?.available) === '0'"  ion-button round full light  class="claims__button" (click)="doClaim()">
+			{{ 'PROFILE.CLAIMS.do_claims' | translate }}
+		</button>
+     
+    </div>
+  </div>
+
+</ion-content>

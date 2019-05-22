@@ -35,7 +35,7 @@ export class SettingsPage {
 		private appCtrl: App
 	) {
 		this.appVersion = version
-		console.log('this.appVersion', this.appVersion)
+		// console.log('this.appVersion', this.appVersion)
 	}
 
 	handleLocaleClick (locale) {

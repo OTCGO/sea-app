@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of'
 import {
 	ClaimsActionTypes,
 	LoadONG,
+	LoadSEAC,
 	DoClaim,
 	Load,
 	LoadFail,
@@ -59,7 +60,21 @@ export class ClaimsEffects {
 								)
 					)
 				)
-
+	@Effect()
+	LoadSEAC$ =
+		this.actions$
+				.ofType<Load>(ClaimsActionTypes.LOAD_SEAC)
+				.pipe(
+					withLatestFrom(this.store$.select(getAccount), (_, account: Account) => account.address),
+					concatMap(
+						address =>
+							this.api.getV2(`${API_CONSTANTS.GAS}/seas/${address}`)
+								.pipe(
+									map(res => new LoadSuccess(res.data)),
+									catchError(error => of(new LoadFail(error)))
+								)
+					)
+				)									
 
 	@Effect()
 	DoClaims$ =

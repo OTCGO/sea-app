@@ -14,6 +14,7 @@ import { SendModalProvider } from '../components/modals/send-modal/send-modal.pr
 import { MapModalProvider } from '../components/modals/map-modal/map-modal.provider'
 import { ClaimsProvider } from '../containers/profile/claims/claims.provider'
 import { OngProvider } from '../containers/profile/ong/ong.provider'
+import { SeacProvider } from '../containers/profile/seac/seac.provider'
 // import { FileStorageProvider } from '../providers/file-storage.provider'
 import { NotificationProvider } from '../providers/notification.provider'
 import { LoadingProvider } from '../providers/loading.provider'
@@ -41,6 +42,7 @@ import { VersionProvider } from '../components/version/version.provider'
 		MapModalProvider,
 		ClaimsProvider,
 		OngProvider,
+		SeacProvider,
 		VersionProvider,
 	   //  FileStorageProvider,
 	  	NotificationProvider,

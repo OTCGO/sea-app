@@ -103,6 +103,7 @@
     "histories": "Transaction Records",
     "claims": "Claims GAS",
     "claims_ong": "Claims ONG",
+    "claims_seac": "Claims SEAC",
     "logout": "Logout",
     "MANAGE_WALLET": {
       "prompt":"prompt",
@@ -188,6 +189,8 @@
     },
     "CLAIMS": {
       "title": "Claims",
+      "title_ONG": "Claims ONG",
+      "title_SEAC": "Claims SEAC",
       "loading": "Handing",
       "available": "Available GAS",
       "unavailable": "UnAvailable GAS",

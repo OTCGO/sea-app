@@ -60,10 +60,10 @@ export class VersionComponent implements OnInit {
 
       const locale = syslan.value.split('-')[0]
 
-      console.log('platform', this.platform.is('ios'))
+      //console.log('platform', this.platform.is('ios'))
       const result = (await this.versionProvider.getVersion(this.platform.is('ios') ? 'ios' : 'android')).version
 
-      console.log('result', JSON.stringify(result))
+      //console.log('result', JSON.stringify(result))
       if (result && result.version !== version) {
 
         let title

@@ -139,7 +139,7 @@ export class SendModalComponent implements OnInit {
 			// console.log('nncValidator', this.toAddress.value)
 			if (this.toAddress.value) {
 
-				if (/.neo/i.test(this.toAddress.value)) {
+				if (/\.neo$/.test(this.toAddress.value)) {
 					const result = await this.sendModalProvider.getNncAddress(this.toAddress.value)
 					console.log('result', result)
 					if (result['error']) {

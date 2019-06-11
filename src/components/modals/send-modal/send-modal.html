@@ -73,13 +73,28 @@
 			<ion-icon item-end *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.invalidAmount" name="close" style="color: red;"></ion-icon>
 		</ion-item>
 
-		<!-- <ion-list class="amount-range">
-			<ion-range step="1" min="0" [max]="selectedBalance.amount"
-			           formControlName="amount">
-				<ion-label range-left>0</ion-label>
-				<ion-label range-right>{{ selectedBalance.amount }}</ion-label>
-			</ion-range>
-		</ion-list> -->
+		
+
+		<ion-label>{{ translationPrefix + 'fee' | translate }}：</ion-label>
+		<ion-item class="round">	
+			<ion-input
+				type="number" formControlName="fee"
+				[value]="fee.value"
+				[max]="maxFee"
+				disabled
+				required></ion-input>
+		
+		
+		</ion-item>
+
+		<ion-range step="1"  min="0" max="1000"
+						(ionChange)="feeChange($event)"
+						[disabled]="feeDisabled">
+			<ion-label range-left>0</ion-label>
+			<ion-label range-right>{{maxFee}}</ion-label>
+		</ion-range>
+
+		<ion-note color="warning" *ngIf="!ongBalance">手续费小于0.001时候，会出现延时到账或者无法到账的情况，请选择合适的手续费。</ion-note>
 
 		<!--<ion-item class="round">
 			<ion-input placeholder="{{ translationPrefix + 'label' | translate }}" formControlName="label"></ion-input>

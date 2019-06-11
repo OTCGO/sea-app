@@ -8,7 +8,8 @@ const { generateSignature } = wallet
 interface ISendOpts {
 	dests: string
 	amounts: number
-	assetId: string
+	assetId: string,
+	fee:string
 }
 
 @Injectable()
@@ -44,9 +45,9 @@ export class SendModalProvider {
 		}
 	}
 
-	doSendAsset ({ dests, amounts, assetId }: ISendOpts, pr) {
+	doSendAsset ({ dests, amounts, assetId ,fee }: ISendOpts, pr) {
 		console.log('doSendAsset', pr)
-		return this.postTransfer({ dests, amounts, assetId, source: this.account.address })
+		return this.postTransfer({ dests, amounts, assetId, source: this.account.address,fee })
 		           .then(res => this.generateSignature(res['transaction'], pr))
 		           .then(res => this.apiProvider.broadcast(res).toPromise())
 	}

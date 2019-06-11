@@ -64,6 +64,8 @@
     },
     "SEND_MODAL": {
       "title": "Transfer",
+      "fee":"fee",
+      "feeTip":"If the fee is less than 0.001, there will be a delay or an inability to arrive. Please choose the appropriate handling fee.",
       "address": "Address Or NEO DOMAIN",
       "map": "Map",
       "mapTransfer": "Map",

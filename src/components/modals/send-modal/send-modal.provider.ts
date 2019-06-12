@@ -8,21 +8,22 @@ const { generateSignature } = wallet
 interface ISendOpts {
 	dests: string
 	amounts: number
-	assetId: string
+	assetId: string,
+	fee: string
 }
 
 @Injectable()
 export class SendModalProvider {
 	account = this.accountProvider.defaultAccount
 
-	constructor (
+	constructor(
 		private apiProvider: ApiProvider,
 		private accountProvider: AccountProvider
 	) {
 
 	}
 
-	async decrypt (passphrase) {
+	async decrypt(passphrase) {
 		// try {
 
 		// 	if (this.account._WIF) return wallet.getPrivateKeyFromWIF(this.account._WIF)
@@ -44,33 +45,53 @@ export class SendModalProvider {
 		}
 	}
 
-	doSendAsset ({ dests, amounts, assetId }: ISendOpts, pr) {
-		console.log('doSendAsset', pr)
-		return this.postTransfer({ dests, amounts, assetId, source: this.account.address })
-		           .then(res => this.generateSignature(res['transaction'], pr))
-		           .then(res => this.apiProvider.broadcast(res).toPromise())
+	doSendAsset({ dests, amounts, assetId, fee }: ISendOpts, pr) {
+		// console.log('doSendAsset', pr)
+		return this.postTransfer({ dests, amounts, assetId, source: this.account.address, fee })
+			.then(res => {
+				// console.log('doSendAsset',res)
+				if(res.result){
+					return this.generateSignature(res['transaction'], pr)
+				}
+
+				throw new Error('ERROR.build_err')
+
+			})
+
+			.then(res => {
+				return this.apiProvider.broadcast(res).toPromise()
+		
+			})
+
 	}
 
-	doSendAssetOnt ({ dests, amounts, assetId }: ISendOpts, pr) {
+	doSendAssetOnt({ dests, amounts, assetId }: ISendOpts, pr) {
 		console.log('doSendAsset', pr)
 		return this.postTransferOnt({ dests, amounts, assetId, source: this.account.address })
-		           .then(res => this.generateSignatureOnt(res['transaction'], pr, res['sigdata']))
-		           .then(res => this.apiProvider.broadcastOnt(res).toPromise())
+			.then(res => {
+				if(res.result){
+					return this.generateSignatureOnt(res['transaction'], pr, res['sigdata'])
+				}
+
+				throw new Error('ERROR.build_err')
+				
+			})
+			.then(res => this.apiProvider.broadcastOnt(res).toPromise())
 	}
 
 	getNncAddress(domain) {
 		return this.apiProvider.get(`resolve/${domain}`).toPromise()
 	}
 
-	private postTransferOnt (transferPostData) {
+	private postTransferOnt(transferPostData) {
 		return this.apiProvider.post('transfer/ont', transferPostData).toPromise()
 	}
 
-	private postTransfer (transferPostData) {
+	private postTransfer(transferPostData) {
 		return this.apiProvider.post('transfer', transferPostData).toPromise()
 	}
 
-	private generateSignature (transaction, pr) {
+	private generateSignature(transaction, pr) {
 
 		const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 		console.log('publicKey', publicKey)

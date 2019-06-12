@@ -1,8 +1,8 @@
 {
   "name": "sea-app",
-  "app_id": "52f9b83b",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular",
+  "id": "52f9b83b"
 }

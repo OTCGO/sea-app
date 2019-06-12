@@ -201,7 +201,8 @@ export class RechargePage implements OnInit {
 					// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
 					dests: 'APV9wADVtSvQQmfuw7gvzsfo3eDrkhpHiK',
 					amounts: this.amount.value,
-					assetId: this.selectedBalance.hash
+					assetId: this.selectedBalance.hash,
+					fee:'0'
 				}, pr)
 
 

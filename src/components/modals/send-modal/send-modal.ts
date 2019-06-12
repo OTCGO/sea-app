@@ -47,6 +47,7 @@ export class SendModalComponent implements OnInit {
 	get passphrase() { return this.formGroup.get('passphrase') }
 	get amount() { return this.formGroup.get('amount') }
 	get label() { return this.formGroup.get('label') }
+	get fee() { return this.formGroup.get('fee') }
 	get w() {
 		try {
 			return this.sendModalProvider.account && this.sendModalProvider.account.WIF
@@ -60,6 +61,8 @@ export class SendModalComponent implements OnInit {
 	// private symbol = 'ontology-ONG'
 
 	private inputType = true
+	private feeDisabled = false
+	private maxFee = 0
 
 	constructor(
 		public viewCtrl: ViewController,
@@ -83,6 +86,7 @@ export class SendModalComponent implements OnInit {
 				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
 				label: [''],
 				nncAddress: [''],
+				fee:[0]
 			})
 
 		} catch (error) {
@@ -92,6 +96,7 @@ export class SendModalComponent implements OnInit {
 
 	ngOnInit(): void {
 
+		// ont ong 默认手续费
 		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
 
 			this.store.select(BalancesSelectors.getOngBalance).subscribe(balance => {
@@ -101,6 +106,16 @@ export class SendModalComponent implements OnInit {
 				this.ongBalance = result
 
 			})
+
+			this.formGroup.get('fee').setValue(0.01)
+			this.maxFee = 1
+			this.feeDisabled = true
+
+			return
+		}
+		
+		else {
+			this.getMaxFee()
 		}
 
 	}
@@ -129,6 +144,33 @@ export class SendModalComponent implements OnInit {
 	handleClose() {
 		this.viewCtrl.dismiss().catch(() => { })
 		this.formGroup.reset()
+	}
+
+	feeChange(event){
+		console.log('feeChange',event.value)
+		this.formGroup.get('fee').setValue(event.value / 1000)
+	}
+
+	getMaxFee(){
+		this.store.select(BalancesSelectors.getGasBalance).subscribe(balance => {
+			console.log('getGasBalance', balance)
+
+			this.maxFee = Number(balance.amount)> 1 ? 1 :Math.floor(Number(balance.amount) * 1000) / 1000    
+		
+			if(Number(this.maxFee) > 0.001){
+				this.formGroup.get('fee').setValue(0.001)
+			}
+
+			return
+			
+		})
+
+
+
+		// this.formGroup.get('fee').setValue(0.01)
+		// this.feeDisabled = true
+
+		return
 	}
 
 	async nncValidator() {
@@ -231,20 +273,24 @@ export class SendModalComponent implements OnInit {
 					// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
 					dests: this.formGroup.get('nncAddress').value.replace(/^\s+|\s+$/g, ''),
 					amounts: this.amount.value,
-					assetId: this.selectedBalance.hash
+					assetId: this.selectedBalance.hash,
+					fee: '0.01'
 				}, pr)
 
 			} else {
 				result = await this.sendModalProvider.doSendAsset({
 					dests: this.formGroup.get('nncAddress').value.replace(/^\s+|\s+$/g, ''),
 					amounts: this.amount.value,
-					assetId: this.selectedBalance.hash
+					assetId: this.selectedBalance.hash,
+					fee: `${this.formGroup.get('fee').value}`
 				}, pr)
 			}
 
 			await this.handleClose()
 			loading.dismiss().catch(() => { }).catch(() => { })
 
+
+			console.log('result', result)
 			// 成功
 			if (result.result) {
 
@@ -252,10 +298,16 @@ export class SendModalComponent implements OnInit {
 					this.notificationProvider.emit({ message: data })
 				})
 
+				// this.getMaxFee()
+
 				return
 			}
 
-			this.ts.get('ERROR.network_err').subscribe(data => {
+
+			// this.notificationProvider.emit({ message: '广播交易失败' })
+
+
+			this.ts.get('ERROR.broadcast_err').subscribe(data => {
 				this.notificationProvider.emit({ message: data })
 			})
 
@@ -267,7 +319,9 @@ export class SendModalComponent implements OnInit {
 			console.log('error', error)
 			loading.dismiss().catch(() => { }).catch(() => { })
 
-			this.ts.get('ERROR.network_err').subscribe(data => {
+			// this.notificationProvider.emit({ message: error })
+
+			this.ts.get('ERROR.build_err').subscribe(data => {
 				this.notificationProvider.emit({ message: data })
 			})
 

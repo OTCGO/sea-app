@@ -115,25 +115,7 @@ export class SendModalComponent implements OnInit {
 		}
 		
 		else {
-			this.store.select(BalancesSelectors.getGasBalance).subscribe(balance => {
-				console.log('getGasBalance', balance)
-
-				this.maxFee = Number(balance.amount)> 1 ? 1 : Number(Number(balance.amount).toFixed(3))
-			
-				if(Number(this.maxFee) > 0.001){
-					this.formGroup.get('fee').setValue(0.001)
-				}
-
-				return
-				
-			})
-
-
-
-			// this.formGroup.get('fee').setValue(0.01)
-			// this.feeDisabled = true
-
-			return
+			this.getMaxFee()
 		}
 
 	}
@@ -167,6 +149,28 @@ export class SendModalComponent implements OnInit {
 	feeChange(event){
 		console.log('feeChange',event.value)
 		this.formGroup.get('fee').setValue(event.value / 1000)
+	}
+
+	getMaxFee(){
+		this.store.select(BalancesSelectors.getGasBalance).subscribe(balance => {
+			console.log('getGasBalance', balance)
+
+			this.maxFee = Number(balance.amount)> 1 ? 1 :Math.floor(Number(balance.amount) * 1000) / 1000    
+		
+			if(Number(this.maxFee) > 0.001){
+				this.formGroup.get('fee').setValue(0.001)
+			}
+
+			return
+			
+		})
+
+
+
+		// this.formGroup.get('fee').setValue(0.01)
+		// this.feeDisabled = true
+
+		return
 	}
 
 	async nncValidator() {
@@ -285,6 +289,8 @@ export class SendModalComponent implements OnInit {
 			await this.handleClose()
 			loading.dismiss().catch(() => { }).catch(() => { })
 
+
+			console.log('result', result)
 			// 成功
 			if (result.result) {
 
@@ -292,10 +298,16 @@ export class SendModalComponent implements OnInit {
 					this.notificationProvider.emit({ message: data })
 				})
 
+				// this.getMaxFee()
+
 				return
 			}
 
-			this.ts.get('ERROR.network_err').subscribe(data => {
+
+			// this.notificationProvider.emit({ message: '广播交易失败' })
+
+
+			this.ts.get('ERROR.broadcast_err').subscribe(data => {
 				this.notificationProvider.emit({ message: data })
 			})
 
@@ -307,7 +319,9 @@ export class SendModalComponent implements OnInit {
 			console.log('error', error)
 			loading.dismiss().catch(() => { }).catch(() => { })
 
-			this.ts.get('ERROR.network_err').subscribe(data => {
+			// this.notificationProvider.emit({ message: error })
+
+			this.ts.get('ERROR.build_err').subscribe(data => {
 				this.notificationProvider.emit({ message: data })
 			})
 

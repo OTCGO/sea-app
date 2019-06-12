@@ -226,6 +226,8 @@
     "claims":"To extract the ONG, you need to pay 0.02ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the extraction will fail. It is recommended to reserve a sufficient amount of ONG before extracting."
   },
   "ERROR":{
-    "network_err":"network error"
+    "network_err":"network error",
+    "build_err": "Build Transfer Fail",
+    "broadcast_err": "Broadcas Transfer Fail"
   }
 }

@@ -24,6 +24,7 @@
     "rm:android": "ionic cordova platform rm android",
     "add:android": "ionic cordova platform add android",
     "rm:ios": "ionic cordova platform rm ios",
+    "add:ios": "ionic cordova platform add ios",
     "test": "karma start ./config/karma.conf.js",
     "test-ci": "karma start ./config/karma.conf.js --single-run",
     "test-coverage": "karma start ./config/karma.conf.js --coverage",
@@ -165,8 +166,8 @@
     },
     "platforms": [
       "browser",
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "config": {

@@ -59,7 +59,7 @@ export class SendModalComponent implements OnInit {
 
 	private ongBalance
 	// private symbol = 'ontology-ONG'
-
+	private feeTitle = 'gas'
 	private inputType = true
 	private feeDisabled = false
 	private maxFee = 0
@@ -111,6 +111,7 @@ export class SendModalComponent implements OnInit {
 			this.maxFee = 1
 			this.feeDisabled = true
 
+			this.feeTitle = 'ong'
 			return
 		}
 		

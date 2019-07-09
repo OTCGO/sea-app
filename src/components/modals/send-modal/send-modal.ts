@@ -97,7 +97,7 @@ export class SendModalComponent implements OnInit {
 	ngOnInit(): void {
 
 		// ont ong 默认手续费
-		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
+		if (this.selectedBalance.type === 'ONTOLOGY') {
 
 			this.store.select(BalancesSelectors.getOngBalance).subscribe(balance => {
 				console.log('ont:ngOnInit', balance)
@@ -224,7 +224,7 @@ export class SendModalComponent implements OnInit {
 		}
 
 		console.log('this.ongBalance', this.ongBalance)
-		if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
+		if (this.selectedBalance.type === 'ONTOLOGY') {
 			// this.ongBalance < 0.01
 
 			if (this.ongBalance < 0.01) {
@@ -262,9 +262,9 @@ export class SendModalComponent implements OnInit {
 
 			let result: any
 
-			console.log('this.selectedBalance.hash', this.selectedBalance.hash)
-			console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
-			if (this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH) {
+			// console.log('this.selectedBalance.hash', this.selectedBalance.hash)
+			// console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
+			if (this.selectedBalance.type === 'ONTOLOGY') {
 				// this.ongBalance < 0.01
 				if (this.ongBalance < 0.01) {
 					return false

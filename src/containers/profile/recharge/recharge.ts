@@ -193,8 +193,8 @@ export class RechargePage implements OnInit {
 
 
 
-			console.log('this.selectedBalance.hash', this.selectedBalance.hash)
-			console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
+			// console.log('this.selectedBalance.hash', this.selectedBalance.hash)
+			// console.log('this.selectedBalance.hash', this.selectedBalance.hash === ONG_HASH || this.selectedBalance.hash === ONT_HASH)
 
 
 			const result: any = await this.sendModalProvider.doSendAssetOnt({

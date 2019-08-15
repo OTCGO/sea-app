@@ -13,7 +13,7 @@
     "lint": "tslint --fix   --project tslint.json ./src/**/*.ts -e ./src/libs/**/*.ts",
     "serve": "npx ionic-app-scripts serve --webpack ./webpack.config.js",
     "browser": "npx ionic cordova run browser --livereload --debug --address 0.0.0.0",
-    "build:browser": "npx ionic cordova build browser  --minifyjs --minifycss --prod",
+    "build:browser": "npx ionic cordova run browser  --minifyjs --minifycss --prod",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "debug:android": "ionic cordova run android -l -c",
@@ -72,7 +72,7 @@
     "bignumber.js": "^6.0.0",
     "copy-to-clipboard": "^3.0.8",
     "cordova-android": "^7.0.0",
-    "cordova-browser": "5.0.3",
+    "cordova-browser": "5.0.4",
     "cordova-clipboard": "^1.2.1",
     "cordova-ios": "4.5.5",
     "cordova-plugin-compat": "^1.2.0",
@@ -166,9 +166,9 @@
       "cordova-plugin-globalization": {}
     },
     "platforms": [
-      "browser",
       "android",
-      "ios"
+      "ios",
+      "browser"
     ]
   },
   "config": {

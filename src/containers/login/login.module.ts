@@ -3,15 +3,16 @@ import { LoginPage } from './login'
 import { IonicPageModule } from 'ionic-angular'
 import { TranslateModule } from '@ngx-translate/core'
 import { LoginFormModule } from '../../components/login'
-import { VersionComponent } from '../../components/version'
+import { VersionModule } from '../../components/version'
 
 @NgModule({
   declarations: [
     LoginPage,
-    VersionComponent
+    // VersionComponent
   ],
   imports: [
-		LoginFormModule,
+    LoginFormModule,
+    VersionModule,
     TranslateModule.forChild(),
     IonicPageModule.forChild(LoginPage)
   ]

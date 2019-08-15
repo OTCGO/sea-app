@@ -21,10 +21,13 @@ const initialState: State = {
 	result: {}
 }
 
-export const reducer: ActionReducer<State> = (
-	state = initialState,
-	action: WalletActions | AuthActions
-): State => {
+// export const reducer: ActionReducer<State> = (
+// 	state = initialState,
+// 	action: WalletActions | AuthActions
+// ): State => {
+
+
+	export function reducer(state = initialState, action: WalletActions | AuthActions): State {
 	switch (action.type) {
 		case WalletActionTypes.ADD_ACCOUNT_SUCCESS: {
 			const { payload } = action

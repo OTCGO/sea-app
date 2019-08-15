@@ -11,7 +11,10 @@ const initialState: State = {
 	entities: {}
 }
 
-export const reducer: ActionReducer<State> = (state = initialState, action: PricesActions) => {
+// export const reducer: ActionReducer<State> = (state = initialState, action: PricesActions) => {
+
+
+	export function reducer(state = initialState, action: PricesActions): State {
 	switch (action.type) {
 		case PricesActionTypes.LOAD:
 			return {

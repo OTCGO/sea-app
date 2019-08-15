@@ -20,7 +20,9 @@ const initialState: State = adapter.getInitialState({
 	error: ''
 })
 
-export const reducer: ActionReducer<State> = (state = initialState, action: ContactsActions): State => {
+// export const reducer: ActionReducer<State> = (state = initialState, action: ContactsActions): State => {
+	export function reducer(state = initialState, action: ContactsActions): State {
+
 	switch (action.type) {
 		case ContactsActionTypes.LOAD:
 			return {

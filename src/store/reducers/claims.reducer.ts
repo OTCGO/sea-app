@@ -17,7 +17,10 @@ const initialState: State = {
 	error: ''
 }
 
-export const reducer: ActionReducer<State> = (state = initialState, action: ClaimsActions): State => {
+// export const reducer: ActionReducer<State> = (state = initialState, action: ClaimsActions): State => {
+
+
+export function reducer(state = initialState, action: ClaimsActions): State {
 	switch (action.type) {
 		case ClaimsActionTypes.LOAD:
 		case ClaimsActionTypes.DO_CLAIM:

@@ -22,10 +22,14 @@ const initialState: State = {
 	selectedTxid: ''
 }
 
-export const reducer: ActionReducer<State> = (
-	state = initialState,
-	action: TransactionHistoryActions
-): State => {
+// export const reducer: ActionReducer<State> = (
+// 	state = initialState,
+// 	action: TransactionHistoryActions
+// ): State => {
+
+
+
+	export function reducer(state = initialState, action: TransactionHistoryActions): State {
 	switch (action.type) {
 		case TransactionHistoryActionTypes.LOAD:
 		case TransactionHistoryActionTypes.LOAD_DETAIL: {

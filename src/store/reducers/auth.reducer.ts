@@ -11,7 +11,11 @@ const initialBalancesState: State = {
 	error: ''
 }
 
-export const reducer: ActionReducer<State> = (state = initialBalancesState, action: AuthActions): State => {
+
+
+export function reducer(state = initialBalancesState, action: AuthActions): State {
+
+
 	switch (action.type) {
 		case AuthActionTypes.LOGIN:
 		case AuthActionTypes.LOGIN_WIF:

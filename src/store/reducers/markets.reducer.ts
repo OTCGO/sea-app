@@ -22,7 +22,11 @@ const initialState: State = {
 	selectedSymbol: ''
 }
 
-export const reducer: ActionReducer<State> = (state = initialState, action: MarketsActions): State => {
+// export const reducer: ActionReducer<State> = (state = initialState, action: MarketsActions): State => {
+
+	export function reducer(state = initialState, action: MarketsActions): State {
+
+
 	switch (action.type) {
 		case MarketsActionTypes.LOAD:
 		case MarketsActionTypes.LOAD_DETAIL: {

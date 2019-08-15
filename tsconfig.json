@@ -32,7 +32,11 @@
       "@app/env": [
         "environments/environment.dev"
       ]
-    }
+    },
+    "types": [
+      "node",
+      "ramda"
+    ]
   },
   "include": [
     "src/**/*.ts"

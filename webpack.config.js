@@ -47,7 +47,7 @@ const config = {
   // }
 };
 
-if (process.env.env === 'prod') {
+if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,

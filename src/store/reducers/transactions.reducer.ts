@@ -13,7 +13,10 @@ const initialState: State = {
 	selectedAddress: ''
 }
 
-export const reducer: ActionReducer<State> = (state = initialState, action: TransactionsActions): State => {
+// export const reducer: ActionReducer<State> = (state = initialState, action: TransactionsActions): State => {
+
+
+	export function reducer(state = initialState, action: TransactionsActions): State {
 	switch (action.type) {
 		case TransactionsActionTypes.SELECT_CONTACT: {
 			return {

@@ -28,7 +28,9 @@ const initialSettingsState: State = {
   	preCurrency: DEFAULT_CURRENCY
 }
 
-export const reducer = (state = initialSettingsState, action: SettingsActions): State => {
+// export const reducer = (state = initialSettingsState, action: SettingsActions): State => {
+
+	export function reducer(state = initialSettingsState, action: SettingsActions): State {
 	switch (action.type) {
 		case SettingsActionTypes.LOAD: {
 			return {

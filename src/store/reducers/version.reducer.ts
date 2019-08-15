@@ -12,7 +12,10 @@ const initialVersionState: State = {
 	error: ''
 }
 
-export const reducer: ActionReducer<State> = (state = initialVersionState, action: VersionActions): State => {
+// export const reducer: ActionReducer<State> = (state = initialVersionState, action: VersionActions): State => {
+
+
+	export function reducer(state = initialVersionState, action: VersionActions): State {
 	switch (action.type) {
 		case VersionActionTypes.LOAD: {
 			return {

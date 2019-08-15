@@ -28,7 +28,10 @@
       "@component/*": ["component/*"],
       "@shared/*": ["shared/*"],
       "@provider/*": ["provider/*"],
-      "@provider": ["provider/index.ts"]
+      "@provider": ["provider/index.ts"],
+      "@app/env": [
+        "environments/environment.dev"
+      ]
     }
   },
   "include": [
@@ -46,4 +49,5 @@
   "atom": {
     "rewriteTsconfig": false
   }
+
 }

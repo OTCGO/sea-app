@@ -24,7 +24,7 @@ import { WalletActions, AuthActions } from '../../store/actions'
 import { getWif } from '../../shared/utils'
 // import parallel from 'async/parallel'
 import waterfall from 'async/waterfall'
-import { dev } from '../../environments/environment'
+import { dev } from '@app/env' 
 
 @Component({
 	selector: 'login-form',

@@ -1,6 +1,6 @@
 import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store'
 import { storeFreeze } from 'ngrx-store-freeze'
-import { dev } from '../../environments/environment'
+import { dev } from '@app/env' 
 
 import * as fromBalances from './balances.reducer'
 import * as fromMarkets from './markets.reducer'

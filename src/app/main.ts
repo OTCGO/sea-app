@@ -2,7 +2,9 @@ import 'reflect-metadata'
 import { enableProdMode } from '@angular/core'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 import { AppModule } from './app.module'
-import { dev } from '../environments/environment'
+import environment from '@app/env' 
+
+console.log('environment',environment)
 
 if (!Array.prototype.includes) {
 	Object.defineProperty(Array.prototype, 'includes', {

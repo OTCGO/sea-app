@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AlertController } from 'ionic-angular'
 import { VersionProvider } from './version.provider'
-import { version } from '../../environments/environment'
+import { version } from '@app/env' 
 // import { RootState } from '../../store/reducers'
 // import { Store } from '@ngrx/store'
 // import { VersionActions } from '../../store/actions'

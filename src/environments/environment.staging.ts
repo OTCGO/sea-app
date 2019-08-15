@@ -1,5 +1,5 @@
 const environment: any = {
-	env:'prod'
+	env:'staging'
 }
 
 export default environment

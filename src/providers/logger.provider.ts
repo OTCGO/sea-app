@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core'
-import { dev } from '../environments/environment'
+import { dev } from '@app/env' 
 
 @Injectable()
 export class Logger {

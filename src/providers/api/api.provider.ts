@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, OnDestroy } from '@angular/core'
 
-import { dev } from '../../environments/environment'
+import { dev } from '@app/env' 
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { takeUntil, timeout } from 'rxjs/operators'

@@ -7,7 +7,7 @@ import { SettingsActions } from '../../../store/actions'
 import { SettingsSelectors } from '../../../store/selectors'
 import { NativeStorage } from '@ionic-native/native-storage'
 import { WalletActions } from '../../../store/actions'
-import { version } from '../../../environments/environment'
+import { version } from '@app/env' 
 
 
 @IonicPage({ name: 'Settings' })

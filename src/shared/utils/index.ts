@@ -7,7 +7,7 @@ export const isEmpty = array => Array.isArray(array) && array.length === 0
 
 declare let window: { navigator: any }
 
-export function getBrowserLanguage() {
+export function getBrowserLanguage() : any { 
 	if (typeof window === 'undefined' || typeof window.navigator === 'undefined')
 		return undefined
 
@@ -23,7 +23,7 @@ export function getBrowserLanguage() {
 	}
 
 	console.log('getBrowserLanguage', browserLang)
-	return browserLang || 'zh'
+	return browserLang || 'zh-cn'
 }
 
 

@@ -133,9 +133,9 @@ export const OTCGO_WALLET_FILE_NAME = 'OTCGO-mobile-wallet.json'
 
 export const OTCGO_SETTING_FILE_NAME = 'OTCGO-settings.json'
 
-export const DEFAULT_LANGUAGE = getBrowserLanguage()
+export const DEFAULT_LANGUAGE = 'zh-cn' 
 
-export const DEFAULT_CURRENCY = DEFAULT_LANGUAGE === 'en' ? 'usd' : 'cny'
+export const DEFAULT_CURRENCY = 'cny'
 
 export const DEFAULT_SETTING: ISetting = {
 	currency: DEFAULT_CURRENCY,

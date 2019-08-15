@@ -60,14 +60,18 @@ if (process.env.env === 'prod') {
 }
 
 
-const build = process.env.build || 'dev';
-console.log('build',process.env.build)
+// const build = process.env.build || 'dev';
+// console.log('build',process.env.build)
 
 const env = process.env.env || 'dev';
 console.log('env',process.env.env)
 const pathConfig = path.resolve(environmentPath(env));
 
-useDefaultConfig[build].resolve.alias = {
+useDefaultConfig['dev'].resolve.alias = {
+  "@app/env": pathConfig
+};
+
+useDefaultConfig['prod'].resolve.alias = {
   "@app/env": pathConfig
 };
 

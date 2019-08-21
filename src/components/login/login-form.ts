@@ -24,7 +24,7 @@ import { WalletActions, AuthActions } from '../../store/actions'
 import { getWif } from '../../shared/utils'
 // import parallel from 'async/parallel'
 import waterfall from 'async/waterfall'
-import { dev } from '@app/env' 
+import { dev } from '@app/env'
 
 @Component({
 	selector: 'login-form',
@@ -82,7 +82,7 @@ export class LoginForm implements OnInit {
 				}
 
 				this.isSwitch = true
-				console.log('this.accountCache', this.accountCache )
+				console.log('this.accountCache', this.accountCache)
 
 
 
@@ -338,7 +338,7 @@ export class LoginForm implements OnInit {
 			// const wif = await decryptAsync(encrypted, passphrase)
 			//  const wif = await wallet.decryptAsync(encrypted, passphrase)
 			//  const acct = new wallet.Account(wif)
-			const wif = await getWif(encrypted, passphrase)
+			const wif: any = await getWif(encrypted, passphrase)
 
 
 			const tempAcct = new wallet.Account(wif)
@@ -353,13 +353,14 @@ export class LoginForm implements OnInit {
 				isDefault: true
 			})
 
+
 			console.log('acct', acct)
 
 			loading.dismiss().catch(() => { })
 			this.store.dispatch(new WalletActions.AddAccount(acct))
-			this.store.dispatch(new WalletActions.SaveWif({wif: wif}))
+			// this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))
 
-			this.nativeStorage.setItem('account', { encrypted })
+			this.nativeStorage.setItem('account', { encrypted, address })
 
 			this.navCtrl.push('Tabs')
 

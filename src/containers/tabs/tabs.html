@@ -1,11 +1,4 @@
-<ion-tabs class="otcgo-tabs" #ionTabs [selectedIndex]="selectedIndex"   style="background: white;">
-    <ion-tab
-      *ngFor="let tab of tabs; index as i"
-      tabsHighlight
-      [root]="tab.root"
-      [tabTitle]="tab.title"
-      [tabIcon]="tab.icon"
-      [enabled]="tab.enabled"
-      (ionSelect)="selectTab($event)"
-    ></ion-tab>
+<ion-tabs class="otcgo-tabs" #ionTabs [selectedIndex]="selectedIndex" style="background: white;">
+  <ion-tab *ngFor="let tab of tabs; index as i" tabsHighlight [root]="tab.root" [tabTitle]="tab.title"
+    [tabIcon]="tab.icon" [enabled]="tab.enabled" (ionSelect)="selectTab($event)"></ion-tab>
 </ion-tabs>

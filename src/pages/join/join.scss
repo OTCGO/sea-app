@@ -1,0 +1,36 @@
+@import "../../theme/variables";
+
+page-join {
+  .content {
+    background: color($colors, navy);
+    overflow: hidden;
+    color: white;
+
+
+    .container {
+      margin-top: 10%;
+      padding: 0 10%;
+
+      .rule {
+        background: transparent;
+        color: white;
+        margin-top: 0px;
+
+        .item-inner {
+          border: 0px;
+        }
+
+      }
+
+
+      ion-item {
+        border-radius: 50px;
+        margin-top: 20px;
+
+      }
+    }
+  }
+
+
+
+}

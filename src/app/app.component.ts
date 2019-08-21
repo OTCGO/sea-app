@@ -6,9 +6,11 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 // import { StatusBar } from '@ionic-native/status-bar'
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
+import { NativeStorage } from '@ionic-native/native-storage'
 import {
 	App,
-	Platform
+	Platform,
+	NavController
 } from 'ionic-angular'
 import 'rxjs/add/operator/take'
 import { NotificationProvider } from '../providers'
@@ -22,17 +24,20 @@ import {
 } from '../store/selectors'
 import { Globalization } from '@ionic-native/globalization'
 import { MessageService } from '../shared/services'
+import { wallet } from '../libs/neon'
 
 
 @Component({
 	templateUrl: 'app.html'
 })
 export class MyApp implements OnInit {
-	rootPage = 'Login'
+	// rootPage = 'Login'
+	rootPage = 'Tabs'
 	public counter = 0
 
-	constructor (
+	constructor(
 		private platform: Platform,
+		private nativeStorage: NativeStorage,
 		// private statusBar: StatusBar,
 		private app: App,
 		private splashScreen: SplashScreen,
@@ -40,19 +45,45 @@ export class MyApp implements OnInit {
 		private np: NotificationProvider,
 		private store: Store<RootState>,
 		private globalization: Globalization,
-		private msgService: MessageService
+		private msgService: MessageService,
+		// public navCtrl: NavController,
 	) {
 
 
 	}
 
-	ngOnInit () {
+	async ngOnInit() {
 		// this.store.dispatch(new SettingsActions.Load())
-		this.initApp()
+		try {
+			this.initApp()
+
+			const account = await this.nativeStorage.getItem('account')
+
+
+			console.log('account', account)
+			if (account) {
+				this.rootPage = 'Tabs'
+
+				const acct = new wallet.Account({
+					// wif,
+					address: account.address,
+					label: account.address,
+					key: account.encrypted,
+					isDefault: true
+				})
+
+				this.store.dispatch(new WalletActions.AddAccount(acct))
+
+			}
+		} catch (error) {
+			console.error(error)
+			this.rootPage = 'Login'
+		}
+
 
 	}
 
-	initApp () {
+	initApp() {
 		// this.statusBar.styleDefault()
 		// // this.statusBar.overlaysWebView(false)
 		// this.statusBar.backgroundColorByHexString('#ffffff')
@@ -86,7 +117,7 @@ export class MyApp implements OnInit {
 	// 	this.store.dispatch(new WalletActions.Load())
 	// }
 
-	async initTranslate () {
+	async initTranslate() {
 		try {
 			this.translateService.addLangs(['zh', 'en'])
 			this.translateService.setDefaultLang('zh')
@@ -101,10 +132,10 @@ export class MyApp implements OnInit {
 
 		} catch (error) {
 			this.store.select(SettingsSelectors.getLanguage)
-					.subscribe(language => {
-						const locale = language.split('-')[0]
-						this.translateService.use(locale || 'zh')
-					})
+				.subscribe(language => {
+					const locale = language.split('-')[0]
+					this.translateService.use(locale || 'zh')
+				})
 		}
 
 	}

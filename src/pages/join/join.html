@@ -1,0 +1,66 @@
+<!--
+  Generated template for the JoinPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar no-border color="navy">
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>节点</ion-title>
+    <button ion-button menuToggle right>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <form class="container" [formGroup]="fp">
+
+    <h4 text-center>基本信息</h4>
+    <ion-item>
+      <ion-label>推荐人</ion-label>
+      <ion-input placeholder="输入地址" required></ion-input>
+    </ion-item>
+
+    <!-- <ion-label stacked>周期/天</ion-label> -->
+    <ion-item>
+      <ion-label>周期/天</ion-label>
+      <ion-select formControlName="cycle">
+        <ion-option value="f">30天</ion-option>
+        <ion-option value="m">60天</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>额度/SEAC</ion-label>
+      <ion-select formControlName="cycle">
+        <ion-option value="f">1000</ion-option>
+        <ion-option value="m">3000</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="rule" margin-top>
+      加入节点将视为参与SEAC锁仓
+    </ion-item>
+
+    <div>
+
+
+      <ion-item class="rule" no-margin>
+        <ion-label>我已阅读并同意 节点规则</ion-label>
+        <ion-checkbox></ion-checkbox>
+      </ion-item>
+    </div>
+
+
+    <button ion-button round full margin-top type="submit">加入节点</button>
+  </form>
+
+</ion-content>

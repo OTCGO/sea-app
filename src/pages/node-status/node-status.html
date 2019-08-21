@@ -1,0 +1,83 @@
+<!--
+  Generated template for the NodeStatusPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar no-border color="navy">
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>节点概况</ion-title>
+    <button ion-button menuToggle right>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="info">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="name">锁仓数量/SEAC</div>
+          <div class="value">1000,000</div>
+        </ion-col>
+        <ion-col col-4>
+          <div class="name"></div>
+          <div class="value">解锁</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="info2" text-center>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="value">179</div>
+          <div class="name">锁仓剩余天数</div>
+
+        </ion-col>
+        <ion-col>
+          <div class="value">180</div>
+          <div class="name">锁仓周期/天</div>
+
+        </ion-col>
+        <ion-col>
+          <div class="value">300</div>
+          <div class="name">节点运行时长</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="list">
+    <h5>每日总收益 <span>(锁仓+直推+团队)</span></h5>
+
+    <div class="item" *ngFor="let tmp of [1,2,3,4,5,6,7,8.9.10]">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="time">2019-08-19 <span>03:00:00</span></div>
+
+          </ion-col>
+          <ion-col col-4>
+            <div class="num">+18.01<span>SEAS</span></div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+
+
+
+
+  </div>
+
+</ion-content>

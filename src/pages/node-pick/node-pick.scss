@@ -1,0 +1,37 @@
+@import "../../theme/variables";
+
+page-node-pick {
+  .content {
+    background: color($colors, navy);
+    overflow: hidden;
+    color: white;
+
+    .info {
+      width: 80%;
+      height: 50%;
+      background: #393a5f;
+      margin: 0 auto;
+      margin-top: 15%;
+
+      .info1 {
+        border-bottom: 1px solid #a08c8c;
+
+
+      }
+
+      .result {
+        margin-top: 3.5rem;
+      }
+
+      .name {
+        font-size: 1rem
+      }
+
+      .value {
+        font-size: 3rem
+      }
+
+
+    }
+  }
+}

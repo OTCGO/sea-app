@@ -1,0 +1,196 @@
+@import "../../theme/variables";
+
+$border-width : 300px;
+
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+
+@include keyframes(circleRoate) {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+page-node {
+  .content {
+    background: color($colors, navy);
+    overflow: hidden;
+
+
+
+    .join {
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+
+      .level2 {
+        width: $border-width * 0.8;
+        height: $border-width * 0.8;
+        border-radius: 50%;
+        margin: 0 auto;
+        margin-top: $border-width * 0.1;
+        border: 1px solid #a09c9c;
+
+        >i {
+          display: block;
+          position: absolute;
+          width: $border-width * 0.8;
+          height: $border-width * 0.8;
+          border-radius: 50%;
+          animation: circleRoate 8s infinite linear;
+        }
+
+        >i span {
+          position: absolute;
+          top: -5px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #ff6200;
+        }
+      }
+
+      .level3 {
+        width: $border-width * 0.6;
+        height: $border-width * 0.6;
+        border-radius: 50%;
+        margin: 0 auto;
+        margin-top: $border-width * 0.1;
+        border: 1px solid #a09c9c;
+
+        >i {
+          display: block;
+          position: absolute;
+          width: $border-width * 0.6;
+          height: $border-width * 0.6;
+          border-radius: 50%;
+          animation: circleRoate 7s infinite linear;
+        }
+
+        >i span {
+          position: absolute;
+          top: -5px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #ff6200;
+        }
+      }
+
+      .level4 {
+        width: $border-width * 0.4;
+        height: $border-width * 0.4;
+        border-radius: 50%;
+        margin: 0 auto;
+        margin-top: $border-width * 0.1;
+        border: 1px solid white;
+        line-height: $border-width * 0.4;
+        font-size: 20px;
+        color: white;
+
+        position: relative;
+
+        >i {
+          display: block;
+          position: absolute;
+          width: $border-width * 0.4;
+          height: $border-width * 0.4;
+          border-radius: 50%;
+          animation: circleRoate 5s infinite linear;
+        }
+
+        >i span {
+          position: absolute;
+          top: -5px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #ff6200;
+        }
+
+      }
+
+      .level1 {
+        width: $border-width;
+        height: $border-width;
+        border-radius: 50%;
+        margin: 0 auto;
+        top: 45%;
+        margin-top: 30%;
+
+        border: 1px solid #a09c9c;
+
+        >i {
+          display: block;
+          position: absolute;
+          width: $border-width;
+          height: $border-width;
+          border-radius: 50%;
+          animation: circleRoate 10s infinite linear;
+        }
+
+        >i span {
+          position: absolute;
+          top: -5px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #ff6200;
+        }
+
+      }
+
+
+
+
+    }
+  }
+
+  color: white;
+
+  .balance {
+    background: white;
+    padding: 5px;
+    width: 80%;
+    margin: 0 auto;
+    color: black;
+    margin-bottom: 10px;
+  }
+
+  // @keyframes circleRoate {
+  //   from {
+  //     transform: rotate(0deg);
+  //   }
+
+  //   to {
+  //     transform: rotate(360deg);
+  //   }
+  // }
+
+
+
+
+
+
+}

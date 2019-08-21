@@ -1,0 +1,42 @@
+@import "../../theme/variables";
+
+
+page-node-unlock {
+  .content {
+    background: color($colors, navy);
+
+    color: white;
+
+    .container {
+      width: 80%;
+      margin: 10px auto;
+
+      .info {
+        background: white;
+        color: black;
+        padding: 10px;
+        padding-bottom: 3rem;
+
+        .item {
+          margin-top: 4rem;
+
+          .name {
+            font-size: 1.5rem;
+          }
+
+          .value {
+            font-size: 2rem;
+          }
+        }
+      }
+
+      .btn {
+        margin-top: 10rem;
+
+        ion-item {
+          border-radius: 30px;
+        }
+      }
+    }
+  }
+}

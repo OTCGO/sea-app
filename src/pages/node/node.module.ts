@@ -3,10 +3,12 @@ import { NodePage } from './node'
 import { IonicPageModule } from 'ionic-angular'
 import { TranslateModule } from '@ngx-translate/core'
 import { NodeMenuComponent } from '../../components/node-menu/node-menu'
+import { NodeHeaderComponent } from '../../components/node-header/node-header'
 
 const COMPONENTS = [
     NodePage,
-    NodeMenuComponent
+    NodeMenuComponent,
+    NodeHeaderComponent
 ]
 
 
@@ -16,6 +18,9 @@ const COMPONENTS = [
         TranslateModule.forChild(),
     ],
     declarations: COMPONENTS,
+    exports: [
+        NodeMenuComponent
+    ]
 })
 export class NodePageModule { }
 

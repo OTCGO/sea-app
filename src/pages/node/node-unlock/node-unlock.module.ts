@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { NodeUnlockPage } from './node-unlock';
+import { NodePageModule } from '../node.module'
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { NodeUnlockPage } from './node-unlock';
   ],
   imports: [
     IonicPageModule.forChild(NodeUnlockPage),
+    NodePageModule
   ],
 })
-export class NodeUnlockPageModule {}
+export class NodeUnlockPageModule { }

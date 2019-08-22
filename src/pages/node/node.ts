@@ -5,6 +5,8 @@ import {
     NavController,
     NavParams
 } from 'ionic-angular'
+import { MenuService } from '../../shared/services'
+
 
 @IonicPage({
     name: 'Node',
@@ -17,7 +19,7 @@ import {
 
 export class NodePage implements OnInit {
 
-    constructor(public navCtrl: NavController, ) {
+    constructor(private navCtrl: NavController, private menuService: MenuService) {
 
     }
     ngOnInit() {
@@ -34,5 +36,9 @@ export class NodePage implements OnInit {
 
     gotoStatus() {
         this.navCtrl.push("NodeStatus")
+    }
+
+    handleMenu() {
+        this.menuService.sendMessage("change")
     }
 }

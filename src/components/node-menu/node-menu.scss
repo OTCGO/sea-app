@@ -2,5 +2,8 @@ node-menu {
   .menu {
     position: absolute;
     right: 3px;
+    z-index: 1000;
   }
+
+
 }

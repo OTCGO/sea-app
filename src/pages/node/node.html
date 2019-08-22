@@ -1,5 +1,5 @@
+<!-- <node-header></node-header> -->
 <ion-header>
-
   <ion-toolbar no-border color="navy">
     <ion-title>节点</ion-title>
     <button ion-button menuToggle right (click)="handleMenu()">
@@ -85,8 +85,14 @@
 
           <ion-col>
             <div text-center class="btn">
-              <button ion-button color="dark" small round (click)="gotoPick()">提取SEAS</button>
-              <button ion-button color="dark" small round (click)="gotoStatus()">收益详情</button>
+              <div>
+                <button ion-button color="dark" small round (click)="gotoPick()">提取SEAS</button>
+
+              </div>
+              <div>
+                <button ion-button color="dark" small round (click)="gotoStatus()">收益详情</button>
+
+              </div>
             </div>
           </ion-col>
 

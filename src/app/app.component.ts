@@ -62,7 +62,6 @@ export class MyApp implements OnInit {
 
 			console.log('account', account)
 			if (account.encrypted && account.address) {
-				this.rootPage = 'Tabs'
 
 				const acct = new wallet.Account({
 					// wif,

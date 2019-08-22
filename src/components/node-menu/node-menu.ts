@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MenuService } from '../../shared/services'
 
 /**
  * Generated class for the NodeMenuComponent component.
@@ -10,10 +11,18 @@ import { Component } from '@angular/core';
   selector: 'node-menu',
   templateUrl: 'node-menu.html'
 })
-export class NodeMenuComponent {
+export class NodeMenuComponent implements OnInit {
+  private display: Boolean
 
-  constructor() {
+  constructor(private menuService: MenuService) {
 
+  }
+
+  ngOnInit() {
+    this.menuService.getMessage().subscribe(data => {
+      console.log('NodeMenuComponent', data)
+      this.display = !this.display
+    })
   }
 
 }

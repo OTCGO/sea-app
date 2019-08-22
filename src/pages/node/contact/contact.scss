@@ -1,0 +1,32 @@
+@import "../../../theme/variables";
+
+page-contact {
+  .content {
+    background: color($colors, navy);
+
+    color: white;
+
+    .container {
+      width: 80%;
+      height: 100%;
+      margin: 10px auto;
+
+
+      .item {
+        background: #393a5f;
+        margin-top: 10px;
+
+        .name {
+          font-size: 1.6rem;
+        }
+
+        .value {
+          font-size: 1.6rem;
+        }
+      }
+    }
+
+
+  }
+
+}

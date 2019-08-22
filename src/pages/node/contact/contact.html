@@ -1,5 +1,5 @@
 <!--
-  Generated template for the NodePostPage page.
+  Generated template for the NodeRulePage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -12,8 +12,8 @@
         <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>推荐好友</ion-title>
-    <button ion-button menuToggle right>
+    <ion-title>联系客服</ion-title>
+    <button ion-button menuToggle right (click)="handleMenu()">
       <ion-icon name="menu"></ion-icon>
     </button>
   </ion-toolbar>
@@ -22,6 +22,21 @@
 
 <ion-content>
   <div class="container">
+
+    <div class="item" *ngFor="let tmp of [1,2,3,4,5,6,7,8.9.10]">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="name">SEA官网</div>
+
+          </ion-col>
+          <ion-col>
+            <div class="value">https://otcgo.cn</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
 
   </div>
 

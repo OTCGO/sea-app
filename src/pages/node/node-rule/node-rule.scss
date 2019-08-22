@@ -1,0 +1,17 @@
+@import "../../../theme/variables";
+
+page-node-rule {
+  .content {
+    background: color($colors, navy);
+
+    color: white;
+
+    .container {
+      width: 80%;
+      height: 100%;
+      margin: 10px auto;
+      background: #393a5f;
+    }
+  }
+
+}

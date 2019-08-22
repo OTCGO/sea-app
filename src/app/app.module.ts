@@ -16,13 +16,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { Globalization } from '@ionic-native/globalization'
 
 import { MyApp } from './app.component'
-import { dev } from '@app/env' 
+import { dev } from '@app/env'
 import { reducers, metaReducers } from '../store/reducers'
 import { schema } from './db-schema'
 import { CoreModule } from './core.module'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { PipesModule } from '../pipes/pipes.module'
-import { MessageService } from '../shared/services'
+import { MessageService, MenuService } from '../shared/services'
 
 import {
   BalancesEffects,
@@ -81,7 +81,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
   providers: [
     InAppBrowser,
     Globalization,
-    MessageService
+    MessageService,
+    MenuService
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

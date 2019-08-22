@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MenuService } from '../../../shared/services'
 
 /**
  * Generated class for the NodePickPage page.
@@ -18,11 +19,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class NodePickPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private menuService: MenuService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NodePickPage');
   }
 
+  handleMenu() {
+    console.log('handleMenu')
+    this.menuService.sendMessage("change")
+  }
 }

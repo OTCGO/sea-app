@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MenuService } from '../../../shared/services'
 
 /**
  * Generated class for the NodeStatusPage page.
@@ -18,7 +19,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class NodeStatusPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private menuService: MenuService) {
   }
 
   ionViewDidLoad() {
@@ -29,4 +30,7 @@ export class NodeStatusPage {
     this.navCtrl.push("NodeUnlock")
   }
 
+  handleMenu() {
+    this.menuService.sendMessage("change")
+  }
 }

@@ -145,7 +145,7 @@ page-node {
         height: $border-width;
         border-radius: 50%;
         margin: 0 auto;
-        margin-top: 20%;
+        margin-top: 10%;
 
         border: 1px solid #a09c9c;
 
@@ -178,10 +178,14 @@ page-node {
       background: white;
       width: 80%;
       margin: 0 auto;
-      margin-top: 7rem;
+      margin-top: 5rem;
 
       .earn {
-        margin-top: 10%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
       }
 
@@ -196,7 +200,7 @@ page-node {
     width: 80%;
     margin: 0 auto;
     color: black;
-    margin-top: 7rem;
+    margin-top: 5rem;
   }
 
   // @keyframes circleRoate {

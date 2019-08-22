@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { MenuService } from '../../../shared/services'
 
 /**
  * Generated class for the JoinPage page.
@@ -20,7 +21,10 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 export class JoinPage {
   private fp: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private formBuilder: FormBuilder,
+    private menuService: MenuService) {
     this.fp = this.formBuilder.group({
       cycle: ['f']
     });
@@ -28,6 +32,9 @@ export class JoinPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad JoinPage');
+  }
+  handleMenu() {
+    this.menuService.sendMessage("change")
   }
 
 }

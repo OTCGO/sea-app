@@ -61,7 +61,7 @@ export class MyApp implements OnInit {
 
 
 			console.log('account', account)
-			if (account) {
+			if (account.encrypted && account.address) {
 				this.rootPage = 'Tabs'
 
 				const acct = new wallet.Account({
@@ -73,6 +73,8 @@ export class MyApp implements OnInit {
 				})
 
 				this.store.dispatch(new WalletActions.AddAccount(acct))
+
+				this.rootPage = 'Tabs'
 
 			}
 		} catch (error) {

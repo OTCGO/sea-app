@@ -1,0 +1,16 @@
+{
+  "ios": {
+    "debug": {
+      "buildFlag": [
+        "-UseModernBuildSystem=0"
+      ],
+      "developmentTeam": "YOUR_DEV_TEAM_ID"
+    },
+    "release": {
+      "buildFlag": [
+        "-UseModernBuildSystem=0"
+      ],
+      "developmentTeam": "YOUR_DEV_TEAM_ID"
+    }
+  }
+}

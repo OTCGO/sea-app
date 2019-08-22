@@ -35,14 +35,23 @@ $border-width : 300px;
 page-node {
   .content {
     background: color($colors, navy);
-    overflow: hidden;
+    // overflow: hidden;
 
 
 
     .join {
       height: 100%;
-      overflow: hidden;
+      // overflow: hidden;
       position: relative;
+
+      .info {
+        margin-top: 20px;
+        margin-left: 10%;
+        font-size: 18px;
+        font-weight: 1rem;
+
+        color: white;
+      }
 
       .level2 {
         width: $border-width * 0.8;
@@ -136,8 +145,7 @@ page-node {
         height: $border-width;
         border-radius: 50%;
         margin: 0 auto;
-        top: 45%;
-        margin-top: 30%;
+        margin-top: 20%;
 
         border: 1px solid #a09c9c;
 
@@ -165,6 +173,19 @@ page-node {
 
 
     }
+
+    .earn-info {
+      background: white;
+      width: 80%;
+      margin: 0 auto;
+      margin-top: 7rem;
+
+      .earn {
+        margin-top: 10%;
+
+      }
+
+    }
   }
 
   color: white;
@@ -175,7 +196,7 @@ page-node {
     width: 80%;
     margin: 0 auto;
     color: black;
-    margin-bottom: 10px;
+    margin-top: 7rem;
   }
 
   // @keyframes circleRoate {

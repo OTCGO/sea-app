@@ -31,8 +31,8 @@ import { wallet } from '../libs/neon'
 	templateUrl: 'app.html'
 })
 export class MyApp implements OnInit {
-	// rootPage = 'Login'
-	rootPage = 'Tabs'
+	rootPage = 'Login'
+	// rootPage = 'Tabs'
 	public counter = 0
 
 	constructor(

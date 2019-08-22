@@ -4,6 +4,7 @@
     "markets": "Markets",
     "discover": "Discover",
     "profile": "Profile",
+    "node": "Node",
     "exit_action": "Press again to exit"
   },
   "LOGIN": {
@@ -37,8 +38,8 @@
     "BACKUP": {
       "success": "Copy success",
       "title": "Create success!",
-      "pwdtip":"Password at least 8-16 characters",
-      "notes_nep2":"Click 'copy', and the backup is kept for your NEP2 character",
+      "pwdtip": "Password at least 8-16 characters",
+      "notes_nep2": "Click 'copy', and the backup is kept for your NEP2 character",
       "notes_wif": "WIF private key is the only certificate of ownership of your personal assets. Please backup and keep it well.",
       "enter": "Enter"
     }
@@ -47,9 +48,9 @@
     "totalBalances": "Total Balances",
     "displayZero": "Hide 0",
     "DETAILS": {
-      "swap":"Swap",
-      "swap_error":"Swap Error",
-      "swap_success":"Swap Success, Please Await 1~2 Block",
+      "swap": "Swap",
+      "swap_error": "Swap Error",
+      "swap_success": "Swap Success, Please Await 1~2 Block",
       "title": "Transaction Records",
       "transfer": "Transfer",
       "map": "Map",
@@ -64,8 +65,8 @@
     },
     "SEND_MODAL": {
       "title": "Transfer",
-      "fee":"fee",
-      "feeTip":"If the fee is less than 0.001, there will be a delay or an inability to arrive. Please choose the appropriate handling fee.",
+      "fee": "fee",
+      "feeTip": "If the fee is less than 0.001, there will be a delay or an inability to arrive. Please choose the appropriate handling fee.",
       "address": "Address Or NEO DOMAIN",
       "map": "Map",
       "mapTransfer": "Map",
@@ -76,9 +77,9 @@
       "transfer": "Transfer",
       "success": "Success",
       "fails": "Error password,please check",
-      "nncError":"Error nnc domain"
+      "nncError": "Error nnc domain"
     },
-    "MAP_MODAL":{
+    "MAP_MODAL": {
       "success": "Map Success",
       "fails": "Error password,please check"
     }
@@ -108,9 +109,9 @@
     "claims_seac": "Claims SEAC",
     "logout": "Logout",
     "MANAGE_WALLET": {
-      "prompt":"prompt",
-      "wif":"WIF",
-      "nep2":"NEP2",
+      "prompt": "prompt",
+      "wif": "WIF",
+      "nep2": "NEP2",
       "title": "Manage wallet",
       "change_name": "Change name",
       "export": "Export",
@@ -118,7 +119,7 @@
       "export_key": "Export NEP2 ",
       "export_file": "Export File",
       "save": "Save",
-      "message":"Note that exporting the private key and using it is a very dangerous thing. It is recommended to use the encrypted private key (EncryptedKey) instead of",
+      "message": "Note that exporting the private key and using it is a very dangerous thing. It is recommended to use the encrypted private key (EncryptedKey) instead of",
       "save_success": "Save Wallet Success",
       "default": "Default",
       "default_action": "Set to default",
@@ -201,32 +202,32 @@
       "success": "success",
       "fail": "fail"
     },
-    "RECHARGE":{
+    "RECHARGE": {
       "title": "《 I am kind》ONG Deposit",
       "describe": "Deposit",
-      "btn_confirm":"Deposit",
-      "history":"deposit history",
+      "btn_confirm": "Deposit",
+      "history": "deposit history",
       "success": "success",
       "fail": "fail",
-      "note1":"1.When recharging the ONG, a fee of 0.01 ONG is required to be paid to the main network; when the balance of the ONG in the wallet is insufficient, the recharge fails.",
-      "note2":"2. Based on Ontology blockchain technology, the wallet project is not responsible for personal losses caused by loss of private key and interruption of service by game company."
-  
+      "note1": "1.When recharging the ONG, a fee of 0.01 ONG is required to be paid to the main network; when the balance of the ONG in the wallet is insufficient, the recharge fails.",
+      "note2": "2. Based on Ontology blockchain technology, the wallet project is not responsible for personal losses caused by loss of private key and interruption of service by game company."
+
     }
   },
-  "OPERATOR":{
-    "executing":"executing"
+  "OPERATOR": {
+    "executing": "executing"
   },
-  "VERSION":{
-    "title":"New Version",
-    "cancle":"Cancle",
-    "confirm":"Update"
+  "VERSION": {
+    "title": "New Version",
+    "cancle": "Cancle",
+    "confirm": "Update"
   },
-  "ONG":{
-    "transer":"Transfer ONG\\ONT to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail.",
-    "claims":"To extract the ONG, you need to pay 0.02ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the extraction will fail. It is recommended to reserve a sufficient amount of ONG before extracting."
+  "ONG": {
+    "transer": "Transfer ONG\\ONT to pay 0.01ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the transfer will fail.",
+    "claims": "To extract the ONG, you need to pay 0.02ONG to the main network of the main body. It will be automatically deducted from the user's balance; when the balance is insufficient, the extraction will fail. It is recommended to reserve a sufficient amount of ONG before extracting."
   },
-  "ERROR":{
-    "network_err":"network error",
+  "ERROR": {
+    "network_err": "network error",
     "build_err": "Build Transfer Fail",
     "broadcast_err": "Broadcas Transfer Fail"
   }

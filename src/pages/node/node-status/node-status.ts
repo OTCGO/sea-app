@@ -25,4 +25,8 @@ export class NodeStatusPage {
     console.log('ionViewDidLoad NodeStatusPage');
   }
 
+  gotoUnlock() {
+    this.navCtrl.push("NodeUnlock")
+  }
+
 }

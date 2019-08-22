@@ -23,8 +23,16 @@ export class NodePage implements OnInit {
     ngOnInit() {
 
     }
-    handleJoin() {
+    gotoJoin() {
         console.log('handleJoin')
         this.navCtrl.push("Join")
+    }
+
+    gotoPick() {
+        this.navCtrl.push("NodePick")
+    }
+
+    gotoStatus() {
+        this.navCtrl.push("NodeStatus")
     }
 }

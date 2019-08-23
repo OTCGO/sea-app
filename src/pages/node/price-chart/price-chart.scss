@@ -1,0 +1,44 @@
+@import "../../../theme/variables";
+
+
+
+
+page-price-chart {
+  .content {
+    background: color($colors, navy);
+
+    color: white;
+
+    .container {
+      width: 80%;
+      margin: 10px auto;
+
+      .seac {
+        margin-top: 10px;
+
+        .title {
+          background: white;
+          color: black;
+        }
+
+        .chart {
+          height: 300px;
+        }
+      }
+
+
+      .seas {
+        margin-top: 10px;
+
+        .title {
+          background: white;
+          color: black;
+        }
+
+        .chart {
+          height: 300px;
+        }
+      }
+    }
+  }
+}

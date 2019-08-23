@@ -27,6 +27,8 @@ import { MessageService } from '../shared/services'
 import { wallet } from '../libs/neon'
 
 
+declare var cordova: any;
+
 @Component({
 	templateUrl: 'app.html'
 })
@@ -54,6 +56,16 @@ export class MyApp implements OnInit {
 
 	async ngOnInit() {
 		// this.store.dispatch(new SettingsActions.Load())
+
+		cordova.plugins.NeoUtilsPlugin.coolMethod("this is testPlugin", (data) => {
+			console.log('TestPlugin,coolMethod', data)
+		})
+
+		cordova.plugins.NeoUtilsPlugin.nep2Decrypt("this is testPlugin", (data) => {
+			console.log('TestPlugin,nep2Decrypt', data)
+		})
+
+
 		try {
 			this.initApp()
 

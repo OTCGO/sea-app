@@ -1,0 +1,40 @@
+failure-alert {
+  position: fixed;
+  width: 100%;
+  top: 10px;
+  color: white;
+
+
+  .success-alert {
+    background: #393a5f;
+    height: 200px;
+    width: 80%;
+    margin: 0 auto;
+    opacity: 0.9;
+
+    .emoji {
+      height: 5rem;
+    }
+
+    .text {
+      .operation {
+        font-size: 1.5rem
+      }
+
+      .state {
+        font-size: 2rem
+      }
+
+      .des {
+        font-size: 1rem
+      }
+    }
+
+    .btn {
+      button {
+        width: 80%;
+        margin: 10px auto;
+      }
+    }
+  }
+}

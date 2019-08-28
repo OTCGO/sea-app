@@ -5,3 +5,7 @@ export * from './contacts.model'
 export * from './histories.model'
 export * from './claims.model'
 export * from './version.model'
+
+export * from './node.model'
+export * from './bonus.model'
+export * from './pick.model'

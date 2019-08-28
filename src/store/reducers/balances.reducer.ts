@@ -94,7 +94,7 @@ export function reducer(state = initialBalancesState, action: BalancesActions): 
 
 		case BalancesActionTypes.LOAD_SUCCESS: {
 			console.log('BalancesActionTypes.LOAD_SUCCESS', action.payload)
-			
+
 			return {
 				...state,
 				entities: action.payload,

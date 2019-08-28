@@ -54,6 +54,7 @@ export class MyApp implements OnInit {
 
 	async ngOnInit() {
 		// this.store.dispatch(new SettingsActions.Load())
+
 		try {
 			this.initApp()
 

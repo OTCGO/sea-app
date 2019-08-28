@@ -4,11 +4,15 @@ import { IonicPageModule } from 'ionic-angular'
 import { TranslateModule } from '@ngx-translate/core'
 import { NodeMenuComponent } from '../../components/node-menu/node-menu'
 import { NodeHeaderComponent } from '../../components/node-header/node-header'
+import { SuccessAlertComponent } from '../../components/success-alert/success-alert'
+import { ShareAlertComponent } from '../../components/share-alert/share-alert'
 
 const COMPONENTS = [
     NodePage,
     NodeMenuComponent,
-    NodeHeaderComponent
+    SuccessAlertComponent,
+    NodeHeaderComponent,
+    ShareAlertComponent
 ]
 
 
@@ -19,7 +23,9 @@ const COMPONENTS = [
     ],
     declarations: COMPONENTS,
     exports: [
-        NodeMenuComponent
+        NodeMenuComponent,
+        SuccessAlertComponent,
+        ShareAlertComponent
     ]
 })
 export class NodePageModule { }

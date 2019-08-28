@@ -6,7 +6,9 @@ import {
     NavParams
 } from 'ionic-angular'
 import { MenuService } from '../../shared/services'
+// import { Wechat } from '@ionic-native/wechat/ngx';
 
+declare var Wechat: any;
 
 @IonicPage({
     name: 'Node',
@@ -19,11 +21,16 @@ import { MenuService } from '../../shared/services'
 
 export class NodePage implements OnInit {
 
-    constructor(private navCtrl: NavController, private menuService: MenuService) {
+    constructor(private navCtrl: NavController, private menuService: MenuService,
+    ) {
 
     }
     ngOnInit() {
+        // Wechat.isInstalled().then(() => {
 
+        // }).catch(() => {
+
+        // });
     }
     gotoJoin() {
         console.log('handleJoin')
@@ -40,5 +47,17 @@ export class NodePage implements OnInit {
 
     handleMenu() {
         this.menuService.sendMessage("change")
+    }
+
+    share() {
+        console.log('share')
+        Wechat.share({
+            text: "这是分享的标题",
+            scene: Wechat.Scene.TIMELINE
+        }, function () {
+            alert("Success");
+        }, function (reason) {
+            alert("Failed: " + reason);
+        });
     }
 }

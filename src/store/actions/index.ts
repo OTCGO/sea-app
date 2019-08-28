@@ -10,6 +10,10 @@ import * as TransactionsActions from './transactions.action'
 import * as ClaimsActions from './claims.action'
 import * as VersionActions from './version.action'
 
+import * as NodeActions from './node.action'
+import * as PickActions from './pick.action'
+import * as BonusActions from './bonus.action'
+
 export {
 	BalancesActions,
 	MarketsActions,
@@ -21,5 +25,8 @@ export {
 	ContactsActions,
 	TransactionsActions,
 	ClaimsActions,
-	VersionActions
+	VersionActions,
+	NodeActions,
+	PickActions,
+	BonusActions
 }

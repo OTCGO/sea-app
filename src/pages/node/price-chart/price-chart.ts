@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the PriceChartPage page.
@@ -26,7 +26,7 @@ export class PriceChartPage implements OnInit {
   @ViewChild('EchartsSEAS') containerS: ElementRef;//与html中div #container1对应
   EChartS: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -34,6 +34,14 @@ export class PriceChartPage implements OnInit {
   }
 
   ngOnInit() {
+    this.initChart()
+
+
+
+
+  }
+
+  initChart() {
     var data = [];
     for (var i = 0; i <= 360; i++) {
       var t = i / 180 * Math.PI;
@@ -80,9 +88,5 @@ export class PriceChartPage implements OnInit {
     this.EChartC.setOption(option);
 
     this.EChartS.setOption(option);
-
-
-
-
   }
 }

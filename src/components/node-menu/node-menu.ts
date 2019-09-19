@@ -10,6 +10,7 @@ import { MenuService } from '../../shared/services'
 @Component({
   selector: 'node-menu',
   templateUrl: 'node-menu.html'
+
 })
 export class NodeMenuComponent implements OnInit {
   private display: Boolean
@@ -21,7 +22,8 @@ export class NodeMenuComponent implements OnInit {
   ngOnInit() {
     this.menuService.getMessage().subscribe(data => {
       console.log('NodeMenuComponent', data)
-      this.display = !this.display
+      // this.display = !this.display
+      this.display = true;
     })
   }
 

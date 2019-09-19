@@ -1,0 +1,77 @@
+<!--
+  Generated template for the CheckInPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar no-border color="navy">
+    <ion-buttons left>
+      <button ion-button navPop icon-only>
+        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>签到</ion-title>
+    <button ion-button menuToggle right (click)="handleMenu()">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <!-- <div class="container">
+    <div class="title" text-center>
+      <div>累计奖励/SEAS</div>
+      <div>88.88</div>
+      <div>本次签到获得奖励 10/SEAS</div>
+
+    </div>
+    <div class="current" text-center>
+      <ion-row>
+        <ion-col class="date">
+          2019-09-01
+        </ion-col>
+        <ion-col>
+          <button ion-button round small color="light">签到</button>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="calendar">
+      <div class="header-weekdays">
+        <span>周日</span>
+        <span>周一</span>
+        <span>周二</span>
+        <span>周三</span>
+        <span>周四</span>
+        <span>周五</span>
+        <span>周六</span>
+      </div>
+      <section>
+        <div class="day current-month" *ngFor="let value of currentArr">{{value}}</div>
+
+      </section>
+
+
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="rule">
+      <div>签到规则</div>
+      <div>1.每日签到收益为每日静态收益的10% 签到奖励将在每天凌晨重置，当天奖励未领取的将无法补签。</div>
+      <div>2.每日签到收益为每日静态收益的10% 签到奖励将在每天凌晨重置，当天奖励未领取的将无法补签。</div>
+      <div>3.每日签到收益为每日静态收益的10% 签到奖励将在每天凌晨重置，当天奖励未领取的将无法补签。</div>
+
+    </div>
+  </div> -->
+
+  <!-- <ng-template #alertContainer></ng-template> -->
+
+  <div #alertContainer>
+  </div>
+
+  <alert-burn></alert-burn>
+
+</ion-content>

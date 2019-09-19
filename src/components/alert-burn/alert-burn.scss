@@ -1,0 +1,30 @@
+alert-burn {
+
+  .alert-burn {
+    top: 20px;
+    //   height: 200px;
+
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+
+
+    .container {
+      width: 60%;
+      margin: 0 auto;
+      // height: 200px;
+      background: #393a5f;
+      opacity: 0.9;
+      padding: 2rem;
+
+      .title {
+        font-size: 20px;
+      }
+
+      .small {
+        font-size: 12px;
+      }
+    }
+
+  }
+}

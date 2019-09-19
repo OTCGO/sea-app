@@ -1,0 +1,103 @@
+@import "../../../theme/variables";
+
+
+page-check-in {
+
+
+
+  .content {
+    background: color($colors, navy);
+
+    color: white;
+
+    .container {
+      width: 80%;
+      height: 100%;
+      margin: 10px auto;
+
+      //   background: #393a5f;
+
+      .title {
+        padding: 1rem 0;
+      }
+
+      .current {
+        background: #393a5f;
+        height: 5rem;
+        border-bottom: 1px white dashed;
+        margin-top: 2rem;
+
+        .date {
+          line-height: 4rem;
+        }
+      }
+
+      .calendar {
+
+        .header-weekdays {
+          // height: 4rem;
+
+          span {
+            font-size: 1.2rem;
+            display: block;
+            float: left;
+            // width: 100%;
+            width: percentage(1/7);
+            padding: 0.5rem 0;
+            text-align: center;
+            text-transform: uppercase;
+            // background: white;
+            // color: #393a5f;
+            background: #393a5f;
+          }
+        }
+
+        .day {
+
+          float: left;
+          width: percentage(1/7);
+          height: 4rem;
+          text-align: center;
+          // padding: 1.2rem 0;
+          margin: 0;
+          font-size: 1.5rem;
+          line-height: 4rem;
+          -webkit-appearance: none;
+          appearance: none;
+          outline: none;
+          transition-property: background, color;
+          transition-duration: 0.3s;
+          transition-timing-function: ease-in-out;
+          transition-delay: 0s;
+          color: #393a5f;
+
+          background: white;
+
+
+        }
+
+        .day:hover {
+          background: #393a5f;
+          color: white;
+        }
+
+
+
+      }
+
+      .clear {
+        clear: both;
+      }
+
+      .rule {
+        margin-top: 3rem;
+        font-size: 1rem;
+
+        div {
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+
+}

@@ -338,8 +338,9 @@ export class LoginForm implements OnInit {
 			// const wif = await decryptAsync(encrypted, passphrase)
 			//  const wif = await wallet.decryptAsync(encrypted, passphrase)
 			//  const acct = new wallet.Account(wif)
+			console.time('getWif')
 			const wif: any = await getWif(encrypted, passphrase)
-
+			console.timeEnd('getWif')
 
 			const tempAcct = new wallet.Account(wif)
 
@@ -365,7 +366,7 @@ export class LoginForm implements OnInit {
 			this.navCtrl.push('Tabs')
 
 			const end = new Date().getTime()
-			console.log('NEP2Login', end - start)
+			// console.log('NEP2Login', end - start)
 
 
 		} catch (error) {

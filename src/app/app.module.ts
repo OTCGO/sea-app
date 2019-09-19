@@ -26,6 +26,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { PipesModule } from '../pipes/pipes.module'
 import { MessageService, MenuService } from '../shared/services'
 
+
+
 import {
   BalancesEffects,
   MarketsEffects,

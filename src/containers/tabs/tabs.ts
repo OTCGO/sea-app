@@ -28,7 +28,7 @@ export class TabsPage implements OnInit {
       { root: 'Possessions', title: this.balancesTitle, icon: 'logo-bitcoin', enabled: true },
       // { root: 'Markets', title: this.marketsTitle, icon: 'markets', enabled: true },
       // { root: 'Discover', title: this.discoverTitle, icon: 'discover', enabled: false },
-      { root: 'Node', title: "node", icon: 'git-network', enabled: true },
+      { root: 'CheckIn', title: "CheckIn", icon: 'git-network', enabled: true },
       { root: 'Profile', title: this.profileTitle, icon: 'person', enabled: true }
     ]
 

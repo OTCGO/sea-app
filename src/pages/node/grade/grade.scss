@@ -1,0 +1,76 @@
+@import "../../../theme/variables";
+
+page-grade {
+  .content {
+    background: color($colors, navy);
+
+    color: white;
+
+    .container {
+      width: 80%;
+      margin: 10px auto;
+
+      .current {
+        height: 200px;
+
+
+      }
+
+      .equity {
+        .title {
+          height: 20px;
+          border-top: 1px dashed white;
+        }
+
+        .title .tit {
+          text-align: center;
+          margin-top: -15px;
+        }
+
+        .title .tit span.bg {
+          background: color($colors, navy);
+          padding: 0 10px;
+          color: white;
+          font-size: 20px;
+        }
+
+        .content {
+          margin-bottom: 50px;
+          margin-top: 50px;
+        }
+      }
+
+
+      .condition {
+        .title {
+          height: 20px;
+          border-top: 1px dashed white;
+        }
+
+        .title .tit {
+          text-align: center;
+          margin-top: -15px;
+        }
+
+        .title .tit span.bg {
+          background: color($colors, navy);
+          padding: 0 10px;
+          color: white;
+          font-size: 20px;
+        }
+
+        ion-row {
+          margin-top: 20px;
+        }
+
+        .content {
+          margin-bottom: 50px;
+          margin-top: 10px;
+        }
+      }
+
+
+    }
+  }
+
+}

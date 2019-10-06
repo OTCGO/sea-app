@@ -5,23 +5,16 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-toolbar no-border color="navy">
-    <ion-buttons left>
-      <button ion-button navPop icon-only>
-        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>等级攻略</ion-title>
-    <button ion-button menuToggle right (click)="handleMenu()">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-  </ion-toolbar>
+  <node-header title="等级攻略"></node-header>
 </ion-header>
 
 
 <ion-content>
-  <div class="container">
+  <node-menu></node-menu>
+  <div class="container" [ngStyle]="{ 'background-image': 'url(' + bgpath + ')'}">
+
+  </div>
+  <!-- <div class="container">
 
     <div class="current">
 
@@ -76,7 +69,7 @@
 
 
     </div>
-  </div>
+  </div> -->
 
 
 </ion-content>

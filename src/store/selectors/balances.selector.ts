@@ -7,7 +7,7 @@ import { IBalance, } from '../../shared/models'
 import { getAccount } from './wallet.selector'
 import { State } from '../reducers/balances.reducer'
 import { sort, compose, prop, lt, filter, not, toPairs, isEmpty, is } from 'ramda'
-
+import { ASSET } from "../../constants"
 
 
 const getState = createFeatureSelector('balances')
@@ -69,7 +69,18 @@ export const getOngBalance = createSelector(
 	(account, entities) =>
 		account && entities && entities[account.address] &&
 		!isEmpty(entities[account.address]) &&
-		entities[account.address].find(balance => balance.symbol === 'ontology-ONG')
+		entities[account.address].find(balance => balance.hash === ASSET.ONG)
+
+)
+
+
+export const getSeacBalance = createSelector(
+	getAccount,
+	getEntities,
+	(account, entities) =>
+		account && entities && entities[account.address] &&
+		!isEmpty(entities[account.address]) &&
+		entities[account.address].find(balance => balance.hash === ASSET.SEAC)
 
 )
 
@@ -80,7 +91,7 @@ export const getGasBalance = createSelector(
 	(account, entities) =>
 		account && entities && entities[account.address] &&
 		!isEmpty(entities[account.address]) &&
-		entities[account.address].find(balance => balance.symbol === 'GAS')
+		entities[account.address].find(balance => balance.hash === ASSET.GAS)
 
 )
 

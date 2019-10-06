@@ -16,7 +16,7 @@ export class Load implements Action {
 export class LoadSuccess implements Action {
     readonly type = BonusActionTypes.LOAD_SUCCESS
 
-    constructor(public payload: Bonus[]) { }
+    constructor(public payload: Bonus) { }
 }
 
 export class LoadFail implements Action {

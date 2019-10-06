@@ -1,3 +1,8 @@
 @import "../../theme/variables";
 
-node-header {}
+node-header {
+  .button {
+    background: transparent;
+    color: white;
+  }
+}

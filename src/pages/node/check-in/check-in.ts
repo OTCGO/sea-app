@@ -2,7 +2,13 @@ import { Component, ViewChild, ComponentFactoryResolver, OnInit, OnDestroy, View
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AdDirective } from '../../../directive/ad.directive';
 import { NodeMenuComponent } from '../../../components/node-menu/node-menu';
-
+import { NodeService } from '../../../shared/services'
+import { Store } from '@ngrx/store'
+import { RootState } from '../../../store/reducers'
+import { SigninSelectors, WalletSelectors } from '../../../store/selectors'
+import { NodeActions } from '../../../store/actions'
+import { Signin } from '@shared/models';
+import { SuccessAlertComponent } from '../../../components/success-alert/success-alert';
 
 /**
  * Generated class for the CheckInPage page.
@@ -21,24 +27,69 @@ import { NodeMenuComponent } from '../../../components/node-menu/node-menu';
 })
 export class CheckInPage implements OnInit, OnDestroy {
   // private data;
+  private currentDate = new Date()
   private year;
   private moth;
   private nday;
-  private currentArr: Array<string> = [];
+  private wif;
+  private currentArr: Array<any> = [];
   // @ViewChild(AdDirective) adHost: AdDirective;
+
+  private signArr;
+  private signin: Signin = {
+    total: '0',
+    bonus: '0',
+    status: 0,
+    history: [0]
+  };
+
+  private signinText = '签到'
+
   @ViewChild("alertContainer", { read: ViewContainerRef }) container: ViewContainerRef;
 
 
   ngOnInit() {
+    this.store.dispatch(new NodeActions.Signin())
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NodeMenuComponent)
+    this.store.select(SigninSelectors.getEntities).subscribe(result => {
+      console.log('SigninSelectors', result)
+      if (result) {
+        this.signin = result
+        this.signArr = result.history
 
-    //const viewContainerRef = this.adHost.viewContainerRef;
-    //const viewContainerRef = this.container;;
-    // viewContainerRef.clear();
-    this.container.createComponent(componentFactory);
 
-    //  const componentRef = viewContainerRef.createComponent(componentFactory);
+        if (result.status === 0) {
+          this.signinText = '签到'
+        }
+        else if (result.status === 1) {
+          this.signinText = '已签到'
+        }
+
+        else {
+          this.signinText = '处理中'
+        }
+
+
+
+        console.log('this.signinText', result.status)
+        console.log('this.signinText', this.signinText)
+        this.calendar()
+      }
+    })
+
+
+    this.store.select(WalletSelectors.getWif).subscribe(result => {
+      console.log('WalletSelectors', result.wif)
+      if (result) {
+        this.wif = result.wif
+      }
+    })
+
+
+
+
+
+
 
   }
 
@@ -50,6 +101,8 @@ export class CheckInPage implements OnInit, OnDestroy {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
+    private nodeService: NodeService,
+    private store: Store<RootState>,
     private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
@@ -60,7 +113,7 @@ export class CheckInPage implements OnInit, OnDestroy {
     this.moth = data.getMonth();//当前月份
     this.nday = data.getDate();//天
 
-    this.calendar()
+
   }
 
   private calendar() {
@@ -75,18 +128,35 @@ export class CheckInPage implements OnInit, OnDestroy {
     const firstDay = nlstr.getDay()
 
     for (let i = 0; i < firstDay; i++) {
-      this.currentArr.push('')
+      this.currentArr.push({
+        value: '',
+        sign: false
+      })
     }
 
 
     for (let i = 0; i < days[this.moth]; i++) {
+      if (this.signArr.indexOf(i + 1) > -1) {
+        this.currentArr.push({
+          value: (i + 1).toString(),
+          sign: true
+        })
+      } else {
+        this.currentArr.push({
+          value: (i + 1).toString(),
+          sign: false
+        })
+      }
 
-      this.currentArr.push((i + 1).toString())
+
 
     }
 
     for (let i = 0; i < this.currentArr.length % 7; i++) {
-      this.currentArr.push('')
+      this.currentArr.push({
+        value: '',
+        sign: false
+      })
     }
 
 
@@ -94,7 +164,7 @@ export class CheckInPage implements OnInit, OnDestroy {
 
 
 
-    // console.log('this.currentArr', this.currentArr)
+    console.log('this.currentArr', this.currentArr)
 
     // console.log('calendar', nlstr.getDay())
   }
@@ -103,6 +173,38 @@ export class CheckInPage implements OnInit, OnDestroy {
     if (((year % 4) == 0) && ((year % 100) != 0) || ((year % 400) == 0)) {
       return 1;
     } else { return 0; }
+
+  }
+
+
+  Notification(content: any[]) {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SuccessAlertComponent)
+    const componentRef = this.container.createComponent(componentFactory);
+
+    componentRef.instance.title = content[0]
+    componentRef.instance.result = content[1]
+    componentRef.instance.reason = content[2]
+    componentRef.instance.icon = content[3]
+  }
+
+
+  async btnSignin() {
+    console.log('signin', this.wif)
+
+    if (this.signin.status !== 0) {
+      return
+    }
+
+    try {
+      const result: any = await this.nodeService.signin(this.wif)
+      console.log('result', result)
+
+      this.Notification(["签到", "签到成功", ``, 1])
+
+    } catch (error) {
+      console.log('签到失败', error)
+      this.Notification(["签到", "签到失败", `${error.message}`, 0])
+    }
 
   }
 

@@ -11,31 +11,32 @@ const { Account } = wallet
 export class AccountProvider {
 	accounts
 
-	get defaultAccount () {
+	get defaultAccount() {
 		return this.accounts.find(account => account.isDefault)
 	}
 
-	constructor (private walletProvider: WalletProvider, private store: Store<fromWallet.State>) {
+	constructor(private walletProvider: WalletProvider, private store: Store<fromWallet.State>) {
 		this.store.select(WalletSelectors.getAccounts).subscribe(accounts => this.accounts = accounts)
 	}
 
-	getPublicKey (encoded: boolean) {
+	getPublicKey(encoded: boolean) {
 		return this.defaultAccount.getPublicKey(encoded)
 	}
 
-	decrypt (passphrase) {
+	decrypt(passphrase) {
 
 	}
 
-	getPrivateKey () {
+	getPrivateKey() {
 		return this.defaultAccount.privateKey
 	}
 
-	getWIF (account) {
+	getWIF(account) {
 
 	}
 
-	getAddress (account) {
+	getAddress(account) {
+		// console.log('AccountProvider', account)
 		return account ? (new Account(account)).address : this.defaultAccount.address
 	}
 }

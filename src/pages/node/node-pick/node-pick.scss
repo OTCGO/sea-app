@@ -8,19 +8,20 @@ page-node-pick {
 
     .info {
       width: 80%;
-      height: 50%;
+      // height: 50%;
+      padding: 10px;
       background: #393a5f;
       margin: 0 auto;
       margin-top: 15%;
 
       .info1 {
         border-bottom: 1px solid #a08c8c;
-
-
       }
 
       .result {
         margin-top: 3.5rem;
+        border-bottom: 1px solid #a08c8c;
+        padding-bottom: 10px;
       }
 
       .name {
@@ -29,6 +30,10 @@ page-node-pick {
 
       .value {
         font-size: 3rem
+      }
+
+      .pick {
+        margin-top: 10px;
       }
 
 

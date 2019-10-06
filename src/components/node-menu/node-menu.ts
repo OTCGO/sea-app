@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../shared/services'
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Store } from '@ngrx/store'
+import { RootState } from '../../store/reducers'
+import { BalancesSelectors, NodeSelectors, WalletSelectors, BonusSelectors } from '../../store/selectors'
+import { BalancesActions, NodeActions, BonusActions } from '../../store/actions'
 
 /**
  * Generated class for the NodeMenuComponent component.
@@ -14,17 +19,31 @@ import { MenuService } from '../../shared/services'
 })
 export class NodeMenuComponent implements OnInit {
   private display: Boolean
+  private nodeLevel
 
-  constructor(private menuService: MenuService) {
+  constructor(
+    public navCtrl: NavController,
+    private store: Store<RootState>,
+    private menuService: MenuService) {
 
   }
 
   ngOnInit() {
     this.menuService.getMessage().subscribe(data => {
       console.log('NodeMenuComponent', data)
-      // this.display = !this.display
-      this.display = true;
+      this.display = !this.display
+      // this.display = true;
+    })
+
+    this.store.select(NodeSelectors.getEntities).subscribe(async node => {
+      if (node && node.nodelevel) {
+        this.nodeLevel = node.nodelevel
+      }
+
     })
   }
 
+  goPage(name) {
+    this.navCtrl.push(name)
+  }
 }

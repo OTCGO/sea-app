@@ -1,6 +1,6 @@
 import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store'
 import { storeFreeze } from 'ngrx-store-freeze'
-import { dev } from '@app/env' 
+import { dev } from '@app/env'
 
 import * as fromBalances from './balances.reducer'
 import * as fromMarkets from './markets.reducer'
@@ -13,7 +13,9 @@ import * as fromContacts from './contacts.reducer'
 import * as fromTransactions from './transactions.reducer'
 import * as fromClaims from './claims.reducer'
 import * as fromVersion from './version.reducer'
-
+import * as fromNode from './node.reducer'
+import * as fromSignin from './signin.reducer'
+import * as fromBonus from './bonus.reducer'
 
 export interface RootState {
 	balances: fromBalances.State
@@ -26,7 +28,10 @@ export interface RootState {
 	contacts: fromContacts.State,
 	transactions: fromTransactions.State,
 	claims: fromClaims.State,
-	version: fromVersion.State
+	version: fromVersion.State,
+	node: fromNode.State,
+	bonus: fromBonus.State,
+	signin: fromSignin.State
 }
 
 export const reducers: ActionReducerMap<RootState> = {
@@ -40,11 +45,14 @@ export const reducers: ActionReducerMap<RootState> = {
 	contacts: fromContacts.reducer,
 	transactions: fromTransactions.reducer,
 	claims: fromClaims.reducer,
-	version: fromVersion.reducer
+	version: fromVersion.reducer,
+	node: fromNode.reducer,
+	bonus: fromBonus.reducer,
+	signin: fromSignin.reducer
 }
 
 
-function logger (reducer: ActionReducer<RootState>): ActionReducer<RootState> {
+function logger(reducer: ActionReducer<RootState>): ActionReducer<RootState> {
 	return (state, action): RootState => {
 		console.group(action.type)
 		const nextState = reducer(state, action)
@@ -69,5 +77,7 @@ export {
 	fromSettings,
 	fromTransactions,
 	fromClaims,
-	fromVersion
+	fromVersion,
+	fromNode,
+	fromBonus
 }

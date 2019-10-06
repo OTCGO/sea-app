@@ -1,18 +1,18 @@
 <!-- Generated template for the SuccessAlertComponent component -->
-<div class="success-alert" text-center>
+<div class="success-alert" text-center *ngIf="display">
 
   <div class="emoji">
-
+    <img [src]="icon ?   'assets/imgs/success-icon.png':'assets/imgs/icon-fail.png' " alt="" width="40px" height="40px">
   </div>
 
   <div class="text">
-    <div class="operation">提取SEAS</div>
-    <div class="state">操作成功</div>
-    <div class="des">将在 03:00 前统一转入钱包账户</div>
+    <div class="operation">{{title}}</div>
+    <div class="state">{{result}}</div>
+    <div class="des">{{reason}}</div>
   </div>
 
   <div class="btn">
-    <button ion-button round full margin-top small type="submit" color="light">OK</button>
+    <button ion-button round full margin-top small (click)="btnConfirm()" color="light">OK</button>
   </div>
 
 </div>

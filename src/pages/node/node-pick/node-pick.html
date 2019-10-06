@@ -5,18 +5,19 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <node-header title="提取"></node-header>
+  <!-- <ion-toolbar no-border color="navy">
 
-  <ion-toolbar no-border color="navy">
-    <ion-buttons left>
-      <button ion-button navPop icon-only>
-        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
+    <button ion-button left>
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+
     <ion-title>提取</ion-title>
+
     <button ion-button menuToggle right (click)="handleMenu()">
       <ion-icon name="menu"></ion-icon>
     </button>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 
@@ -24,22 +25,22 @@
   <node-menu></node-menu>
   <div class="info" text-center padding>
     <div>
-      <h4>提取SEAC</h4>
+      <h4>提取SEAS</h4>
     </div>
 
     <div class="info1">
       <ion-grid>
         <ion-row>
           <ion-col>
-            <div class="name">可提取整数</div>
-            <div class="value">100</div>
+            <div class="name">可提取</div>
+            <div class="value">{{total}}</div>
           </ion-col>
           <ion-col>
 
           </ion-col>
           <ion-col>
             <div class="name">手续费</div>
-            <div class="value">10%</div>
+            <div class="value">{{this.fee}}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -47,13 +48,20 @@
 
     <div class="result">
       <div class="name">实际提取数/SEAS</div>
-      <div class="value">90</div>
+      <div class="value">{{this.withdraw_actually}}</div>
     </div>
 
-    <div>
-      <button ion-button round full margin-top margin-bottom type="submit" color="light">确认提取</button>
+    <div class="pick">
+      <ion-item marging-top btn>
+        <ion-input placeholder="输入密码" [(ngModel)]="pwd" required type="password" minlength="8" maxlength="16">
+        </ion-input>
+      </ion-item>
+      <button ion-button round full margin-top margin-bottom (click)="btnPick()" color="light">确认提取</button>
     </div>
 
 
+  </div>
+
+  <div #alertContainer>
   </div>
 </ion-content>

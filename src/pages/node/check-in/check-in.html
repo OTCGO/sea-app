@@ -5,36 +5,27 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <node-header title="签到"></node-header>
 
-  <ion-toolbar no-border color="navy">
-    <ion-buttons left>
-      <button ion-button navPop icon-only>
-        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>签到</ion-title>
-    <button ion-button menuToggle right (click)="handleMenu()">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-  </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-  <!-- <div class="container">
+  <node-menu></node-menu>
+  <div class="container">
     <div class="title" text-center>
       <div>累计奖励/SEAS</div>
-      <div>88.88</div>
-      <div>本次签到获得奖励 10/SEAS</div>
+      <div>{{signin.total || 0}}</div>
+      <div>本次签到获得奖励 {{signin.bonus || 0}}/SEAS</div>
 
     </div>
     <div class="current" text-center>
       <ion-row>
         <ion-col class="date">
-          2019-09-01
+          {{currentDate | date : 'yyyy-MM-dd'}}
         </ion-col>
         <ion-col>
-          <button ion-button round small color="light">签到</button>
+          <button ion-button round small color="light" (click)=btnSignin()>{{signinText}}</button>
         </ion-col>
       </ion-row>
     </div>
@@ -49,7 +40,12 @@
         <span>周六</span>
       </div>
       <section>
-        <div class="day current-month" *ngFor="let value of currentArr">{{value}}</div>
+        <div class="day " [ngClass]="item.sign ? 'current-month':''" *ngFor="let item of currentArr">{{item.value}}
+        </div>
+
+        <!-- <div class="day">1</div>
+        <div class="day">2</div>
+        <div class="day">3</div> -->
 
       </section>
 
@@ -60,18 +56,16 @@
 
     <div class="rule">
       <div>签到规则</div>
-      <div>1.每日签到收益为每日静态收益的10% 签到奖励将在每天凌晨重置，当天奖励未领取的将无法补签。</div>
-      <div>2.每日签到收益为每日静态收益的10% 签到奖励将在每天凌晨重置，当天奖励未领取的将无法补签。</div>
-      <div>3.每日签到收益为每日静态收益的10% 签到奖励将在每天凌晨重置，当天奖励未领取的将无法补签。</div>
-
+      <div>1.每日签到收益为每日静态收益的10%。</div>
+      <div>2.签到奖励将在每天凌晨重置，当天奖励未领取的将无法补签。</div>
     </div>
-  </div> -->
+  </div>
 
-  <!-- <ng-template #alertContainer></ng-template> -->
+
 
   <div #alertContainer>
   </div>
 
-  <alert-burn></alert-burn>
+  <!-- <alert-burn></alert-burn> -->
 
 </ion-content>

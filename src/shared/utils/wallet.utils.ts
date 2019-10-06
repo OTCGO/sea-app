@@ -2,7 +2,7 @@ import {
 	Account,
 	Wallet
 } from '../typings'
-import { wallet } from '../../libs/neon'
+import { wallet, u } from '../../libs/neon'
 import * as CryptoJS from 'crypto-js'
 import * as KJ from 'jsrsasign'
 
@@ -38,8 +38,8 @@ export const doVerify = (pubkey, msg, sigval) => {
 }
 
 export const decryptPrv = (enckey, pwd) => CryptoJS.AES
-																									 .decrypt(enckey, pwd)
-																									 .toString((<any>CryptoJS).enc.Utf8)
+	.decrypt(enckey, pwd)
+	.toString((<any>CryptoJS).enc.Utf8)
 
 export const verifyKeyPair = (prvkey, pubkey) => {
 	const msg = 'aaa'
@@ -59,17 +59,45 @@ export const findDefaultAccount = (appWallet: Wallet): Account => {
 
 export const getEveryAccountAddress = (appWallet: Wallet) => appWallet.accounts.map(account => account.address)
 
-export function  getWif(encrypted, passphrase) {
+export function getWif(encrypted, passphrase) {
 	const n = 16384
 	const r = 8
 	const p = 8
-	return new  Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		ThinNeo.Helper.GetPrivateKeyFromNep2(encrypted, passphrase, n, r, p, (info, result) => {
 			try {
 				if (info === 'finish') {
 					const prikey = result as Uint8Array
-					const wif  = ThinNeo.Helper.GetWifFromPrivateKey(prikey)
+					const wif = ThinNeo.Helper.GetWifFromPrivateKey(prikey)
 					resolve(wif)
+				}
+
+				reject('error')
+				// console.log('info=' + info)
+				// const prikey = result as Uint8Array
+				// // console.log('result=' + prikey.toHexString())
+				// const pubkey = ThinNeo.Helper.GetPublicKeyFromPrivateKey(prikey)
+				// const address = ThinNeo.Helper.GetAddressFromPublicKey(pubkey)
+				// console.log('address=' + address)
+
+			} catch (error) {
+				reject('error')
+				console.log('GetPrivateKeyFromNep2', error)
+			}
+		})
+	})
+}
+
+export function GetPrivateKeyFromNep2(encrypted, passphrase) {
+	const n = 16384
+	const r = 8
+	const p = 8
+	return new Promise((resolve, reject) => {
+		ThinNeo.Helper.GetPrivateKeyFromNep2(encrypted, passphrase, n, r, p, (info, result) => {
+			try {
+				if (info === 'finish') {
+					const prikey = result as Uint8Array
+					resolve(prikey.toHexString())
 				}
 
 				reject('error')
@@ -90,10 +118,10 @@ export function  getWif(encrypted, passphrase) {
 
 
 export const {
-  isWIF,
-  isAddress,
-  isNEP2,
-  isPrivateKey,
-  isPublicKey,
-  decryptAsync
+	isWIF,
+	isAddress,
+	isNEP2,
+	isPrivateKey,
+	isPublicKey,
+	decryptAsync
 } = wallet

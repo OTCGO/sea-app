@@ -6,6 +6,8 @@ import { NodeMenuComponent } from '../../components/node-menu/node-menu'
 import { NodeHeaderComponent } from '../../components/node-header/node-header'
 import { SuccessAlertComponent } from '../../components/success-alert/success-alert'
 import { ShareAlertComponent } from '../../components/share-alert/share-alert'
+import { RouterProvider, AccountProvider, ApiProvider, WalletProvider } from '../../providers'
+
 
 const COMPONENTS = [
     NodePage,
@@ -21,12 +23,10 @@ const COMPONENTS = [
         IonicPageModule.forChild(NodePage),
         TranslateModule.forChild(),
     ],
+    providers: [AccountProvider],
     declarations: COMPONENTS,
-    exports: [
-        NodeMenuComponent,
-        SuccessAlertComponent,
-        ShareAlertComponent
-    ]
+    exports: COMPONENTS,
+    entryComponents: [SuccessAlertComponent]
 })
 export class NodePageModule { }
 

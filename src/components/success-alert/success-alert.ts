@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the SuccessAlertComponent component.
@@ -12,8 +13,25 @@ import { Component } from '@angular/core';
 })
 export class SuccessAlertComponent {
 
-  constructor() {
 
+
+  private display = true;
+
+  public icon
+  public title
+  public result
+  public reason
+  public isHome
+  constructor(public navCtrl: NavController) {
+
+  }
+
+  btnConfirm() {
+    if (this.isHome) {
+      this.navCtrl.popToRoot()
+      return
+    }
+    this.display = false
   }
 
 }

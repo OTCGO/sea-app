@@ -5,18 +5,8 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <node-header title="解锁"></node-header>
 
-  <ion-toolbar no-border color="navy">
-    <ion-buttons left>
-      <button ion-button navPop icon-only>
-        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>解锁</ion-title>
-    <button ion-button menuToggle right (click)="handleMenu()">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-  </ion-toolbar>
 </ion-header>
 
 
@@ -26,30 +16,34 @@
     <div class="info" text-center>
       <div class="item">
         <div class="name">锁仓数量/SEAC</div>
-        <div class="value">1000,000</div>
+        <div class="value">{{node.amount}}</div>
       </div>
       <div class="item">
         <div class="name">违约金/SEAC</div>
-        <div class="value">-20</div>
+        <div class="value">{{node.penalty}}</div>
       </div>
       <div class="item">
         <div class="name">实际到账/SEAC</div>
-        <div class="value">1000,000</div>
+        <div class="value">{{node.amount - node.penalty}}</div>
       </div>
     </div>
 
 
     <div class="btn">
       <ion-item>
-        <ion-input placeholder="输入密码" required></ion-input>
+        <ion-input placeholder="输入密码" [(ngModel)]="pwd" required type="password" minlength="8" maxlength="16">
+        </ion-input>
       </ion-item>
 
-      <button ion-button round full margin-top type="submit">确认解锁</button>
-      <button ion-button round full margin-top type="submit" color="light">取消解锁</button>
+      <button ion-button round full margin-top (click)=btnUnlock()>确认解锁</button>
+      <button ion-button round full margin-top color="light">取消解锁</button>
 
     </div>
   </div>
 
+
+  <div #alertContainer>
+  </div>
 
 
 </ion-content>

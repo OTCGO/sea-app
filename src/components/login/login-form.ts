@@ -359,7 +359,7 @@ export class LoginForm implements OnInit {
 
 			loading.dismiss().catch(() => { })
 			this.store.dispatch(new WalletActions.AddAccount(acct))
-			// this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))
+			this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))
 
 			this.nativeStorage.setItem('account', { encrypted, address })
 

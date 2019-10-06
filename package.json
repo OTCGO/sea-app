@@ -105,6 +105,7 @@
     "ramda": "^0.25.0",
     "resource": "0.8.1",
     "rxjs": "^5.5.2",
+    "secure-random": "^1.1.2",
     "sharp": "^0.22.1",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"

@@ -1,11 +1,15 @@
 import { Action } from '@ngrx/store'
-import { Node } from '../../shared/models/node.model'
+import { Node, Signin as Sign } from '../../shared/models/index'
 
 export enum NodeActionTypes {
     LOAD = '[Node] Load',
     LOAD_FAIL = '[Node] Load Error',
     LOAD_SUCCESS = '[Node] Load Success',
 
+
+    SIGNIN = '[Node] Signin',
+    SIGNIN_FAIL = '[Node] Signin Error',
+    SIGNIN_SUCCESS = '[Node] Signin Success',
 }
 
 export class Load implements Action {
@@ -25,7 +29,30 @@ export class LoadFail implements Action {
     constructor(public payload: Error | string) { }
 }
 
+
+export class Signin implements Action {
+    readonly type = NodeActionTypes.SIGNIN
+}
+
+
+export class SigninSuccess implements Action {
+    readonly type = NodeActionTypes.SIGNIN_SUCCESS
+
+    constructor(public payload: Sign) { }
+}
+
+export class SigninFail implements Action {
+    readonly type = NodeActionTypes.SIGNIN_FAIL
+
+    constructor(public payload: Error | string) { }
+}
+
+
+
 export type NodeActions =
     Load
     | LoadSuccess
     | LoadFail
+    | Signin
+    | SigninSuccess
+    | SigninFail

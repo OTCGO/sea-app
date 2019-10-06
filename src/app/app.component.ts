@@ -58,9 +58,10 @@ export class MyApp implements OnInit {
 		try {
 			this.initApp()
 
+
+			/*
+			// auto login
 			const account = await this.nativeStorage.getItem('account')
-
-
 			console.log('account', account)
 			if (account.encrypted && account.address) {
 
@@ -77,6 +78,10 @@ export class MyApp implements OnInit {
 				this.rootPage = 'Tabs'
 
 			}
+			*/
+
+
+
 		} catch (error) {
 			console.error(error)
 			this.rootPage = 'Login'
@@ -128,15 +133,20 @@ export class MyApp implements OnInit {
 			console.log('syslan', syslan)
 			// .then(res => console.log(res))
 			// .catch(e => console.log(e))
-			const locale = syslan.value.split('-')[0]
-			this.translateService.use(locale || 'zh')
+
+			// const locale = syslan.value.split('-')[0]
+			// this.translateService.use(locale || 'zh')
+
+			this.translateService.use('zh')
 
 
 		} catch (error) {
 			this.store.select(SettingsSelectors.getLanguage)
 				.subscribe(language => {
-					const locale = language.split('-')[0]
-					this.translateService.use(locale || 'zh')
+					// const locale = language.split('-')[0]
+					// this.translateService.use(locale || 'zh')
+
+					this.translateService.use('zh')
 				})
 		}
 

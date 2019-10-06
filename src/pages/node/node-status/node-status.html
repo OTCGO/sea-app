@@ -5,18 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-toolbar no-border color="navy">
-    <ion-buttons left>
-      <button ion-button navPop icon-only>
-        <ion-icon ios="ios-arrow-back" md="nbsons-arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>节点概况</ion-title>
-    <button ion-button menuToggle right (click)="handleMenu()">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-  </ion-toolbar>
+  <node-header title="收益概况"></node-header>
 </ion-header>
 
 
@@ -27,7 +16,7 @@
       <ion-row>
         <ion-col>
           <div class="name">锁仓数量/SEAC</div>
-          <div class="value">1000,000</div>
+          <div class="value">{{node.amount}}</div>
         </ion-col>
         <ion-col col-4>
           <div class="name"></div>
@@ -43,17 +32,17 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <div class="value">179</div>
+          <div class="value">{{node.status >= 0 ?(node.days -node.status) : node.days }}</div>
           <div class="name">锁仓剩余天数</div>
 
         </ion-col>
         <ion-col>
-          <div class="value">180</div>
+          <div class="value">{{node.days}}</div>
           <div class="name">锁仓周期/天</div>
 
         </ion-col>
         <ion-col>
-          <div class="value">300</div>
+          <div class="value">{{node.status >= 0 ? node.status : '0' }}</div>
           <div class="name">节点运行时长</div>
         </ion-col>
       </ion-row>
@@ -61,17 +50,28 @@
   </div>
 
   <div class="list">
-    <h5>每日总收益 <span>(锁仓+直推+团队)</span></h5>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h5>每日总收益 <span>(锁仓+直推+团队)</span></h5>
+        </ion-col>
+        <ion-col col-4 class="balance">
+          <button class="btn" ion-button color="light" full small round (click)="gotoBalance()">剩余收益</button>
+        </ion-col>
+      </ion-row>
 
-    <div class="item" *ngFor="let tmp of [1,2,3,4,5,6,7,8.9.10]">
+
+    </ion-grid>
+    <div class="item" *ngFor="let tmp of bonus.history">
       <ion-grid>
         <ion-row>
           <ion-col>
-            <div class="time">2019-08-19 <span>03:00:00</span></div>
+            <div class="time">{{ tmp.bonustime * 1000 | date: 'yyyy-MM-dd'  }}
+              <span>{{ tmp.bonustime * 1000 | date: 'HH:mm:ss'  }}</span></div>
 
           </ion-col>
           <ion-col col-4>
-            <div class="num">+18.01<span>SEAS</span></div>
+            <div class="num">+{{tmp.amount}}<span>SEAS</span></div>
           </ion-col>
         </ion-row>
       </ion-grid>

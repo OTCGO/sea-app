@@ -37,7 +37,10 @@ page-node {
     background: color($colors, navy);
     // overflow: hidden;
 
-
+    .sigin {
+      width: 60%;
+      margin: 0 auto;
+    }
 
     .join {
       height: 100%;

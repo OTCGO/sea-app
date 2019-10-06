@@ -9,6 +9,9 @@ import * as ContactsSelectors from './contacts.selector'
 import * as TransactionsSelectors from './transactions.selector'
 import * as ClaimsSelectors from './claims.selector'
 import * as VersionSelectors from './version.selector'
+import * as NodeSelectors from './node.selector'
+import * as BonusSelectors from './bonus.selector'
+import * as SigninSelectors from './signin.selector'
 
 export {
 	PricesSelectors,
@@ -21,5 +24,8 @@ export {
 	ContactsSelectors,
 	TransactionsSelectors,
 	ClaimsSelectors,
-	VersionSelectors
+	VersionSelectors,
+	NodeSelectors,
+	BonusSelectors,
+	SigninSelectors
 }

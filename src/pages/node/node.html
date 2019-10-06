@@ -1,17 +1,23 @@
 <!-- <node-header></node-header> -->
 <ion-header>
-  <ion-toolbar no-border color="navy">
+  <!-- <ion-toolbar no-border color="navy">
     <ion-title>节点</ion-title>
     <button ion-button menuToggle right (click)="handleMenu()">
       <ion-icon name="menu"></ion-icon>
     </button>
-  </ion-toolbar>
+  </ion-toolbar> -->
+  <node-header title="节点"></node-header>
 </ion-header>
 
 <ion-content>
   <node-menu></node-menu>
 
-  <div class="join" *ngIf="false">
+  <div class="join" *ngIf="!isJoin">
+
+    <div class="sigin">
+      <div *ngIf="joinTitle"> <button ion-button round full margin-top small color="light">{{joinTitle}}</button>
+      </div>
+    </div>
 
     <div class="level1" text-center>
       <i><span></span></i>
@@ -36,7 +42,7 @@
           <ion-col>
             <div text-center class="balance">
               <h3>SEAC余额</h3>
-              <h3>3000,000</h3>
+              <h3>{{seacBanlance}}</h3>
             </div>
 
           </ion-col>
@@ -46,11 +52,17 @@
     </div>
   </div>
 
-  <div class="join" *ngIf="true">
+  <div class="join" *ngIf="isJoin">
+
+    <div class="sigin" *ngIf="node.smallareaburned || node.burned">
+      <div> <button ion-button round full margin-top small color="light">烧伤警告</button>
+      </div>
+    </div>
 
     <div class="info">
-      <div>团队锁仓总额: 10k</div>
-      <div>直推人数: 8</div>
+      <div>团队锁仓总额: {{node.performance}}</div>
+      <div>直推人数: {{node.referrals}}</div>
+      <div>{{belowNodeNum}}</div>
     </div>
 
     <div class="level1" text-center>
@@ -61,7 +73,7 @@
           <i><span></span></i>
           <div class="level4">
             <i><span></span></i>
-            炼气
+            {{node.nodelevel}}星
           </div>
         </div>
 
@@ -76,7 +88,7 @@
           <ion-col>
             <div text-center class="earn">
               <div class="name">SEAS总收益</div>
-              <div class="value">1000,000</div>
+              <div class="value">{{bonus.total || '0'}}</div>
             </div>
 
 
@@ -89,10 +101,10 @@
                 <button ion-button color="dark" small round (click)="gotoPick()">提取SEAS</button>
 
               </div>
-              <div>
+              <!-- <div>
                 <button ion-button color="dark" small round (click)="gotoStatus()">收益详情</button>
 
-              </div>
+              </div> -->
             </div>
           </ion-col>
 
@@ -100,10 +112,10 @@
       </ion-grid>
     </div>
   </div>
-  <div>
+  <!-- <div>
     <button ion-button round full margin-top margin-bottom type="submit" (click)="share()" color="light">分享</button>
-  </div>
+  </div> -->
 
-  <share-alert></share-alert>
+  <!-- <share-alert></share-alert> -->
 
 </ion-content>

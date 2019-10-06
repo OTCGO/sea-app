@@ -24,7 +24,7 @@ import { schema } from './db-schema'
 import { CoreModule } from './core.module'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { PipesModule } from '../pipes/pipes.module'
-import { MessageService, MenuService } from '../shared/services'
+import { MessageService, MenuService, NodeService } from '../shared/services'
 
 
 
@@ -37,7 +37,9 @@ import {
   TransactionHistoryEffects,
   SettingsEffects,
   ClaimsEffects,
-  VersionEffects
+  VersionEffects,
+  NodeEffects,
+  BonusEffects
 } from '../store/effects'
 
 const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'assets/i18n/', '.json')
@@ -62,7 +64,9 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
       TransactionHistoryEffects,
       SettingsEffects,
       ClaimsEffects,
-      VersionEffects
+      VersionEffects,
+      NodeEffects,
+      BonusEffects
     ]),
     IonicModule.forRoot(MyApp, {
       tabbarPlacement: 'bottom',
@@ -86,7 +90,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     InAppBrowser,
     Globalization,
     MessageService,
-    MenuService
+    MenuService,
+    NodeService
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

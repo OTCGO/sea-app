@@ -5,16 +5,16 @@ import { BonusActionTypes, BonusActions } from '../actions/bonus.action'
 export interface State {
     loading: boolean
     error: string | Error
-    entities?: Bonus[]
+    entities?: Bonus
 }
 
-const initialBalancesState: State = {
+const initialBonsuState: State = {
     loading: false,
     error: ''
 }
 
 
-export function reducer(state = initialBalancesState, action: BonusActions): State {
+export function reducer(state = initialBonsuState, action: BonusActions): State {
     switch (action.type) {
         case BonusActionTypes.LOAD: {
             return {
@@ -39,5 +39,7 @@ export function reducer(state = initialBalancesState, action: BonusActions): Sta
                 loading: false
             }
         }
+
+        default: return state
     }
 }

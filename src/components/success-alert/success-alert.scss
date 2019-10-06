@@ -5,15 +5,18 @@ success-alert {
   color: white;
 
 
+
   .success-alert {
     background: #393a5f;
     height: 200px;
     width: 80%;
     margin: 0 auto;
     opacity: 0.9;
+    padding: 10px;
 
     .emoji {
       height: 5rem;
+      margin-top: 1rem;
     }
 
     .text {

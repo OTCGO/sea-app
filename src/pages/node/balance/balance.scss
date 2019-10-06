@@ -1,0 +1,49 @@
+@import "../../../theme/variables";
+
+page-balance {
+  .content {
+
+    background: white;
+
+    color: white;
+
+    .container {
+      //   width: 80%;
+      // margin: 10px auto;
+
+      .img {
+        height: 200px;
+        width: 100%;
+        background: #393a5f;
+
+      }
+
+      .desc {
+        color: #3A3A62;
+        margin-top: 20px;
+
+        .title {
+          font-weight: bold;
+          font-size: 40px;
+        }
+
+        .balance {
+          .name {
+            font-size: 20px;
+          }
+
+          .value {
+            font-size: 30px;
+          }
+
+
+        }
+      }
+
+      .btn {
+        width: 60%;
+        margin: 0 auto;
+      }
+    }
+  }
+}

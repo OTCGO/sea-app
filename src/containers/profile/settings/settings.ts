@@ -7,7 +7,7 @@ import { SettingsActions } from '../../../store/actions'
 import { SettingsSelectors } from '../../../store/selectors'
 import { NativeStorage } from '@ionic-native/native-storage'
 import { WalletActions } from '../../../store/actions'
-import { version } from '@app/env' 
+import { version } from '@app/env'
 
 
 @IonicPage({ name: 'Settings' })
@@ -21,12 +21,12 @@ export class SettingsPage {
 	currencies = ['cny', 'usd']
 	locales = [
 		{ title: '中文', locale: 'zh', enabled: true },
-		{ title: 'English', locale: 'en', enabled: true }
+		// { title: 'English', locale: 'en', enabled: true }
 	]
 
 	private appVersion
 
-	constructor (
+	constructor(
 		private navCtrl: NavController,
 		private nativeStorage: NativeStorage,
 		public translateService: TranslateService,
@@ -38,12 +38,12 @@ export class SettingsPage {
 		// console.log('this.appVersion', this.appVersion)
 	}
 
-	handleLocaleClick (locale) {
+	handleLocaleClick(locale) {
 		this.store.dispatch(new SettingsActions.ChangeLanguage(locale))
 	}
 
-	handleCurrencyClick (currency) {
-    this.store.dispatch(new SettingsActions.ChangeCurrency(currency))
+	handleCurrencyClick(currency) {
+		this.store.dispatch(new SettingsActions.ChangeCurrency(currency))
 	}
 
 	logout() {

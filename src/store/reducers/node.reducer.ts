@@ -8,13 +8,13 @@ export interface State {
     entities?: Node
 }
 
-const initialBalancesState: State = {
+const initialNodeState: State = {
     loading: false,
     error: ''
 }
 
 
-export function reducer(state = initialBalancesState, action: NodeActions): State {
+export function reducer(state = initialNodeState, action: NodeActions): State {
     switch (action.type) {
         case NodeActionTypes.LOAD: {
             return {
@@ -26,12 +26,13 @@ export function reducer(state = initialBalancesState, action: NodeActions): Stat
         case NodeActionTypes.LOAD_FAIL: {
             return {
                 ...state,
+                loading: true,
                 error: action.payload
             }
         }
 
         case NodeActionTypes.LOAD_SUCCESS: {
-            console.log('BalancesActionTypes.LOAD_SUCCESS', action.payload)
+            console.log('NodeActionTypes.LOAD_SUCCESS', action.payload)
 
             return {
                 ...state,
@@ -39,5 +40,9 @@ export function reducer(state = initialBalancesState, action: NodeActions): Stat
                 loading: false
             }
         }
+
+
+        default:
+            return state
     }
 }

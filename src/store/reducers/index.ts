@@ -65,7 +65,11 @@ function logger(reducer: ActionReducer<RootState>): ActionReducer<RootState> {
 	}
 }
 
+// export const metaReducers: any = dev ? [logger, storeFreeze] : []
+
 export const metaReducers: MetaReducer<RootState>[] = dev ? [logger, storeFreeze] : []
+
+
 
 export {
 	fromBalances,
@@ -79,5 +83,6 @@ export {
 	fromClaims,
 	fromVersion,
 	fromNode,
-	fromBonus
+	fromBonus,
+	fromSignin
 }

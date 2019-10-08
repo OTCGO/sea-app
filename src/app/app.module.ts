@@ -52,7 +52,8 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    // StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers),
     dev ? StoreDevtoolsModule.instrument() : [],
     DBModule.provideDB(schema),
     EffectsModule.forRoot([

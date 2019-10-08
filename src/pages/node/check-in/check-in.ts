@@ -200,6 +200,7 @@ export class CheckInPage implements OnInit, OnDestroy {
       console.log('result', result)
 
       this.Notification(["签到", "签到成功", ``, 1])
+      this.signinText = '已签到'
 
     } catch (error) {
       console.log('签到失败', error)

@@ -130,7 +130,9 @@ export class JoinPage implements OnInit {
 
       const result: any = await this.nodeService.insert(body, this.fp.get('pwd').value)
 
+      this.store.dispatch(new NodeActions.Load())
       this.Notification(["加入", "加入成功", ``, 1, 1])
+
 
       // if (result.code === 200) {
       //   // console.log('签到成功')

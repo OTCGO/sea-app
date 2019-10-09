@@ -56,7 +56,8 @@ export class NodePage implements OnInit {
         '-4': '已到期已确认',
         '-3': '已到期已退币待确认',
         '-2': '已到期未退币',
-        '-1': '新节点未确认'
+        '-1': '新节点未确认',
+        '610': '节点正在创建，请稍候'
     }
 
 
@@ -104,6 +105,14 @@ export class NodePage implements OnInit {
             this.node = node
 
 
+            if (node && (node.code === 610)) {
+                this.isJoin = false
+                this.joinTitle = this.tips[`610`]
+
+                await sleep(5000)
+                this.store.dispatch(new NodeActions.Load())
+                return
+            }
 
 
             if (node && (node.status < 0)) {
@@ -138,7 +147,7 @@ export class NodePage implements OnInit {
 
                 //显示旗下星数  >=5 才显示 
                 if (node.nodelevel >= 5) {
-                    const num = parseInt(node.nodelevel.toString().substr((node.nodelevel - 1) * 4, 4), 18)
+                    const num = parseInt(node.teamlevelinfo.toString().substr((node.nodelevel - 1) * 4, 4), 18)
                     this.belowNodeNum = `旗下${node.nodelevel}星数：${num}`
                 }
                 return

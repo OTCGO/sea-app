@@ -80,6 +80,7 @@ export class NodeUnlockPage implements OnInit {
     componentRef.instance.result = content[1]
     componentRef.instance.reason = content[2]
     componentRef.instance.icon = content[3]
+    componentRef.instance.isHome = content[4] || false
   }
 
 
@@ -88,7 +89,8 @@ export class NodeUnlockPage implements OnInit {
       console.log('btnPick', this.pwd)
       const result: any = await this.nodeService.unlock(this.pwd);
 
-      this.Notification(["解锁", "操作成功", ``, 1])
+      this.store.dispatch(new NodeActions.Load())
+      this.Notification(["解锁", "操作成功", ``, 1, 1])
 
 
     } catch (error) {

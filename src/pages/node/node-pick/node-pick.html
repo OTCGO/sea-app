@@ -51,10 +51,16 @@
       <div class="value">{{this.withdraw_actually}}</div>
     </div>
 
-    <div class="pick">
-      <ion-item marging-top btn>
-        <ion-input placeholder="输入密码" [(ngModel)]="pwd" required type="password" minlength="8" maxlength="16">
+    <div class="pick" btn>
+      <ion-item marging-top>
+        <ion-input placeholder="输入密码" [(ngModel)]="pwd" required [type]="pwdType" minlength="8" maxlength="16">
         </ion-input>
+        <button ion-button clear color="dark" type="button" item-right (click)="displayPwd()">
+          <ion-icon name="eye" *ngIf="!inputType"> </ion-icon>
+          <ion-icon name="eye-off" *ngIf="inputType"> </ion-icon>
+        </button>
+
+
       </ion-item>
       <button ion-button round full margin-top margin-bottom (click)="btnPick()" color="light">确认提取</button>
     </div>

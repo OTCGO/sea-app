@@ -15,10 +15,10 @@ page-node-unlock {
         background: white;
         color: black;
         padding: 10px;
-        padding-bottom: 3rem;
+        padding-bottom: 2rem;
 
         .item {
-          margin-top: 4rem;
+          margin-top: 2rem;
 
           .name {
             font-size: 1.5rem;
@@ -30,8 +30,19 @@ page-node-unlock {
         }
       }
 
+      .rule {
+        background: transparent;
+        color: white;
+        margin-top: 10px;
+
+        .item-inner {
+          border: 0px;
+        }
+
+      }
+
       .btn {
-        margin-top: 10rem;
+        margin-top: 5rem;
 
         ion-item {
           border-radius: 30px;

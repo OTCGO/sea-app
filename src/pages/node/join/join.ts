@@ -30,6 +30,8 @@ export class JoinPage implements OnInit {
   private gasBalance;
   private isAddress = false;
   private isAgree = false;
+  private inputType = true
+  private pwdType = 'password'
 
   @ViewChild("alertContainer", { read: ViewContainerRef }) container: ViewContainerRef;
 
@@ -151,6 +153,20 @@ export class JoinPage implements OnInit {
 
 
 
+
+  }
+  displayPwd() {
+    console.log('displayPwd')
+    this.inputType = !this.inputType
+
+    this.pwdType === 'password' ? this.pwdType = 'text' : this.pwdType = 'password';
+
+  }
+
+  updateAgree() {
+    if (this.isAgree) {
+      this.navCtrl.push('NodeRule')
+    }
 
   }
 

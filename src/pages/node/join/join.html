@@ -45,7 +45,12 @@
 
     <ion-item>
       <ion-label>密码</ion-label>
-      <ion-input placeholder="输入密码" formControlName="pwd" type="password" minlength="8" maxlength="16"></ion-input>
+      <ion-input placeholder="输入密码" formControlName="pwd" [type]="pwdType" minlength="8" maxlength="16"></ion-input>
+
+      <button ion-button clear color="dark" type="button" item-right (click)="displayPwd()">
+        <ion-icon name="eye" *ngIf="!inputType"> </ion-icon>
+        <ion-icon name="eye-off" *ngIf="inputType"> </ion-icon>
+      </button>
     </ion-item>
 
 
@@ -54,16 +59,17 @@
 
 
       <ion-item class="rule" no-margin>
+        <ion-checkbox formControlName="isAgree" (ionChange)="updateAgree()"></ion-checkbox>
         <ion-label>我已阅读并同意节点规则</ion-label>
-        <ion-checkbox formControlName="isAgree"></ion-checkbox>
       </ion-item>
+
     </div>
 
 
-    <div class="rule" margin-top>
+    <!-- <div class="rule" margin-top>
       1. 加入节点将视为参与SEAC锁仓。 <br>
       2. 加入节点将收取0.01 gas,作为转账手续费，请确定gas余额充足。
-    </div>
+    </div> -->
 
 
     <button ion-button [disabled]="!isAddress || !isAgree" round full margin-top type="submit">加入节点</button>

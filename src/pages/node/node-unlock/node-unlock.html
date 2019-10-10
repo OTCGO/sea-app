@@ -29,14 +29,25 @@
     </div>
 
 
+
     <div class="btn">
       <ion-item>
-        <ion-input placeholder="输入密码" [(ngModel)]="pwd" required type="password" minlength="8" maxlength="16">
+        <ion-input placeholder="输入密码" [(ngModel)]="pwd" required [type]="pwdType" minlength="8" maxlength="16">
         </ion-input>
+
+        <button ion-button clear color="dark" type="button" item-right (click)="displayPwd()">
+          <ion-icon name="eye" *ngIf="!inputType"> </ion-icon>
+          <ion-icon name="eye-off" *ngIf="inputType"> </ion-icon>
+        </button>
       </ion-item>
 
       <button ion-button round full margin-top (click)=btnUnlock()>确认解锁</button>
-      <button ion-button round full margin-top color="light">取消解锁</button>
+      <button ion-button round full margin-top color="light" (click)="navCtrl.pop();">取消解锁</button>
+
+    </div>
+
+    <div class="rule" margin-top>
+      如果你有未提取的SEAS收益，请先提取SEAS收益后解锁，否则导致SEAS损失。
 
     </div>
   </div>

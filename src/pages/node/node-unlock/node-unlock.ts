@@ -29,6 +29,9 @@ export class NodeUnlockPage implements OnInit {
 
   private pwd;
   private node;
+  private inputType = true
+  private pwdType = 'password'
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -102,4 +105,11 @@ export class NodeUnlockPage implements OnInit {
 
   }
 
+  displayPwd() {
+    console.log('displayPwd')
+    this.inputType = !this.inputType
+
+    this.pwdType === 'password' ? this.pwdType = 'text' : this.pwdType = 'password';
+
+  }
 }

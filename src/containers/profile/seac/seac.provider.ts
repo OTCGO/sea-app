@@ -73,15 +73,15 @@ export class SeacProvider {
 			const res = await this.tran(pr, publicKey)
 
 			if (!res['result']) {
-				return  Promise.resolve(false)
+				return Promise.resolve(false)
 			}
 
 			return Promise.resolve(true)
-		
+
 
 		} catch (error) {
 			console.log('error', error)
-			return  Promise.resolve(false)
+			return Promise.resolve(false)
 		}
 	}
 

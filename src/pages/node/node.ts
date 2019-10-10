@@ -48,16 +48,20 @@ export class NodePage implements OnInit {
 
     private tips = {
         '-10': '无效交易',
-        '-9': '收款方不一致',
-        '-8': '交易金额不一致',
-        '-7': '解锁已确认',
-        '-6': '解锁已退币待确认',
-        '-5': '解锁未退币',
-        '-4': '已到期已确认',
-        '-3': '已到期已退币待确认',
-        '-2': '已到期未退币',
-        '-1': '新节点未确认',
-        '610': '节点正在创建，请稍候'
+        '-9': '收款方错误',
+        '-8': '交易金额错误',
+        '-7': '已解锁',
+        '-6': '等待区块确认，SEAC将返回钱包余额',
+        '-5': '等待区块确认，SEAC将返回钱包余额',
+        '-4': '节点已到期',
+        '-3': '正在处理，请稍候',
+        '-2': '正在处理，请稍候',
+        '-1': '节点正在创建，请稍候',
+        '610': "节点正在创建，请稍候",
+        '611': "正在处理解锁操作，请稍侯",
+        '612': "正在处理提取操作，请稍候",
+        '613': "正在处理签到操作，请稍候",
+        '614': "正在处理节点激活，请稍候",
     }
 
 
@@ -105,12 +109,60 @@ export class NodePage implements OnInit {
             this.node = node
 
 
+
+
+
             if (node && (node.code === 610)) {
                 this.isJoin = false
                 this.joinTitle = this.tips[`610`]
 
                 await sleep(5000)
                 this.store.dispatch(new NodeActions.Load())
+                return
+            }
+
+            if (node && (node.code === 611)) {
+                this.isJoin = false
+                this.joinTitle = this.tips[`611`]
+
+                await sleep(5000)
+                this.store.dispatch(new NodeActions.Load())
+                return
+            }
+
+            if (node && (node.code === 612)) {
+                this.isJoin = false
+                this.joinTitle = this.tips[`612`]
+
+                await sleep(5000)
+                this.store.dispatch(new NodeActions.Load())
+                return
+            }
+
+            if (node && (node.code === 613)) {
+                this.isJoin = false
+                this.joinTitle = this.tips[`613`]
+
+                await sleep(5000)
+                this.store.dispatch(new NodeActions.Load())
+                return
+            }
+
+
+            if (node && (node.code === 614)) {
+                this.isJoin = false
+                this.joinTitle = this.tips[`614`]
+
+                await sleep(5000)
+                this.store.dispatch(new NodeActions.Load())
+                return
+            }
+
+            if (node && (node.status === -7)) {
+                this.isJoin = false
+                console.log('this.tips', this.tips[`${node.status}`])
+                this.joinTitle = this.tips[`${node.status}`]
+
                 return
             }
 

@@ -34,9 +34,14 @@ page-node-pick {
 
       .pick {
         margin-top: 10px;
+
+        ion-item {
+          border-radius: 30px;
+        }
       }
 
 
     }
+
   }
 }

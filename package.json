@@ -19,7 +19,7 @@
     "debug:android": "export CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL=../gradle-5.6-all.zip && ionic cordova run android  --debug",
     "build:android": "export CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL=../gradle-5.6-all.zip && ionic cordova build android --minifyjs --minifycss --debug ",
     "release:android": "export CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL=../gradle-5.6-all.zip && ionic cordova build android --minifyjs --minifycss --release --prod",
-    "debug:ios": "ionic cordova build ios",
+    "debug:ios": "ionic cordova run ios",
     "build:ios": "ionic cordova build ios --prod  --release  --minifyjs --minifycss",
     "rm:android": "ionic cordova platform rm android",
     "add:android": "ionic cordova platform add android",

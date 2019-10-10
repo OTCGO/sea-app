@@ -15,7 +15,7 @@
 
     <div class="item" *ngFor="let item of obj">
       <ion-grid>
-        <ion-row>
+        <ion-row (click)="copy(item.value)">
           <ion-col>
             <div class="name">{{item.title}}</div>
 

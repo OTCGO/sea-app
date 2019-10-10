@@ -33,6 +33,9 @@ export class NodePickPage implements OnInit {
   private withdraw_actually
   private pwd
 
+  private inputType = true
+  private pwdType = 'password'
+
   @ViewChild("alertContainer", { read: ViewContainerRef }) container: ViewContainerRef;
 
   constructor(public navCtrl: NavController,
@@ -77,6 +80,7 @@ export class NodePickPage implements OnInit {
     componentRef.instance.result = content[1]
     componentRef.instance.reason = content[2]
     componentRef.instance.icon = content[3]
+    componentRef.instance.isHome = content[4] || false
   }
 
 
@@ -85,7 +89,7 @@ export class NodePickPage implements OnInit {
     try {
       // console.log('btnPick', this.pwd)
       const result: any = await this.nodeService.withdraw(this.pwd);
-      this.Notification(["提取", "操作成功", `本次提取${this.withdraw_actually}`, 1])
+      this.Notification(["提取", "操作成功", `本次提取${this.withdraw_actually}`, 1, 1])
 
       // if (result.code === 200) {
       //   // console.log('签到成功')
@@ -100,5 +104,13 @@ export class NodePickPage implements OnInit {
 
       this.Notification(["提取", "操作失败", `${error.message}`, 0])
     }
+  }
+
+  displayPwd() {
+    console.log('displayPwd')
+    this.inputType = !this.inputType
+
+    this.pwdType === 'password' ? this.pwdType = 'text' : this.pwdType = 'password';
+
   }
 }

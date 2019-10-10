@@ -36,7 +36,7 @@ export class NodeMenuComponent implements OnInit {
     })
 
     this.store.select(NodeSelectors.getEntities).subscribe(async node => {
-      if (node && node.nodelevel) {
+      if (node && node.nodelevel && node.status >= 0) {
         this.nodeLevel = node.nodelevel
       }
 

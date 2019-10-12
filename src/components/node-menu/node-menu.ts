@@ -44,6 +44,11 @@ export class NodeMenuComponent implements OnInit {
   }
 
   goPage(name) {
+    this.menuService.sendMessage("change")
     this.navCtrl.push(name)
+  }
+
+  handleMenu() {
+    this.menuService.sendMessage("change")
   }
 }

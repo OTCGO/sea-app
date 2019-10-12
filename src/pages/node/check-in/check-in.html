@@ -25,7 +25,8 @@
           {{currentDate | date : 'yyyy-MM-dd'}}
         </ion-col>
         <ion-col>
-          <button ion-button round small color="light" (click)=btnSignin()>{{signinText}}</button>
+          <button ion-button round small color="light" [disabled]="signin.status"
+            (click)=btnSignin()>{{signinText}}</button>
         </ion-col>
       </ion-row>
     </div>

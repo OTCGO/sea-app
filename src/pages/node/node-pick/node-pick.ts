@@ -27,7 +27,7 @@ export class NodePickPage implements OnInit {
     total: '',
   }
 
-  private total
+  private remain
   private available
   private fee
   private withdraw_actually
@@ -51,7 +51,7 @@ export class NodePickPage implements OnInit {
       if (bonus) {
         console.log('bonus', bonus)
         // this.total = parseInt(bonus.total)
-        this.total = bonus.total
+        this.remain = bonus.remain
 
         this.available = bonus.withdraw_max
         this.withdraw_actually = bonus.withdraw_actually

@@ -1,43 +1,62 @@
+@import "../../theme/variables";
+
 success-alert {
-  position: fixed;
-  width: 100%;
-  top: 10px;
-  color: white;
+
+  .container-alert {
+    position: fixed;
+    width: 100%;
+    top: 10px;
+    color: white;
+    z-index: 1000;
+
+
+    .success-alert {
 
 
 
-  .success-alert {
-    background: #393a5f;
-    height: 200px;
-    width: 80%;
-    margin: 0 auto;
-    opacity: 0.9;
-    padding: 10px;
+      background: #393a5f;
+      height: 200px;
+      width: 80%;
+      margin: 0 auto;
+      opacity: 0.9;
+      padding: 10px;
 
-    .emoji {
-      height: 5rem;
-      margin-top: 1rem;
+      .emoji {
+        height: 5rem;
+        margin-top: 1rem;
+      }
+
+      .text {
+        .operation {
+          font-size: 1.5rem
+        }
+
+        .state {
+          font-size: 2rem
+        }
+
+        .des {
+          font-size: 1rem
+        }
+      }
+
+      .btn {
+        button {
+          width: 80%;
+          margin: 10px auto;
+        }
+      }
     }
+  }
 
-    .text {
-      .operation {
-        font-size: 1.5rem
-      }
-
-      .state {
-        font-size: 2rem
-      }
-
-      .des {
-        font-size: 1rem
-      }
-    }
-
-    .btn {
-      button {
-        width: 80%;
-        margin: 10px auto;
-      }
-    }
+  .shield {
+    position: absolute;
+    background: color($colors, navy);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    z-index: 999;
   }
 }

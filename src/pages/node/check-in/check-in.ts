@@ -191,22 +191,21 @@ export class CheckInPage implements OnInit, OnDestroy {
   async btnSignin() {
     console.log('signin', this.wif)
 
-    if (this.signin.status !== 0) {
-      return
+    if (this.signin.status === 0) {
+      try {
+        const result: any = await this.nodeService.signin(this.wif)
+        console.log('result', result)
+
+        this.Notification(["签到", "签到成功", ``, 1])
+        this.signinText = '已签到';
+        this.signin.status = 1;
+
+
+      } catch (error) {
+        console.log('签到失败', error)
+        this.Notification(["签到", "签到失败", `${error.message}`, 0])
+      }
     }
-
-    try {
-      const result: any = await this.nodeService.signin(this.wif)
-      console.log('result', result)
-
-      this.Notification(["签到", "签到成功", ``, 1])
-      this.signinText = '已签到'
-
-    } catch (error) {
-      console.log('签到失败', error)
-      this.Notification(["签到", "签到失败", `${error.message}`, 0])
-    }
-
   }
 
 }

@@ -338,9 +338,9 @@ export class LoginForm implements OnInit {
 			// const wif = await decryptAsync(encrypted, passphrase)
 			//  const wif = await wallet.decryptAsync(encrypted, passphrase)
 			//  const acct = new wallet.Account(wif)
-			console.time('getWif')
+			// console.time('getWif')
 			const wif: any = await getWif(encrypted, passphrase)
-			console.timeEnd('getWif')
+			// console.timeEnd('getWif')
 
 			const tempAcct = new wallet.Account(wif)
 
@@ -355,13 +355,44 @@ export class LoginForm implements OnInit {
 			})
 
 
-			console.log('acct', acct)
+			// console.log('acct', acct)
 
 			loading.dismiss().catch(() => { })
 			this.store.dispatch(new WalletActions.AddAccount(acct))
 			this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))
 
-			this.nativeStorage.setItem('account', { encrypted, address })
+			await this.nativeStorage.setItem('account', { encrypted, address })
+
+			try {
+				const result = await this.nativeStorage.getItem('addressList')
+				console.log('result', result)
+
+
+				if (result) {
+
+					let isIn = false;
+					result.forEach(element => {
+						element.isDefault = false
+						if (element.address === address) {
+							isIn = true;
+							element.isDefault = true
+						}
+					});
+					if (!isIn) {
+						result.push({ encrypted, address, isDefault: true })
+					}
+
+					await this.nativeStorage.setItem('addressList', result)
+				} else {
+					await this.nativeStorage.setItem('addressList', [{ encrypted, address, isDefault: true }])
+				}
+
+			} catch (error) {
+				console.log('error', error)
+				await this.nativeStorage.setItem('addressList', [{ encrypted, address, isDefault: true }])
+			}
+
+
 
 			this.navCtrl.push('Tabs')
 

@@ -15,9 +15,12 @@ export interface Node {
     nodelevel: number
     teamlevelinfo: string
     burned: number
+    levelchange: number
     smallareaburned: string
     signin: number
     static_total: number
     penalty: string
     refundtxid: string
+    static_remain: string
+    static_remain_cny: string
 }

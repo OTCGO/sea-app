@@ -1,20 +1,21 @@
 <form [formGroup]="loginForm" (submit)="login(loginForm)">
-	<ion-label class="login__error">
-		<!-- <h5 *ngIf="key.invalid && (key.dirty || key.touched) && key.errors.invalidWIF">
+  <ion-label class="login__error">
+    <!-- <h5 *ngIf="key.invalid && (key.dirty || key.touched) && key.errors.invalidWIF">
 			{{ 'LOGIN.wif_error' | translate }}
 		</h5> -->
     <!-- <h5 *ngIf="key.invalid && (key.dirty || key.touched) && key.errors.invalidNEP2">
       {{ 'LOGIN.nep2_error' | translate }}
     </h5> -->
-	</ion-label>
+  </ion-label>
 
-	<ion-row class="login__wif-section" *ngIf="isSwitch">
-		<ion-col>
-			<ion-item class="login__wif-input rounded">
-				<ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="key" required></ion-input>
-			</ion-item>
+  <ion-row class="login__wif-section" *ngIf="isSwitch">
+    <ion-col>
+      <ion-item class="login__wif-input rounded">
+        <ion-input type="text" placeholder="{{ 'LOGIN.wif_placeholder' | translate }}" formControlName="key" required>
+        </ion-input>
+      </ion-item>
 
-			<!-- <button
+      <!-- <button
 				class="login__import-button"
 				type="button"
 				[class.is-active]="!isKey"
@@ -24,40 +25,47 @@
 			</button> 
 		    -->
 
-			<!-- <input accept="application/json, text/plain, .json" type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])"> -->
+      <!-- <input accept="application/json, text/plain, .json" type="file" id="fileInput" hidden #fileInput (change)="fileChange(fileInput.files[0])"> -->
 
-			<!-- <button
+      <!-- <button
 				class="login__wif-switcher"
 				type="button"
 				*ngIf="!isKey"
 				(click)="switchWIFKeyBox()">
 				<img src="assets/imgs/icon-login_WIF.svg" alt="" class="icon">
 			</button> -->
-		</ion-col>
-	</ion-row>
+    </ion-col>
+  </ion-row>
 
-	<ion-row class="login__password-section" >
-		<ion-col>
-			<ion-item class="login__password-input">	
-				<ion-input type="password" *ngIf="inputType" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required maxlength=20 minlength="8" ></ion-input>
-				<ion-input type="text" *ngIf="!inputType" placeholder="{{ 'LOGIN.password' | translate }}" formControlName="passphrase" required maxlength=20 minlength="8" ></ion-input>
-			
-				<button ion-button clear color="dark" type="button" item-right (click)="displayPwd()">
-					 <ion-icon name="eye" *ngIf="!inputType"> </ion-icon>
-					 <ion-icon name="eye-off" *ngIf="inputType"> </ion-icon>
-				</button>
-			</ion-item>
-		</ion-col>
-	</ion-row>
+  <ion-row class="login__password-section">
+    <ion-col *ngIf="accountCache">
+      <ion-item class="address" style=" font-size: 12px;">
+        <span>{{accountCache.address}}</span>
+      </ion-item>
+    </ion-col>
 
-	<ion-row>
-		<ion-col>
-			<button
-				ion-button round block outline
-				[disabled]="loginForm.valid"
-				class="login__button"
-				type="submit">{{ 'LOGIN.' + tip | translate }}</button>
-		</ion-col>
-	</ion-row>
-	
+    <ion-col>
+      <ion-item class="login__password-input">
+        <ion-input type="password" *ngIf="inputType" placeholder="{{ 'LOGIN.password' | translate }}"
+          formControlName="passphrase" required maxlength=20 minlength="8"></ion-input>
+        <ion-input type="text" *ngIf="!inputType" placeholder="{{ 'LOGIN.password' | translate }}"
+          formControlName="passphrase" required maxlength=20 minlength="8"></ion-input>
+
+        <button ion-button clear color="dark" type="button" item-right (click)="displayPwd()">
+          <ion-icon name="eye" *ngIf="!inputType"> </ion-icon>
+          <ion-icon name="eye-off" *ngIf="inputType"> </ion-icon>
+        </button>
+      </ion-item>
+    </ion-col>
+
+
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <button ion-button round block outline [disabled]="loginForm.valid" class="login__button"
+        type="submit">{{ 'LOGIN.' + tip | translate }}</button>
+    </ion-col>
+  </ion-row>
+
 </form>

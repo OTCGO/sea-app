@@ -1,0 +1,55 @@
+<!--
+  Generated template for the AddressListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>地址列表</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="list">
+    <ion-grid>
+      <ion-card ion-item *ngFor="let item of addressList">
+        <ion-row text-center [ngClass]="{'selected':item.isDefault}">
+          <ion-col>
+            {{ item.address.substr(0,6)+"***"+item.address.substr(28)}}
+            <ion-icon name="copy" (click)="copy(item.address)"></ion-icon>
+          </ion-col>
+          <ion-col col-2>
+            <ion-icon name="arrow-forward" (click)="btnSelected(item)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+
+      <!-- <ion-card>
+        <ion-row text-center class="selected">
+          <ion-col>
+            AZ2FJD***h3SdoG
+            <ion-icon name="copy" (click)="copy()"></ion-icon>
+          </ion-col>
+          <ion-col col-2>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-card> -->
+    </ion-grid>
+  </div>
+  <!-- <ion-list>
+    <button [ngClass]="{'selected':item.isDefault}" ion-item *ngFor="let item of addressList">
+
+      {{ item.address.substr(0,6)+"***"+item.address.substr(28)}}
+      <ion-icon name="copy" (click)="copy()"></ion-icon>
+    </button>
+
+     (click)="btnSelected(item)" 
+
+  </ion-list> -->
+</ion-content>

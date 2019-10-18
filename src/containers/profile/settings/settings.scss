@@ -27,16 +27,64 @@ page-settings {
     width: 90%;
     margin: 0 auto;
   }
+
   //  .scroll-content {
   //    padding: 0
   //  }
 
-  .version{
+  .version {
     color: black;
     position: absolute;
     bottom: 5rem;
     font-size: 3rem;
     text-align: center;
     width: 100%;
+    z-index: 999;
   }
+
+  .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #175bd7;
+    z-index: 1000;
+
+
+    .list {
+      .button-inner {
+        color: black !important;
+      }
+
+      // button {
+
+
+      //   }
+
+    }
+
+    // .addresslist {
+    //   .card {
+    //     margin: 0px !important;
+    //     width: 100%;
+    //   }
+
+    //   position: absolute;
+    //   bottom: 0;
+    //   width: 100%;
+    //   height: 400px;
+    //   background: white;
+
+    //   button {
+    //     margin-top: 1rem;
+    //   }
+
+    //   .selected {
+    //     background: #175bd7;
+    //     color: white;
+    //   }
+    // }
+  }
+
 }

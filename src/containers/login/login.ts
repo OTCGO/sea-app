@@ -112,7 +112,8 @@ export class LoginPage implements OnInit {
     this.store.dispatch(new WalletActions.RemoveAccount())
     this.isSwitch = true
     // clear all storage
-    this.nativeStorage.clear()
+    // this.nativeStorage.clear()
+    this.nativeStorage.remove('account')
     console.log('this.isSwitch', this.isSwitch)
   }
 

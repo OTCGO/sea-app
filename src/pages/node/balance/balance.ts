@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import { RootState } from '../../../store/reducers'
 import { BalancesSelectors, NodeSelectors, WalletSelectors, BonusSelectors } from '../../../store/selectors'
-
+import { BalancesActions, NodeActions, BonusActions } from '../../../store/actions'
 /**
  * Generated class for the BalancePage page.
  *
@@ -28,6 +28,8 @@ export class BalancePage implements OnInit {
   }
 
   ngOnInit() {
+    this.store.dispatch(new NodeActions.Load())
+
     this.store.select(NodeSelectors.getEntities).subscribe(node => {
       console.log('node:ngOnInit:node', node)
       if (node && node.nodelevel) {

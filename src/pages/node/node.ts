@@ -179,6 +179,13 @@ export class NodePage implements OnInit {
 
             if (node && (node.status >= 0)) {
                 this.isJoin = true
+
+                if (node.levelchange === 1) {
+                    this.joinTitle = '节点已升级'
+                }
+                if (node.levelchange === 2) {
+                    this.joinTitle = '节点被降级'
+                }
             }
 
 

@@ -1,31 +1,71 @@
 <ion-header class="otcgo-header">
-	<ion-navbar>
-		<ion-title>{{ 'PROFILE.SETTINGS.title' | translate }}</ion-title>
-	</ion-navbar>
+  <ion-navbar>
+    <ion-title>{{ 'PROFILE.SETTINGS.title' | translate }}</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-	<ion-list style="width: 89%;margin: 1rem auto;">
-		<settings-language
-      [languages]="locales"
-      [currentLanguage]="currentLanguage | async"
+  <ion-list style="width: 89%;margin: 1rem auto;">
+    <settings-language [languages]="locales" [currentLanguage]="currentLanguage | async"
       (localeClick)="handleLocaleClick($event)"></settings-language>
+
+    <ion-item class="list">
+      <button class="btn" ion-button clear full text-capitalize (click)="openAddresstLis()">钱包列表</button>
+    </ion-item>
+
   </ion-list>
 
+  <!-- 
+  <ion-list>
+
+    <ion-item>
+      <button class="btn" ion-button full (click)="openAddresstLis()">钱包列表</button>
+    </ion-item>
+
+  </ion-list> -->
+
+  <!-- <ion-row>
+    <ion-col>
+     
+    </ion-col>
+  </ion-row> -->
+
   <ion-row>
-      <ion-col>
-          <button class="btn" ion-button   full color="danger" (click)="logout()">{{ 'PROFILE.logout' | translate }}</button>
-      </ion-col>
+    <ion-col>
+      <button class="btn" ion-button full color="danger" (click)="logout()">{{ 'PROFILE.logout' | translate }}</button>
+    </ion-col>
   </ion-row>
 
 
+  <!-- <div class="bg" *ngIf="display">
+    <div class="addresslist">
+      <ion-card>
+        <ion-card-header text-center>
+          钱包列表
+        </ion-card-header>
+
+        <ion-list>
+          <button [ngClass]="{'selected':item.isDefault}" ion-item *ngFor="let item of addressList"
+            (click)="btnSelected(item)">
+
+            {{item.address}}
+            <ion-icon name="copy" (click)="copy()"></ion-icon>
+          </button>
+
+
+
+        </ion-list>
+      </ion-card>
+    </div>
+
+  </div> -->
 
   <div class="version">
     v {{ appVersion }}
   </div>
 
- <!-- <ion-list>
+  <!-- <ion-list>
     
   </ion-list> -->
 

@@ -1,0 +1,22 @@
+page-address-list {
+  button {
+    margin-top: 1rem;
+  }
+
+  .list {
+    // width: 80%;
+    margin: 0 auto;
+
+    ion-row {
+      margin-top: 5px;
+      //   height: 40px;
+      font-size: 16px;
+      //   border: 1px solid black;
+    }
+  }
+
+  .selected {
+    background: #175bd7;
+    color: white;
+  }
+}

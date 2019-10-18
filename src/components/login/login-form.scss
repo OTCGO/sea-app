@@ -2,6 +2,8 @@
 
 login-form {
   .login__wif-section {
+
+
     .login__wif-input {
       transition: all 0.2s ease-in-out;
       padding-left: 2vh !important;
@@ -9,7 +11,7 @@ login-form {
       min-height: 3.8rem;
       max-height: 3.8rem;
 
-      &.input-has-value + button.login__import-button {
+      &.input-has-value+button.login__import-button {
         opacity: 0;
       }
 

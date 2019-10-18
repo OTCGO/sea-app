@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core'
   templateUrl: 'tabs.html'
 })
 export class TabsPage implements OnInit {
-  selectedIndex = 1
+  selectedIndex = 0
   tabs: any[]
 
   @ViewChild('ionTabs') tabRef: Tabs
@@ -21,7 +21,8 @@ export class TabsPage implements OnInit {
   // private discoverTitle = 'discover'
   private profileTitle = 'profile'
 
-  constructor(private trs: TranslateService) { }
+  constructor(private trs: TranslateService
+  ) { }
 
   ngOnInit() {
     this.tabs = [
@@ -29,6 +30,9 @@ export class TabsPage implements OnInit {
       // { root: 'Markets', title: this.marketsTitle, icon: 'markets', enabled: true },
       // { root: 'Discover', title: this.discoverTitle, icon: 'discover', enabled: false },
       { root: 'Node', title: "node", icon: 'git-network', enabled: true },
+
+      // { root: 'AddressList', title: "AddressList", icon: 'git-network', enabled: true },
+
       { root: 'Profile', title: this.profileTitle, icon: 'person', enabled: true }
     ]
 

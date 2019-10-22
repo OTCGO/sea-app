@@ -1,22 +1,19 @@
 <ion-content class="login">
 
-	<div class="login__container">
-		<ion-label class="login__title">
-			<h2>{{ 'LOGIN.title' | translate }}</h2>
-		</ion-label>
+  <div class="login__container">
+    <ion-label class="login__title">
+      <h2>{{ 'LOGIN.title' | translate }}</h2>
+    </ion-label>
 
-		<login-form tip="login_wallet"
-					[isSwitch]="isSwitch"
-                (onNEP2)="NEP2Login($event)"
-                (onWIF)="wifLogin($event)"
-		            (onOldWallet)="oldWalletLogin($event)"
-		            (onNEP5)="NEP5Login($event)"></login-form>
+    <login-form tip="login_wallet" [isSwitch]="isSwitch" (onNEP2)="NEP2Login($event)" (onWIF)="wifLogin($event)"
+      (onOldWallet)="oldWalletLogin($event)" (onNEP5)="NEP5Login($event)"></login-form>
 
-		<div class="login__tip">
-			<a (click)="navCtrl.setRoot('CreateWallet')">{{ 'LOGIN.tip' | translate }}</a> &nbsp;|
-			<a (click)="switchAccount()">{{ 'LOGIN.switch' | translate }}</a>
-		</div>
+    <div class="login__tip">
+      <a (click)="navCtrl.setRoot('CreateWallet')">{{ 'LOGIN.tip' | translate }}</a>
+      &nbsp;|
+      <a (click)="switchAccount()">{{ 'LOGIN.switch' | translate }}</a>
+    </div>
 
-		<version></version>
-	</div>
+    <version></version>
+  </div>
 </ion-content>

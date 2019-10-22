@@ -349,7 +349,7 @@ export class LoginForm implements OnInit {
 			const acct = new wallet.Account({
 				// wif,
 				address,
-				label: address,
+				// label: address,
 				key: encrypted,
 				isDefault: true
 			})
@@ -361,7 +361,7 @@ export class LoginForm implements OnInit {
 			this.store.dispatch(new WalletActions.AddAccount(acct))
 			this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))
 
-			await this.nativeStorage.setItem('account', { encrypted, address })
+			await this.nativeStorage.setItem('account', { encrypted, address, label: '123' })
 
 			try {
 				const result = await this.nativeStorage.getItem('addressList')
@@ -384,12 +384,12 @@ export class LoginForm implements OnInit {
 
 					await this.nativeStorage.setItem('addressList', result)
 				} else {
-					await this.nativeStorage.setItem('addressList', [{ encrypted, address, isDefault: true }])
+					await this.nativeStorage.setItem('addressList', [{ encrypted, address, isDefault: true, label: '123' }])
 				}
 
 			} catch (error) {
 				console.log('error', error)
-				await this.nativeStorage.setItem('addressList', [{ encrypted, address, isDefault: true }])
+				await this.nativeStorage.setItem('addressList', [{ encrypted, address, isDefault: true, label: '123' }])
 			}
 
 

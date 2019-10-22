@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!-- <ion-header>
 
   <ion-navbar>
     <ion-title>地址列表</ion-title>
@@ -28,28 +28,57 @@
           </ion-col>
         </ion-row>
       </ion-card>
-
-      <!-- <ion-card>
-        <ion-row text-center class="selected">
-          <ion-col>
-            AZ2FJD***h3SdoG
-            <ion-icon name="copy" (click)="copy()"></ion-icon>
-          </ion-col>
-          <ion-col col-2>
-            <ion-icon name="arrow-forward"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-card> -->
     </ion-grid>
   </div>
-  <!-- <ion-list>
-    <button [ngClass]="{'selected':item.isDefault}" ion-item *ngFor="let item of addressList">
+</ion-content> -->
 
-      {{ item.address.substr(0,6)+"***"+item.address.substr(28)}}
-      <ion-icon name="copy" (click)="copy()"></ion-icon>
-    </button>
+<ion-header>
 
-     (click)="btnSelected(item)" 
+  <ion-navbar>
+    <ion-title>钱包列表</ion-title>
+  </ion-navbar>
 
-  </ion-list> -->
+</ion-header>
+
+<ion-content padding>
+  <ion-list class="address-sliding">
+    <!-- <ion-list-header>
+      Chats
+    </ion-list-header> -->
+
+    <ion-item-sliding *ngFor="let item of addressList; index as i">
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="assets/icon/default.png">
+        </ion-avatar>
+        <h2>
+          {{ item.label || '123'}} <ion-icon name="copy" (click)="copy(item.address)" color="blue"></ion-icon>
+          <span *ngIf="item.isDefault" class="selected">当前</span>
+        </h2>
+        <p>{{ item.address.substr(0,6)+"***"+item.address.substr(28)}}</p>
+        <ion-note item-end *ngIf="!item.isDefault">
+          <ion-icon name="arrow-forward" (click)="btnSelected(item)"></ion-icon>
+        </ion-note>
+      </ion-item>
+
+      <ion-item-options>
+        <button ion-button (click)="edit(i)">
+          <ion-icon name="create"></ion-icon>
+          编辑
+        </button>
+        <button ion-button color="danger" (click)="deleteAddress(i)">
+          <ion-icon name="trash"></ion-icon>
+          删除
+        </button>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+
+
+
+
+
+  </ion-list>
 </ion-content>

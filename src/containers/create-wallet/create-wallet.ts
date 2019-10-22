@@ -98,7 +98,7 @@ export class CreateWalletPage implements OnInit {
 
       if (this.wif && !wallet.isWIF(this.wif)) {
         this.ts.get('CW.wif_error').subscribe(data => {
-         return this.np.emit({ message: data })
+          return this.np.emit({ message: data })
         })
         //
         return
@@ -135,6 +135,7 @@ export class CreateWalletPage implements OnInit {
         passphrase: this.passphrase1
       }
       loading.dismiss().catch(() => { }).catch(() => { })
+
       this.store.dispatch(new AuthActions.CreateWallet(dispatchOption))
 
     } catch (error) {

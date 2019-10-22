@@ -66,7 +66,7 @@ export class SettingsPage implements OnInit {
 	logout() {
 		// this.nativeStorage.clear()
 		// this.navCtrl.setRoot('Login')
-		this.nativeStorage.remove('account')
+		// this.nativeStorage.remove('account')
 		this.store.dispatch(new WalletActions.RemoveAccount())
 		this.viewCtrl.dismiss()
 		this.appCtrl.getRootNav().setRoot('Login')
@@ -99,17 +99,6 @@ export class SettingsPage implements OnInit {
 		this.clipboard.copy(value).then(() => this.np.emit({ message: copyText })).catch()
 	}
 
-	async btnSelected(item) {
-
-
-		this.store.dispatch(new WalletActions.RemoveAccount())
-		this.viewCtrl.dismiss()
-
-		await this.nativeStorage.setItem('account', { encrypted: item.encrypted, address: item.address })
-
-		this.appCtrl.getRootNav().setRoot('Login')
-
-	}
 
 	openAddresstLis() {
 		this.navCtrl.push('AddressList')

@@ -10,9 +10,16 @@
     <settings-language [languages]="locales" [currentLanguage]="currentLanguage | async"
       (localeClick)="handleLocaleClick($event)"></settings-language>
 
-    <ion-item class="list">
-      <button class="btn" ion-button clear full text-capitalize (click)="openAddresstLis()">钱包列表</button>
-    </ion-item>
+    <!-- <ion-item class="list">
+      <button class="btn" ion-button clear full text-capitalize (click)="openAddresstLis()" color="dark">钱包列表</button>
+    </ion-item> -->
+
+    <ion-card (click)="openAddresstLis()">
+      <ion-card-content>
+        <p>钱包列表</p>
+      </ion-card-content>
+    </ion-card>
+
 
   </ion-list>
 

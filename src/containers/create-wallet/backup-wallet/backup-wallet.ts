@@ -1,6 +1,6 @@
 import {
-	Component,
-	OnInit
+  Component,
+  OnInit
 } from '@angular/core'
 import { IonicPage, NavController, Platform, AlertController } from 'ionic-angular'
 import { AccountProvider } from '../../../providers'
@@ -20,19 +20,19 @@ import { CreateWalletPage } from '../create-wallet'
   selector: 'page-backup-wallet',
   templateUrl: 'backup-wallet.html',
 })
-export class BackupWalletPage  implements OnInit {
+export class BackupWalletPage implements OnInit {
   private encrypted: string
   private isCopy: boolean
-  constructor (private navCtrl: NavController,
-               private platform: Platform,
-               private nativeStorage: NativeStorage,
-               private clipBoard: Clipboard,
-               private np: NotificationProvider,
-               private ts: TranslateService,
-               private alertCtrl: AlertController,
-               private accountProvider: AccountProvider, ) {}
+  constructor(private navCtrl: NavController,
+    private platform: Platform,
+    private nativeStorage: NativeStorage,
+    private clipBoard: Clipboard,
+    private np: NotificationProvider,
+    private ts: TranslateService,
+    private alertCtrl: AlertController,
+    private accountProvider: AccountProvider, ) { }
 
-  ngOnInit () {
+  async ngOnInit() {
     this.isCopy = false
 
     let createError
@@ -42,10 +42,35 @@ export class BackupWalletPage  implements OnInit {
 
     try {
       this.encrypted = this.accountProvider.defaultAccount.encrypted
-      console.log('this.encrypted', this.encrypted)
-      this.nativeStorage.setItem('account', { encrypted: this.encrypted })
 
-      if (!this.encrypted ) {
+      const address = this.accountProvider.defaultAccount.address
+      const label = this.accountProvider.defaultAccount.label
+      // console.log('this.encrypted', this.encrypted)
+
+      await this.nativeStorage.setItem('account', { encrypted: this.encrypted, address, label })
+
+      try {
+        const result = await this.nativeStorage.getItem('addressList')
+
+        if (result) {
+
+          result.push({ encrypted: this.encrypted, address, label, isDefault: true })
+
+          await this.nativeStorage.setItem('addressList', result)
+        } else {
+          await this.nativeStorage.setItem('addressList', [{ encrypted: this.encrypted, address, label, isDefault: true }])
+        }
+
+      } catch (error) {
+        await this.nativeStorage.setItem('addressList', [{ encrypted: this.encrypted, address, label, isDefault: true }])
+      }
+
+
+
+
+
+
+      if (!this.encrypted) {
         this.np.emit(createError)
         this.navCtrl.setRoot('CreateWallet')
       }
@@ -56,63 +81,63 @@ export class BackupWalletPage  implements OnInit {
     }
     console.log('account', this.encrypted)
   }
-  openHome () {
-     // this.navCtrl.setRoot('Tabs')
-     this.navCtrl.setRoot('Login')
+  openHome() {
+    // this.navCtrl.setRoot('Tabs')
+    this.navCtrl.setRoot('Login')
   }
 
-  handleEncryptedClick () {
-		try {
-			console.log('handleEncryptedClick:account', this.encrypted)
-			// if (!account.encrypted) {
-			// 	this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
-			// }
-			this.showKeyBox({ title: 'NEP2', message: this.encrypted })
-		} catch (e) {
+  handleEncryptedClick() {
+    try {
+      console.log('handleEncryptedClick:account', this.encrypted)
+      // if (!account.encrypted) {
+      // 	this.np.emit('请使用WIF私钥创建钱包，再导出NEP2私钥')
+      // }
+      this.showKeyBox({ title: 'NEP2', message: this.encrypted })
+    } catch (e) {
 
-		}
-	}
+    }
+  }
 
-  showKeyBox ({ title, message }) {
-		const handler = () => {
-			if (this.platform.is('mobileweb') || this.platform.is('core')) {
-				// const state = copy(message) ? 'success' : 'fail'
-				const el = document.createElement('textarea')
-				el.value = message
-				document.body.appendChild(el)
-				el.select()
-				document.execCommand('copy')
-				document.body.removeChild(el)
+  showKeyBox({ title, message }) {
+    const handler = () => {
+      if (this.platform.is('mobileweb') || this.platform.is('core')) {
+        // const state = copy(message) ? 'success' : 'fail'
+        const el = document.createElement('textarea')
+        el.value = message
+        document.body.appendChild(el)
+        el.select()
+        document.execCommand('copy')
+        document.body.removeChild(el)
         this.isCopy = true
 
-				return this.np.emit(`copy success!`)
+        return this.np.emit(`copy success!`)
       }
 
 
-			let copyText
-			this.ts.get('CW.BACKUP.success').subscribe(data => {
-				copyText = data
-			})
-			this.clipBoard.copy(message).then(() => {
+      let copyText
+      this.ts.get('CW.BACKUP.success').subscribe(data => {
+        copyText = data
+      })
+      this.clipBoard.copy(message).then(() => {
         this.isCopy = true
         this.np.emit(copyText)
       })
-		}
+    }
 
     let btnCancle
-		let btnCopy
+    let btnCopy
 
-		this.ts.get('PROFILE.CONTACTS.remove_disagree').subscribe(data => {
-			btnCancle = data
+    this.ts.get('PROFILE.CONTACTS.remove_disagree').subscribe(data => {
+      btnCancle = data
     })
 
     this.ts.get('POSSESSIONS.QR_CODE.copy').subscribe(data => {
-			btnCopy = data
-		})
+      btnCopy = data
+    })
 
-		this.alertCtrl.create({
-			title, message, cssClass: 'mw__exports-actions--key',
-			buttons: [{ text: btnCancle }, { text: btnCopy, handler }]
-		}).present()
-	}
+    this.alertCtrl.create({
+      title, message, cssClass: 'mw__exports-actions--key',
+      buttons: [{ text: btnCancle }, { text: btnCopy, handler }]
+    }).present()
+  }
 }

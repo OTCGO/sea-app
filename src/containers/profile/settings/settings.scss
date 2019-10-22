@@ -42,6 +42,19 @@ page-settings {
     z-index: 999;
   }
 
+  ion-card {
+    margin: 5px 0 0 0 !important;
+    width: 100% !important;
+
+    ion-card-content {
+      text-align-last: right;
+    }
+
+    expansion-panel-header {
+      height: 48px;
+    }
+  }
+
   .bg {
     position: absolute;
     top: 0;
@@ -52,17 +65,7 @@ page-settings {
     z-index: 1000;
 
 
-    .list {
-      .button-inner {
-        color: black !important;
-      }
 
-      // button {
-
-
-      //   }
-
-    }
 
     // .addresslist {
     //   .card {

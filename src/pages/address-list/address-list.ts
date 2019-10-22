@@ -245,7 +245,16 @@ export class AddressListPage implements OnInit {
     alert.present();
   }
 
-  async deleteAddress(index) {
-    delete this.addressList[index];
+  async deleteAddress(item) {
+    if (item.isDefault) {
+      this.showPrompt('当前钱包正在使用。')
+      return
+    }
+
+    this.addressList = this.addressList.filter(function (i) {
+      return i.address != item.address
+    });
+
+    this.nativeStorage.setItem('addressList', this.addressList)
   }
 }

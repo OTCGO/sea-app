@@ -23,4 +23,5 @@ export interface Node {
     refundtxid: string
     static_remain: string
     static_remain_cny: string
+    teamcurlevelcount: number
 }

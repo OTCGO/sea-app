@@ -40,13 +40,13 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding (click)="closeSliding()">
   <ion-list class="address-sliding">
     <!-- <ion-list-header>
       Chats
     </ion-list-header> -->
 
-    <ion-item-sliding *ngFor="let item of addressList; index as i">
+    <ion-item-sliding *ngFor="let item of addressList; index as i" #slidingCase (ionDrag)="ondrag($event, slidingCase)">
       <ion-item>
         <ion-avatar item-start>
           <img src="assets/icon/default.png">
@@ -62,14 +62,15 @@
       </ion-item>
 
       <ion-item-options>
-        <button ion-button (click)="edit(i)">
+        <button ion-button (click)="edit(i,slidingCase)">
           <ion-icon name="create"></ion-icon>
           编辑
         </button>
-        <button ion-button color="danger" (click)="deleteAddress(item)">
+        <button ion-button color="danger" (click)="deleteAddress(item,slidingCase)">
           <ion-icon name="trash"></ion-icon>
           删除
         </button>
+
 
       </ion-item-options>
 

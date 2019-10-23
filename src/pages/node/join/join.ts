@@ -111,11 +111,11 @@ export class JoinPage implements OnInit {
   async submitJoin() {
     try {
       console.log('submitJoin')
-      if (parseFloat(this.gasBalance) < 0.01) {
-        // gas balance not enough
-        // return new
-        console.log('gasBalance no enough')
-      }
+      // if (parseFloat(this.gasBalance) < 0.01) {
+      //   // gas balance not enough
+      //   // return new
+      //   console.log('gasBalance no enough')
+      // }
 
       // check isAgree
       if (!this.fp.get('isAgree')) {

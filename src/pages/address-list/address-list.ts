@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, AlertController, NavParams, App, ViewController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, ItemSliding, AlertController, NavParams, App, ViewController, Platform } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
 import { RootState } from '../../store/reducers'
@@ -32,6 +32,7 @@ export class AddressListPage implements OnInit {
   private addressList;
 
   chats: any[];
+  sliding: ItemSliding
 
   constructor(private navCtrl: NavController,
     private alertCtrl: AlertController,
@@ -212,7 +213,7 @@ export class AddressListPage implements OnInit {
   }
 
 
-  async edit(index) {
+  async edit(index, slidingItem: ItemSliding) {
     let alert = this.alertCtrl.create({
       title: '编辑',
       inputs: [
@@ -237,15 +238,18 @@ export class AddressListPage implements OnInit {
             console.log('this.addressList', this.addressList);
             this.nativeStorage.setItem('addressList', this.addressList)
 
+            this.close(slidingItem)
             return true;
           }
         }
       ]
     });
     alert.present();
+
+
   }
 
-  async deleteAddress(item) {
+  async deleteAddress(item, slidingItem: ItemSliding) {
     if (item.isDefault) {
       this.showPrompt('当前钱包正在使用。')
       return
@@ -256,5 +260,25 @@ export class AddressListPage implements OnInit {
     });
 
     this.nativeStorage.setItem('addressList', this.addressList)
+    this.close(slidingItem)
+  }
+
+  async close(slidingItem: ItemSliding) {
+    slidingItem.close();
+  }
+
+  closeSliding() {
+    this.sliding.close();
+    console.log('closeSliding')
+  }
+
+  ondrag(event, slidingCase) {
+    this.sliding = slidingCase
+    // let percent = item.getSlidingPercent();
+    // if (percent < 0) {
+    //   // positive
+    //   console.log('left side');
+    // }
+
   }
 }

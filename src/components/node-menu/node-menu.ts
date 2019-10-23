@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuService } from '../../shared/services'
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Store } from '@ngrx/store'
@@ -21,6 +21,8 @@ export class NodeMenuComponent implements OnInit {
   private display: Boolean
   private nodeLevel
 
+  @Input() isMenu: boolean;
+
   constructor(
     public navCtrl: NavController,
     private store: Store<RootState>,
@@ -38,7 +40,16 @@ export class NodeMenuComponent implements OnInit {
     this.store.select(NodeSelectors.getEntities).subscribe(async node => {
       if (node && node.nodelevel && node.status >= 0) {
         this.nodeLevel = node.nodelevel
+
+        // console.log('444', !node.nodelevel || node.code === -7)
+        // if (!node.nodelevel || node.code === -7) {
+        //   this.isMenu = false
+        // } else {
+        //   this.isMenu = true
+        // }
       }
+
+
 
     })
   }

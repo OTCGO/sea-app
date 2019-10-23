@@ -37,6 +37,8 @@ export class NodePage implements OnInit {
 
     private joinTitle
 
+    private isMenu = false;
+
     constructor(private navCtrl: NavController, private menuService: MenuService,
         private store: Store<RootState>,
         private apiProvider: ApiProvider,
@@ -107,9 +109,16 @@ export class NodePage implements OnInit {
         // check is join
         this.store.select(NodeSelectors.getEntities).subscribe(async node => {
             this.node = node
+            this.isMenu = false;
+
+            if (!node) {
+                this.isMenu = true
+            }
 
 
-
+            if (node && !node.nodelevel) {
+                this.isMenu = true
+            }
 
 
             if (node && (node.code === 610)) {
@@ -163,6 +172,8 @@ export class NodePage implements OnInit {
                 console.log('this.tips', this.tips[`${node.status}`])
                 this.joinTitle = this.tips[`${node.status}`]
 
+                this.isMenu = true
+
                 return
             }
 
@@ -204,10 +215,12 @@ export class NodePage implements OnInit {
 
                 })
 
-                //显示旗下星数  >=5 才显示 
-                if (node.nodelevel >= 5) {
-                    const num = parseInt(node.teamlevelinfo.toString().substr((node.nodelevel - 1) * 4, 4), 18)
-                    this.belowNodeNum = `旗下${node.nodelevel}星数：${num}`
+                //显示旗下星数  >5 才显示 
+                if (node.nodelevel > 5) {
+                    //   const num = parseInt(node.teamlevelinfo.toString().substr((node.nodelevel - 1) * 4, 4), 18)
+                    this.belowNodeNum = `旗下${node.nodelevel}星线：${node.teamcurlevelcount}`
+                } else {
+                    this.belowNodeNum = `旗下5星线：0`
                 }
                 return
             }

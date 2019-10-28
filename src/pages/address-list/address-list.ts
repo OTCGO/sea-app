@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, ItemSliding, AlertController, NavParams, App, ViewController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, ItemSliding, AlertController, LoadingController, NavParams, App, ViewController, Platform } from 'ionic-angular';
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
 import { RootState } from '../../store/reducers'
@@ -43,6 +43,7 @@ export class AddressListPage implements OnInit {
     private clipboard: Clipboard,
     private store: Store<RootState>,
     private platform: Platform,
+    private loadingCtrl: LoadingController,
     private np: NotificationProvider, ) {
     this.chats = [
       {
@@ -153,34 +154,52 @@ export class AddressListPage implements OnInit {
         {
           text: '确定',
           handler: ({ passphrase }) => {
-            if (!passphrase || passphrase === '' || passphrase.length < 8 || passphrase.length > 20) return false
+            const loading = this.loadingCtrl.create()
+            loading.present().then(() => {
+              if (!passphrase || passphrase === '' || passphrase.length < 8 || passphrase.length > 20) return false
 
-            getWif(item.encrypted, passphrase).then((wif: any) => {
-              const tempAcct = new wallet.Account(wif)
+              getWif(item.encrypted, passphrase).then((wif: any) => {
+                const tempAcct = new wallet.Account(wif)
 
-              const { address } = tempAcct
+                const { address } = tempAcct
 
-              const acct = new wallet.Account({
-                // wif,
-                address,
-                // label: address,
-                key: item.encrypted,
-                isDefault: true
+                const acct = new wallet.Account({
+                  // wif,
+                  address,
+                  // label: address,
+                  key: item.encrypted,
+                  isDefault: true
+                })
+
+                this.store.dispatch(new WalletActions.RemoveAccount())
+
+                this.store.dispatch(new WalletActions.AddAccount(acct))
+                this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))
+
+                this.nativeStorage.setItem('account', item)
+                // this.navCtrl.push('Tabs')
+
+
+
+                this.addressList.forEach(element => {
+                  element.isDefault = false
+                  if (element.address === address) {
+                    element.isDefault = true
+                  }
+                });
+
+                this.nativeStorage.setItem('addressList', this.addressList)
+
+                loading.dismiss().catch(() => { }).catch(() => { })
+                this.viewCtrl.dismiss()
+                this.appCtrl.getRootNav().setRoot('Tabs')
+
+
+              }).catch((error) => {
+                loading.dismiss().catch(() => { }).catch(() => { })
+                console.log('error', error)
+                this.showPrompt('密码错误，请重新输入')
               })
-
-              this.store.dispatch(new WalletActions.RemoveAccount())
-
-              this.store.dispatch(new WalletActions.AddAccount(acct))
-              this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))
-
-              this.nativeStorage.setItem('account', item)
-              // this.navCtrl.push('Tabs')
-
-              this.viewCtrl.dismiss()
-              this.appCtrl.getRootNav().setRoot('Tabs')
-            }).catch((error) => {
-              console.log('error', error)
-              this.showPrompt('密码错误，请重新输入')
             })
           }
         }
@@ -264,12 +283,27 @@ export class AddressListPage implements OnInit {
   }
 
   async close(slidingItem: ItemSliding) {
-    slidingItem.close();
+    if (slidingItem) {
+      try {
+        slidingItem.close();
+      } catch (error) {
+
+      }
+
+    }
+
   }
 
   closeSliding() {
-    this.sliding.close();
-    console.log('closeSliding')
+    if (this.sliding) {
+      try {
+        this.sliding.close();
+      } catch (error) {
+
+      }
+
+    }
+
   }
 
   ondrag(event, slidingCase) {

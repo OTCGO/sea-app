@@ -82,7 +82,7 @@ export class OngPage implements OnInit {
 			this.ongBalance = result
 
 
-			if (result < 0.01 ) {
+			if (result < 0.01) {
 				this.btnDisable = true
 			}
 
@@ -208,8 +208,8 @@ export class OngPage implements OnInit {
 								getWif(this.account.encrypted, passphrase).then((wif: any) => {
 									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									const pr = getPrivateKeyFromWIF(wif)
-									console.log('getWif', pr)
-									this.ongProvider.doClaims(c, pr, this.ongBalance ).then(result => {
+									// console.log('getWif', pr)
+									this.ongProvider.doClaims(c, pr, this.ongBalance).then(result => {
 
 										self.alert.dismiss().catch(() => { })
 										this.btnLoading = false

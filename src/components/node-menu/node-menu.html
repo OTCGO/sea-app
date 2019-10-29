@@ -1,18 +1,17 @@
 <div>
 
   <div class="menu" *ngIf="display">
-    <!-- <div class="menu"> -->
-    <div class="item" *ngIf="!isMenu"><button ion-button round small color="light"
+    <div class="item" *ngIf="isMenu"><button ion-button round small color="light"
         (click)="goPage('NodeStatus')">收益详情</button></div>
-    <div class="item" *ngIf="!isMenu"><button ion-button round small color="light"
+    <div class="item" *ngIf="isMenu"><button ion-button round small color="light"
         (click)="goPage('CheckIn')">每日签到</button></div>
-    <div class="item" *ngIf="!isMenu"><button ion-button round small color="light"
+    <div class="item" *ngIf="isMenu"><button ion-button round small color="light"
         (click)="goPage('Grade')">等级攻略</button></div>
+
 
     <div class="item"><button ion-button round small color="light" (click)="goPage('NodeRule')">节点规则</button></div>
     <div class="item"><button ion-button round small color="light" (click)="goPage('Contact')">联系客服</button></div>
 
-    {{isMenu}}
   </div>
 
 

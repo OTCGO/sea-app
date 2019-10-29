@@ -37,8 +37,6 @@ export class NodePage implements OnInit {
 
     private joinTitle
 
-    private isMenu = false;
-
     constructor(private navCtrl: NavController, private menuService: MenuService,
         private store: Store<RootState>,
         private apiProvider: ApiProvider,
@@ -68,6 +66,7 @@ export class NodePage implements OnInit {
 
 
     async ngOnInit() {
+
 
 
         // seac balance
@@ -108,21 +107,22 @@ export class NodePage implements OnInit {
         // console.log('2')
         // check is join
         this.store.select(NodeSelectors.getEntities).subscribe(async node => {
+
+            console.log('NodeSelectors', node)
+
             this.node = node
-            this.isMenu = false;
 
             if (!node) {
                 await sleep(2000)
 
                 this.store.dispatch(new NodeActions.Load())
 
-                this.isMenu = true
 
             }
 
 
             if (node && !node.nodelevel) {
-                this.isMenu = true
+
             }
 
 
@@ -176,9 +176,10 @@ export class NodePage implements OnInit {
                 this.isJoin = false
                 console.log('this.tips', this.tips[`${node.status}`])
                 this.joinTitle = this.tips[`${node.status}`]
+                return
+            }
 
-                this.isMenu = true
-
+            if (node && (node.status === -4)) {
                 return
             }
 

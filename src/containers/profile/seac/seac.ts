@@ -138,7 +138,7 @@ export class SeacPage implements OnInit {
 								getWif(this.account.encrypted, passphrase).then((wif: any) => {
 									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									const pr = getPrivateKeyFromWIF(wif)
-									console.log('getWif', pr)
+									// console.log('getWif', pr)
 									this.seacProvider.doClaims(c, pr).then(result => {
 
 										self.alert.dismiss().catch(() => { })

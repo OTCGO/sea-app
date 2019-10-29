@@ -179,7 +179,7 @@ export class ClaimsPage implements OnInit {
 								getWif(this.account.encrypted, passphrase).then((wif: any) => {
 									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									const pr = getPrivateKeyFromWIF(wif)
-									console.log('getWif', pr)
+									// console.log('getWif', pr)
 									this.claimsProvider.doClaims(c, pr).then(result => {
 
 										self.alert.dismiss().catch(() => { })
@@ -196,7 +196,7 @@ export class ClaimsPage implements OnInit {
 
 								}).catch((e) => {
 									this.showPrompt(failText)
-									console.log(e)
+									// console.log(e)
 
 									self.alert.dismiss().catch(() => { })
 									loading.dismiss().catch(() => { }).catch(() => { })

@@ -21,7 +21,7 @@ export class NodeMenuComponent implements OnInit {
   private display: Boolean
   private nodeLevel
 
-  @Input() isMenu: boolean;
+  private isMenu: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -30,7 +30,24 @@ export class NodeMenuComponent implements OnInit {
 
   }
 
+  ngOnChanges() {
+    // console.log('ngOnChanges')
+  }
+
+  ngDoCheck() {
+    // console.log('ngDoCheck')
+
+    this.store.select(NodeSelectors.getEntities).subscribe(async node => {
+      if (node && node.status >= 0) {
+        this.isMenu = true
+      } else {
+        this.isMenu = false
+      }
+    })
+  }
+
   ngOnInit() {
+
     this.menuService.getMessage().subscribe(data => {
       console.log('NodeMenuComponent', data)
       this.display = !this.display
@@ -48,10 +65,8 @@ export class NodeMenuComponent implements OnInit {
         //   this.isMenu = true
         // }
       }
-
-
-
     })
+
   }
 
   goPage(name) {

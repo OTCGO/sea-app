@@ -3,7 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
-
+import { StatusBar } from '@ionic-native/status-bar'
 
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
@@ -88,6 +88,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     PipesModule
   ],
   providers: [
+    StatusBar,
     InAppBrowser,
     Globalization,
     MessageService,

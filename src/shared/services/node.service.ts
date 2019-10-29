@@ -24,8 +24,8 @@ export class NodeService {
     //     "message":""
     // }
     async insert(body, passphrase) {
-        console.log('NodeService', 'insert')
-        console.log('accountProvider:encrypted', this.account)
+        // console.log('NodeService', 'insert')
+        // console.log('accountProvider:encrypted', this.account)
 
         let rk;
         try {
@@ -39,7 +39,7 @@ export class NodeService {
 
         body.publicKey = wallet.getPublicKeyFromPrivateKey(rk, true)
 
-        console.log('NodeService', body)
+        // console.log('NodeService', body)
 
         const result = await this.apiProvider.postV2(`node/new`, body).toPromise()
 

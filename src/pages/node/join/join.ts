@@ -1,5 +1,5 @@
 import { Component, ViewChild, ComponentFactoryResolver, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MenuService, NodeService } from '../../../shared/services'
 import { Store } from '@ngrx/store'
@@ -37,6 +37,8 @@ export class JoinPage implements OnInit {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     private componentFactoryResolver: ComponentFactoryResolver,
     private nodeService: NodeService,
     private formBuilder: FormBuilder,
@@ -54,11 +56,13 @@ export class JoinPage implements OnInit {
 
   async addressValidator(addressCtrl: FormControl) {
     const { value } = addressCtrl
-    console.log('addressValidator', value)
-    console.log('addressValidator', this.isAddress)
+    // console.log('addressValidator', value)
+    // console.log('addressValidator', this.isAddress)
     if (isAddress(value)) {
       this.isAddress = true
       return
+    } else {
+      this.showPrompt('错误的地址')
     }
 
     this.isAddress = false
@@ -130,10 +134,19 @@ export class JoinPage implements OnInit {
 
       console.log('submitJoin:body', body)
 
-      const result: any = await this.nodeService.insert(body, this.fp.get('pwd').value)
+      if (!this.fp.get('pwd').value) {
+        return
+      }
+
+
+      await this.showLoading()
+
+      await this.nodeService.insert(body, this.fp.get('pwd').value)
 
       this.store.dispatch(new NodeActions.Load())
       this.Notification(["加入", "加入成功", ``, 1, 1])
+
+
 
 
       // if (result.code === 200) {
@@ -147,13 +160,8 @@ export class JoinPage implements OnInit {
 
     } catch (error) {
       console.log('error', error)
-      this.Notification(["解锁", "操作失败", `${error.message}`, 0])
+      this.Notification(["加入", "加入失败", `${error.message}`, 0])
     }
-
-
-
-
-
   }
   displayPwd() {
     console.log('displayPwd')
@@ -168,6 +176,26 @@ export class JoinPage implements OnInit {
       this.navCtrl.push('NodeRule')
     }
 
+  }
+
+  async showLoading() {
+    const alert = this.loadingCtrl.create()
+    await alert.present()
+
+    setTimeout(() => {
+      alert.dismiss().catch(() => { })
+    }, 1000)
+  }
+
+
+  showPrompt(msg) {
+    const message = msg.message || msg
+    const alert = this.alertCtrl.create({ message })
+    alert.present()
+
+    setTimeout(() => {
+      alert.dismiss().catch(() => { })
+    }, 500)
   }
 
 }

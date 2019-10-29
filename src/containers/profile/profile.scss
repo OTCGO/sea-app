@@ -2,7 +2,7 @@
 
 page-profile {
   ion-content .scroll-content {
-    
+
     margin-bottom: 67px;
     display: flex;
     justify-content: flex-start;
@@ -10,6 +10,7 @@ page-profile {
     flex-direction: column;
     padding: 0 !important;
   }
+
   .card-background-page {
     ion-card {
       width: 100%;
@@ -18,6 +19,7 @@ page-profile {
       display: flex;
       margin-bottom: 5px;
     }
+
     .card-info {
       text-align: center;
       height: 200px;
@@ -38,9 +40,10 @@ page-profile {
       // border-bottom-right-radius: 45%;
       // border-bottom-left-radius: 45%;
 
-      & > * {
+      &>* {
         margin-bottom: 10px;
       }
+
       .card-avatar {
         background-color: white;
         border-radius: 50%;
@@ -55,6 +58,7 @@ page-profile {
           height: 30px;
         }
       }
+
       .card-title {
         margin-top: 2rem;
         font-size: 2rem;
@@ -64,6 +68,7 @@ page-profile {
         color: #fff;
       }
     }
+
     profile-round-menu {
       ion-card.card-circle-menu {
         display: flex;
@@ -119,18 +124,22 @@ page-profile {
           border: none;
           color: #000;
           box-shadow: none;
+
           &:hover {
+
             // background-color: transparent;
             &:before {
               border-color: #007aff;
             }
           }
+
           .card-img {
             display: block;
             width: 35px;
             height: 35px;
             margin-bottom: 5px;
           }
+
           .card-title {
             display: block;
             color: $primary-color;
@@ -155,17 +164,21 @@ page-profile {
         button {
           width: 100%;
           border-radius: 5px;
+
           .trade-info {
             position: absolute;
             left: 170px;
             top: 10px;
+
             .trade-date {
               font-size: 8px;
             }
+
             .trade-time {
               font-size: 10px;
             }
           }
+
           ion-icon {
             display: flex;
             justify-content: center;
@@ -194,7 +207,7 @@ page-profile {
   .setting {
     position: absolute;
     right: 5px;
-    top: 4rem;
+    // top: 4rem;
     width: 50px;
     height: 50px;
     display: flex;

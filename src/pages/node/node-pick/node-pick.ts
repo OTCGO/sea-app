@@ -1,5 +1,5 @@
 import { Component, ViewChild, ComponentFactoryResolver, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MenuService, NodeService } from '../../../shared/services'
 import { NodeSelectors, BonusSelectors } from '../../../store/selectors'
 import { Store } from '@ngrx/store'
@@ -40,6 +40,7 @@ export class NodePickPage implements OnInit {
 
   constructor(public navCtrl: NavController,
     private store: Store<RootState>,
+    private loadingCtrl: LoadingController,
     public navParams: NavParams,
     public nodeService: NodeService,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -88,6 +89,13 @@ export class NodePickPage implements OnInit {
   async btnPick() {
     try {
       // console.log('btnPick', this.pwd)
+
+      if (!this.pwd) {
+        return
+      }
+
+      await this.showLoading()
+
       const result: any = await this.nodeService.withdraw(this.pwd);
       this.Notification(["提取", "操作成功", `本次提取${this.withdraw_actually}`, 1, 1])
 
@@ -105,6 +113,16 @@ export class NodePickPage implements OnInit {
       this.Notification(["提取", "操作失败", `${error.message}`, 0])
     }
   }
+
+  async showLoading() {
+    const alert = this.loadingCtrl.create()
+    await alert.present()
+
+    setTimeout(() => {
+      alert.dismiss().catch(() => { })
+    }, 500)
+  }
+
 
   displayPwd() {
     console.log('displayPwd')

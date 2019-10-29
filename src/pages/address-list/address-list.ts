@@ -246,15 +246,15 @@ export class AddressListPage implements OnInit {
           text: '取消',
           role: 'cancel',
           handler: data => {
-            console.log('Cancel clicked');
+            // console.log('Cancel clicked');
           }
         },
         {
           text: '确定',
           handler: data => {
-            console.log('index', index)
+            // console.log('index', index)
             this.addressList[index].label = data.username
-            console.log('this.addressList', this.addressList);
+            // console.log('this.addressList', this.addressList);
             this.nativeStorage.setItem('addressList', this.addressList)
 
             this.close(slidingItem)

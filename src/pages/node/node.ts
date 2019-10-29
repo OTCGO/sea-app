@@ -91,7 +91,7 @@ export class NodePage implements OnInit {
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }
         // 
-        console.log('1')
+        // console.log('1')
         // this.store.select(WalletSelectors.getAddress).subscribe(address => {
         //     console.log('address', address)
         //     this.address = address
@@ -112,7 +112,12 @@ export class NodePage implements OnInit {
             this.isMenu = false;
 
             if (!node) {
+                await sleep(2000)
+
+                this.store.dispatch(new NodeActions.Load())
+
                 this.isMenu = true
+
             }
 
 
@@ -266,7 +271,7 @@ export class NodePage implements OnInit {
     }
 
     share() {
-        console.log('share')
+        // console.log('share')
         Wechat.share({
             text: "这是分享的标题",
             scene: Wechat.Scene.TIMELINE

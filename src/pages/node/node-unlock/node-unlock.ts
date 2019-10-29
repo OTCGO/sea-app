@@ -1,5 +1,5 @@
 import { Component, ViewChild, ComponentFactoryResolver, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MenuService, NodeService } from '../../../shared/services'
 import { SuccessAlertComponent } from '../../../components/success-alert/success-alert';
 import { Store } from '@ngrx/store'
@@ -36,6 +36,7 @@ export class NodeUnlockPage implements OnInit {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public nodeService: NodeService,
+    private loadingCtrl: LoadingController,
     private store: Store<RootState>,
     private componentFactoryResolver: ComponentFactoryResolver,
     private menuService: MenuService) {
@@ -90,6 +91,11 @@ export class NodeUnlockPage implements OnInit {
   async btnUnlock() {
     try {
       console.log('btnPick', this.pwd)
+      if (!this.pwd) {
+        return
+      }
+
+      await this.showLoading();
       const result: any = await this.nodeService.unlock(this.pwd);
 
       this.store.dispatch(new NodeActions.Load())
@@ -103,6 +109,16 @@ export class NodeUnlockPage implements OnInit {
     }
 
 
+  }
+
+
+  async showLoading() {
+    const alert = this.loadingCtrl.create()
+    await alert.present()
+
+    setTimeout(() => {
+      alert.dismiss().catch(() => { })
+    }, 500)
   }
 
   displayPwd() {

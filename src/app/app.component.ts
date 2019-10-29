@@ -3,7 +3,7 @@ import {
 	OnInit
 } from '@angular/core'
 import { SplashScreen } from '@ionic-native/splash-screen'
-// import { StatusBar } from '@ionic-native/status-bar'
+import { StatusBar } from '@ionic-native/status-bar'
 import { Store } from '@ngrx/store'
 import { TranslateService } from '@ngx-translate/core'
 import { NativeStorage } from '@ionic-native/native-storage'
@@ -39,7 +39,7 @@ export class MyApp implements OnInit {
 	constructor(
 		private platform: Platform,
 		private nativeStorage: NativeStorage,
-		// private statusBar: StatusBar,
+		private statusBar: StatusBar,
 		private app: App,
 		private splashScreen: SplashScreen,
 		private translateService: TranslateService,
@@ -92,12 +92,21 @@ export class MyApp implements OnInit {
 	}
 
 	initApp() {
-		// this.statusBar.styleDefault()
+
 		// // this.statusBar.overlaysWebView(false)
 		// this.statusBar.backgroundColorByHexString('#ffffff')
 
 		this.platform.ready().then(() => {
+
 			this.splashScreen.hide()
+
+			this.statusBar.styleDefault(); //深色文本
+			this.statusBar.backgroundColorByHexString("#f8f8f8"); //浅色
+
+
+
+			// this.statusBar.styleDefault()
+
 			this.platform.registerBackButtonAction(async () => {
 				console.log('registerBackButtonAction', this.msgService.msg)
 				if (this.msgService.msg) {

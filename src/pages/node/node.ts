@@ -242,6 +242,14 @@ export class NodePage implements OnInit {
 
         // });
     }
+
+    ionViewDidEnter() {
+        console.log('ionViewDidEnter')
+        this.store.dispatch(new BalancesActions.Load())
+        this.store.dispatch(new NodeActions.Load())
+    }
+
+
     gotoJoin() {
         console.log('handleJoin')
 

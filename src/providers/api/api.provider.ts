@@ -10,7 +10,7 @@ import { takeUntil, timeout } from 'rxjs/operators'
 @Injectable()
 export class ApiProvider implements OnDestroy {
 	otcgoApiV1 = 'api.otcgo.cn'
-	otcgoApiV2 = 'otcgo.cn:8082'
+	otcgoApiV2 = 'api.otcgo.cn'
 	onDestroy = new Subject()
 
 	constructor(private http: HttpClient) { }
@@ -23,8 +23,8 @@ export class ApiProvider implements OnDestroy {
 
 	getAPIV2Endpoint() {
 		return dev
-			? `http://${this.otcgoApiV2}/v2/mainnet`
-			: `http://${this.otcgoApiV2}/v2/mainnet`
+			? `https://${this.otcgoApiV1}/v2/mainnet`
+			: `https://${this.otcgoApiV1}/v2/mainnet`
 	}
 
 	ngOnDestroy() {

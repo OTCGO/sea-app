@@ -1,14 +1,19 @@
 @import "../../theme/variables";
 
 node-header {
+
+
   .button {
     background: transparent;
     color: white;
   }
 
-  ion-toolbar {
-    padding: 0px !important;
-    height: 44px;
-  }
+  // ion-toolbar {
+  //   // padding: 0px !important;
+  //   // height: 44px;
+  // }
 
+  [hidden] {
+    visibility: hidden;
+  }
 }

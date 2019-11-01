@@ -1,5 +1,5 @@
-
 const dotenv = require('dotenv')
+const webpack = require('webpack');
 
 const result = dotenv.config()
 
@@ -7,7 +7,7 @@ if (result.error) {
   throw result.error
 }
 
-console.log(result.parsed)
+// console.log(result.parsed)
 
 const useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 const path = require('path');
@@ -47,7 +47,7 @@ const config = {
   // }
 };
 
-// if (process.env.NODE_ENV === 'production') {
+// if (process.env.env === 'prod') {
 //   module.exports.plugins = (module.exports.plugins || []).concat([
 //     new webpack.optimize.UglifyJsPlugin({
 //       sourceMap: false,
@@ -64,7 +64,7 @@ const config = {
 // console.log('build',process.env.build)
 
 const env = process.env.env || 'dev';
-console.log('env',process.env.env)
+console.log('env', process.env.env)
 const pathConfig = path.resolve(environmentPath(env));
 
 useDefaultConfig['dev'].resolve.alias = {
@@ -75,19 +75,31 @@ useDefaultConfig['prod'].resolve.alias = {
   "@app/env": pathConfig
 };
 
+if (process.env.env === 'prod') {
+  useDefaultConfig.prod.plugins.concat([
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      compress: {
+        warnings: false,
+        drop_console: true
+      }
+    })
+  ])
+}
+
 function environmentPath(env) {
-  const filePath = './src/environments/environment.' +  env + '.ts';
-  console.log('filePath',filePath)
+  const filePath = './src/environments/environment.' + env + '.ts';
+  console.log('filePath', filePath)
   if (!fs.existsSync(filePath)) {
-   // console.log(chalk.red('\n' + filePath + ' does not exist!'));
+    // console.log(chalk.red('\n' + filePath + ' does not exist!'));
   } else {
-	// console.log('filePath',filePath)
-	return filePath;
-	
+    // console.log('filePath',filePath)
+    return filePath;
+
   }
 }
 
 
-module.exports = function(){
-	return useDefaultConfig
+module.exports = function () {
+  return useDefaultConfig
 }

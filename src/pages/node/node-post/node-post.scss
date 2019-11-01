@@ -11,6 +11,23 @@ page-node-post {
       height: 100%;
       margin: 10px auto;
       background: #393a5f;
+      z-index: 999;
+    }
+
+    .btn-share {
+      position: fixed;
+      bottom: 4%;
+      width: 80%;
+      left: 10%;
+      z-index: 1000;
+    }
+
+    .share-icon {
+      position: fixed;
+      bottom: 4%;
+      width: 80%;
+      left: 10%;
+      z-index: 1000;
     }
   }
 

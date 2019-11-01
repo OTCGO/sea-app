@@ -1,7 +1,7 @@
 <!-- Generated template for the NodeHeaderComponent component -->
 <ion-toolbar no-border color="navy">
-  <button *ngIf="navCtrl.length() !== 1" ion-button clear left color="light" (click)="navCtrl.pop();">
-    <ion-icon name="arrow-back"></ion-icon>
+  <button ion-button clear left color="light" (click)="navCtrl.pop();">
+    <ion-icon *ngIf="navCtrl.length() !== 1" name="arrow-back"></ion-icon>
   </button>
 
   <ion-title>{{title}}</ion-title>

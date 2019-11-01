@@ -32,7 +32,7 @@ import { wallet } from '../libs/neon'
 })
 export class MyApp implements OnInit {
 	rootPage = 'Login'
-	// rootPage = 'AddressList'
+	// rootPage = 'NodePost'
 
 	public counter = 0
 

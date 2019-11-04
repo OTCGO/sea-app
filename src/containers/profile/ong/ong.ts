@@ -27,7 +27,7 @@ import { BalancesSelectors } from '../../../store/selectors'
 	templateUrl: 'ong.html'
 })
 export class OngPage implements OnInit {
-	account = this.accountProvider.defaultAccount
+	// account = this.accountProvider.defaultAccount
 	private claims: Observable<Claims>
 	private btnLoading = false
 	private alert
@@ -205,7 +205,9 @@ export class OngPage implements OnInit {
 							loading.present().then(() => {
 								this.btnLoading = true
 
-								getWif(this.account.encrypted, passphrase).then((wif: any) => {
+								const account = this.accountProvider.defaultAccount
+
+								getWif(account.encrypted, passphrase).then((wif: any) => {
 									// const pr = getPrivateKeyFromWIF(decrypt(this.account.encrypted, passphrase))
 									const pr = getPrivateKeyFromWIF(wif)
 									// console.log('getWif', pr)

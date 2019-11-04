@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import {
 	IonicPage,
@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core'
 	selector: 'page-profile',
 	templateUrl: 'profile.html',
 })
-export class ProfilePage {
+export class ProfilePage implements OnInit {
 	account
 	avatar = 'assets/imgs/icon-avatar.svg'
 
@@ -48,8 +48,13 @@ export class ProfilePage {
 		}
 	]
 
-	constructor (public navCtrl: NavController, public navParams: NavParams, private store: Store<RootState>) {
-		store.select(WalletSelectors.getAccount).take(1).subscribe(account => this.account = account)
+	constructor(public navCtrl: NavController, public navParams: NavParams, private store: Store<RootState>) {
+
+	}
+	ngOnInit() {
+
+		this.store.select(WalletSelectors.getAccount).subscribe(account => this.account = account)
+
 	}
 
 	handleImageError = () => this.avatar = ''

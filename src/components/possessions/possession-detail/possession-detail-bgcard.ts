@@ -66,7 +66,7 @@ export class PossessionDetailBgcard {
 	// 	return `${computedResult}px`
 	// }
 
-	account = this.accountProvider.defaultAccount
+	// account = this.accountProvider.defaultAccount
 
 	constructor(
 		private ts: TranslateService,
@@ -134,7 +134,8 @@ export class PossessionDetailBgcard {
 	}
 
 	getSwap(asset) {
-		return this.apiProvider.get(`swap/${this.account.address}/${asset}`).toPromise()
+		const account = this.accountProvider.defaultAccount
+		return this.apiProvider.get(`swap/${account.address}/${asset}`).toPromise()
 	}
 
 

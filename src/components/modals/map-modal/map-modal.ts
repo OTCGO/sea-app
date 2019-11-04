@@ -49,13 +49,13 @@ export class MapModalComponent implements OnInit {
 	get passphrase() { return this.formGroup.get('passphrase') }
 	get amount() { return this.formGroup.get('amount') }
 	get label() { return this.formGroup.get('label') }
-	get w() {
-		try {
-			return this.mapModalProvider.account && this.mapModalProvider.account.WIF
-		} catch (e) {
-			return ''
-		}
-	}
+	// get w() {
+	// 	try {
+	// 		return this.mapModalProvider.account && this.mapModalProvider.account.WIF
+	// 	} catch (e) {
+	// 		return ''
+	// 	}
+	// }
 
 
 
@@ -79,7 +79,7 @@ export class MapModalComponent implements OnInit {
 			this.formGroup = this.fb.group({
 				// address: new FormControl({value: 'AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', disabled: true}, Validators.required),
 				address: ['AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', [Validators.required, addressValidator]],
-				passphrase: ['', this.w ? [] : Validators.required],
+				passphrase: ['', Validators.required],
 				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount)]],
 				label: [''],
 			})

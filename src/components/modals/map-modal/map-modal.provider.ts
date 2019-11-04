@@ -13,25 +13,28 @@ interface ISendOpts {
 
 @Injectable()
 export class MapModalProvider {
-	account = this.accountProvider.defaultAccount
 
-	constructor (
+
+	constructor(
 		private apiProvider: ApiProvider,
 		private accountProvider: AccountProvider
 	) {
 
 	}
 
-	async decrypt (passphrase) {
+	async decrypt(passphrase) {
+		const account = this.accountProvider.defaultAccount
+
+
 		try {
 
-			if (this.account._WIF) return wallet.getPrivateKeyFromWIF(this.account._WIF)
+			if (account._WIF) return wallet.getPrivateKeyFromWIF(account._WIF)
 		} catch (e) {
 			console.log(e)
 		}
 		try {
 			// const wif = wallet.decrypt(this.account.encrypted, passphrase)
-			const wif: any = await getWif(this.account.encrypted, passphrase)
+			const wif: any = await getWif(account.encrypted, passphrase)
 
 			console.log('decrypt:passphrase', passphrase)
 			const pr = wallet.getPrivateKeyFromWIF(wif)
@@ -43,18 +46,21 @@ export class MapModalProvider {
 		}
 	}
 
-	doSendAsset ({ dests, amounts, assetId }: ISendOpts, pr) {
+	doSendAsset({ dests, amounts, assetId }: ISendOpts, pr) {
 
-		return this.postTransfer({ dests: 'AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', amounts, assetId, source: this.account.address })
-		           .then(res => this.generateSignature(res['transaction'], pr))
-		           .then(res => this.apiProvider.broadcast(res).toPromise())
+		const account = this.accountProvider.defaultAccount
+
+
+		return this.postTransfer({ dests: 'AFmseVrdL9f9oyCzZefL9tG6UbvhPbdYzM', amounts, assetId, source: account.address })
+			.then(res => this.generateSignature(res['transaction'], pr))
+			.then(res => this.apiProvider.broadcast(res).toPromise())
 	}
 
-	private postTransfer (transferPostData) {
+	private postTransfer(transferPostData) {
 		return this.apiProvider.post('transfer', transferPostData).toPromise()
 	}
 
-	private generateSignature (transaction, pr) {
+	private generateSignature(transaction, pr) {
 
 		const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 		console.log('publicKey', publicKey)

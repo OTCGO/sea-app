@@ -26,6 +26,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { PipesModule } from '../pipes/pipes.module'
 import { MessageService, MenuService, NodeService } from '../shared/services'
 
+import { Wechat } from '@ionic-native/wechat/ngx';
 
 
 import {
@@ -89,6 +90,7 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
   ],
   providers: [
     StatusBar,
+    Wechat,
     InAppBrowser,
     Globalization,
     MessageService,

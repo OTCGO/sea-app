@@ -14,7 +14,7 @@ interface ISendOpts {
 
 @Injectable()
 export class SendModalProvider {
-	account = this.accountProvider.defaultAccount
+
 
 	constructor(
 		private apiProvider: ApiProvider,
@@ -24,6 +24,8 @@ export class SendModalProvider {
 	}
 
 	async decrypt(passphrase) {
+
+		const account = this.accountProvider.defaultAccount
 		// try {
 
 		// 	if (this.account._WIF) return wallet.getPrivateKeyFromWIF(this.account._WIF)
@@ -32,8 +34,8 @@ export class SendModalProvider {
 		// }
 		try {
 			// const wif = wallet.decrypt(this.account.encrypted, passphrase)
-			console.log('this.account.encrypted', this.account.encrypted)
-			const wif: any = await getWif(this.account.encrypted, passphrase)
+			console.log('this.account.encrypted', account.encrypted)
+			const wif: any = await getWif(account.encrypted, passphrase)
 
 			console.log('decrypt:passphrase', passphrase)
 			const pr = wallet.getPrivateKeyFromWIF(wif)
@@ -46,11 +48,13 @@ export class SendModalProvider {
 	}
 
 	doSendAsset({ dests, amounts, assetId, fee }: ISendOpts, pr) {
+
+		const account = this.accountProvider.defaultAccount
 		// console.log('doSendAsset', pr)
-		return this.postTransfer({ dests, amounts, assetId, source: this.account.address, fee })
+		return this.postTransfer({ dests, amounts, assetId, source: account.address, fee })
 			.then(res => {
 				// console.log('doSendAsset',res)
-				if(res.result){
+				if (res.result) {
 					return this.generateSignature(res['transaction'], pr)
 				}
 
@@ -60,21 +64,25 @@ export class SendModalProvider {
 
 			.then(res => {
 				return this.apiProvider.broadcast(res).toPromise()
-		
+
 			})
 
 	}
 
 	doSendAssetOnt({ dests, amounts, assetId }: ISendOpts, pr) {
+
+		const account = this.accountProvider.defaultAccount
+
+
 		console.log('doSendAsset', pr)
-		return this.postTransferOnt({ dests, amounts, assetId, source: this.account.address })
+		return this.postTransferOnt({ dests, amounts, assetId, source: account.address })
 			.then(res => {
-				if(res.result){
+				if (res.result) {
 					return this.generateSignatureOnt(res['transaction'], pr, res['sigdata'])
 				}
 
 				throw new Error('ERROR.build_err')
-				
+
 			})
 			.then(res => this.apiProvider.broadcastOnt(res).toPromise())
 	}

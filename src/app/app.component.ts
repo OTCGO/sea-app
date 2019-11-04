@@ -32,7 +32,7 @@ import { wallet } from '../libs/neon'
 })
 export class MyApp implements OnInit {
 	rootPage = 'Login'
-	// rootPage = 'AddressList'
+	// rootPage = 'NodePost'
 
 	public counter = 0
 
@@ -59,30 +59,6 @@ export class MyApp implements OnInit {
 		try {
 			this.initApp()
 
-
-			/*
-			// auto login
-			const account = await this.nativeStorage.getItem('account')
-			console.log('account', account)
-			if (account.encrypted && account.address) {
-
-				const acct = new wallet.Account({
-					// wif,
-					address: account.address,
-					label: account.address,
-					key: account.encrypted,
-					isDefault: true
-				})
-
-				this.store.dispatch(new WalletActions.AddAccount(acct))
-
-				this.rootPage = 'Tabs'
-
-			}
-			*/
-
-
-
 		} catch (error) {
 			console.error(error)
 			this.rootPage = 'Login'
@@ -93,8 +69,6 @@ export class MyApp implements OnInit {
 
 	initApp() {
 
-		// // this.statusBar.overlaysWebView(false)
-		// this.statusBar.backgroundColorByHexString('#ffffff')
 
 		this.platform.ready().then(() => {
 
@@ -130,9 +104,7 @@ export class MyApp implements OnInit {
 		})
 	}
 
-	// async initWallet () {
-	// 	this.store.dispatch(new WalletActions.Load())
-	// }
+
 
 	async initTranslate() {
 		try {

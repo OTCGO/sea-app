@@ -41,6 +41,15 @@ export function reducer(state = initialNodeState, action: NodeActions): State {
             }
         }
 
+        case NodeActionTypes.CLEAN: {
+
+            return {
+                loading: false,
+                error: '',
+                entities: undefined
+            }
+        }
+
 
         default:
             return state

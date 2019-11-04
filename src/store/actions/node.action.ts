@@ -10,6 +10,10 @@ export enum NodeActionTypes {
     SIGNIN = '[Node] Signin',
     SIGNIN_FAIL = '[Node] Signin Error',
     SIGNIN_SUCCESS = '[Node] Signin Success',
+
+
+    CLEAN = '[Node] Clean',
+
 }
 
 export class Load implements Action {
@@ -30,10 +34,14 @@ export class LoadFail implements Action {
 }
 
 
+export class Clean implements Action {
+    readonly type = NodeActionTypes.CLEAN
+}
+
+
 export class Signin implements Action {
     readonly type = NodeActionTypes.SIGNIN
 }
-
 
 export class SigninSuccess implements Action {
     readonly type = NodeActionTypes.SIGNIN_SUCCESS
@@ -56,3 +64,4 @@ export type NodeActions =
     | Signin
     | SigninSuccess
     | SigninFail
+    | Clean

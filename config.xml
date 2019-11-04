@@ -120,11 +120,11 @@
     <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-globalization" spec="^1.11.0" />
-    <plugin name="cordova-plugin-wechat" spec="^2.9.0">
-        <variable name="WECHATAPPID" value="wx154fb427e32b6687" />
-    </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-wechat" spec="^2.9.0">
+        <variable name="wechatappid" value="wx154fb427e32b6687" />
+    </plugin>
     <engine name="browser" spec="5.0.4" />
+    <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.5" />
 </widget>

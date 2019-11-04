@@ -19,7 +19,7 @@ const { getPublicKeyFromPrivateKey, generateSignature } = wallet
 
 @Injectable()
 export class OngProvider {
-	_account = this.accountProvider.defaultAccount
+	// _account = this.accountProvider.defaultAccount
 	balances
 
 
@@ -33,12 +33,17 @@ export class OngProvider {
 	}
 
 	getClaims() {
-		return this.apiProvider.get('claim/ong' + this._account.address).toPromise()
+		const _account = this.accountProvider.defaultAccount
+
+		return this.apiProvider.get('claim/ong' + _account.address).toPromise()
 	}
 
 	hasDecrypt() {
+
+		const _account = this.accountProvider.defaultAccount
+
 		try {
-			if (this._account.publicKey)
+			if (_account.publicKey)
 				return true
 		} catch (e) {
 			return false
@@ -96,7 +101,7 @@ export class OngProvider {
 			const publicKey = wallet.getPublicKeyFromPrivateKey(pr, true)
 
 			if (ongBalance >= 0.2) {
-				if (data.available > 0 ) {
+				if (data.available > 0) {
 
 					const res = await this.pick(pr, publicKey)
 					// return Promise.resolve(true)
@@ -115,7 +120,7 @@ export class OngProvider {
 
 				return Promise.resolve(true)
 			} else if (ongBalance >= 0.01 && ongBalance < 0.02) {
-				if (data.available > 0 ) {
+				if (data.available > 0) {
 					const res = await this.pick(pr, publicKey)
 					// return Promise.resolve(true)
 					if (res['result']) {
@@ -126,10 +131,10 @@ export class OngProvider {
 				if (data.unavailable > 0) {
 					const res = await this.tran(pr, publicKey)
 
-						if (res['result']) {
-							return Promise.resolve(true)
-						}
-						return Promise.resolve(false)
+					if (res['result']) {
+						return Promise.resolve(true)
+					}
+					return Promise.resolve(false)
 				}
 			}
 
@@ -227,8 +232,10 @@ export class OngProvider {
 	}
 
 	doSendAsset(pr: string, publicKey) {
+		const _account = this.accountProvider.defaultAccount
+
 		const ONT = this.balances.find(bal => bal.hash === ONT_HASH)
-		const address = this._account.address
+		const address = _account.address
 		console.log('doSendAsset:ong', ONT)
 		if (!ONT || !ONT.amount) {
 			return

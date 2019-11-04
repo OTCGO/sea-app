@@ -19,6 +19,8 @@ import { MenuService } from '../../../shared/services'
 })
 export class NodePostPage {
 
+  private isShare: boolean
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private menuService: MenuService) {
   }
 
@@ -28,6 +30,10 @@ export class NodePostPage {
 
   handleMenu() {
     this.menuService.sendMessage("change")
+  }
+
+  openShare() {
+    this.isShare = true;
   }
 
 }

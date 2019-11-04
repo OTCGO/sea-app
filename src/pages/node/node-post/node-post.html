@@ -15,19 +15,20 @@
 
   <div class="container">
 
+    <img src="https://otcgo.cn/static/node/sea-app-post.png" alt="">
 
 
   </div>
 
-  <!-- <div class="btn-share">
-    <button ion-button round full margin-top color="light">分享海报</button>
-  </div> -->
-
-
-  <div class="share-icon">
-    <button ion-button round full margin-top color="light">分享海报</button>
+  <!-- <div class="btn-share" *ngIf="!isShare">
+    <button ion-button round full margin-top color="light" (click)="openShare()">分享海报</button>
   </div>
 
 
+
+  <share-alert *ngIf="isShare"></share-alert> -->
+
+
+  <share-alert></share-alert>
 
 </ion-content>

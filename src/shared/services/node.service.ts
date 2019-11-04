@@ -8,7 +8,7 @@ import { MSG } from '../../constants'
 
 @Injectable()
 export class NodeService {
-    account = this.accountProvider.defaultAccount
+
 
     constructor(private apiProvider: ApiProvider,
         private accountProvider: AccountProvider,
@@ -26,10 +26,11 @@ export class NodeService {
     async insert(body, passphrase) {
         // console.log('NodeService', 'insert')
         // console.log('accountProvider:encrypted', this.account)
+        const account = this.accountProvider.defaultAccount
 
         let rk;
         try {
-            rk = await GetPrivateKeyFromNep2(this.account.encrypted, passphrase)
+            rk = await GetPrivateKeyFromNep2(account.encrypted, passphrase)
             console.log('NodeService:rk', rk)
         } catch (err) {
             throw new Error(MSG[206])
@@ -92,9 +93,12 @@ export class NodeService {
     // message	随机信息
 
     async withdraw(passphrase) {
+
+        const account = this.accountProvider.defaultAccount
+
         let rk;
         try {
-            rk = await GetPrivateKeyFromNep2(this.account.encrypted, passphrase)
+            rk = await GetPrivateKeyFromNep2(account.encrypted, passphrase)
             console.log('NodeService:rk', rk)
         } catch (err) {
             console.log('NodeService:rk', err)
@@ -134,6 +138,8 @@ export class NodeService {
         // } catch (err) {
         //     throw new Error(206)
         // }
+
+
 
         const body = {
             message: '',
@@ -177,9 +183,12 @@ export class NodeService {
     }
 
     async unlock(passphrase) {
+
+        const account = this.accountProvider.defaultAccount
+
         let rk;
         try {
-            rk = await GetPrivateKeyFromNep2(this.account.encrypted, passphrase)
+            rk = await GetPrivateKeyFromNep2(account.encrypted, passphrase)
             console.log('NodeService:rk', rk)
         } catch (err) {
             console.log('NodeService:rk', err)

@@ -8,10 +8,24 @@ node-header {
     color: white;
   }
 
-  // ion-toolbar {
-  //   // padding: 0px !important;
-  //   // height: 44px;
-  // }
+  .toolbar-ios {
+    /* Status bar height on iOS 11.0 */
+    padding-top: constant(safe-area-inset-top);
+    // padding-bottom: constant(safe-area-inset-bottom);
+    /* Status bar height on iOS 11+ */
+    padding-top: env(safe-area-inset-top);
+    // padding-bottom: env(safe-area-inset-bottom);
+    /* backgroup-color: #000; */
+  }
+
+  .title-ios {
+    /* Status bar height on iOS 11.0 */
+    padding-top: constant(safe-area-inset-top);
+
+    /* Status bar height on iOS 11+ */
+    padding-top: env(safe-area-inset-top);
+  }
+
 
   [hidden] {
     visibility: hidden;

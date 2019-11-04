@@ -48,13 +48,13 @@ export class SendModalComponent implements OnInit {
 	get amount() { return this.formGroup.get('amount') }
 	get label() { return this.formGroup.get('label') }
 	get fee() { return this.formGroup.get('fee') }
-	get w() {
-		try {
-			return this.sendModalProvider.account && this.sendModalProvider.account.WIF
-		} catch (e) {
-			return ''
-		}
-	}
+	// get w() {
+	// 	try {
+	// 		return this.sendModalProvider.account && this.sendModalProvider.account.WIF
+	// 	} catch (e) {
+	// 		return ''
+	// 	}
+	// }
 
 
 	private ongBalance
@@ -82,11 +82,11 @@ export class SendModalComponent implements OnInit {
 			this.store.select(BalancesSelectors.getSelectedBalance).subscribe(selectedBalance => this.selectedBalance = selectedBalance)
 			this.formGroup = this.fb.group({
 				address: ['', [Validators.required, addressValidator], [this.nncValidator.bind(this)]],
-				passphrase: ['', this.w ? [] : Validators.required],
+				passphrase: ['', Validators.required],
 				amount: ['', [Validators.required, amountValidator(this.selectedBalance.amount), amountInt(this.selectedBalance.hash)]],
 				label: [''],
 				nncAddress: [''],
-				fee:[0]
+				fee: [0]
 			})
 
 		} catch (error) {
@@ -114,7 +114,7 @@ export class SendModalComponent implements OnInit {
 			this.feeTitle = 'ong'
 			return
 		}
-		
+
 		else {
 			this.getMaxFee()
 		}
@@ -147,23 +147,23 @@ export class SendModalComponent implements OnInit {
 		this.formGroup.reset()
 	}
 
-	feeChange(event){
-		console.log('feeChange',event.value)
+	feeChange(event) {
+		console.log('feeChange', event.value)
 		this.formGroup.get('fee').setValue(event.value / 1000)
 	}
 
-	getMaxFee(){
+	getMaxFee() {
 		this.store.select(BalancesSelectors.getGasBalance).subscribe(balance => {
 			console.log('getGasBalance', balance)
 
-			this.maxFee = Number(balance.amount)> 1 ? 1 :Math.floor(Number(balance.amount) * 1000) / 1000    
-		
-			if(Number(this.maxFee) > 0.001){
+			this.maxFee = Number(balance.amount) > 1 ? 1 : Math.floor(Number(balance.amount) * 1000) / 1000
+
+			if (Number(this.maxFee) > 0.001) {
 				this.formGroup.get('fee').setValue(0.001)
 			}
 
 			return
-			
+
 		})
 
 

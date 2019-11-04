@@ -6,7 +6,7 @@ import { RootState } from '../../store/reducers'
 import { SettingsActions } from '../../store/actions'
 import { SettingsSelectors } from '../../store/selectors'
 import { NativeStorage } from '@ionic-native/native-storage'
-import { WalletActions } from '../../store/actions'
+import { WalletActions, NodeActions } from '../../store/actions'
 import { version } from '@app/env'
 import { Clipboard } from '@ionic-native/clipboard'
 import { NotificationProvider } from '../../providers/notification.provider'
@@ -172,6 +172,8 @@ export class AddressListPage implements OnInit {
                 })
 
                 this.store.dispatch(new WalletActions.RemoveAccount())
+
+                this.store.dispatch(new NodeActions.Clean())
 
                 this.store.dispatch(new WalletActions.AddAccount(acct))
                 this.store.dispatch(new WalletActions.SaveWif({ wif: wif }))

@@ -36,18 +36,23 @@
 
 </head>
 
-<style>
-  body {
+<!-- <style>
+  html {
     /* Status bar height on iOS 11.0 */
     padding-top: constant(safe-area-inset-top);
-    padding-bottom: constant(safe-area-inset-bottom);
+    /* padding-bottom: constant(safe-area-inset-bottom); */
     /* Status bar height on iOS 11+ */
     padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+    /* padding-bottom: env(safe-area-inset-bottom); */
     /* backgroup-color: #000; */
   }
 
-</style>
+  .tabs-ios .tabbar {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+</style> -->
 
 <body>
 
@@ -76,5 +81,7 @@
   <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
 
 </body>
+
+
 
 </html>

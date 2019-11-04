@@ -18,7 +18,7 @@ const { getPublicKeyFromPrivateKey, generateSignature } = wallet
 
 @Injectable()
 export class ClaimsProvider {
-	_account = this.accountProvider.defaultAccount
+	// _account = this.accountProvider.defaultAccount
 	balances
 
 
@@ -32,12 +32,16 @@ export class ClaimsProvider {
 	}
 
 	getClaims() {
-		return this.apiProvider.get('claim/' + this._account.address).toPromise()
+		const account = this.accountProvider.defaultAccount
+		return this.apiProvider.get('claim/' + account.address).toPromise()
 	}
 
 	hasDecrypt() {
+
+
+		const account = this.accountProvider.defaultAccount
 		try {
-			if (this._account.publicKey)
+			if (account.publicKey)
 				return true
 		} catch (e) {
 			return false
@@ -45,7 +49,7 @@ export class ClaimsProvider {
 	}
 
 	// 可提取变余额
-	async  pick (pr, publicKey) {
+	async  pick(pr, publicKey) {
 		const { transaction } = await this.postGAS(pr)
 		// console.log('transaction', transaction)
 		const signature = await this.generateSignatureAndData(transaction, pr, publicKey)
@@ -91,7 +95,7 @@ export class ClaimsProvider {
 				// return Promise.resolve(true)
 
 				if (!res['result']) {
-					return  Promise.resolve(false)
+					return Promise.resolve(false)
 				}
 
 			}
@@ -99,7 +103,7 @@ export class ClaimsProvider {
 				const res = await this.tran(pr, publicKey)
 
 				if (!res['result']) {
-					return  Promise.resolve(false)
+					return Promise.resolve(false)
 				}
 
 			}
@@ -149,7 +153,7 @@ export class ClaimsProvider {
 
 		} catch (error) {
 			console.log('error', error)
-			return  Promise.resolve(false)
+			return Promise.resolve(false)
 		}
 	}
 
@@ -179,8 +183,10 @@ export class ClaimsProvider {
 	}
 
 	doSendAsset(pr: string, publicKey) {
+
+		const account = this.accountProvider.defaultAccount
 		const NEO = this.balances.find(bal => bal.hash === NEO_HASH)
-		const address = this._account.address
+		const address = account.address
 		console.log('doSendAsset:NEO', NEO)
 		if (!NEO || !NEO.amount) {
 			return

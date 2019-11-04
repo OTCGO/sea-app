@@ -4,13 +4,21 @@ share-alert {
   width: 100%;
   color: white;
 
+  bottom: 1%;
+
+  z-index: 1000;
+
 
   .container {
     background: #393a5f;
     // padding: 10px 0;
     width: 80%;
     margin: 0 auto;
-    opacity: 0.9;
+    opacity: 0.6;
+
+    h6 {
+      font-size: 0.6rem;
+    }
   }
 
 }

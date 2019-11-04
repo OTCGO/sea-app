@@ -3,16 +3,25 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <img src="assets/imgs/share-wechat.png" alt="">
+        <img src="assets/imgs/share-wechat.png" (click)="wechatShare()" alt="">
+        <h6>微信好友</h6>
       </ion-col>
       <ion-col>
         <img src="assets/imgs/share-qq.png" alt="">
+        <h6>QQ</h6>
       </ion-col>
       <ion-col>
-        <img src="assets/imgs/share-friends.png" alt="">
+        <img src="assets/imgs/share-friends.png" (click)="wechatFriendShare()" alt="">
+        <h6>朋友圈</h6>
       </ion-col>
       <ion-col>
         <img src="assets/imgs/share-save.png" alt="">
+        <h6>保存图片</h6>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button round full margin-top color="light" (click)="navCtrl.pop();">取消</button>
       </ion-col>
     </ion-row>
   </ion-grid>

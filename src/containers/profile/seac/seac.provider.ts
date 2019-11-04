@@ -18,7 +18,7 @@ const { getPublicKeyFromPrivateKey, generateSignature } = wallet
 
 @Injectable()
 export class SeacProvider {
-	_account = this.accountProvider.defaultAccount
+	// _account = this.accountProvider.defaultAccount
 	balances
 
 
@@ -32,12 +32,14 @@ export class SeacProvider {
 	}
 
 	getClaims() {
-		return this.apiProvider.getV2('claim/seac' + this._account.address).toPromise()
+		const _account = this.accountProvider.defaultAccount
+		return this.apiProvider.getV2('claim/seac' + _account.address).toPromise()
 	}
 
 	hasDecrypt() {
+		const _account = this.accountProvider.defaultAccount
 		try {
-			if (this._account.publicKey)
+			if (_account.publicKey)
 				return true
 		} catch (e) {
 			return false
@@ -111,8 +113,11 @@ export class SeacProvider {
 	}
 
 	doSendAsset(pr: string, publicKey) {
+		const _account = this.accountProvider.defaultAccount
+
+
 		const SEAS = this.balances.find(bal => bal.hash === SEAS_HASH)
-		const address = this._account.address
+		const address = _account.address
 		console.log('doSendAsset:NEO', SEAS)
 		if (!SEAS || !SEAS.amount) {
 			return

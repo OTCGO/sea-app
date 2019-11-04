@@ -51,7 +51,7 @@ export class RechargePage implements OnInit {
 	private claims
 	private symbol = 'ontology-ONG'
 	private btnDisable
-	account = this.accountProvider.defaultAccount
+	// account = this.accountProvider.defaultAccount
 
 	private inputType = true
 
@@ -91,7 +91,7 @@ export class RechargePage implements OnInit {
 	async checkLength() {
 		try {
 			console.log('checkLength', this.amount.value.toString().split('.')[1].length > 8)
-			if (this.amount.value.toString().split('.')[1].length > 8 ) {
+			if (this.amount.value.toString().split('.')[1].length > 8) {
 				return { invalidAmount: true }
 			}
 		} catch (error) {
@@ -122,7 +122,7 @@ export class RechargePage implements OnInit {
 			this.ongBalance = result
 
 
-			if (result < 0.01 ) {
+			if (result < 0.01) {
 				this.btnDisable = true
 			}
 
@@ -137,7 +137,7 @@ export class RechargePage implements OnInit {
 
 
 	ionViewWillEnter() {
-		 this.store.select(TransactionsSelectors.getSelectedAddress).take(1).subscribe(address => this.toAddress.setValue(address))
+		this.store.select(TransactionsSelectors.getSelectedAddress).take(1).subscribe(address => this.toAddress.setValue(address))
 	}
 
 	ionViewDidLeave() {
@@ -165,7 +165,7 @@ export class RechargePage implements OnInit {
 
 
 			console.log('Deposit,ongBalance', this.ongBalance)
-			if (parseFloat(this.ongBalance)   < parseFloat(this.amount.value) + 0.01) {
+			if (parseFloat(this.ongBalance) < parseFloat(this.amount.value) + 0.01) {
 
 				this.ts.get('PROFILE.CLAIMS.ong_balance_error').subscribe(data => {
 					this.notificationProvider.emit({ message: data })
@@ -198,12 +198,12 @@ export class RechargePage implements OnInit {
 
 
 			const result: any = await this.sendModalProvider.doSendAssetOnt({
-					// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
-					dests: 'APV9wADVtSvQQmfuw7gvzsfo3eDrkhpHiK',
-					amounts: this.amount.value,
-					assetId: this.selectedBalance.hash,
-					fee:'0'
-				}, pr)
+				// dests: this.toAddress.value.replace(/^\s+|\s+$/g, ''),
+				dests: 'APV9wADVtSvQQmfuw7gvzsfo3eDrkhpHiK',
+				amounts: this.amount.value,
+				assetId: this.selectedBalance.hash,
+				fee: '0'
+			}, pr)
 
 
 			// 成功
@@ -248,7 +248,9 @@ export class RechargePage implements OnInit {
 	}
 
 	handleNavClick() {
-		this.iab.create(`https://explorer.ont.io/address/${this.account.address}/20/1`, '_system')
+
+		const account = this.accountProvider.defaultAccount
+		this.iab.create(`https://explorer.ont.io/address/${account.address}/20/1`, '_system')
 		return
 	}
 }

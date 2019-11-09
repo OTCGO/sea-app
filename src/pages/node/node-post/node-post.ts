@@ -36,4 +36,8 @@ export class NodePostPage {
     this.isShare = true;
   }
 
+  closeShare() {
+    this.isShare = false;
+  }
+
 }

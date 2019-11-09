@@ -26,8 +26,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { PipesModule } from '../pipes/pipes.module'
 import { MessageService, MenuService, NodeService } from '../shared/services'
 
-import { Wechat } from '@ionic-native/wechat/ngx';
-
+import { Wechat } from '@ionic-native/wechat';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 import {
   BalancesEffects,
@@ -89,13 +91,16 @@ const LoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, 'asset
     PipesModule
   ],
   providers: [
+    FileTransfer,
     StatusBar,
+    File,
     Wechat,
     InAppBrowser,
     Globalization,
     MessageService,
     MenuService,
-    NodeService
+    NodeService,
+    PhotoLibrary
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp]

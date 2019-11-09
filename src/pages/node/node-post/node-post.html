@@ -20,15 +20,15 @@
 
   </div>
 
-  <!-- <div class="btn-share" *ngIf="!isShare">
+  <div class="btn-share" *ngIf="!isShare">
     <button ion-button round full margin-top color="light" (click)="openShare()">分享海报</button>
   </div>
 
 
 
-  <share-alert *ngIf="isShare"></share-alert> -->
+  <share-alert *ngIf="isShare" (cancleEvent)="closeShare($event)"></share-alert>
 
 
-  <share-alert></share-alert>
+
 
 </ion-content>

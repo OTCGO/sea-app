@@ -214,7 +214,7 @@ export class AddressListPage implements OnInit {
       ]
     });
 
-    alert.present();
+    await alert.present();
 
     // const wif: any = await getWif(encrypted, passphrase)
     // // console.timeEnd('getWif')

@@ -149,9 +149,10 @@ export class SendModalComponent implements OnInit {
 
 	feeChange(event) {
 		// console.log('feeChange', event.value)
-		if (event.value) {
-			this.formGroup.get('fee').setValue(event.value / 1000)
-		}
+		this.formGroup.get('fee').setValue(event.value / 1000)
+		// if (event.value) {
+
+		// }
 
 	}
 

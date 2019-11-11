@@ -27,7 +27,7 @@ const initialState: State = {
 // ): State => {
 
 
-	export function reducer(state = initialState, action: WalletActions | AuthActions): State {
+export function reducer(state = initialState, action: WalletActions | AuthActions): State {
 	switch (action.type) {
 		case WalletActionTypes.ADD_ACCOUNT_SUCCESS: {
 			const { payload } = action
@@ -97,7 +97,7 @@ const initialState: State = {
 			// 	accounts[0].isDefault = true
 			// }
 
-			const entity = new wallet.Wallet(<any>{ ...state.entity, accounts })
+			const entity = new wallet.Wallet(<any>{ accounts })
 
 			return {
 				...state,

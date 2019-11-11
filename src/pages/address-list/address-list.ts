@@ -156,9 +156,14 @@ export class AddressListPage implements OnInit {
           handler: ({ passphrase }) => {
             const loading = this.loadingCtrl.create()
             loading.present().then(() => {
-              if (!passphrase || passphrase === '' || passphrase.length < 8 || passphrase.length > 20) return false
+              // if (!passphrase || passphrase === '' || passphrase.length < 8 || passphrase.length > 20) {
+              //   return false
+              //   loading.dismiss().catch(() => { }).catch(() => { })
+              // }
 
               getWif(item.encrypted, passphrase).then((wif: any) => {
+
+
                 const tempAcct = new wallet.Account(wif)
 
                 const { address } = tempAcct
@@ -193,6 +198,7 @@ export class AddressListPage implements OnInit {
                 this.nativeStorage.setItem('addressList', this.addressList)
 
                 loading.dismiss().catch(() => { }).catch(() => { })
+
                 this.viewCtrl.dismiss()
                 this.appCtrl.getRootNav().setRoot('Tabs')
 
@@ -207,7 +213,8 @@ export class AddressListPage implements OnInit {
         }
       ]
     });
-    await alert.present();
+
+    alert.present();
 
     // const wif: any = await getWif(encrypted, passphrase)
     // // console.timeEnd('getWif')

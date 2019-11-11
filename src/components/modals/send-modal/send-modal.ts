@@ -148,21 +148,28 @@ export class SendModalComponent implements OnInit {
 	}
 
 	feeChange(event) {
-		console.log('feeChange', event.value)
-		this.formGroup.get('fee').setValue(event.value / 1000)
+		// console.log('feeChange', event.value)
+		if (event.value) {
+			this.formGroup.get('fee').setValue(event.value / 1000)
+		}
+
 	}
 
 	getMaxFee() {
 		this.store.select(BalancesSelectors.getGasBalance).subscribe(balance => {
 			console.log('getGasBalance', balance)
 
-			this.maxFee = Number(balance.amount) > 1 ? 1 : Math.floor(Number(balance.amount) * 1000) / 1000
+			if (balance && balance.amount) {
+				this.maxFee = Number(balance.amount) > 1 ? 1 : Math.floor(Number(balance.amount) * 1000) / 1000
 
-			if (Number(this.maxFee) > 0.001) {
-				this.formGroup.get('fee').setValue(0.001)
+				if (Number(this.maxFee) > 0.001) {
+					this.formGroup.get('fee').setValue(0.001)
+				}
+
+				return
 			}
 
-			return
+
 
 		})
 
